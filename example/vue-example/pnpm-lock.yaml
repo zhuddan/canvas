@@ -12,8 +12,8 @@ dependencies:
     specifier: ^10.9.0
     version: 10.9.0(vue@3.4.27)
   '@zd~/painter':
-    specifier: ^0.0.1
-    version: 0.0.1
+    specifier: ^0.0.2
+    version: 0.0.2
   file-saver:
     specifier: ^2.0.5
     version: 2.0.5
@@ -2183,8 +2183,8 @@ packages:
       - '@vue/composition-api'
       - vue
 
-  /@zd~/painter@0.0.1:
-    resolution: {integrity: sha512-h192bpUUrigdLm3S0vwChB/e5ucIDbwIj/AjS41gaaQvg/TvuSOktWUPfbYrXq7L6I36eLLpkr2+zi4URMyW+w==}
+  /@zd~/painter@0.0.2:
+    resolution: {integrity: sha512-rGkgR0xVV4eaXL2SwgAKWVZm7BC0Yv4f8XLxqR5LZp7WWiY7Hdm0z3opNWshwfT8D1SVVOqmyDbGQaKw7Frc2g==}
     dev: false
 
   /abbrev@2.0.0:

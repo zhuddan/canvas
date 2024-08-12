@@ -28,28 +28,34 @@ export interface TextMultilineStyle extends TextBaseStyle {
 export class Painter {
   canvas?: OffscreenCanvas | UniNamespace.OffscreenCanvas | WechatMiniprogram.OffscreenCanvas
   ctx?: OffscreenCanvasRenderingContext2D
-  constructor(private defaultTextStyle: Omit<TextMultilineStyle, 'lineHeight' | 'maxWidth'> = {
-    textBaseline: 'top',
-    fontFamily: '"Microsoft YaHei"',
-    textAlign: 'left',
-  }) {
-
+  constructor(public defaultTextStyle: TextBaseStyle) {
+    this.defaultTextStyle = Object.assign({}, {
+      textBaseline: 'hanging',
+      fontFamily: '"Microsoft YaHei"',
+      textAlign: 'left',
+      fontSize: 32,
+      color: '#000',
+    }, defaultTextStyle)
   }
 
   init(width: number, height: number) {
     switch (getEnv()) {
       case ENV.WEB:
-        this.canvas = new OffscreenCanvas(width, height)
+        this.canvas = document.createElement('canvas')!
         this.ctx = this.canvas.getContext('2d')!
+        const dpr = window.devicePixelRatio ?? 1
+        this.canvas.width = width * dpr
+        this.canvas.height = height * dpr
+        this.ctx.scale(dpr, dpr)
         break
-      case ENV.UNI_APP:
-        this.canvas = uni.createOffscreenCanvas(width, height)
-        this.ctx = this.canvas.getContext('2d')
-        break
-      case ENV.WX:
-        this.canvas = wx.createOffscreenCanvas(width, height)
-        this.ctx = this.canvas.getContext('2d')
-        break
+      // case ENV.UNI_APP:
+      //   this.canvas = uni.createOffscreenCanvas(width, height)
+      //   this.ctx = this.canvas.getContext('2d')
+      //   break
+      // case ENV.WX:
+      //   this.canvas = wx.createOffscreenCanvas(width, height)
+      //   this.ctx = this.canvas.getContext('2d')
+      //   break
     }
   }
 
@@ -66,6 +72,7 @@ export class Painter {
       return
     }
     const _style = Object.assign({}, this.defaultTextStyle, style)
+    console.log(_style)
     const ctx = this.ctx!
     if (_style.color) {
       ctx.fillStyle = _style.color
@@ -75,13 +82,19 @@ export class Painter {
       ctx.textAlign = _style.textAlign
     }
 
+    if (_style.textBaseline) {
+      ctx.textBaseline = _style.textBaseline
+    }
+
     if (_style.font) {
       ctx.font = _style.font
     }
     else {
-      const fs = _style?.fontSize ? `${_style.fontSize}px` : '32px'
-      const fontWeight = _style?.fontWeight || 'normal'
-      ctx.font = `${fs} ${fontWeight} ${_style.fontFamily}`
+      const fs = _style.fontSize ? `${_style.fontSize}px` : '32px'
+      console.log(_style.fontSize)
+      const fontWeight = _style.fontWeight || 'normal'
+      ctx.font = ` ${fontWeight} ${fs} ${_style.fontFamily}`
+      console.log(ctx.font)
     }
     if (_style?.maxWidth && _style?.lineHeight) {
       const allAtr = text.split('')
@@ -107,6 +120,7 @@ export class Painter {
       }
     }
     else {
+      console.log(ctx.textBaseline)
       ctx.fillText(text, x, y)
     }
   }
