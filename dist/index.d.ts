@@ -24,4 +24,4 @@ declare class Painter {
     text(text: string, x: number, y: number, style?: TextMultilineStyle): void;
 }
 
-export { Painter, type TextBaseStyle, type TextMultilineStyle };
+export { Painter, type TextBaseStyle, type TextMultilineStyle, Painter as default };
