@@ -87,7 +87,7 @@ const buildDtsOptions = {
           console.error('TypeScript compilation failed:', stderr)
           process.exit(1)
         }
-        console.log('ok2')
+        console.log('ok')
       },
     },
   ],

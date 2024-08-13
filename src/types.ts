@@ -1,9 +1,48 @@
 import type { Properties } from 'csstype'
 
-export enum ENV {
-  WEB = 'WEB',
-  UNI_APP = 'UNI_APP',
-  WX = 'WX',
+// export enum ENV {
+//   WEB = 'WEB',
+//   UNI_APP = 'UNI_APP',
+//   WX = 'WX',
+// }
+
+export interface IColor {
+  /**
+   * 填充颜色
+   * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/fillStyle)
+   */
+  fill?: CanvasRenderingContext2D['fillStyle']
+  /**
+   * 描边颜色 当仅仅指定stroke 而未指定 fill 时 只会绘制镂空文字
+   * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/strokeStyle)
+   */
+  stroke?: CanvasRenderingContext2D['strokeStyle']
+  /**
+   * 描边宽度? 默认为1
+   */
+  strokeWeight?: number
+}
+
+/**
+ * 锚点 默认 左上角为0(x=0,y=0) 右下角为(1,1)
+ */
+export type Anchor = number | { x: number, y: number }
+export interface IAnchor {
+  anchor?: Anchor
+}
+
+/**
+ * 旋转角度(默认旋转中心为 IAnchor)
+ */
+export interface IRotate {
+  /**
+   * 旋转弧度 Math.PI * 2 为一周
+   */
+  rotateAngle?: number
+  /**
+   * 旋转角度 360度 为一周
+   */
+  rotateDeg?: number
 }
 
 /**
@@ -31,17 +70,6 @@ export interface IFont {
    * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-weight)
    */
   fontWeight?: Properties['fontWeight']
-}
-
-export interface IColor {
-  /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/fillStyle) */
-  fill?: CanvasRenderingContext2D['fillStyle']
-  /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/strokeStyle) */
-  stroke?: CanvasRenderingContext2D['strokeStyle']
-  /**
-   * 描边宽度? 默认为1
-   */
-  strokeWeight?: number
 }
 
 export interface TextBaseStyle extends IFont, IColor, IAnchor, IRotate {
@@ -88,25 +116,31 @@ export interface TextMultilineStyle extends TextBaseStyle {
   maxWidth?: number
 }
 
-/**
- * 锚点 默认 左上角为0(x=0,y=0) 右下角为(1,1)
- * 此属性影响旋转
- */
-export type Anchor = number | { x: number, y: number }
-export interface IAnchor {
-  anchor?: Anchor
-}
-
-/**
- * 旋转角度(默认旋转中心为 IAnchor)
- */
-export interface IRotate {
+export type ILinePosition = Array<[number, number]>
+export interface LineStyle extends IColor, IRotate, IAnchor {
   /**
-   * 旋转弧度 Math.PI * 2 为一周
+   * 虚线 为 true 时候取 [2,2]
+   *[MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setLineDash)
    */
-  rotateAngle?: number
+  dash?: boolean | Iterable<number>
   /**
-   * 旋转角度 360度 为一周
+   * 虚线偏移量或者称为“相位”
+   * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/lineDashOffset)
    */
-  rotateDeg?: number
+  dashOffset?: number
+  /**
+   * 每一条线段的末端 默认 "butt"
+   * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/lineCap)
+   */
+  lineCap?: CanvasLineCap
+  /**
+   * 用于设置 2 个线段如何连接在一起 默认值是 "miter"
+   * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/lineJoin)
+   */
+  lineJoin?: CanvasLineJoin
+  /**
+   * 当前点添加一条直线到当前子路径的起点。如果形状已经闭合或只有一个点，此函数将不执行任何操作
+   * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/closePath)
+   */
+  close?: boolean
 }

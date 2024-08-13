@@ -3,71 +3,60 @@ import Painter from '@zd~/painter'
 
 const p = new Painter()
 const base64String = ref('')
-p.init(500, 500)
+p.init(document.documentElement.clientWidth / window.devicePixelRatio, document.documentElement.clientHeight / window.devicePixelRatio,
+)
 function render() {
-  p.text('平林漠漠烟如织，寒山一带伤心碧。暝色入高楼，有人楼上愁。玉阶空伫立，宿鸟归飞急。何处是归程？长亭更短亭', 250, 250, {
-    fontFamily: '宋体',
+  p.text('平林漠漠烟如织，寒山一带伤心碧。暝色入高楼，有人楼上愁。玉阶空伫立，宿鸟归飞急。何处是归程？长亭更短亭', 300 / 2, 300 / 2, {
+    fontFamily: '黑体',
     textAlign: 'left',
-    fontSize: 32,
-    fontWeight: 'bold',
-    maxWidth: 300,
-    lineHeight: 40,
+    fontSize: 18,
+    fontWeight: 900,
+    maxWidth: 250,
+    lineHeight: 20,
     letterSpacing: 10,
     wordSpacing: 50,
     stroke: 'blue',
     fill: 'red',
-    strokeWeight: 1,
     anchor: 0.5,
     rotateDeg: -30,
   })
 
-  p.text(`平林漠漠烟如织`, 18, 60, {
-    fontSize: 12,
-    maxWidth: 250,
-    lineHeight: 20,
+  p.text(`大漠孤烟直`, 18, 60, {
+    fontSize: 28,
+    stroke: 'pink',
+    strokeWeight: 0.5,
+    // fill: 'transparent',
   })
 
-  // p.text(`白日依山尽，黄河入海流。欲穷千里目，更上一层楼。`, 30, 130, {
-  //   fontSize: 12,
-  //   maxWidth: 80,
-  //   lineHeight: 20,
-  //   color: '#30e3ca',
-  // })
+  p.line([
+    // [300, 300],
+    // [400, 350],
+    // [500, 300],
+    // [450, 400],
+    // [500, 500],
+    // [400, 450],
+    // [300, 500],
+    // [350, 400],
+    // [300, 300],
+    [280, 50],
+    [280 + 50, 50],
+    [280 + 50, 50 + 80],
+  ], {
+    fill: 'red',
+    close: true,
+    strokeWeight: 9,
+    lineCap: 'round',
+    lineJoin: 'round',
+  })
 
-  // const deg = (Math.PI * 2) / 360 * (-45)
-  // const x = 150
-  // const y = 250
+  const canvas = p.canvas!
 
-  // p.ctx!.save()
-  // p.ctx!.translate(x, y)
-  // p.ctx!.rotate(deg)
+  base64String.value = canvas.toDataURL('jpg')
 
-  // p.text(`旋转跳跃旋转旋转跳跃旋转旋跳跃旋转`, 0, 0, {
-  //   fontSize: 28,
-  //   maxWidth: 180,
-  //   lineHeight: 50,
-  //   color: '#0505cc',
-  // })
-  // p.ctx!.restore()
+  // canvas.width = originalWidth
+  // canvas.height = originalHeight
 
-  // p.text(`hahah`, 300, 300, {
-  //   fontSize: 50,
-  //   color: '#f08a5d',
-  // })
-
-  const offscreenCanvas = p.canvas as HTMLCanvasElement
-  console.log(offscreenCanvas)
-
-  // const imageBitmap = offscreenCanvas.transferToImageBitmap()
-  // const canvas = document.createElement('canvas')
-  // canvas.width = 200
-  // canvas.height = 200
-  // const context = canvas.getContext('2d')!
-  // // 将 ImageBitmap 绘制到普通canvas上
-  // context.drawImage(imageBitmap, 0, 0)
-  // context.textBaseline = 'top'
-
-  base64String.value = offscreenCanvas.toDataURL('jpg')
+  // console.log(base64String.value)
 }
 
 onMounted(render)
