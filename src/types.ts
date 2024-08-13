@@ -78,9 +78,12 @@ export interface TextBaseStyle extends IFont, IColor, IAnchor, IRotate {
 }
 
 export interface TextMultilineStyle extends TextBaseStyle {
+  /**
+   * 多行文本属性 行高 单位px
+   */
   lineHeight?: number
   /**
-   * 多行文本的最大宽度。超过此宽度则换行
+   * 多行文本属性 最大宽度 超过此宽度则换行
    */
   maxWidth?: number
 }

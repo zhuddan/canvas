@@ -6,17 +6,17 @@ const base64String = ref('')
 p.init(500, 500)
 function render() {
   p.text('平林漠漠烟如织，寒山一带伤心碧。暝色入高楼，有人楼上愁。玉阶空伫立，宿鸟归飞急。何处是归程？长亭更短亭', 250, 250, {
-    // fontFamily: '宋体',
+    fontFamily: '宋体',
     textAlign: 'left',
     fontSize: 32,
-    // fontWeight: 'bold',
+    fontWeight: 'bold',
     maxWidth: 300,
     lineHeight: 40,
-    // letterSpacing: 10,
-    // wordSpacing: 50,
+    letterSpacing: 10,
+    wordSpacing: 50,
     stroke: 'blue',
     fill: 'red',
-    // strokeWeight: 1,
+    strokeWeight: 1,
     anchor: 0.5,
     rotateDeg: -30,
   })
