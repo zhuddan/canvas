@@ -45,6 +45,10 @@ export interface IRotate {
   rotateDeg?: number
 }
 
+export interface IBase extends IRotate, IColor, IAnchor {
+
+}
+
 /**
  * 由于某些属性不支持CanvasRenderingContext2D 故舍弃
  * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/font)
@@ -72,7 +76,7 @@ export interface IFont {
   fontWeight?: Properties['fontWeight']
 }
 
-export interface TextBaseStyle extends IFont, IColor, IAnchor, IRotate {
+export interface TextBaseStyle extends IFont, IBase {
   /**
    * 指定绘制文本时字体如何被扩展或压缩
    * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/fontStretch)
@@ -117,7 +121,7 @@ export interface TextMultilineStyle extends TextBaseStyle {
 }
 
 export type ILinePosition = Array<[number, number]>
-export interface LineStyle extends IColor, IRotate, IAnchor {
+export interface LineBaseStyle extends IBase {
   /**
    * 虚线 为 true 时候取 [2,2]
    *[MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setLineDash)
@@ -138,9 +142,30 @@ export interface LineStyle extends IColor, IRotate, IAnchor {
    * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/lineJoin)
    */
   lineJoin?: CanvasLineJoin
+}
+export interface LineStyle extends LineBaseStyle {
   /**
    * 当前点添加一条直线到当前子路径的起点。如果形状已经闭合或只有一个点，此函数将不执行任何操作
    * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/closePath)
    */
   close?: boolean
+}
+
+export interface RectStyle extends LineBaseStyle {
+
+}
+
+/**
+ * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/arc)
+ */
+export interface ArcStyle extends LineBaseStyle {
+  startAngle?: number
+  startDeg?: number
+  endAngle?: number
+  endDeg?: number
+  counterclockwise?: boolean
+}
+
+export interface ArcToStyle extends LineBaseStyle {
+
 }

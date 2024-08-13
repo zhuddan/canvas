@@ -6,48 +6,64 @@ const base64String = ref('')
 p.init(document.documentElement.clientWidth / window.devicePixelRatio, document.documentElement.clientHeight / window.devicePixelRatio,
 )
 function render() {
-  p.text('平林漠漠烟如织，寒山一带伤心碧。暝色入高楼，有人楼上愁。玉阶空伫立，宿鸟归飞急。何处是归程？长亭更短亭', 300 / 2, 300 / 2, {
-    fontFamily: '黑体',
-    textAlign: 'left',
-    fontSize: 18,
-    fontWeight: 900,
-    maxWidth: 250,
-    lineHeight: 20,
-    letterSpacing: 10,
-    wordSpacing: 50,
-    stroke: 'blue',
-    fill: 'red',
-    anchor: 0.5,
-    rotateDeg: -30,
-  })
+  // p.text('平林漠漠烟如织，寒山一带伤心碧。暝色入高楼，有人楼上愁。玉阶空伫立，宿鸟归飞急。何处是归程？长亭更短亭', 300 / 2, 300 / 2, {
+  //   fontFamily: '黑体',
+  //   textAlign: 'left',
+  //   fontSize: 18,
+  //   fontWeight: 900,
+  //   maxWidth: 250,
+  //   lineHeight: 20,
+  //   letterSpacing: 10,
+  //   wordSpacing: 50,
+  //   stroke: 'blue',
+  //   fill: 'red',
+  //   anchor: 0.5,
+  //   rotateDeg: -30,
+  // })
 
-  p.text(`大漠孤烟直`, 18, 60, {
-    fontSize: 28,
-    stroke: 'pink',
-    strokeWeight: 0.5,
-    // fill: 'transparent',
-  })
+  // p.text(`大漠孤烟直`, 18, 60, {
+  //   fontSize: 28,
+  //   stroke: 'pink',
+  //   strokeWeight: 0.5,
+  //   // fill: 'transparent',
+  // })
 
-  p.line([
-    // [300, 300],
-    // [400, 350],
-    // [500, 300],
-    // [450, 400],
-    // [500, 500],
-    // [400, 450],
-    // [300, 500],
-    // [350, 400],
-    // [300, 300],
-    [280, 50],
-    [280 + 50, 50],
-    [280 + 50, 50 + 80],
-  ], {
-    fill: 'red',
-    close: true,
+  // p.line([
+  //   // [300, 300],
+  //   // [400, 350],
+  //   // [500, 300],
+  //   // [450, 400],
+  //   // [500, 500],
+  //   // [400, 450],
+  //   // [300, 500],
+  //   // [350, 400],
+  //   // [300, 300],
+  //   [280, 50],
+  //   [280 + 50, 50],
+  //   [280 + 50, 50 + 80],
+  // ], {
+  //   fill: 'red',
+  //   close: true,
+  //   strokeWeight: 9,
+  //   lineCap: 'round',
+  //   lineJoin: 'round',
+  // })
+
+  // p.rect(400, 50, 100, 100, {
+  //   strokeWeight: 9,
+  //   lineJoin: 'round',
+  //   fill: 'red',
+  //   rotateDeg: -15,
+  // })
+
+  p.arc(350, 250, 50, {
     strokeWeight: 9,
-    lineCap: 'round',
     lineJoin: 'round',
+    fill: 'pink',
+    rotateDeg: -15,
   })
+
+  p.arcTo(200, 130, 50, 20, 60)
 
   const canvas = p.canvas!
 

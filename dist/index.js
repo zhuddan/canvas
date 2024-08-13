@@ -23,7 +23,25 @@ class Painter {
             ctx.lineWidth = _style.strokeWeight || 1;
         }
     }
-    setAnchor(_style) {
+    setLineStyle(_style) {
+        if (!this.checkCtx()) {
+            return; // Required<LineStyle>
+        }
+        const ctx = this.ctx;
+        this.setColor(_style);
+        if (_style.dash) {
+            if (_style.dash === true) {
+                ctx.setLineDash([4, 4]);
+            }
+            else {
+                ctx.setLineDash(_style.dash);
+            }
+        }
+        ctx.lineDashOffset = _style.dashOffset;
+        ctx.lineCap = _style.lineCap;
+        ctx.lineJoin = _style.lineJoin;
+    }
+    getAnchor(_style) {
         let anchorX = 0;
         let anchorY = 0;
         if (typeof _style.anchor !== 'undefined') {
@@ -75,9 +93,13 @@ class Painter {
             y = 0;
         });
         /**
+         * 填充颜色
+         */
+        this.setColor(_style);
+        /**
          * 处理中心坐标
          */
-        const { anchorY, anchorX } = this.setAnchor(_style);
+        const { anchorY, anchorX } = this.getAnchor(_style);
         /**
          * font
          */
@@ -97,10 +119,6 @@ class Painter {
          * 文本高度
          */
         let textHeight = Number.isNaN(fontSize) ? 0 : fontSize;
-        /**
-         * 填充颜色
-         */
-        this.setColor(_style);
         // 多行文本绘制
         if (_style.maxWidth && _style.lineHeight) {
             textWidth = _style.maxWidth;
@@ -183,7 +201,7 @@ class Painter {
     canvas;
     ctx;
     defaultTextStyle;
-    defaultLineStyle;
+    defaultLineBaseStyle;
     constructor() {
         const defaultTextBaseStyle = {
             fontFamily: '"Microsoft YaHei"',
@@ -200,15 +218,15 @@ class Painter {
             textBaseline: 'top',
         };
         this.defaultTextStyle = Object.assign({}, defaultTextBaseStyle);
-        const defaultLineStyle = {
+        const defaultBaseStyle = {
+            fill: undefined,
+            stroke: '#000',
             dash: false,
             dashOffset: 0,
             lineCap: 'butt',
             lineJoin: 'miter',
-            fill: undefined,
-            stroke: '#000',
         };
-        this.defaultLineStyle = Object.assign({}, defaultLineStyle);
+        this.defaultLineBaseStyle = Object.assign({}, defaultBaseStyle);
     }
     init(width, height) {
         this.canvas = document.createElement('canvas');
@@ -230,7 +248,7 @@ class Painter {
         }
         const ctx = this.ctx;
         ctx.save();
-        const _style = Object.assign({}, this.defaultLineStyle, style);
+        const _style = Object.assign({}, this.defaultLineBaseStyle, style);
         /**
          * 填充颜色
          */
@@ -243,14 +261,7 @@ class Painter {
                 ];
             });
         });
-        if (_style.dash) {
-            if (_style.dash === true) {
-                ctx.setLineDash([4, 4]);
-            }
-            else {
-                ctx.setLineDash(_style.dash);
-            }
-        }
+        const { anchorY, anchorX } = this.getAnchor(_style);
         /**
          * 宽度
          */
@@ -259,7 +270,6 @@ class Painter {
          * 高度
          */
         const instanceHeight = calcDiff(lines.map(e => e[1]));
-        const { anchorY, anchorX } = this.setAnchor(_style);
         if (anchorX || anchorY) {
             lines = lines.map((e) => {
                 return [
@@ -268,10 +278,8 @@ class Painter {
                 ];
             });
         }
+        this.setLineStyle(_style);
         ctx.beginPath();
-        ctx.lineDashOffset = _style.dashOffset;
-        ctx.lineCap = _style.lineCap;
-        ctx.lineJoin = _style.lineJoin;
         ctx.moveTo(...lines.shift());
         for (let index = 0; index < lines.length; index++) {
             const point = lines[index];
@@ -280,6 +288,139 @@ class Painter {
         if (_style.close) {
             ctx.closePath();
         }
+        if (_style.stroke) {
+            ctx.stroke();
+        }
+        if (_style.fill) {
+            ctx.fill();
+        }
+        ctx.restore();
+    }
+    rect(x, y, w, h, style = {}) {
+        if (!this.checkCtx()) {
+            return;
+        }
+        const _style = Object.assign({}, this.defaultLineBaseStyle, style);
+        const ctx = this.ctx;
+        ctx.save();
+        /**
+         * 处理旋转
+         */
+        this.setRotate(x, y, _style, () => {
+            x = 0;
+            y = 0;
+        });
+        /**
+         * 填充颜色
+         */
+        this.setLineStyle(_style);
+        /**
+         * 处理中心坐标
+         */
+        const { anchorY, anchorX } = this.getAnchor(_style);
+        if (anchorX !== 0) {
+            x -= w * anchorX;
+        }
+        if (anchorY !== 0) {
+            y -= h * anchorY;
+        }
+        ctx.beginPath();
+        ctx.rect(x, y, w, h);
+        if (_style.stroke) {
+            ctx.stroke();
+        }
+        if (_style.fill) {
+            ctx.fill();
+        }
+        ctx.restore();
+    }
+    arc(x, y, radius, style = {}) {
+        if (!this.checkCtx()) {
+            return;
+        }
+        const ctx = this.ctx;
+        ctx.save();
+        const base = {
+            startDeg: 0,
+            endDeg: 360,
+        };
+        const _style = Object.assign({ ...base }, this.defaultLineBaseStyle, style);
+        /**
+         * 处理旋转
+         */
+        this.setRotate(x, y, _style, () => {
+            x = 0;
+            y = 0;
+        });
+        /**
+         * 填充颜色
+         */
+        this.setLineStyle(_style);
+        /**
+         * 处理中心坐标
+         */
+        const { anchorY, anchorX } = this.getAnchor(_style);
+        const startAngle = _style.startAngle
+            ? _style.startAngle
+            : (_style.startDeg) * Math.PI / 180;
+        const endAngle = _style.endAngle
+            ? _style.endAngle
+            : (_style.endDeg) * Math.PI / 180;
+        if (anchorX !== 0) {
+            x -= radius * 2 * anchorX;
+        }
+        if (anchorY !== 0) {
+            y -= radius * 2 * anchorY;
+        }
+        ctx.beginPath();
+        ctx.arc(x, y, radius, startAngle, endAngle, !!_style.counterclockwise);
+        if (_style.stroke) {
+            ctx.stroke();
+        }
+        if (_style.fill) {
+            ctx.fill();
+        }
+        ctx.restore();
+    }
+    arcTo(x1, y1, x2, y2, radius, style = {}) {
+        if (!this.checkCtx()) {
+            return;
+        }
+        const ctx = this.ctx;
+        ctx.save();
+        const _style = Object.assign({}, this.defaultLineBaseStyle, style);
+        /**
+         * 处理旋转
+         */
+        const minX = Math.min(x1, x2);
+        const maxX = Math.max(x1, x2);
+        const minY = Math.min(y1, y2);
+        const maxY = Math.max(y1, y2);
+        this.setRotate(maxX - minX, maxY - minY, _style, () => {
+            x1 -= minX;
+            x2 -= minX;
+            y1 -= minX;
+            y2 -= minX;
+        });
+        /**
+         * 填充颜色
+         */
+        this.setLineStyle(_style);
+        /**
+         * 处理中心坐标
+         */
+        const { anchorY, anchorX } = this.getAnchor(_style);
+        if (anchorX !== 0) {
+            x1 -= radius * 2 * anchorX;
+            x2 -= radius * 2 * anchorX;
+        }
+        if (anchorY !== 0) {
+            y1 -= radius * 2 * anchorX;
+            y2 -= radius * 2 * anchorX;
+        }
+        ctx.beginPath();
+        ctx.moveTo(x1, y2);
+        ctx.arcTo(x1, y1, x2, y2, radius);
         if (_style.stroke) {
             ctx.stroke();
         }
@@ -323,6 +464,4 @@ function calcDiff(numbers) {
 }
 
 exports.Painter = Painter;
-exports.calcMax = calcMax;
-exports.calcMin = calcMin;
 exports.default = Painter;
