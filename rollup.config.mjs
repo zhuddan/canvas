@@ -8,6 +8,7 @@ import del from 'rollup-plugin-delete'
 // import json from '@rollup/plugin-json'
 import { dts } from 'rollup-plugin-dts'
 import terser from '@rollup/plugin-terser'
+import { exec } from './scripts/exec.mjs'
 
 const prod = process.env.NODE_ENV === 'production'
 
@@ -80,8 +81,13 @@ const buildDtsOptions = {
   plugins: [
     dts(),
     {
-      buildEnd: () => {
-
+      buildStart: async () => {
+        const { ok, stderr } = await exec('tsc', ['-p', 'tsconfig.build.json'])
+        if (!ok) {
+          console.error('TypeScript compilation failed:', stderr)
+          process.exit(1)
+        }
+        console.log('ok2')
       },
     },
   ],
@@ -89,8 +95,10 @@ const buildDtsOptions = {
 /**
  * @type {RollupOptions}
  */
-const configs = [buildOptions]
-if (prod) {
-  configs.push(buildDtsOptions)
-}
+const configs = [buildOptions, buildDtsOptions]
+// if (prod) {
+// configs.push(buildDtsOptions)
+// }
+
+console.log({ 'configs.length': configs })
 export default defineConfig(configs)

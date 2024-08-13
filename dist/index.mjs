@@ -1,33 +1,156 @@
-var ENV;
-(function (ENV) {
-    ENV["WEB"] = "WEB";
-    ENV["UNI_APP"] = "UNI_APP";
-    ENV["WX"] = "WX";
-})(ENV || (ENV = {}));
+import { ENV } from './types.mjs';
+
 class Painter {
     defaultTextStyle;
+    text(text, x, y, style = {}) {
+        if (!this.checkCtx()) {
+            return;
+        }
+        const ctx = this.ctx;
+        ctx.save();
+        const _style = Object.assign({}, this.defaultTextStyle, style);
+        if (_style.rotateAngle || _style.rotateDeg) {
+            const angle = _style.rotateAngle
+                ? _style.rotateAngle
+                : _style.rotateDeg * Math.PI / 180;
+            ctx.translate(x, y);
+            x = 0;
+            y = 0;
+            ctx.rotate(angle);
+        }
+        ctx.font = this.createCanvasFontString(_style);
+        ctx.fontStretch = _style.fontStretch;
+        ctx.fontVariantCaps = _style.fontVariantCaps;
+        ctx.letterSpacing = this.formatValue(_style.letterSpacing);
+        ctx.wordSpacing = this.formatValue(_style.wordSpacing);
+        ctx.textAlign = _style.textAlign;
+        ctx.textBaseline = _style.textBaseline;
+        const fontSize = Number(Number.parseInt(`${_style.fontSize}`));
+        let textHeight = Number.isNaN(fontSize) ? 0 : fontSize;
+        let textWidth = 0;
+        if (_style.fill) {
+            ctx.fillStyle = _style.fill;
+        }
+        if (_style.stroke) {
+            ctx.strokeStyle = _style.stroke;
+            ctx.lineWidth = _style.strokeWeight || 1;
+        }
+        let anchorX = 0;
+        let anchorY = 0;
+        if (typeof _style.anchor !== 'undefined') {
+            if (typeof _style.anchor === 'object') {
+                anchorX = _style.anchor.x;
+                anchorY = _style.anchor.y;
+            }
+            else {
+                anchorX = anchorY = _style.anchor;
+            }
+        }
+        anchorX = anchorX <= 0 ? 0 : anchorX >= 1 ? 1 : anchorX;
+        anchorY = anchorY <= 0 ? 0 : anchorY >= 1 ? 1 : anchorY;
+        if (_style.maxWidth && _style.lineHeight) {
+            textWidth = _style.maxWidth;
+            const texts = text.split('');
+            const splitText = [];
+            let multilineText = [];
+            for (let i = 0; i < texts.length; i++) {
+                const currentStr = texts[i];
+                multilineText.push(currentStr);
+                const rowStr = multilineText.join('');
+                if (ctx.measureText(rowStr).width > _style.maxWidth) {
+                    multilineText.pop();
+                    splitText.push(multilineText.join(''));
+                    multilineText = [currentStr];
+                    continue;
+                }
+                if (i === texts.length - 1) {
+                    splitText.push(rowStr);
+                }
+            }
+            if (!splitText.length) {
+                textHeight = 0;
+            }
+            else if (splitText.length === 1) {
+                const measure = ctx.measureText(splitText[0]);
+                textHeight = Math.max(...[
+                    measure.actualBoundingBoxDescent - measure.actualBoundingBoxAscent,
+                    Number.isNaN(fontSize) ? 0 : fontSize,
+                ]);
+            }
+            else {
+                textHeight = (splitText.length - 1) * _style.lineHeight + textHeight;
+            }
+            if (anchorX !== 0) {
+                x -= textWidth * anchorX;
+            }
+            if (anchorY !== 0) {
+                y -= textHeight * anchorY;
+            }
+            for (let i = 0; i < splitText.length; i++) {
+                ctx.fillText(splitText[i], x, y + i * _style.lineHeight);
+                if (_style.stroke) {
+                    ctx.strokeText(splitText[i], x, y + i * _style.lineHeight);
+                }
+            }
+        }
+        else {
+            const measure = ctx.measureText(text);
+            textWidth = measure.width;
+            textHeight = Math.max(...[
+                measure.actualBoundingBoxDescent - measure.actualBoundingBoxAscent,
+                Number.isNaN(fontSize) ? 0 : fontSize,
+            ]);
+            if (anchorX !== 0) {
+                x -= textWidth * anchorX;
+            }
+            if (anchorY !== 0) {
+                y -= textHeight * anchorY;
+            }
+            if (_style.stroke) {
+                ctx.strokeText(text, x, y);
+            }
+            ctx.fillText(text, x, y);
+        }
+        ctx.restore();
+        return textHeight;
+    }
+    createCanvasFontString({ fontFamily, fontSize, fontStyle = 'normal', fontWeight = 'normal', }) {
+        fontSize = typeof fontSize === 'string' ? fontSize : `${fontSize}px`;
+        return `${fontStyle} ${fontWeight} ${fontSize} ${fontFamily}`;
+    }
+    formatValue(val) {
+        return typeof val === 'string' ? val : `${val}px`;
+    }
     canvas;
     ctx;
-    constructor(defaultTextStyle) {
+    constructor(defaultTextStyle = {}) {
         this.defaultTextStyle = defaultTextStyle;
-        this.defaultTextStyle = Object.assign({}, {
-            textBaseline: 'hanging',
+        const default_ = {
             fontFamily: '"Microsoft YaHei"',
-            textAlign: 'left',
             fontSize: 32,
-            color: '#000',
-        }, defaultTextStyle);
+            fontWeight: 'normal',
+            fontStyle: 'normal',
+            fill: '#000',
+            stroke: undefined,
+            fontStretch: 'normal',
+            fontVariantCaps: 'normal',
+            letterSpacing: 'normal',
+            wordSpacing: 'normal',
+            textAlign: 'left',
+            textBaseline: 'top',
+        };
+        this.defaultTextStyle = Object.assign({}, default_, defaultTextStyle);
     }
     init(width, height) {
         switch (getEnv()) {
-            case ENV.WEB:
+            case ENV.WEB: {
                 this.canvas = document.createElement('canvas');
                 this.ctx = this.canvas.getContext('2d');
-                const dpr = window.devicePixelRatio ?? 1;
-                this.canvas.width = width * dpr;
-                this.canvas.height = height * dpr;
-                this.ctx.scale(dpr, dpr);
+                this.canvas.width = width * 1;
+                this.canvas.height = height * 1;
+                // this.ctx.scale(dpr, dpr)
                 break;
+            }
             // case ENV.UNI_APP:
             //   this.canvas = uni.createOffscreenCanvas(width, height)
             //   this.ctx = this.canvas.getContext('2d')
@@ -44,59 +167,6 @@ class Painter {
             throw new Error('请先执行 init() 函数');
         }
         return true;
-    }
-    text(text, x, y, style = {}) {
-        if (!this.checkCtx()) {
-            return;
-        }
-        const _style = Object.assign({}, this.defaultTextStyle, style);
-        console.log(_style);
-        const ctx = this.ctx;
-        if (_style.color) {
-            ctx.fillStyle = _style.color;
-        }
-        if (_style.textAlign) {
-            ctx.textAlign = _style.textAlign;
-        }
-        if (_style.textBaseline) {
-            ctx.textBaseline = _style.textBaseline;
-        }
-        if (_style.font) {
-            ctx.font = _style.font;
-        }
-        else {
-            const fs = _style.fontSize ? `${_style.fontSize}px` : '32px';
-            console.log(_style.fontSize);
-            const fontWeight = _style.fontWeight || 'normal';
-            ctx.font = ` ${fontWeight} ${fs} ${_style.fontFamily}`;
-            console.log(ctx.font);
-        }
-        if (_style?.maxWidth && _style?.lineHeight) {
-            const allAtr = text.split('');
-            const splitText = []; // 拆分出来的每一行
-            let multilineText = []; // 每一行的文字数组
-            for (let i = 0; i < allAtr.length; i++) {
-                const currentStr = allAtr[i];
-                multilineText.push(currentStr);
-                const rowStr = multilineText.join('');
-                if (ctx.measureText(rowStr).width > _style.maxWidth) {
-                    multilineText.pop();
-                    splitText.push(multilineText.join(''));
-                    multilineText = [currentStr];
-                    continue;
-                }
-                if (i === allAtr.length - 1) {
-                    splitText.push(rowStr);
-                }
-            }
-            for (let i = 0; i < splitText.length; i++) {
-                ctx.fillText(splitText[i], x, y + i * _style.lineHeight);
-            }
-        }
-        else {
-            console.log(ctx.textBaseline);
-            ctx.fillText(text, x, y);
-        }
     }
 }
 function getEnv() {
