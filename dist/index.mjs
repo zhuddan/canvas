@@ -1,5 +1,6 @@
 import { ensureBetween, toPoint, formatValue } from './utils.mjs';
 
+const dpr = window.devicePixelRatio ?? 1;
 class Bounds {
     start;
     size;
@@ -23,7 +24,7 @@ class Bounds {
         };
     }
 }
-window.devicePixelRatio = 1;
+// window.devicePixelRatio = 1
 class Painter {
     canvas;
     ctx;
@@ -102,7 +103,6 @@ class Painter {
             ctx.lineJoin = _style.lineJoin;
         }, false);
     }
-    _isSetTransform = false;
     setTransform(style, bounds) {
         this._create((ctx) => {
             let { transform, angle = 0, scale = 1, skew = 0, anchor = 0, } = style;
@@ -115,19 +115,20 @@ class Painter {
                 // 角度转换为弧度
                 const radians = angle * Math.PI / 180;
                 // 计算变换矩阵的各个元素
-                const a = Math.cos(radians) * scale.x; // 缩放并旋转后，x轴方向的缩放
-                const b = Math.sin(radians) * scale.x; // 缩放并旋转后，y轴方向的偏移（旋转+缩放）
-                const c = -Math.sin(radians) * scale.y + skew.x; // 缩放并旋转后，x轴方向的偏移（旋转+缩放+倾斜）
-                const d = Math.cos(radians) * scale.y + skew.y; // 缩放并旋转后，y轴方向的缩放
-                transform = [a, b, c, d, translateX, translateY];
+                const scaleX = Math.cos(radians) * scale.x; // 缩放并旋转后，x轴方向的缩放
+                const skewX = Math.sin(radians) * scale.x; // 缩放并旋转后，y轴方向的偏移（旋转+缩放）
+                const skewY = -Math.sin(radians) * scale.y + skew.x; // 缩放并旋转后，x轴方向的偏移（旋转+缩放+倾斜）
+                const scaleY = Math.cos(radians) * scale.y + skew.y; // 缩放并旋转后，y轴方向的缩放
+                transform = [
+                    scaleX * dpr,
+                    skewX * dpr,
+                    skewY * dpr,
+                    scaleY * dpr,
+                    translateX * dpr,
+                    translateY * dpr,
+                ];
             }
-            // setTransform(scaleX, skewX, skewY, scaleY, translateX, translateY);
-            // ctx.setTransform(1, 0, 0, 1, 0, 0) // 重置 transform
-            // ctx.scale(1, 1) // 按照 dpr 比例进行缩放
             ctx.setTransform(...transform);
-            // const dpr = window.devicePixelRatio ?? 1
-            // ctx.scale(dpr, dpr) // 再次应用缩放，以便考虑到 dpr
-            this._isSetTransform = true;
         }, false);
     }
     getAnchor(style, bounds) {
@@ -153,7 +154,6 @@ class Painter {
     init(width, height) {
         this.canvas = document.createElement('canvas');
         this.ctx = this.canvas.getContext('2d');
-        const dpr = window.devicePixelRatio ?? 1;
         this.canvas.style.width = formatValue(width);
         this.canvas.style.height = formatValue(height);
         this.canvas.width = width * dpr;
@@ -212,10 +212,6 @@ class Painter {
         if (save) {
             ctx.restore();
         }
-        if (this._isSetTransform && save) {
-            ctx.resetTransform();
-            this._isSetTransform = false;
-        }
         return result;
     }
 }
@@ -225,9 +221,12 @@ p.init(600, 600);
 p.rect(200, 200, 200, 200, {
     fill: 'blue',
     alpha: 0.5,
-    anchor: 0.5,
-    angle: 45,
-    skew: 0.5,
+    anchor: 0,
+    angle: -45,
+    skew: {
+        x: 0.2,
+        y: 0.8,
+    },
 });
 p._create((ctx) => {
     ctx.beginPath();
@@ -245,7 +244,7 @@ p._create((ctx) => {
             ctx.fillText(`${row * 100},${col * 100}`, row * 100, col * 100);
         }
     }
-});
+}, false);
 const canvas = p.canvas;
 
 export { Painter, canvas, Painter as default };
