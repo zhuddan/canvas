@@ -24,13 +24,14 @@ interface IColor {
      */
     alpha?: number;
 }
+interface IPoint {
+    x: number;
+    y: number;
+}
 /**
  * 锚点 默认 左上角为0(x=0,y=0) 右下角为(1,1)
  */
-type Anchor = number | {
-    x: number;
-    y: number;
-};
+type Anchor = number | IPoint;
 interface IAnchor {
     anchor?: Anchor;
 }
@@ -47,7 +48,16 @@ interface IRotate {
      */
     rotateDeg?: number;
 }
-interface IBaseStyle extends IRotate, IColor, IAnchor {
+/**
+ * [单位矩阵变化](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)
+ */
+interface ITransform {
+    /**
+     * 设置此属性时 旋转和中心点将失效
+     */
+    transform?: [number, number, number, number, number, number];
+}
+interface IBaseStyle extends IRotate, IColor, IAnchor, ITransform {
 }
 /**
  * 由于某些属性不支持CanvasRenderingContext2D 故舍弃
@@ -150,6 +160,10 @@ interface LineStyle extends LineBaseStyle {
     close?: boolean;
 }
 interface RectStyle extends LineBaseStyle {
+    /**
+     * 圆角
+     */
+    radii?: number | DOMPointInit | Iterable<number | DOMPointInit>;
 }
 /**
  * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/arc)
@@ -163,5 +177,7 @@ interface ArcStyle extends LineBaseStyle {
 }
 interface ArcToStyle extends LineBaseStyle {
 }
+interface BezierStyle extends LineBaseStyle {
+}
 
-export type { Anchor, ArcStyle, ArcToStyle, IAnchor, IBaseStyle, IColor, IFont, ILinePosition, IRotate, LineBaseStyle, LineStyle, RectStyle, TextBaseStyle, TextMultilineStyle };
+export type { Anchor, ArcStyle, ArcToStyle, BezierStyle, IAnchor, IBaseStyle, IColor, IFont, ILinePosition, IPoint, IRotate, ITransform, LineBaseStyle, LineStyle, RectStyle, TextBaseStyle, TextMultilineStyle };

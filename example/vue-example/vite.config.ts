@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         '~/': `${path.resolve(__dirname, 'src')}/`,
-        '@zd~/painter': 'http://localhost:3000/dist/index.mjs',
+        '@zd~/painter': 'http://localhost:3033/dist/index.mjs',
       },
     },
     plugins: [

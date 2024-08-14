@@ -47,8 +47,14 @@ function calcDiff(numbers) {
 function ensureBetween(input, min = 0, max = 1) {
     return input <= min ? min : input >= max ? max : input;
 }
+function calcCenter(num1, num2) {
+    return (num1 + num2) / 2;
+}
 
+exports.calcCenter = calcCenter;
 exports.calcDiff = calcDiff;
+exports.calcMax = calcMax;
+exports.calcMin = calcMin;
 exports.createCanvasFontString = createCanvasFontString;
 exports.ensureBetween = ensureBetween;
 exports.formatValue = formatValue;

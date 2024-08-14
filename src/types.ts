@@ -1,11 +1,5 @@
 import type { Properties } from 'csstype'
 
-// export enum ENV {
-//   WEB = 'WEB',
-//   UNI_APP = 'UNI_APP',
-//   WX = 'WX',
-// }
-
 export interface IColor {
   /**
    * 填充颜色
@@ -31,10 +25,11 @@ export interface IColor {
   alpha?: number
 }
 
+export interface IPoint { x: number, y: number }
 /**
  * 锚点 默认 左上角为0(x=0,y=0) 右下角为(1,1)
  */
-export type Anchor = number | { x: number, y: number }
+export type Anchor = number | IPoint
 export interface IAnchor {
   anchor?: Anchor
 }
@@ -53,7 +48,17 @@ export interface IRotate {
   rotateDeg?: number
 }
 
-export interface IBaseStyle extends IRotate, IColor, IAnchor {
+/**
+ * [单位矩阵变化](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)
+ */
+export interface ITransform {
+  /**
+   * 设置此属性时 旋转和中心点将失效
+   */
+  transform?: [number, number, number, number, number, number]
+}
+
+export interface IBaseStyle extends IRotate, IColor, IAnchor, ITransform {
 
 }
 
@@ -161,7 +166,10 @@ export interface LineStyle extends LineBaseStyle {
 }
 
 export interface RectStyle extends LineBaseStyle {
-
+  /**
+   * 圆角
+   */
+  radii?: number | DOMPointInit | Iterable<number | DOMPointInit>
 }
 
 /**
@@ -175,6 +183,5 @@ export interface ArcStyle extends LineBaseStyle {
   counterclockwise?: boolean
 }
 
-export interface ArcToStyle extends LineBaseStyle {
-
-}
+export interface ArcToStyle extends LineBaseStyle {}
+export interface BezierStyle extends LineBaseStyle {}

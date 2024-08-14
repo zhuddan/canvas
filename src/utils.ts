@@ -18,7 +18,7 @@ export function createCanvasFontString({
   return `${fontStyle} ${fontWeight} ${fontSize} ${fontFamily}`
 }
 
-function calcMin(numbers: number[]) {
+export function calcMin(numbers: number[]) {
   let min = numbers[0]
   for (let index = 0; index < numbers.length; index++) {
     const element = numbers[index]
@@ -29,7 +29,7 @@ function calcMin(numbers: number[]) {
   return min
 }
 
-function calcMax(numbers: number[]) {
+export function calcMax(numbers: number[]) {
   let max = numbers[0]
   for (let index = 0; index < numbers.length; index++) {
     const element = numbers[index]
@@ -56,4 +56,8 @@ export function calcDiff(numbers: number[]) {
  */
 export function ensureBetween(input: number, min: number = 0, max: number = 1) {
   return input <= min ? min : input >= max ? max : input
+}
+
+export function calcCenter(num1: number, num2: number) {
+  return (num1 + num2) / 2
 }

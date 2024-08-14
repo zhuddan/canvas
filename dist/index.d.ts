@@ -1,4 +1,4 @@
-import { TextBaseStyle, LineBaseStyle, TextMultilineStyle, ILinePosition, LineStyle, RectStyle, ArcStyle, ArcToStyle } from './types.js';
+import { TextBaseStyle, LineBaseStyle, TextMultilineStyle, ILinePosition, LineStyle, RectStyle, ArcStyle, ArcToStyle, IPoint, BezierStyle } from './types.js';
 import 'csstype';
 
 declare class Painter {
@@ -23,6 +23,8 @@ declare class Painter {
      * 设置旋转角度
      */
     private setRotate;
+    private _isSetTransform;
+    private setTransform;
     /**
      * 设置锚点
      */
@@ -40,15 +42,16 @@ declare class Painter {
      * @param y
      * @param style
      */
-    text(text: string, x: number, y: number, style?: Partial<TextMultilineStyle>): number | undefined;
+    text(text: string, x: number, y: number, style?: Partial<TextMultilineStyle>): number;
     /**
-     *  线段
+     * 绘制线段
+     * 你也可以使用此方法绘制多边形
      * @param lines
      * @param style
      */
     line(lines: ILinePosition, style?: LineStyle): void;
     /**
-     * 绘制矩形
+     * 绘制矩形(圆角请设置 style.radii )
      * @param x
      * @param y
      * @param w
@@ -74,6 +77,17 @@ declare class Painter {
      * @param style
      */
     arcTo(x1: number, y1: number, x2: number, y2: number, radius: number, style?: ArcToStyle): void;
+    /**
+     * [绘制贝塞尔曲线](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/bezierCurveTo)
+     */
+    bezier(start: IPoint, cp1: IPoint, cp2: IPoint, end: IPoint, style?: BezierStyle): void;
+    image(): string;
+    /**
+     *
+     * @param callback
+     * @param save
+     */
+    private _create;
 }
 
 export { Painter, Painter as default };
