@@ -15,6 +15,14 @@ interface IColor {
      * 描边宽度? 默认为1
      */
     strokeWeight?: number;
+    /**
+     * 透明度<br/>此透明度为 [CanvasRenderingContext2D.globalAlpha](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/globalAlpha)
+     *
+     * 你也可以设置fill或者stroke为rgba实现透明效果
+     *
+     * 或者你喜欢16进制颜色也可以使用[这种方法](https://blog.csdn.net/ezconn/article/details/90052114)设置透明度
+     */
+    alpha?: number;
 }
 /**
  * 锚点 默认 左上角为0(x=0,y=0) 右下角为(1,1)
@@ -39,7 +47,7 @@ interface IRotate {
      */
     rotateDeg?: number;
 }
-interface IBase extends IRotate, IColor, IAnchor {
+interface IBaseStyle extends IRotate, IColor, IAnchor {
 }
 /**
  * 由于某些属性不支持CanvasRenderingContext2D 故舍弃
@@ -67,7 +75,7 @@ interface IFont {
      */
     fontWeight?: Properties['fontWeight'];
 }
-interface TextBaseStyle extends IFont, IBase {
+interface TextBaseStyle extends IFont, IBaseStyle {
     /**
      * 指定绘制文本时字体如何被扩展或压缩
      * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/fontStretch)
@@ -109,8 +117,10 @@ interface TextMultilineStyle extends TextBaseStyle {
      */
     maxWidth?: number;
 }
-type ILinePosition = Array<[number, number]>;
-interface LineBaseStyle extends IBase {
+type x = number;
+type y = number;
+type ILinePosition = Array<[x, y]>;
+interface LineBaseStyle extends IBaseStyle {
     /**
      * 虚线 为 true 时候取 [2,2]
      *[MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setLineDash)
@@ -154,4 +164,4 @@ interface ArcStyle extends LineBaseStyle {
 interface ArcToStyle extends LineBaseStyle {
 }
 
-export type { Anchor, ArcStyle, ArcToStyle, IAnchor, IBase, IColor, IFont, ILinePosition, IRotate, LineBaseStyle, LineStyle, RectStyle, TextBaseStyle, TextMultilineStyle };
+export type { Anchor, ArcStyle, ArcToStyle, IAnchor, IBaseStyle, IColor, IFont, ILinePosition, IRotate, LineBaseStyle, LineStyle, RectStyle, TextBaseStyle, TextMultilineStyle };

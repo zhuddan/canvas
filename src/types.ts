@@ -21,6 +21,14 @@ export interface IColor {
    * 描边宽度? 默认为1
    */
   strokeWeight?: number
+  /**
+   * 透明度<br/>此透明度为 [CanvasRenderingContext2D.globalAlpha](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/globalAlpha)
+   *
+   * 你也可以设置fill或者stroke为rgba实现透明效果
+   *
+   * 或者你喜欢16进制颜色也可以使用[这种方法](https://blog.csdn.net/ezconn/article/details/90052114)设置透明度
+   */
+  alpha?: number
 }
 
 /**
@@ -45,7 +53,7 @@ export interface IRotate {
   rotateDeg?: number
 }
 
-export interface IBase extends IRotate, IColor, IAnchor {
+export interface IBaseStyle extends IRotate, IColor, IAnchor {
 
 }
 
@@ -76,7 +84,7 @@ export interface IFont {
   fontWeight?: Properties['fontWeight']
 }
 
-export interface TextBaseStyle extends IFont, IBase {
+export interface TextBaseStyle extends IFont, IBaseStyle {
   /**
    * 指定绘制文本时字体如何被扩展或压缩
    * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/fontStretch)
@@ -119,9 +127,10 @@ export interface TextMultilineStyle extends TextBaseStyle {
    */
   maxWidth?: number
 }
-
-export type ILinePosition = Array<[number, number]>
-export interface LineBaseStyle extends IBase {
+type x = number
+type y = number
+export type ILinePosition = Array<[x, y]>
+export interface LineBaseStyle extends IBaseStyle {
   /**
    * 虚线 为 true 时候取 [2,2]
    *[MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setLineDash)

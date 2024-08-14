@@ -3,8 +3,7 @@ import Painter from '@zd~/painter'
 
 const p = new Painter()
 const base64String = ref('')
-p.init(document.documentElement.clientWidth / window.devicePixelRatio, document.documentElement.clientHeight / window.devicePixelRatio,
-)
+p.init(600, 800)
 function render() {
   // p.text('平林漠漠烟如织，寒山一带伤心碧。暝色入高楼，有人楼上愁。玉阶空伫立，宿鸟归飞急。何处是归程？长亭更短亭', 300 / 2, 300 / 2, {
   //   fontFamily: '黑体',
@@ -62,12 +61,16 @@ function render() {
     fill: 'pink',
     rotateDeg: -15,
   })
-
   p.arcTo(200, 130, 50, 20, 60)
 
-  const canvas = p.canvas!
+  p.rect(0, 0, 600, 800, {
+    fill: 'rgba(0,56,0,0.3)',
+    strokeWeight: 9,
+  })
 
-  base64String.value = canvas.toDataURL('jpg')
+  const canvas = p.canvas!
+  document.getElementById('c')?.appendChild(canvas)
+  // base64String.value = canvas.toDataURL('jpg')
 
   // canvas.width = originalWidth
   // canvas.height = originalHeight
@@ -79,7 +82,5 @@ onMounted(render)
 </script>
 
 <template>
-  <div>
-    <img :src="base64String" alt="" class="bg-blue-300">
-  </div>
+  <div id="c" />
 </template>
