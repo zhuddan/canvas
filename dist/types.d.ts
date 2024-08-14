@@ -56,6 +56,10 @@ interface ITransform {
      * 设置此属性时 旋转和中心点将失效
      */
     transform?: [number, number, number, number, number, number];
+    angle?: number;
+    scale?: IPoint | number;
+    skew?: IPoint | number;
+    origin?: IPoint | number;
 }
 interface IBaseStyle extends IRotate, IColor, IAnchor, ITransform {
 }

@@ -1,10 +1,35 @@
-import { ensureBetween, formatValue, createCanvasFontString, calcDiff } from './utils.mjs';
+import { ensureBetween, toPoint, formatValue } from './utils.mjs';
 
+class Bounds {
+    start;
+    size;
+    constructor(start, size) {
+        if (size[0] < 0 || size[1] < 0) {
+            throw new Error(`Size ${JSON.stringify(size)} is meaningless`);
+        }
+        this.start = { x: start[0], y: start[1] };
+        this.size = { x: size[0], y: size[1] };
+    }
+    get width() {
+        return this.size.x;
+    }
+    get height() {
+        return this.size.y;
+    }
+    get end() {
+        return {
+            x: this.start.x + this.size.x,
+            y: this.start.y + this.size.y,
+        };
+    }
+}
+window.devicePixelRatio = 1;
 class Painter {
     canvas;
     ctx;
     defaultTextStyle;
     defaultLineBaseStyle;
+    _defaultTransform = { angle: 0, scale: 1, skew: 0, anchor: 0 };
     constructor() {
         const defaultTextBaseStyle = {
             fontFamily: '"Microsoft YaHei"',
@@ -20,7 +45,9 @@ class Painter {
             textAlign: 'left',
             textBaseline: 'top',
         };
-        this.defaultTextStyle = Object.assign({}, defaultTextBaseStyle);
+        this.defaultTextStyle = Object.assign({
+            ...this._defaultTransform,
+        }, defaultTextBaseStyle);
         const defaultBaseStyle = {
             fill: undefined,
             stroke: '#000',
@@ -29,7 +56,7 @@ class Painter {
             lineCap: 'butt',
             lineJoin: 'miter',
         };
-        this.defaultLineBaseStyle = Object.assign({}, defaultBaseStyle);
+        this.defaultLineBaseStyle = Object.assign({ ...this._defaultTransform }, defaultBaseStyle);
     }
     /**
      * 检查init函数是否执行
@@ -50,7 +77,7 @@ class Painter {
             }
             if (_style.stroke) {
                 ctx.strokeStyle = _style.stroke;
-                ctx.lineWidth = _style.strokeWeight || 1;
+                ctx.lineWidth = typeof _style.strokeWeight === 'undefined' ? 1 : _style.strokeWeight;
             }
             if (_style.alpha) {
                 ctx.globalAlpha = ensureBetween(_style.alpha);
@@ -75,49 +102,48 @@ class Painter {
             ctx.lineJoin = _style.lineJoin;
         }, false);
     }
-    /**
-     * 设置旋转角度
-     */
-    setRotate(x, y, _style, cb) {
-        this._create((ctx) => {
-            if (_style.rotateAngle || _style.rotateDeg) {
-                const angle = _style.rotateAngle
-                    ? _style.rotateAngle
-                    : (_style.rotateDeg) * Math.PI / 180;
-                ctx.translate(x, y);
-                ctx.rotate(angle);
-                cb();
-            }
-        }, false);
-    }
     _isSetTransform = false;
-    setTransform(style) {
+    setTransform(style, bounds) {
         this._create((ctx) => {
-            if (style.transform) {
-                ctx.setTransform(...style.transform);
-                this._isSetTransform = true;
+            let { transform, angle = 0, scale = 1, skew = 0, anchor = 0, } = style;
+            if (!transform) {
+                scale = toPoint(scale);
+                skew = toPoint(skew);
+                anchor = toPoint(anchor);
+                const translateX = bounds.start.x + bounds.size.x * ensureBetween(anchor.x);
+                const translateY = bounds.start.y + bounds.size.y * ensureBetween(anchor.y);
+                // 角度转换为弧度
+                const radians = angle * Math.PI / 180;
+                // 计算变换矩阵的各个元素
+                const a = Math.cos(radians) * scale.x; // 缩放并旋转后，x轴方向的缩放
+                const b = Math.sin(radians) * scale.x; // 缩放并旋转后，y轴方向的偏移（旋转+缩放）
+                const c = -Math.sin(radians) * scale.y + skew.x; // 缩放并旋转后，x轴方向的偏移（旋转+缩放+倾斜）
+                const d = Math.cos(radians) * scale.y + skew.y; // 缩放并旋转后，y轴方向的缩放
+                transform = [a, b, c, d, translateX, translateY];
             }
+            // setTransform(scaleX, skewX, skewY, scaleY, translateX, translateY);
+            // ctx.setTransform(1, 0, 0, 1, 0, 0) // 重置 transform
+            // ctx.scale(1, 1) // 按照 dpr 比例进行缩放
+            ctx.setTransform(...transform);
+            // const dpr = window.devicePixelRatio ?? 1
+            // ctx.scale(dpr, dpr) // 再次应用缩放，以便考虑到 dpr
+            this._isSetTransform = true;
         }, false);
     }
-    /**
-     * 设置锚点
-     */
-    createAnchor(_style) {
-        let anchorX = 0;
-        let anchorY = 0;
-        if (typeof _style.anchor !== 'undefined') {
-            if (typeof _style.anchor === 'object') {
-                anchorX = _style.anchor.x;
-                anchorY = _style.anchor.y;
-            }
-            else {
-                anchorX = anchorY = _style.anchor;
-            }
+    getAnchor(style, bounds) {
+        if (!style.transform) {
+            const p = toPoint(style.anchor || 0);
+            return {
+                x: ensureBetween(p.x),
+                y: ensureBetween(p.y),
+            };
         }
-        return {
-            anchorX: ensureBetween(anchorX),
-            anchorY: ensureBetween(anchorY),
-        };
+        else {
+            return {
+                x: (style.transform[4] - bounds.start.x) / bounds.width,
+                y: (style.transform[5] - bounds.start.y) / bounds.height,
+            };
+        }
     }
     /**
      * 初始化
@@ -136,187 +162,6 @@ class Painter {
         return this;
     }
     /**
-     * 绘制文本
-     * @param text
-     * @param x
-     * @param y
-     * @param style
-     */
-    text(text, x, y, style = {}) {
-        return this._create((ctx) => {
-            /**
-             * 镂空
-             */
-            const _style = Object.assign({}, this.defaultTextStyle, style);
-            /**
-             * 镂空
-             */
-            const isHollowOut = !style.fill && style.stroke;
-            this.setTransform(_style);
-            /**
-             * 处理旋转
-             */
-            this.setRotate(x, y, _style, () => {
-                x = 0;
-                y = 0;
-            });
-            /**
-             * 填充颜色
-             */
-            this.setColor(_style);
-            /**
-             * 处理中心坐标
-             */
-            const { anchorY, anchorX } = this.createAnchor(_style);
-            /**
-             * font
-             */
-            ctx.font = createCanvasFontString(_style);
-            ctx.fontStretch = _style.fontStretch;
-            ctx.fontVariantCaps = _style.fontVariantCaps;
-            ctx.letterSpacing = formatValue(_style.letterSpacing);
-            ctx.wordSpacing = formatValue(_style.wordSpacing);
-            ctx.textAlign = _style.textAlign;
-            ctx.textBaseline = _style.textBaseline;
-            const fontSize = Number(Number.parseInt(`${_style.fontSize}`));
-            /**
-             * 文本宽度
-             */
-            let textWidth = 0;
-            /**
-             * 文本高度
-             */
-            let textHeight = Number.isNaN(fontSize) ? 0 : fontSize;
-            // 多行文本绘制
-            if (_style.maxWidth && _style.lineHeight) {
-                textWidth = _style.maxWidth;
-                const texts = text.split('');
-                const splitText = [];
-                let multilineText = [];
-                for (let i = 0; i < texts.length; i++) {
-                    const currentStr = texts[i];
-                    multilineText.push(currentStr);
-                    const rowStr = multilineText.join('');
-                    if (ctx.measureText(rowStr).width > _style.maxWidth) {
-                        multilineText.pop();
-                        splitText.push(multilineText.join(''));
-                        multilineText = [currentStr];
-                        continue;
-                    }
-                    if (i === texts.length - 1) {
-                        splitText.push(rowStr);
-                    }
-                }
-                if (!splitText.length) {
-                    textHeight = 0;
-                }
-                else if (splitText.length === 1) {
-                    const measure = ctx.measureText(splitText[0]);
-                    textHeight = Math.max(...[
-                        measure.actualBoundingBoxDescent - measure.actualBoundingBoxAscent,
-                        Number.isNaN(fontSize) ? 0 : fontSize,
-                    ]);
-                }
-                else {
-                    textHeight = (splitText.length - 1) * _style.lineHeight + textHeight;
-                }
-                if (anchorX !== 0) {
-                    x -= textWidth * anchorX;
-                }
-                if (anchorY !== 0) {
-                    y -= textHeight * anchorY;
-                }
-                for (let i = 0; i < splitText.length; i++) {
-                    if (_style.stroke) {
-                        ctx.strokeText(splitText[i], x, y + i * _style.lineHeight);
-                    }
-                    if (!isHollowOut) {
-                        ctx.fillText(splitText[i], x, y + i * _style.lineHeight);
-                    }
-                }
-            }
-            // 单行文本绘制
-            else {
-                const measure = ctx.measureText(text);
-                textWidth = measure.width;
-                textHeight = Math.max(...[
-                    measure.actualBoundingBoxDescent - measure.actualBoundingBoxAscent,
-                    Number.isNaN(fontSize) ? 0 : fontSize,
-                ]);
-                if (anchorX !== 0) {
-                    x -= textWidth * anchorX;
-                }
-                if (anchorY !== 0) {
-                    y -= textHeight * anchorY;
-                }
-                if (_style.stroke) {
-                    ctx.strokeText(text, x, y);
-                }
-                if (!isHollowOut) {
-                    ctx.fillText(text, x, y);
-                }
-            }
-            return textHeight;
-        });
-    }
-    /**
-     * 绘制线段
-     * 你也可以使用此方法绘制多边形
-     * @param lines
-     * @param style
-     */
-    line(lines, style = {}) {
-        return this._create((ctx) => {
-            if (lines.length < 2) {
-                console.warn('至少两个点');
-                return;
-            }
-            const _style = Object.assign({}, this.defaultLineBaseStyle, style);
-            this.setColor(_style);
-            this.setLineStyle(_style);
-            this.setRotate(lines[0][0], lines[0][1], _style, () => {
-                lines = lines.map((e) => {
-                    return [
-                        e[0] - lines[0][0],
-                        e[1] - lines[0][1],
-                    ];
-                });
-            });
-            const { anchorY, anchorX } = this.createAnchor(_style);
-            /**
-             * 宽度
-             */
-            const w = calcDiff(lines.map(e => e[0]));
-            /**
-             * 高度
-             */
-            const h = calcDiff(lines.map(e => e[1]));
-            if (anchorX || anchorY) {
-                lines = lines.map((e) => {
-                    return [
-                        e[0] - anchorX * w,
-                        e[1] - anchorX * h,
-                    ];
-                });
-            }
-            ctx.beginPath();
-            ctx.moveTo(...lines.shift());
-            for (let index = 0; index < lines.length; index++) {
-                const point = lines[index];
-                ctx.lineTo(...point);
-            }
-            if (_style.close) {
-                ctx.closePath();
-            }
-            if (_style.stroke) {
-                ctx.stroke();
-            }
-            if (_style.fill) {
-                ctx.fill();
-            }
-        });
-    }
-    /**
      * 绘制矩形(圆角请设置 style.radii )
      * @param x
      * @param y
@@ -328,28 +173,13 @@ class Painter {
         return this._create((ctx) => {
             const _style = Object.assign({}, this.defaultLineBaseStyle, style);
             ctx.save();
-            /**
-             * 处理旋转
-             */
-            this.setRotate(x, y, _style, () => {
-                x = 0;
-                y = 0;
-            });
-            /**
-             * 填充颜色
-             */
+            const bounds = new Bounds([x, y], [w, h]);
+            this.setTransform(_style, bounds);
+            const anchor = this.getAnchor(_style, bounds);
+            x = -anchor.x * w;
+            y = -anchor.y * h;
             this.setColor(_style);
             this.setLineStyle(_style);
-            /**
-             * 处理中心坐标
-             */
-            const { anchorY, anchorX } = this.createAnchor(_style);
-            if (anchorX !== 0) {
-                x -= w * anchorX;
-            }
-            if (anchorY !== 0) {
-                y -= h * anchorY;
-            }
             ctx.beginPath();
             if (_style.radii) {
                 ctx.roundRect(x, y, w, h, _style.radii);
@@ -360,153 +190,9 @@ class Painter {
             if (_style.fill) {
                 ctx.fill();
             }
-            if (_style.stroke) {
+            if (style.stroke) {
                 ctx.stroke();
             }
-        });
-    }
-    /**
-     * 绘制圆弧
-     * @param x
-     * @param y
-     * @param radius
-     * @param style
-     */
-    arc(x, y, radius, style = {}) {
-        return this._create((ctx) => {
-            const base = {
-                startDeg: 0,
-                endDeg: 360,
-            };
-            const _style = Object.assign({ ...base }, this.defaultLineBaseStyle, style);
-            /**
-             * 处理旋转
-             */
-            this.setRotate(x, y, _style, () => {
-                x = 0;
-                y = 0;
-            });
-            /**
-             * 填充颜色
-             */
-            this.setColor(_style);
-            this.setLineStyle(_style);
-            /**
-             * 处理中心坐标
-             */
-            const { anchorY, anchorX } = this.createAnchor(_style);
-            const startAngle = _style.startAngle
-                ? _style.startAngle
-                : (_style.startDeg) * Math.PI / 180;
-            const endAngle = _style.endAngle
-                ? _style.endAngle
-                : (_style.endDeg) * Math.PI / 180;
-            if (anchorX !== 0) {
-                x -= radius * 2 * anchorX;
-            }
-            if (anchorY !== 0) {
-                y -= radius * 2 * anchorY;
-            }
-            ctx.beginPath();
-            ctx.arc(x, y, radius, startAngle, endAngle, !!_style.counterclockwise);
-            if (_style.stroke) {
-                ctx.stroke();
-            }
-            if (_style.fill) {
-                ctx.fill();
-            }
-        });
-    }
-    /**
-     * 参考[MDN Reference](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/arcTo)
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
-     * @param radius
-     * @param style
-     */
-    arcTo(x1, y1, x2, y2, radius, style = {}) {
-        return this._create((ctx) => {
-            const _style = Object.assign({}, this.defaultLineBaseStyle, style);
-            this.setRotate(x1, y1, _style, () => {
-                x1 -= x1;
-                x2 -= x1;
-                y1 -= y1;
-                y2 -= y1;
-            });
-            this.setColor(_style);
-            this.setLineStyle(_style);
-            const { anchorY, anchorX } = this.createAnchor(_style);
-            if (anchorX !== 0) {
-                x1 -= radius * 2 * anchorX;
-                x2 -= radius * 2 * anchorX;
-            }
-            if (anchorY !== 0) {
-                y1 -= radius * 2 * anchorX;
-                y2 -= radius * 2 * anchorX;
-            }
-            ctx.beginPath();
-            ctx.moveTo(x1, y2);
-            ctx.arcTo(x1, y1, x2, y2, radius);
-            if (_style.stroke) {
-                ctx.stroke();
-            }
-            if (_style.fill) {
-                ctx.fill();
-            }
-        });
-    }
-    /**
-     * [绘制贝塞尔曲线](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/bezierCurveTo)
-     */
-    bezier(start, cp1, cp2, end, style = {}) {
-        return this._create((ctx) => {
-            const _style = Object.assign({}, this.defaultLineBaseStyle, style);
-            this.setRotate(start.x, start.y, _style, () => {
-                start.x -= start.x;
-                start.y -= start.y;
-                cp1.x -= start.x;
-                cp1.y -= start.y;
-                cp2.x -= start.x;
-                cp2.y -= start.y;
-                end.x -= start.x;
-                end.y -= start.y;
-            });
-            this.setColor(_style);
-            this.setLineStyle(_style);
-            const { anchorY, anchorX } = this.createAnchor(_style);
-            const w = calcDiff([start.x, end.x]);
-            /**
-             * 高度
-             */
-            const h = calcDiff([start.y, end.y]);
-            if (anchorX !== 0) {
-                start.x -= anchorX * w;
-                cp1.x -= anchorX * w;
-                cp2.x -= anchorX * w;
-                end.x -= anchorX * w;
-            }
-            if (anchorY !== 0) {
-                start.y -= anchorY * h;
-                cp1.y -= anchorY * h;
-                cp2.y -= anchorY * h;
-                end.y -= anchorY * h;
-            }
-            ctx.beginPath();
-            ctx.moveTo(start.x, start.y);
-            ctx.bezierCurveTo(cp1.x, cp1.y, cp2.x, cp2.y, end.x, end.y);
-            if (_style.stroke) {
-                ctx.stroke();
-            }
-            if (_style.fill) {
-                ctx.fill();
-            }
-        });
-    }
-    image() {
-        return this._create(() => {
-            return 'x';
         });
     }
     /**
@@ -533,5 +219,33 @@ class Painter {
         return result;
     }
 }
+// test
+const p = new Painter();
+p.init(600, 600);
+p.rect(200, 200, 200, 200, {
+    fill: 'blue',
+    alpha: 0.5,
+    anchor: 0.5,
+    angle: 45,
+    skew: 0.5,
+});
+p._create((ctx) => {
+    ctx.beginPath();
+    [100, 200, 300, 400, 500].forEach((e) => {
+        ctx.moveTo(e, 0);
+        ctx.lineTo(e, 600);
+        ctx.moveTo(0, e);
+        ctx.lineTo(600, e);
+    });
+    ctx.stroke();
+    ctx.textBaseline = 'top';
+    ctx.font = '12px 黑体';
+    for (let row = 0; row < 6; row++) {
+        for (let col = 0; col < 6; col++) {
+            ctx.fillText(`${row * 100},${col * 100}`, row * 100, col * 100);
+        }
+    }
+});
+const canvas = p.canvas;
 
-export { Painter, Painter as default };
+export { Painter, canvas, Painter as default };

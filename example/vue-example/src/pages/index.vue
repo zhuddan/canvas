@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import Painter from '@zd~/painter'
+import { canvas } from '@zd~/painter'
 
-const p = new Painter()
-// const base64String = ref('')
-p.init(600, 800)
 function render() {
   p.rect(0, 0, 600, 800, {
     fill: '#eaffd0',
@@ -102,21 +99,26 @@ function render() {
   p.text('贝塞尔曲线', 100, 350, {
 
   })
-
-  p.text('先帝创业未半而中道崩殂，今天下三分，益州疲弊，此诚危急存亡之秋也。然侍卫之臣不懈于内，忠志之士忘身于外者，盖追先帝之殊遇，欲报之于陛下也。诚宜开张圣听，以光先帝遗德，恢弘志士之气，不宜妄自菲薄，引喻失义，以塞忠谏之路也', -10, 600, {
-    fontSize: 18,
-    maxWidth: 250,
-    lineHeight: 25,
-    stroke: '#ca82f8',
-    transform: [1, 0.2, 0.2, 1, 0, 0],
-    rotateDeg: 0,
-  })
-
-  const canvas = p.canvas!
-  document.getElementById('c')?.appendChild(canvas)
 }
 
-onMounted(render)
+onMounted(() => {
+  // p.rect(0, 0, 600, 600, {
+  //   fill: '#eaffd0',
+  //   // strokeWeight: 9,
+  //   lineJoin: 'bevel',
+  //   // stroke: '#f08a5d',
+  // })
+
+  // p.text('先帝创业未半而中道崩殂，今天下三分，益州疲弊，此诚危急存亡之秋也。然侍卫之臣不懈于内，忠志之士忘身于外者，盖追先帝之殊遇，欲报之于陛下也。诚宜开张圣听，以光先帝遗德，恢弘志士之气，不宜妄自菲薄，引喻失义，以塞忠谏之路也', 50, 50, {
+  //   fontSize: 18,
+  //   maxWidth: 250,
+  //   lineHeight: 25,
+  //   stroke: '#ca82f8',
+  //   // rotateDeg: 0,
+  //   // scale: 1,
+  // })
+  document.getElementById('c')?.appendChild(canvas!)
+})
 </script>
 
 <template>

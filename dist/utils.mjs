@@ -48,5 +48,49 @@ function ensureBetween(input, min = 0, max = 1) {
 function calcCenter(num1, num2) {
     return (num1 + num2) / 2;
 }
+function toPoint(point) {
+    let x = 0;
+    let y = 0;
+    if (typeof point !== 'undefined') {
+        if (typeof point === 'object') {
+            x = point.x;
+            y = point.y;
+        }
+        else {
+            x = y = point;
+        }
+    }
+    return { x, y };
+}
+// 计算变换后的矩形实际大小
+function getTransformedRectSize(transform, rect) {
+    const [a, b, c, d, e, f] = transform;
+    const { x, y, width, height } = rect;
+    // 矩形四个角的坐标
+    const corners = [
+        { x, y },
+        { x: x + width, y },
+        { x: x + width, y: y + height },
+        { x, y: y + height },
+    ];
+    // 变换后的角点坐标
+    const transformedCorners = corners.map(({ x: cx, y: cy }) => {
+        return {
+            x: a * cx + c * cy + e,
+            y: b * cx + d * cy + f,
+        };
+    });
+    // 计算变换后的矩形宽度和高度
+    const xValues = transformedCorners.map(corner => corner.x);
+    const yValues = transformedCorners.map(corner => corner.y);
+    const minX = Math.min(...xValues);
+    const maxX = Math.max(...xValues);
+    const minY = Math.min(...yValues);
+    const maxY = Math.max(...yValues);
+    return {
+        width: maxX - minX,
+        height: maxY - minY,
+    };
+}
 
-export { calcCenter, calcDiff, calcMax, calcMin, createCanvasFontString, ensureBetween, formatValue };
+export { calcCenter, calcDiff, calcMax, calcMin, createCanvasFontString, ensureBetween, formatValue, getTransformedRectSize, toPoint };

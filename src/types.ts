@@ -52,10 +52,15 @@ export interface IRotate {
  * [单位矩阵变化](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)
  */
 export interface ITransform {
-  /**
-   * 设置此属性时 旋转和中心点将失效
-   */
   transform?: [number, number, number, number, number, number]
+
+  angle?: number
+
+  scale?: IPoint | number
+
+  skew?: IPoint | number
+
+  anchor?: IPoint | number
 }
 
 export interface IBaseStyle extends IRotate, IColor, IAnchor, ITransform {
@@ -185,3 +190,8 @@ export interface ArcStyle extends LineBaseStyle {
 
 export interface ArcToStyle extends LineBaseStyle {}
 export interface BezierStyle extends LineBaseStyle {}
+
+export interface Bounds {
+  topLeft: IPoint
+  rightBottom: IPoint
+}
