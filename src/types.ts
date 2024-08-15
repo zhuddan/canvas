@@ -189,6 +189,11 @@ export interface ArcStyle extends LineBaseStyle {
 
 export interface ArcToStyle extends LineBaseStyle {}
 export interface BezierStyle extends LineBaseStyle {}
+export interface ImageStyle extends LineBaseStyle {
+  size?: IPoint
+  crop?: Bounds
+  objectFit?: Properties['objectFit']
+}
 
 export interface Bounds {
   topLeft: IPoint
