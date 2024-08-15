@@ -10,24 +10,14 @@ function createCanvasFontString({ fontFamily, fontSize, fontStyle = 'normal', fo
     return `${fontStyle} ${fontWeight} ${fontSize} ${fontFamily}`;
 }
 function calcMin(numbers) {
-    let min = numbers[0];
-    for (let index = 0; index < numbers.length; index++) {
-        const element = numbers[index];
-        if (element < min) {
-            min = element;
-        }
-    }
-    return min;
+    return numbers.reduce((a, b) => {
+        return a < b ? a : b;
+    });
 }
 function calcMax(numbers) {
-    let max = numbers[0];
-    for (let index = 0; index < numbers.length; index++) {
-        const element = numbers[index];
-        if (element > max) {
-            max = element;
-        }
-    }
-    return max;
+    return numbers.reduce((a, b) => {
+        return a > b ? a : b;
+    });
 }
 /**
  * 计算差异

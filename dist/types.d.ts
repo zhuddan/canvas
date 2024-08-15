@@ -52,10 +52,6 @@ interface IRotate {
  * [单位矩阵变化](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)
  */
 interface ITransform {
-    /**
-     *
-     */
-    transform?: [number, number, number, number, number, number];
     angle?: number;
     scale?: IPoint | number;
     skew?: IPoint | number;
@@ -183,9 +179,14 @@ interface ArcToStyle extends LineBaseStyle {
 }
 interface BezierStyle extends LineBaseStyle {
 }
+interface ImageStyle extends LineBaseStyle {
+    size?: IPoint;
+    crop?: Bounds;
+    objectFit?: Properties['objectFit'];
+}
 interface Bounds {
     topLeft: IPoint;
     rightBottom: IPoint;
 }
 
-export type { Anchor, ArcStyle, ArcToStyle, BezierStyle, Bounds, IAnchor, IBaseStyle, IColor, IFont, ILinePosition, IPoint, IRotate, ITransform, LineBaseStyle, LineStyle, RectStyle, TextBaseStyle, TextMultilineStyle };
+export type { Anchor, ArcStyle, ArcToStyle, BezierStyle, Bounds, IAnchor, IBaseStyle, IColor, IFont, ILinePosition, IPoint, IRotate, ITransform, ImageStyle, LineBaseStyle, LineStyle, RectStyle, TextBaseStyle, TextMultilineStyle };

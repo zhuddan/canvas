@@ -1,29 +1,7 @@
-import { ensureBetween, toPoint, formatValue, createCanvasFontString, calcMin, calcDiff } from './utils.mjs';
+import { Bounds } from './bounds.mjs';
+import { ensureBetween, toPoint, formatValue, createCanvasFontString, calcMin, calcMax } from './utils.mjs';
 
 const dpr = 1; // window.devicePixelRatio ?? 1
-class Bounds {
-    start;
-    size;
-    constructor(start, size) {
-        if (size[0] < 0 || size[1] < 0) {
-            throw new Error(`Size ${JSON.stringify(size)} is meaningless`);
-        }
-        this.start = { x: start[0], y: start[1] };
-        this.size = { x: size[0], y: size[1] };
-    }
-    get width() {
-        return this.size.x;
-    }
-    get height() {
-        return this.size.y;
-    }
-    get end() {
-        return {
-            x: this.start.x + this.size.x,
-            y: this.start.y + this.size.y,
-        };
-    }
-}
 // window.devicePixelRatio = 1
 class Painter {
     canvas;
@@ -116,12 +94,13 @@ class Painter {
             const skewX = Math.sin(radians) * scale.x; // 缩放并旋转后，y轴方向的偏移（旋转+缩放）
             const skewY = -Math.sin(radians) * scale.y + skew.x; // 缩放并旋转后，x轴方向的偏移（旋转+缩放+倾斜）
             const scaleY = Math.cos(radians) * scale.y + skew.y; // 缩放并旋转后，y轴方向的缩放
+            const min = bounds.min;
             const translateX = isArc
                 ? bounds.width + bounds.width / 2 + bounds.width * (0.5 - anchor.x) / 2
-                : bounds.start.x + bounds.width * anchor.x;
+                : min.x + bounds.width * anchor.x;
             const translateY = isArc
                 ? bounds.height + bounds.height / 2 + bounds.height * (0.5 - anchor.y) / 2
-                : bounds.start.y + bounds.height * anchor.x;
+                : min.y + bounds.height * anchor.x;
             const transform = ([
                 scaleX,
                 skewX,
@@ -230,7 +209,7 @@ class Painter {
                 else {
                     textHeight = (splitText.length - 1) * _style.lineHeight + textHeight;
                 }
-                const bounds = new Bounds([x, y], [textWidth, textHeight]);
+                const bounds = new Bounds([x, y], [x + textWidth, y + textHeight]);
                 this.setTransform(_style, bounds);
                 const anchor = this.getAnchor(_style);
                 const offsetX = x + anchor.x * bounds.width;
@@ -254,7 +233,7 @@ class Painter {
                     measure.actualBoundingBoxDescent - measure.actualBoundingBoxAscent,
                     Number.isNaN(fontSize) ? 0 : fontSize,
                 ]);
-                const bounds = new Bounds([x, y], [textWidth, textHeight]);
+                const bounds = new Bounds([x, y], [x + textWidth, y + textHeight]);
                 this.setTransform(_style, bounds);
                 const anchor = this.getAnchor(_style);
                 const offsetX = x + anchor.x * bounds.width;
@@ -288,18 +267,15 @@ class Painter {
             this.setLineStyle(_style);
             const x = calcMin(lines.map(e => e[0]));
             const y = calcMin(lines.map(e => e[1]));
-            const w = calcDiff(lines.map(e => e[0]));
-            const h = calcDiff(lines.map(e => e[1]));
-            const bounds = new Bounds([x, y], [w, h]);
+            const x2 = calcMax(lines.map(e => e[0]));
+            const y2 = calcMax(lines.map(e => e[1]));
+            const bounds = new Bounds([x, y], [x2, y2]);
             this.setTransform(_style, bounds);
             const anchor = this.getAnchor(style);
             const offsetX = anchor.x * bounds.width + lines[0][0];
             const offsetY = anchor.y * bounds.height + lines[0][1];
             lines = lines.map((e) => {
-                return [
-                    e[0] - offsetX,
-                    e[1] - offsetY,
-                ];
+                return [e[0] - offsetX, e[1] - offsetY];
             });
             ctx.beginPath();
             ctx.moveTo(...lines.shift());
@@ -330,7 +306,7 @@ class Painter {
         return this._create((ctx) => {
             const _style = Object.assign({}, this.defaultLineBaseStyle, style);
             ctx.save();
-            const bounds = new Bounds([x, y], [w, h]);
+            const bounds = new Bounds([x, y], [x + w, y + h]);
             this.setTransform(_style, bounds);
             const anchor = this.getAnchor(_style);
             const offsetX = anchor.x * bounds.width + x;
@@ -368,7 +344,13 @@ class Painter {
                 endDeg: 360,
             };
             const _style = Object.assign({ ...base }, this.defaultLineBaseStyle, style);
-            const bounds = new Bounds([x - radius, y - radius], [radius * 2, radius * 2]);
+            const bounds = new Bounds([
+                x - radius,
+                y - radius,
+            ], [
+                x + radius,
+                y + radius,
+            ]);
             this.setColor(_style);
             this.setLineStyle(_style);
             this.setTransform(_style, bounds, true);
@@ -405,15 +387,11 @@ class Painter {
     arcTo(x1, y1, x2, y2, radius, style = {}) {
         return this._create((ctx) => {
             const _style = Object.assign({}, this.defaultLineBaseStyle, style);
-            const x = calcMin([x1, x2]);
-            const y = calcMin([y1, y2]);
-            const w = calcDiff([x1, x2]);
-            const h = calcDiff([y1, y2]);
-            const bounds = new Bounds([x, y], [w, h]);
+            const bounds = new Bounds([x1, y1], [x2, y2]);
             this.setTransform(_style, bounds);
             const anchor = this.getAnchor(_style);
-            const offsetX = anchor.x * bounds.width + bounds.start.x;
-            const offsetY = anchor.y * bounds.height + bounds.start.y;
+            const offsetX = anchor.x * bounds.width + bounds.min.x;
+            const offsetY = anchor.y * bounds.height + bounds.min.y;
             x1 -= offsetX;
             x2 -= offsetX;
             y1 -= offsetY;
@@ -437,11 +415,7 @@ class Painter {
     bezier(start, cp1, cp2, end, style = {}) {
         return this._create((ctx) => {
             const _style = Object.assign({}, this.defaultLineBaseStyle, style);
-            const x = calcMin([start.x, end.x]);
-            const y = calcMin([start.y, end.y]);
-            const w = calcDiff([start.x, end.x]);
-            const h = calcDiff([start.y, end.y]);
-            const bounds = new Bounds([x, y], [w, h]);
+            const bounds = new Bounds([start.x, start.y], [end.x, end.y]);
             this.setTransform(_style, bounds);
             const anchor = this.getAnchor(_style);
             const offsetX = anchor.x * bounds.width + start.x;
@@ -472,7 +446,7 @@ class Painter {
             if (maybeImage instanceof HTMLImageElement) {
                 const w = maybeImage.width;
                 const h = maybeImage.width;
-                new Bounds([x, y], [w, h]);
+                new Bounds([x, y], [x + w, y + h]);
                 // this.setTransform(_style, bounds)
                 // const anchor = this.getAnchor(_style)
                 // const offsetX = anchor.x * bounds.width + x
@@ -510,17 +484,17 @@ p.init(600, 600);
 p.rect(0, 0, 600, 600, {
     fill: '#81D4FA',
 });
-p.text('单行文本', 100, 100, {
+p.text('单行文本', 50, 50, {
     fill: 'red',
     anchor: 0.5,
-    angle: -30,
+    // angle: -30,
     alpha: 0.3,
-    skew: {
-        x: -0.5,
-        y: 0.1,
-    },
+    // skew: {
+    //   x: -0.5,
+    //   y: 0.1,
+    // },
 });
-p.text('平林漠漠烟如织，寒山一带伤心碧。暝色入高楼，有人楼上愁。玉阶空伫立，宿鸟归飞急。何处是归程？长亭更短亭', 200, 200, {
+p.text('平林漠漠烟如织，寒山一带伤心碧。暝色入高楼，有人楼上愁。玉阶空伫立，宿鸟归飞急。何处是归程？长亭更短亭', 200, 0, {
     fontFamily: '黑体',
     textAlign: 'left',
     fontSize: 18,
@@ -533,10 +507,10 @@ p.text('平林漠漠烟如织，寒山一带伤心碧。暝色入高楼，有人
     fill: 'red',
     alpha: 0.3,
     anchor: 0.5,
-    angle: -30,
+    angle: -20,
     skew: {
         x: -0.5,
-        y: 0.1,
+        y: -0.1,
     },
 });
 p.line([
@@ -550,8 +524,8 @@ p.line([
     stroke: '#7effdb',
     lineCap: 'round',
     lineJoin: 'round',
-    // anchor: 0.5,
-    angle: 1,
+    anchor: 0.5,
+    angle: 100,
     skew: -0.1,
 });
 p._create((ctx) => {
@@ -618,12 +592,12 @@ p.bezier(start, cp1, cp2, end, {
 const img = new Image();
 img.src = '/eva-0.jpg';
 img.onload = () => {
-    p.image(img, 0, 0, {
-        // scale: 0.5,
-        // anchor: 0.5,
-        alpha: 0.8,
-    });
+    // p.image(img, 0, 0, {
+    //   // scale: 0.5,
+    //   // anchor: 0.5,
+    //   alpha: 0.8,
+    // })
 };
 const canvas = p.canvas;
 
-export { Bounds, Painter, canvas, Painter as default };
+export { Painter, canvas, Painter as default };

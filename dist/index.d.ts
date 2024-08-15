@@ -1,4 +1,4 @@
-import { IPoint, TextBaseStyle, LineBaseStyle, TextMultilineStyle, ILinePosition, LineStyle, RectStyle, ArcStyle } from './types.js';
+import { IPoint, TextBaseStyle, LineBaseStyle, TextMultilineStyle, ILinePosition, LineStyle, RectStyle, ArcStyle, ArcToStyle, BezierStyle, ImageStyle } from './types.js';
 import 'csstype';
 
 declare class Bounds {
@@ -71,6 +71,21 @@ declare class Painter {
      * @param style
      */
     arc(x: number, y: number, radius: number, style?: ArcStyle): void;
+    /**
+     * 参考[MDN Reference](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/arcTo)
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @param radius
+     * @param style
+     */
+    arcTo(x1: number, y1: number, x2: number, y2: number, radius: number, style?: ArcToStyle): void;
+    /**
+     * [绘制贝塞尔曲线](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/bezierCurveTo)
+     */
+    bezier(start: IPoint, cp1: IPoint, cp2: IPoint, end: IPoint, style?: BezierStyle): void;
+    image(maybeImage: HTMLImageElement | string, x: number, y: number, style?: ImageStyle): void;
     /**
      *
      * @param callback

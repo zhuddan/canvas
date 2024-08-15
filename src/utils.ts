@@ -1,5 +1,5 @@
 import type { IFont, IPoint } from './types'
-import type { Bounds } from '.'
+import type { BoundsV0 } from '.'
 
 export function formatValue(val: string | number) {
   return typeof val === 'string' ? val : `${val}px`
@@ -20,25 +20,15 @@ export function createCanvasFontString({
 }
 
 export function calcMin(numbers: number[]) {
-  let min = numbers[0]
-  for (let index = 0; index < numbers.length; index++) {
-    const element = numbers[index]
-    if (element < min) {
-      min = element
-    }
-  }
-  return min
+  return numbers.reduce((a, b) => {
+    return a < b ? a : b
+  })
 }
 
 export function calcMax(numbers: number[]) {
-  let max = numbers[0]
-  for (let index = 0; index < numbers.length; index++) {
-    const element = numbers[index]
-    if (element > max) {
-      max = element
-    }
-  }
-  return max
+  return numbers.reduce((a, b) => {
+    return a > b ? a : b
+  })
 }
 
 /**
