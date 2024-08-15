@@ -296,8 +296,8 @@ export class Painter {
 
         const anchor = this.getAnchor(_style)
 
-        x = -anchor.x * bounds.size.x
-        y = -anchor.y * bounds.size.y
+        x = -anchor.x * bounds.width
+        y = -anchor.y * bounds.height
 
         for (let i = 0; i < splitText.length; i++) {
           if (_style.stroke) {
@@ -320,8 +320,8 @@ export class Painter {
         const bounds = new Bounds([x, y], [textWidth, textHeight])
         this.setTransform(_style, bounds)
         const anchor = this.getAnchor(_style)
-        x = -anchor.x * bounds.size.x
-        y = -anchor.y * bounds.size.y
+        x = -anchor.x * bounds.width
+        y = -anchor.y * bounds.height
         if (_style.stroke) {
           ctx.strokeText(text, x, y)
         }
@@ -360,12 +360,12 @@ export class Painter {
       this.setTransform(_style, bounds)
       const anchor = this.getAnchor(style)
 
-      const _x = -anchor.x * bounds.size.x
-      const _y = -anchor.y * bounds.size.y
+      const _x = -anchor.x * bounds.width - lines[0][0]
+      const _y = -anchor.y * bounds.height - lines[0][1]
       lines = lines.map((e) => {
         return [
-          e[0] - lines[0][0] + _x,
-          e[1] - lines[0][1] + _y,
+          e[0] + _x,
+          e[1] + _y,
         ]
       })
 
@@ -408,8 +408,8 @@ export class Painter {
       const bounds = new Bounds([x, y], [w, h])
       this.setTransform(_style, bounds)
       const anchor = this.getAnchor(_style)
-      x = -anchor.x * bounds.size.x
-      y = -anchor.y * bounds.size.y
+      x = -anchor.x * bounds.width
+      y = -anchor.y * bounds.height
       this.setColor(_style)
       this.setLineStyle(_style)
       ctx.beginPath()
@@ -493,14 +493,14 @@ export class Painter {
       this.setTransform(_style, bounds)
       const anchor = this.getAnchor(_style)
 
-      const _x = -anchor.x * bounds.size.x
-      const _y = -anchor.y * bounds.size.y
+      const _x = -anchor.x * bounds.width - bounds.start.x
+      const _y = -anchor.y * bounds.height - bounds.start.y
 
-      x1 -= x + _x
-      x2 -= x + _x
+      x1 += _x
+      x2 += _x
 
-      y1 -= y + _y
-      y2 -= y + _y
+      y1 += _y
+      y2 += _y
 
       this.setColor(_style)
       this.setLineStyle(_style)
@@ -534,18 +534,18 @@ export class Painter {
       this.setTransform(_style, bounds)
       const anchor = this.getAnchor(_style)
 
-      const _x = x - anchor.x * bounds.size.x
-      const _y = y - anchor.y * bounds.size.y
+      const _x = -anchor.x * bounds.width - start.x
+      const _y = -anchor.y * bounds.height - start.y
 
-      start.x -= _x
-      cp1.x -= _x
-      cp2.x -= _x
-      end.x -= _x
+      start.x += _x
+      cp1.x += _x
+      cp2.x += _x
+      end.x += _x
 
-      start.y -= _y
-      cp1.y -= _y
-      cp2.y -= _y
-      end.y -= _y
+      start.y += _y
+      cp1.y += _y
+      cp2.y += _y
+      end.y += _y
 
       this.setColor(_style)
 
@@ -646,10 +646,9 @@ p.line([
   stroke: '#7effdb',
   lineCap: 'round',
   lineJoin: 'round',
-  anchor: 0.5,
-  angle: 50,
+  // anchor: 0.5,
+  angle: 1,
   skew: -0.1,
-  alpha: 0,
 })
 
 p._create((ctx) => {
@@ -697,7 +696,8 @@ p.arcTo(200, 600, 50, 100, 60, {
   stroke: '#e84a5f',
   strokeWeight: 10,
   alpha: 0.5,
-  scale: 2,
+  scale: 1.5,
+  anchor: 0.5,
 })
 
 p.rect(150, 150, 100, 100, {
@@ -720,8 +720,8 @@ const end = { x: 250, y: 100 + 300 }
 p.bezier(start, cp1, cp2, end, {
   strokeWeight: 2,
   stroke: '#2eb872',
-  scale: 2,
-  anchor: 0.5,
+  scale: 1,
+  // anchor: 0.5,
 })
 
 export const canvas = p.canvas
