@@ -594,7 +594,7 @@ p.init(600, 600)
 
 p.rect(200, 200, 200, 200, {
   fill: 'blue',
-  alpha: 0,
+  alpha: 0.3,
   anchor: 0.5,
   angle: -45,
   skew: {
@@ -608,7 +608,7 @@ p.text('单行文本', 100, 100, {
   fill: 'red',
   anchor: 0.5,
   angle: -30,
-  alpha: 0,
+  alpha: 0.3,
   skew: {
     x: -0.5,
     y: 0.1,
@@ -626,7 +626,7 @@ p.text('平林漠漠烟如织，寒山一带伤心碧。暝色入高楼，有人
   wordSpacing: 50,
   stroke: 'blue',
   fill: 'red',
-  alpha: 0,
+  alpha: 0.3,
   anchor: 0.5,
   angle: -30,
   skew: {
@@ -674,7 +674,7 @@ p._create((ctx) => {
 //   strokeWeight: 5,
 //   lineJoin: 'round',
 //   fill: 'red',
-//   alpha: 0.2,
+//   alpha: 0.3.2,
 // })
 
 console.log('arc')
