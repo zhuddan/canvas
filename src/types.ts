@@ -185,5 +185,5 @@ export interface BezierStyle extends LineBaseStyle {}
 export interface ImageStyle extends LineBaseStyle {
   size?: MaybePoint
   crop?: MaybeBounds
-  objectFit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down'
+  objectFit?: Properties['objectFit']
 }

@@ -448,16 +448,46 @@ class Painter {
         this._create((ctx) => {
             const _style = Object.assign({}, this.defaultLineBaseStyle, style);
             if (maybeImage instanceof HTMLImageElement) {
+                /**
+                 * 原始大小
+                 */
                 const imgSize = point.createPoint([maybeImage.width, maybeImage.height]);
+                /**
+                 * 用户传入的大小
+                 */
                 const size = point.createPoint(_style.size ?? imgSize.clone());
+                /**
+                 * 原点
+                 */
                 const _anchor = point.createPoint(_style.anchor ?? 0);
+                /**
+                 * 裁剪边框
+                 */
                 const _cropBounds = bounds.createBounds(_style.crop ?? bounds.createBounds([[0, 0], imgSize]));
-                const cropBounds = _cropBounds.clone();
-                cropBounds.origin().translate([x, y]);
+                /**
+                 * 裁剪边框
+                 */
+                const cropBounds = _cropBounds.clone().origin().translate([x, y]);
                 this.setTransform(_style, cropBounds);
-                x -= cropBounds.width * _anchor.x;
-                y -= cropBounds.height * _anchor.y;
+                x -= cropBounds.width * _anchor.x + x;
+                y -= cropBounds.height * _anchor.y + y;
                 this.setColor(_style);
+                // 只有
+                if (!_style.crop && _style.size && _style.objectFit) {
+                    const diff = utils.calcDiff([imgSize.x, imgSize.y]);
+                    switch (_style.objectFit) {
+                        case 'contain':
+                            if (imgSize.x < imgSize.y) {
+                                x += diff / 2;
+                                size.x -= diff;
+                            }
+                            else if (imgSize.x > imgSize.y) {
+                                y -= diff / 2;
+                                size.y += diff;
+                            }
+                            break;
+                    }
+                }
                 const args = [
                     maybeImage,
                     _cropBounds.min.x,
@@ -605,15 +635,16 @@ p.bezier(start, cp1, cp2, end, {
     // anchor: 0.5,
 });
 const img = new Image();
-img.src = '/eva-0.jpg';
+img.src = '/th.jpg';
+// const k = 0.5
 img.onload = () => {
     setTimeout(() => {
         p.image(img, 0, 0, {
-            angle: 15,
-            alpha: 0.5,
-            // size: 500,
-            size: 250,
-            objectFit: 'fill',
+            anchor: 0.5,
+            // angle: 15,
+            size: 300,
+            // size: 250,
+            objectFit: 'contain',
             // crop: [
             //   [300 * k, 379 * k],
             //   [300, 379],
