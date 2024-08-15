@@ -52,7 +52,6 @@ export interface IRotate {
  * [单位矩阵变化](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)
  */
 export interface ITransform {
-  transform?: [number, number, number, number, number, number]
 
   angle?: number
 

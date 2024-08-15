@@ -53,13 +53,13 @@ interface IRotate {
  */
 interface ITransform {
     /**
-     * 设置此属性时 旋转和中心点将失效
+     *
      */
     transform?: [number, number, number, number, number, number];
     angle?: number;
     scale?: IPoint | number;
     skew?: IPoint | number;
-    origin?: IPoint | number;
+    anchor?: IPoint | number;
 }
 interface IBaseStyle extends IRotate, IColor, IAnchor, ITransform {
 }
@@ -183,5 +183,9 @@ interface ArcToStyle extends LineBaseStyle {
 }
 interface BezierStyle extends LineBaseStyle {
 }
+interface Bounds {
+    topLeft: IPoint;
+    rightBottom: IPoint;
+}
 
-export type { Anchor, ArcStyle, ArcToStyle, BezierStyle, IAnchor, IBaseStyle, IColor, IFont, ILinePosition, IPoint, IRotate, ITransform, LineBaseStyle, LineStyle, RectStyle, TextBaseStyle, TextMultilineStyle };
+export type { Anchor, ArcStyle, ArcToStyle, BezierStyle, Bounds, IAnchor, IBaseStyle, IColor, IFont, ILinePosition, IPoint, IRotate, ITransform, LineBaseStyle, LineStyle, RectStyle, TextBaseStyle, TextMultilineStyle };

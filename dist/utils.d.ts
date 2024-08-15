@@ -1,4 +1,5 @@
 import { IFont, IPoint } from './types.js';
+import { Bounds } from './index.js';
 import 'csstype';
 
 declare function formatValue(val: string | number): string;
@@ -23,5 +24,13 @@ declare function calcDiff(numbers: number[]): number;
 declare function ensureBetween(input: number, min?: number, max?: number): number;
 declare function calcCenter(num1: number, num2: number): number;
 declare function toPoint(point: IPoint | number): IPoint;
+declare function getTransformedRectSize(transform: [number, number, number, number, number, number], bounds: Bounds): {
+    width: number;
+    height: number;
+};
+declare function calculateEllipseRadii(rx: number, ry: number, a: number, b: number, c: number, d: number): {
+    newRx: number;
+    newRy: number;
+};
 
-export { calcCenter, calcDiff, calcMax, calcMin, createCanvasFontString, ensureBetween, formatValue, toPoint };
+export { calcCenter, calcDiff, calcMax, calcMin, calculateEllipseRadii, createCanvasFontString, ensureBetween, formatValue, getTransformedRectSize, toPoint };

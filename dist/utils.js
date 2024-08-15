@@ -64,36 +64,52 @@ function toPoint(point) {
     }
     return { x, y };
 }
-// 计算变换后的矩形实际大小
-function getTransformedRectSize(transform, rect) {
-    const [a, b, c, d, e, f] = transform;
-    const { x, y, width, height } = rect;
-    // 矩形四个角的坐标
-    const corners = [
-        { x, y },
-        { x: x + width, y },
-        { x: x + width, y: y + height },
-        { x, y: y + height },
-    ];
-    // 变换后的角点坐标
-    const transformedCorners = corners.map(({ x: cx, y: cy }) => {
-        return {
-            x: a * cx + c * cy + e,
-            y: b * cx + d * cy + f,
-        };
-    });
-    // 计算变换后的矩形宽度和高度
-    const xValues = transformedCorners.map(corner => corner.x);
-    const yValues = transformedCorners.map(corner => corner.y);
-    const minX = Math.min(...xValues);
-    const maxX = Math.max(...xValues);
-    const minY = Math.min(...yValues);
-    const maxY = Math.max(...yValues);
-    return {
-        width: maxX - minX,
-        height: maxY - minY,
-    };
-}
+// // 计算变换后的矩形实际大小
+// export function getTransformedRectSize(
+//   transform: [number, number, number, number, number, number],
+//   bounds: Bounds,
+// ) {
+//   const [scaleX, skewX, skewY, scaleY, translateX, translateY] = transform
+//   // const [1, 0.5, 0.5, 1, 0, 0] = transform
+//   const x = bounds.start.x
+//   const y = bounds.start.y
+//   const width = bounds.width
+//   const height = bounds.height
+//   // 矩形四个角的坐标
+//   const corners: IPoint[] = [
+//     { x, y },
+//     { x: x + width, y },
+//     { x: x + width, y: y + height },
+//     { x, y: y + height },
+//   ]
+//   // 变换后的角点坐标
+//   const transformedCorners = corners.map(({ x: cx, y: cy }) => {
+//     return {
+//       x: scaleX * cx + skewY * cy + translateX,
+//       y: skewX * cx + scaleY * cy + translateY,
+//     }
+//   })
+//   // 计算变换后的矩形宽度和高度
+//   const xValues = transformedCorners.map(corner => corner.x)
+//   const yValues = transformedCorners.map(corner => corner.y)
+//   const minX = Math.min(...xValues)
+//   const maxX = Math.max(...xValues)
+//   const minY = Math.min(...yValues)
+//   const maxY = Math.max(...yValues)
+//   return {
+//     width: maxX - minX,
+//     height: maxY - minY,
+//   }
+// }
+// export function calculateEllipseRadii(rx: number, ry: number, a: number, b: number, c: number, d: number): { newRx: number, newRy: number } {
+//   const newRx = Math.sqrt((a * rx) ** 2 + (b * ry) ** 2)
+//   const newRy = Math.sqrt((c * rx) ** 2 + (d * ry) ** 2)
+//   return { newRx, newRy }
+// }
+// const originalRadius = 50
+// const transformMatrix = [1, 0.8, 0.2, 1] as const
+// const { newRx, newRy } = calculateEllipseRadii(originalRadius, originalRadius, ...transformMatrix)
+// console.log(`Transformed ellipse radii: Rx = ${newRx}, Ry = ${newRy}`)
 
 exports.calcCenter = calcCenter;
 exports.calcDiff = calcDiff;
@@ -102,5 +118,4 @@ exports.calcMin = calcMin;
 exports.createCanvasFontString = createCanvasFontString;
 exports.ensureBetween = ensureBetween;
 exports.formatValue = formatValue;
-exports.getTransformedRectSize = getTransformedRectSize;
 exports.toPoint = toPoint;

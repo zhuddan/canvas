@@ -4,7 +4,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var utils = require('./utils.js');
 
-const dpr = window.devicePixelRatio ?? 1;
+const dpr = 1; // window.devicePixelRatio ?? 1
 class Bounds {
     start;
     size;
@@ -84,7 +84,7 @@ class Painter {
                 ctx.strokeStyle = _style.stroke;
                 ctx.lineWidth = typeof _style.strokeWeight === 'undefined' ? 1 : _style.strokeWeight;
             }
-            if (_style.alpha) {
+            if (_style.alpha !== undefined) {
                 ctx.globalAlpha = utils.ensureBetween(_style.alpha);
             }
         }, false);
@@ -107,48 +107,44 @@ class Painter {
             ctx.lineJoin = _style.lineJoin;
         }, false);
     }
-    setTransform(style, bounds) {
+    setTransform(style, bounds, isArc = false) {
         this._create((ctx) => {
-            let { transform, angle = 0, scale = 1, skew = 0, anchor = 0, } = style;
-            if (!transform) {
-                scale = utils.toPoint(scale);
-                skew = utils.toPoint(skew);
-                anchor = utils.toPoint(anchor);
-                const translateX = bounds.start.x + bounds.size.x * utils.ensureBetween(anchor.x);
-                const translateY = bounds.start.y + bounds.size.y * utils.ensureBetween(anchor.y);
-                // 角度转换为弧度
-                const radians = angle * Math.PI / 180;
-                // 计算变换矩阵的各个元素
-                const scaleX = Math.cos(radians) * scale.x; // 缩放并旋转后，x轴方向的缩放
-                const skewX = Math.sin(radians) * scale.x; // 缩放并旋转后，y轴方向的偏移（旋转+缩放）
-                const skewY = -Math.sin(radians) * scale.y + skew.x; // 缩放并旋转后，x轴方向的偏移（旋转+缩放+倾斜）
-                const scaleY = Math.cos(radians) * scale.y + skew.y; // 缩放并旋转后，y轴方向的缩放
-                transform = [
-                    scaleX * dpr,
-                    skewX * dpr,
-                    skewY * dpr,
-                    scaleY * dpr,
-                    translateX * dpr,
-                    translateY * dpr,
-                ];
-            }
+            let { angle = 0, scale = 1, skew = 0, anchor = 0, } = style;
+            scale = utils.toPoint(scale);
+            skew = utils.toPoint(skew);
+            anchor = utils.toPoint(anchor);
+            // 角度转换为弧度
+            const radians = angle * Math.PI / 180;
+            // 计算变换矩阵的各个元素
+            const scaleX = Math.cos(radians) * scale.x; // 缩放并旋转后，x轴方向的缩放
+            const skewX = Math.sin(radians) * scale.x; // 缩放并旋转后，y轴方向的偏移（旋转+缩放）
+            const skewY = -Math.sin(radians) * scale.y + skew.x; // 缩放并旋转后，x轴方向的偏移（旋转+缩放+倾斜）
+            const scaleY = Math.cos(radians) * scale.y + skew.y; // 缩放并旋转后，y轴方向的缩放
+            const translateX = isArc
+                ? bounds.width + bounds.width / 2 + bounds.width * (0.5 - anchor.x) / 2
+                : bounds.start.x + bounds.width * anchor.x;
+            const translateY = isArc
+                ? bounds.height + bounds.height / 2 + bounds.height * (0.5 - anchor.y) / 2
+                : bounds.start.y + bounds.height * anchor.x;
+            const transform = [
+                scaleX,
+                skewX,
+                skewY,
+                scaleY,
+                translateX,
+                translateY,
+            ];
+            console.log(transform);
             ctx.setTransform(...transform);
         }, false);
     }
-    getAnchor(style, bounds) {
-        if (!style.transform) {
-            const p = utils.toPoint(style.anchor || 0);
-            return {
-                x: utils.ensureBetween(p.x),
-                y: utils.ensureBetween(p.y),
-            };
-        }
-        else {
-            return {
-                x: (style.transform[4] - bounds.start.x) / bounds.width,
-                y: (style.transform[5] - bounds.start.y) / bounds.height,
-            };
-        }
+    getAnchor(style) {
+        const p = utils.toPoint(style.anchor ?? 0);
+        const point = {
+            x: utils.ensureBetween(p.x),
+            y: utils.ensureBetween(p.y),
+        };
+        return point;
     }
     /**
      * 初始化
@@ -166,6 +162,163 @@ class Painter {
         return this;
     }
     /**
+     * 绘制文本
+     * @param text
+     * @param x
+     * @param y
+     * @param style
+     */
+    text(text, x, y, style = {}) {
+        return this._create((ctx) => {
+            /**
+             * 镂空
+             */
+            const _style = Object.assign({}, this.defaultTextStyle, style);
+            /**
+             * 镂空
+             */
+            const isHollowOut = !style.fill && style.stroke;
+            /**
+             * 填充颜色
+             */
+            this.setColor(_style);
+            /**
+             * font
+             */
+            ctx.font = utils.createCanvasFontString(_style);
+            ctx.fontStretch = _style.fontStretch;
+            ctx.fontVariantCaps = _style.fontVariantCaps;
+            ctx.letterSpacing = utils.formatValue(_style.letterSpacing);
+            ctx.wordSpacing = utils.formatValue(_style.wordSpacing);
+            ctx.textAlign = _style.textAlign;
+            ctx.textBaseline = _style.textBaseline;
+            const fontSize = Number(Number.parseInt(`${_style.fontSize}`));
+            /**
+             * 文本宽度
+             */
+            let textWidth = 0;
+            /**
+             * 文本高度
+             */
+            let textHeight = Number.isNaN(fontSize) ? 0 : fontSize;
+            // 多行文本绘制
+            if (_style.maxWidth && _style.lineHeight) {
+                textWidth = _style.maxWidth;
+                const texts = text.split('');
+                const splitText = [];
+                let multilineText = [];
+                for (let i = 0; i < texts.length; i++) {
+                    const currentStr = texts[i];
+                    multilineText.push(currentStr);
+                    const rowStr = multilineText.join('');
+                    if (ctx.measureText(rowStr).width > _style.maxWidth) {
+                        multilineText.pop();
+                        splitText.push(multilineText.join(''));
+                        multilineText = [currentStr];
+                        continue;
+                    }
+                    if (i === texts.length - 1) {
+                        splitText.push(rowStr);
+                    }
+                }
+                if (!splitText.length) {
+                    textHeight = 0;
+                }
+                else if (splitText.length === 1) {
+                    const measure = ctx.measureText(splitText[0]);
+                    textHeight = Math.max(...[
+                        measure.actualBoundingBoxDescent - measure.actualBoundingBoxAscent,
+                        Number.isNaN(fontSize) ? 0 : fontSize,
+                    ]);
+                }
+                else {
+                    textHeight = (splitText.length - 1) * _style.lineHeight + textHeight;
+                }
+                const bounds = new Bounds([x, y], [textWidth, textHeight]);
+                this.setTransform(_style, bounds);
+                const anchor = this.getAnchor(_style);
+                x = -anchor.x * bounds.size.x;
+                y = -anchor.y * bounds.size.y;
+                for (let i = 0; i < splitText.length; i++) {
+                    if (_style.stroke) {
+                        ctx.strokeText(splitText[i], x, y + i * _style.lineHeight);
+                    }
+                    if (!isHollowOut) {
+                        ctx.fillText(splitText[i], x, y + i * _style.lineHeight);
+                    }
+                }
+            }
+            // 单行文本绘制
+            else {
+                const measure = ctx.measureText(text);
+                textWidth = measure.width;
+                textHeight = Math.max(...[
+                    measure.actualBoundingBoxDescent - measure.actualBoundingBoxAscent,
+                    Number.isNaN(fontSize) ? 0 : fontSize,
+                ]);
+                const bounds = new Bounds([x, y], [textWidth, textHeight]);
+                this.setTransform(_style, bounds);
+                const anchor = this.getAnchor(_style);
+                x = -anchor.x * bounds.size.x;
+                y = -anchor.y * bounds.size.y;
+                if (_style.stroke) {
+                    ctx.strokeText(text, x, y);
+                }
+                if (!isHollowOut) {
+                    ctx.fillText(text, x, y);
+                }
+            }
+            return textHeight;
+        });
+    }
+    /**
+     * 绘制线段
+     * 你也可以使用此方法绘制多边形
+     * @param lines
+     * @param style
+     */
+    line(lines, style = {}) {
+        return this._create((ctx) => {
+            if (lines.length < 2) {
+                console.warn('至少两个点');
+                return;
+            }
+            const _style = Object.assign({}, this.defaultLineBaseStyle, style);
+            this.setColor(_style);
+            this.setLineStyle(_style);
+            const x = utils.calcMin(lines.map(e => e[0]));
+            const y = utils.calcMin(lines.map(e => e[1]));
+            const w = utils.calcDiff(lines.map(e => e[0]));
+            const h = utils.calcDiff(lines.map(e => e[1]));
+            const bounds = new Bounds([x, y], [w, h]);
+            this.setTransform(_style, bounds);
+            const anchor = this.getAnchor(style);
+            const _x = -anchor.x * bounds.size.x;
+            const _y = -anchor.y * bounds.size.y;
+            lines = lines.map((e) => {
+                return [
+                    e[0] - lines[0][0] + _x,
+                    e[1] - lines[0][1] + _y,
+                ];
+            });
+            ctx.beginPath();
+            ctx.moveTo(...lines.shift());
+            for (let index = 0; index < lines.length; index++) {
+                const point = lines[index];
+                ctx.lineTo(...point);
+            }
+            if (_style.close) {
+                ctx.closePath();
+            }
+            if (_style.stroke) {
+                ctx.stroke();
+            }
+            if (_style.fill) {
+                ctx.fill();
+            }
+        });
+    }
+    /**
      * 绘制矩形(圆角请设置 style.radii )
      * @param x
      * @param y
@@ -179,9 +332,9 @@ class Painter {
             ctx.save();
             const bounds = new Bounds([x, y], [w, h]);
             this.setTransform(_style, bounds);
-            const anchor = this.getAnchor(_style, bounds);
-            x = -anchor.x * w;
-            y = -anchor.y * h;
+            const anchor = this.getAnchor(_style);
+            x = -anchor.x * bounds.size.x;
+            y = -anchor.y * bounds.size.y;
             this.setColor(_style);
             this.setLineStyle(_style);
             ctx.beginPath();
@@ -196,6 +349,115 @@ class Painter {
             }
             if (style.stroke) {
                 ctx.stroke();
+            }
+        });
+    }
+    /**
+     * 绘制圆弧
+     * @param x
+     * @param y
+     * @param radius
+     * @param style
+     */
+    arc(x, y, radius, style = {}) {
+        return this._create((ctx) => {
+            const base = {
+                startDeg: 0,
+                endDeg: 360,
+            };
+            const _style = Object.assign({ ...base }, this.defaultLineBaseStyle, style);
+            const bounds = new Bounds([x - radius, y - radius], [radius * 2, radius * 2]);
+            this.setColor(_style);
+            this.setLineStyle(_style);
+            const scale = utils.toPoint(_style.scale ?? 1);
+            this.setTransform(_style, bounds, true);
+            x = y = radius / scale.x;
+            const startAngle = _style.startAngle
+                ? _style.startAngle
+                : (_style.startDeg) * Math.PI / 180;
+            const endAngle = _style.endAngle
+                ? _style.endAngle
+                : (_style.endDeg) * Math.PI / 180;
+            ctx.beginPath();
+            ctx.arc(x, y, radius, startAngle, endAngle, !!_style.counterclockwise);
+            if (_style.stroke) {
+                ctx.stroke();
+            }
+            if (_style.fill) {
+                ctx.fill();
+            }
+        });
+    }
+    /**
+     * 参考[MDN Reference](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/arcTo)
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @param radius
+     * @param style
+     */
+    arcTo(x1, y1, x2, y2, radius, style = {}) {
+        return this._create((ctx) => {
+            const _style = Object.assign({}, this.defaultLineBaseStyle, style);
+            const x = utils.calcMin([x1, x2]);
+            const y = utils.calcMin([y1, y2]);
+            const w = utils.calcDiff([x1, x2]);
+            const h = utils.calcDiff([y1, y2]);
+            const bounds = new Bounds([x, y], [w, h]);
+            this.setTransform(_style, bounds);
+            const anchor = this.getAnchor(_style);
+            const _x = -anchor.x * bounds.size.x;
+            const _y = -anchor.y * bounds.size.y;
+            x1 -= x + _x;
+            x2 -= x + _x;
+            y1 -= y + _y;
+            y2 -= y + _y;
+            this.setColor(_style);
+            this.setLineStyle(_style);
+            ctx.beginPath();
+            ctx.moveTo(x1, y2);
+            ctx.arcTo(x1, y1, x2, y2, radius);
+            if (_style.stroke) {
+                ctx.stroke();
+            }
+            if (_style.fill) {
+                ctx.fill();
+            }
+        });
+    }
+    /**
+     * [绘制贝塞尔曲线](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/bezierCurveTo)
+     */
+    bezier(start, cp1, cp2, end, style = {}) {
+        return this._create((ctx) => {
+            const _style = Object.assign({}, this.defaultLineBaseStyle, style);
+            const x = utils.calcMin([start.x, end.x]);
+            const y = utils.calcMin([start.y, end.y]);
+            const w = utils.calcDiff([start.x, end.x]);
+            const h = utils.calcDiff([start.y, end.y]);
+            const bounds = new Bounds([x, y], [w, h]);
+            this.setTransform(_style, bounds);
+            const anchor = this.getAnchor(_style);
+            const _x = x - anchor.x * bounds.size.x;
+            const _y = y - anchor.y * bounds.size.y;
+            start.x -= _x;
+            cp1.x -= _x;
+            cp2.x -= _x;
+            end.x -= _x;
+            start.y -= _y;
+            cp1.y -= _y;
+            cp2.y -= _y;
+            end.y -= _y;
+            this.setColor(_style);
+            ctx.beginPath();
+            ctx.moveTo(start.x, start.y);
+            ctx.bezierCurveTo(cp1.x, cp1.y, cp2.x, cp2.y, end.x, end.y);
+            if (_style.stroke) {
+                ctx.stroke();
+            }
+            if (_style.fill) {
+                ctx.fill();
             }
         });
     }
@@ -224,13 +486,59 @@ const p = new Painter();
 p.init(600, 600);
 p.rect(200, 200, 200, 200, {
     fill: 'blue',
-    alpha: 0.5,
-    anchor: 0,
+    alpha: 0,
+    anchor: 0.5,
     angle: -45,
     skew: {
-        x: 0.2,
-        y: 0.8,
+        x: 0.1,
+        y: 0.9,
     },
+    radii: 20,
+});
+p.text('单行文本', 100, 100, {
+    fill: 'red',
+    anchor: 0.5,
+    angle: -30,
+    alpha: 0,
+    skew: {
+        x: -0.5,
+        y: 0.1,
+    },
+});
+p.text('平林漠漠烟如织，寒山一带伤心碧。暝色入高楼，有人楼上愁。玉阶空伫立，宿鸟归飞急。何处是归程？长亭更短亭', 200, 200, {
+    fontFamily: '黑体',
+    textAlign: 'left',
+    fontSize: 18,
+    fontWeight: 900,
+    maxWidth: 250,
+    lineHeight: 20,
+    letterSpacing: 10,
+    wordSpacing: 50,
+    stroke: 'blue',
+    fill: 'red',
+    alpha: 0,
+    anchor: 0.5,
+    angle: -30,
+    skew: {
+        x: -0.5,
+        y: 0.1,
+    },
+});
+p.line([
+    [250, 160],
+    [250 + 300, 160],
+    [250 + 300, 160 + 120],
+], {
+    fill: '#26A69A',
+    close: true,
+    strokeWeight: 4,
+    stroke: '#7effdb',
+    lineCap: 'round',
+    lineJoin: 'round',
+    anchor: 0.5,
+    angle: 50,
+    skew: -0.1,
+    alpha: 0,
 });
 p._create((ctx) => {
     ctx.beginPath();
@@ -249,8 +557,58 @@ p._create((ctx) => {
         }
     }
 }, false);
+// p.arc(200, 200, 50, {
+//   strokeWeight: 5,
+//   lineJoin: 'round',
+//   fill: 'red',
+//   alpha: 0.2,
+// })
+console.log('arc');
+p.arc(200, 200, 50, {
+    strokeWeight: 0,
+    lineJoin: 'round',
+    fill: '#FFF176',
+    alpha: 0.5,
+    anchor: 0.5,
+    skew: {
+        x: 0.1,
+        y: 0.1,
+    },
+    scale: 1.5,
+    startAngle: 0.5,
+});
+p.arcTo(200, 600, 50, 100, 60, {
+    stroke: '#e84a5f',
+    strokeWeight: 10,
+    alpha: 0.5,
+    scale: 2,
+});
+p.rect(150, 150, 100, 100, {
+    strokeWeight: 9,
+    lineJoin: 'round',
+    fill: 'blue',
+    alpha: 0.5,
+    anchor: 0.5,
+    scale: 1.5,
+    skew: {
+        x: 0.8,
+        y: 0.2,
+    },
+    // scale: 0.5,
+});
+const start = { x: 50, y: 20 + 300 };
+const cp1 = { x: 230, y: 30 + 300 };
+const cp2 = { x: 150, y: 80 + 300 };
+const end = { x: 250, y: 100 + 300 };
+p.bezier(start, cp1, cp2, end, {
+    strokeWeight: 2,
+    stroke: '#2eb872',
+    scale: 2,
+    anchor: 0.5,
+});
 const canvas = p.canvas;
 
+exports.Bounds = Bounds;
 exports.Painter = Painter;
 exports.canvas = canvas;
 exports.default = Painter;
