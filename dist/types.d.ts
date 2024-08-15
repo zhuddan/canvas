@@ -1,4 +1,5 @@
 import { Properties } from 'csstype';
+import { MaybePoint, PointObject } from './point.js';
 
 interface IColor {
     /**
@@ -24,19 +25,8 @@ interface IColor {
      */
     alpha?: number;
 }
-interface IPoint {
-    x: number;
-    y: number;
-}
 /**
- * 锚点 默认 左上角为0(x=0,y=0) 右下角为(1,1)
- */
-type Anchor = number | IPoint;
-interface IAnchor {
-    anchor?: Anchor;
-}
-/**
- * 旋转角度(默认旋转中心为 IAnchor)
+ * 旋转角度
  */
 interface IRotate {
     /**
@@ -53,11 +43,11 @@ interface IRotate {
  */
 interface ITransform {
     angle?: number;
-    scale?: IPoint | number;
-    skew?: IPoint | number;
-    anchor?: IPoint | number;
+    scale?: MaybePoint;
+    skew?: MaybePoint;
+    anchor?: MaybePoint;
 }
-interface IBaseStyle extends IRotate, IColor, IAnchor, ITransform {
+interface IBaseStyle extends IRotate, IColor, ITransform {
 }
 /**
  * 由于某些属性不支持CanvasRenderingContext2D 故舍弃
@@ -180,13 +170,13 @@ interface ArcToStyle extends LineBaseStyle {
 interface BezierStyle extends LineBaseStyle {
 }
 interface ImageStyle extends LineBaseStyle {
-    size?: IPoint;
+    size?: PointObject;
     crop?: Bounds;
     objectFit?: Properties['objectFit'];
 }
 interface Bounds {
-    topLeft: IPoint;
-    rightBottom: IPoint;
+    topLeft: PointObject;
+    rightBottom: PointObject;
 }
 
-export type { Anchor, ArcStyle, ArcToStyle, BezierStyle, Bounds, IAnchor, IBaseStyle, IColor, IFont, ILinePosition, IPoint, IRotate, ITransform, ImageStyle, LineBaseStyle, LineStyle, RectStyle, TextBaseStyle, TextMultilineStyle };
+export type { ArcStyle, ArcToStyle, BezierStyle, Bounds, IBaseStyle, IColor, IFont, ILinePosition, IRotate, ITransform, ImageStyle, LineBaseStyle, LineStyle, RectStyle, TextBaseStyle, TextMultilineStyle };

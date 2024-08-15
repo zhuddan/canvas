@@ -1,5 +1,6 @@
-import { IFont, IPoint } from './types.js';
+import { IFont } from './types.js';
 import 'csstype';
+import './point.js';
 
 declare function formatValue(val: string | number): string;
 /**
@@ -22,6 +23,5 @@ declare function calcDiff(numbers: number[]): number;
  */
 declare function ensureBetween(input: number, min?: number, max?: number): number;
 declare function calcCenter(num1: number, num2: number): number;
-declare function toPoint(point: IPoint | number): IPoint;
 
-export { calcCenter, calcDiff, calcMax, calcMin, createCanvasFontString, ensureBetween, formatValue, toPoint };
+export { calcCenter, calcDiff, calcMax, calcMin, createCanvasFontString, ensureBetween, formatValue };

@@ -1,4 +1,6 @@
 import type { Properties } from 'csstype'
+import type { MaybePoint } from './point'
+import type { Bounds, MaybeBounds } from './bounds'
 
 export interface IColor {
   /**
@@ -25,25 +27,16 @@ export interface IColor {
   alpha?: number
 }
 
-export interface IPoint { x: number, y: number }
 /**
- * 锚点 默认 左上角为0(x=0,y=0) 右下角为(1,1)
- */
-export type Anchor = number | IPoint
-export interface IAnchor {
-  anchor?: Anchor
-}
-
-/**
- * 旋转角度(默认旋转中心为 IAnchor)
+ * 旋转角度
  */
 export interface IRotate {
   /**
-   * 旋转弧度 Math.PI * 2 为一周
+   * @deprecated
    */
   rotateAngle?: number
   /**
-   * 旋转角度 360度 为一周
+   * @deprecated
    */
   rotateDeg?: number
 }
@@ -55,14 +48,14 @@ export interface ITransform {
 
   angle?: number
 
-  scale?: IPoint | number
+  scale?: MaybePoint
 
-  skew?: IPoint | number
+  skew?: MaybePoint
 
-  anchor?: IPoint | number
+  anchor?: MaybePoint
 }
 
-export interface IBaseStyle extends IRotate, IColor, IAnchor, ITransform {
+export interface IBaseStyle extends IRotate, IColor, ITransform {
 
 }
 
@@ -190,12 +183,7 @@ export interface ArcStyle extends LineBaseStyle {
 export interface ArcToStyle extends LineBaseStyle {}
 export interface BezierStyle extends LineBaseStyle {}
 export interface ImageStyle extends LineBaseStyle {
-  size?: IPoint
-  crop?: Bounds
-  objectFit?: Properties['objectFit']
-}
-
-export interface Bounds {
-  topLeft: IPoint
-  rightBottom: IPoint
+  size?: MaybePoint
+  crop?: MaybeBounds
+  objectFit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down'
 }

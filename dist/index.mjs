@@ -1,5 +1,6 @@
-import { Bounds } from './bounds.mjs';
-import { ensureBetween, toPoint, formatValue, createCanvasFontString, calcMin, calcMax } from './utils.mjs';
+import { Bounds, createBounds } from './bounds.mjs';
+import { createPoint } from './point.mjs';
+import { ensureBetween, formatValue, createCanvasFontString, calcMin, calcMax } from './utils.mjs';
 
 const dpr = 1; // window.devicePixelRatio ?? 1
 // window.devicePixelRatio = 1
@@ -84,9 +85,9 @@ class Painter {
     setTransform(style, bounds, isArc = false) {
         this._create((ctx) => {
             let { angle = 0, scale = 1, skew = 0, anchor = 0, } = style;
-            scale = toPoint(scale);
-            skew = toPoint(skew);
-            anchor = toPoint(anchor);
+            scale = createPoint(scale);
+            skew = createPoint(skew);
+            anchor = createPoint(anchor);
             // 角度转换为弧度
             const radians = angle * Math.PI / 180;
             // 计算变换矩阵的各个元素
@@ -114,12 +115,7 @@ class Painter {
         }, false);
     }
     getAnchor(style) {
-        const p = toPoint(style.anchor ?? 0);
-        const point = {
-            x: ensureBetween(p.x),
-            y: ensureBetween(p.y),
-        };
-        return point;
+        return createPoint(style.anchor ?? 0);
     }
     /**
      * 初始化
@@ -354,7 +350,7 @@ class Painter {
             this.setColor(_style);
             this.setLineStyle(_style);
             this.setTransform(_style, bounds, true);
-            const anchor = toPoint(style.anchor ?? 0);
+            const anchor = createPoint(style.anchor ?? 0);
             const offsetX = (bounds.width + bounds.width / 2 + bounds.width * (0.5 - anchor.x) / 2);
             const offsetY = (bounds.height + bounds.height / 2 + bounds.height * (0.5 - anchor.x) / 2);
             x -= offsetX;
@@ -414,6 +410,10 @@ class Painter {
      */
     bezier(start, cp1, cp2, end, style = {}) {
         return this._create((ctx) => {
+            start = createPoint(start);
+            cp1 = createPoint(start);
+            cp2 = createPoint(start);
+            end = createPoint(start);
             const _style = Object.assign({}, this.defaultLineBaseStyle, style);
             const bounds = new Bounds([start.x, start.y], [end.x, end.y]);
             this.setTransform(_style, bounds);
@@ -444,17 +444,28 @@ class Painter {
         this._create((ctx) => {
             const _style = Object.assign({}, this.defaultLineBaseStyle, style);
             if (maybeImage instanceof HTMLImageElement) {
-                const w = maybeImage.width;
-                const h = maybeImage.width;
-                new Bounds([x, y], [x + w, y + h]);
-                // this.setTransform(_style, bounds)
-                // const anchor = this.getAnchor(_style)
-                // const offsetX = anchor.x * bounds.width + x
-                // const offsetY = anchor.y * bounds.height + y
-                // x -= offsetX
-                // y -= offsetY
+                const imgSize = createPoint([maybeImage.width, maybeImage.height]);
+                const size = createPoint(_style.size ?? imgSize.clone());
+                const _anchor = createPoint(_style.anchor ?? 0);
+                const _cropBounds = createBounds(_style.crop ?? createBounds([[0, 0], imgSize]));
+                const cropBounds = _cropBounds.clone();
+                cropBounds.origin().translate([x, y]);
+                this.setTransform(_style, cropBounds);
+                x -= cropBounds.width * _anchor.x;
+                y -= cropBounds.height * _anchor.y;
                 this.setColor(_style);
-                ctx.drawImage(maybeImage, 100, 0, 200, 200, x, y, 300, 350);
+                const args = [
+                    maybeImage,
+                    _cropBounds.min.x,
+                    _cropBounds.min.y,
+                    _cropBounds.max.x,
+                    _cropBounds.max.y,
+                    x,
+                    y,
+                    size.x,
+                    size.y,
+                ];
+                ctx.drawImage(...args);
             }
         });
     }
@@ -592,12 +603,26 @@ p.bezier(start, cp1, cp2, end, {
 const img = new Image();
 img.src = '/eva-0.jpg';
 img.onload = () => {
-    // p.image(img, 0, 0, {
-    //   // scale: 0.5,
-    //   // anchor: 0.5,
-    //   alpha: 0.8,
-    // })
+    setTimeout(() => {
+        p.image(img, 0, 0, {
+            angle: 15,
+            alpha: 0.5,
+            // size: 500,
+            size: 250,
+            objectFit: 'fill',
+            // crop: [
+            //   [300 * k, 379 * k],
+            //   [300, 379],
+            // ],
+        });
+    });
 };
+// const img2 = new Image()
+// img2.src = '/eva-0.jpg'
+// img2.onload = () => {
+//   p.image(img, 300, 0, {
+//   })
+// }
 const canvas = p.canvas;
 
 export { Painter, canvas, Painter as default };

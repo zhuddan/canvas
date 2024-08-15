@@ -1,17 +1,7 @@
-import { IPoint, TextBaseStyle, LineBaseStyle, TextMultilineStyle, ILinePosition, LineStyle, RectStyle, ArcStyle, ArcToStyle, BezierStyle, ImageStyle } from './types.js';
+import { MaybePoint } from './point.js';
+import { TextBaseStyle, LineBaseStyle, TextMultilineStyle, ILinePosition, LineStyle, RectStyle, ArcStyle, ArcToStyle, BezierStyle, ImageStyle } from './types.js';
 import 'csstype';
 
-declare class Bounds {
-    start: IPoint;
-    size: IPoint;
-    constructor(start: [number, number], size: [number, number]);
-    get width(): number;
-    get height(): number;
-    get end(): {
-        x: number;
-        y: number;
-    };
-}
 declare class Painter {
     canvas?: HTMLCanvasElement;
     ctx?: CanvasRenderingContext2D;
@@ -84,7 +74,7 @@ declare class Painter {
     /**
      * [绘制贝塞尔曲线](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/bezierCurveTo)
      */
-    bezier(start: IPoint, cp1: IPoint, cp2: IPoint, end: IPoint, style?: BezierStyle): void;
+    bezier(start: MaybePoint, cp1: MaybePoint, cp2: MaybePoint, end: MaybePoint, style?: BezierStyle): void;
     image(maybeImage: HTMLImageElement | string, x: number, y: number, style?: ImageStyle): void;
     /**
      *
@@ -96,4 +86,4 @@ declare class Painter {
 
 declare const canvas: HTMLCanvasElement | undefined;
 
-export { Bounds, Painter, canvas, Painter as default };
+export { Painter, canvas, Painter as default };

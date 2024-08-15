@@ -40,20 +40,20 @@ function ensureBetween(input, min = 0, max = 1) {
 function calcCenter(num1, num2) {
     return (num1 + num2) / 2;
 }
-function toPoint(point) {
-    let x = 0;
-    let y = 0;
-    if (typeof point !== 'undefined') {
-        if (typeof point === 'object') {
-            x = point.x;
-            y = point.y;
-        }
-        else {
-            x = y = point;
-        }
-    }
-    return { x, y };
-}
+// export function toPoint(point: PointObject | number): PointObject {
+//   let x = 0
+//   let y = 0
+//   if (typeof point !== 'undefined') {
+//     if (typeof point === 'object') {
+//       x = point.x
+//       y = point.y
+//     }
+//     else {
+//       x = y = point
+//     }
+//   }
+//   return { x, y }
+// }
 // // 计算变换后的矩形实际大小
 // export function getTransformedRectSize(
 //   transform: [number, number, number, number, number, number],
@@ -108,4 +108,3 @@ exports.calcMin = calcMin;
 exports.createCanvasFontString = createCanvasFontString;
 exports.ensureBetween = ensureBetween;
 exports.formatValue = formatValue;
-exports.toPoint = toPoint;

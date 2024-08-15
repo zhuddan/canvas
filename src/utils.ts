@@ -1,5 +1,4 @@
-import type { IFont, IPoint } from './types'
-import type { BoundsV0 } from '.'
+import type { IFont } from './types'
 
 export function formatValue(val: string | number) {
   return typeof val === 'string' ? val : `${val}px`
@@ -53,20 +52,20 @@ export function calcCenter(num1: number, num2: number) {
   return (num1 + num2) / 2
 }
 
-export function toPoint(point: IPoint | number): IPoint {
-  let x = 0
-  let y = 0
-  if (typeof point !== 'undefined') {
-    if (typeof point === 'object') {
-      x = point.x
-      y = point.y
-    }
-    else {
-      x = y = point
-    }
-  }
-  return { x, y }
-}
+// export function toPoint(point: PointObject | number): PointObject {
+//   let x = 0
+//   let y = 0
+//   if (typeof point !== 'undefined') {
+//     if (typeof point === 'object') {
+//       x = point.x
+//       y = point.y
+//     }
+//     else {
+//       x = y = point
+//     }
+//   }
+//   return { x, y }
+// }
 
 // // 计算变换后的矩形实际大小
 // export function getTransformedRectSize(
