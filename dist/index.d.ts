@@ -1,1 +1,1 @@
-export declare function two(): number[];
+export * from './app';

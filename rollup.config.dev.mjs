@@ -1,33 +1,15 @@
-import fs from 'node:fs'
 import { defineConfig } from 'rollup'
 import typescript from '@rollup/plugin-typescript'
 import del from 'rollup-plugin-delete'
 import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
-/**
- *
- * @param {'d.ts' | 'ts'} suffix
- */
-function createInput(suffix = 'ts') {
-  const files = fs.readdirSync('./src')
-  /**
-   * @type {{ [entryAlias: string]: string }}
-   */
-  const input = {}
-  for (let index = 0; index < files.length; index++) {
-    if (!/^(?!.*\.d\.ts$).+ts$/.test(files[index])) {
-      continue
-    }
-    const file = files[index].replace('.ts', '')
-    input[file] = `./${suffix === 'd.ts' ? 'temp' : 'src'}/${file}.${suffix}`
-  }
-  return input
-}
+import { createInput } from './input.mjs'
+
 /**
  * @type {import('rollup').RollupOptions}
  */
 const devOptions = {
-  input: createInput('ts'),
+  input: createInput(),
   output: [
     {
       dir: 'dist',
@@ -49,9 +31,7 @@ const devOptions = {
       hook: 'buildEnd',
       ignore: ['dist/types/**'],
     }),
-    typescript({
-      declaration: true,
-    }),
+    typescript(),
     livereload(),
     serve({
       port: 13000,

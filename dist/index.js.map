@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["../src/index.ts"],"sourcesContent":["console.log('1')\nexport function two() {\n  console.log('two')\n  return [2]\n}\n"],"names":[],"mappings":";;;;AAAA,OAAO,CAAC,GAAG,CAAC,GAAG,CAAC,CAAA;SACA,GAAG,GAAA;AACjB,IAAA,OAAO,CAAC,GAAG,CAAC,KAAK,CAAC,CAAA;IAClB,OAAO,CAAC,CAAC,CAAC,CAAA;AACZ;;;;"}
+{"version":3,"file":"index.js","sources":[],"sourcesContent":[],"names":[],"mappings":";;;;;;;;;"}

@@ -1,2 +1,8 @@
-/* eslint-disable antfu/no-import-dist */
-import * as s from '../dist/index.mjs'
+// @ts-check
+import { App } from '../dist/index.mjs'
+
+const app = new App({
+
+})
+
+document.body.appendChild(app.canvas)
