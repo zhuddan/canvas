@@ -5,7 +5,7 @@ import { Pane } from 'https://cdn.jsdelivr.net/npm/tweakpane@4.0.4/dist/tweakpan
 import throttle from 'https://cdn.jsdelivr.net/npm/lodash-es/throttle.js'
 import { App, Text } from '../dist/index.mjs'
 
-const text = new Text('哈哈', 150, 150)
+const text = new Text('这是文字', 150, 150)
 const pane = new Pane()
 
 const refresh = throttle(() => {
@@ -34,6 +34,10 @@ pane.addBinding(text.style, 'fontSize', {
   max: 80,
 })
 
+pane.addBinding(text.style, 'letterSpacing', {
+  min: 0,
+  max: 80,
+})
 pane.addBinding(text, 'text')
 pane.addBinding(text.style, 'fill')
 

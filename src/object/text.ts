@@ -1,6 +1,6 @@
 import { interceptUpdate } from '../common/intercept'
 import { TextStyle } from '../style/text-style'
-import { createCanvasFontString } from '../utils'
+import { createCanvasFontString, formatValue } from '../utils'
 import { Display } from './display'
 
 export class Text extends Display {
@@ -29,12 +29,12 @@ export class Text extends Display {
     ctx.textBaseline = 'top'
     ctx.fillStyle = this.style.fill
     ctx.font = createCanvasFontString(this.style)
-    // ctx.fontStretch = _style.fontStretch
-    // ctx.fontVariantCaps = _style.fontVariantCaps
-    // ctx.letterSpacing = formatValue(_style.letterSpacing)
-    // ctx.wordSpacing = formatValue(_style.wordSpacing)
-    // ctx.textAlign = _style.textAlign
-    // ctx.textBaseline = _style.textBaseline
+    ctx.fontStretch = this.style.fontStretch
+    ctx.fontVariantCaps = this.style.fontVariantCaps
+    ctx.letterSpacing = formatValue(this.style.letterSpacing)
+    ctx.wordSpacing = formatValue(this.style.wordSpacing)
+    ctx.textAlign = this.style.textAlign
+    ctx.textBaseline = this.style.textBaseline
 
     ctx.fillText(this.text, this.position.x, this.position.y)
   }

@@ -3,7 +3,7 @@
 import { _ as __decorate } from '../tslib.es6-Dn8e3nS6.js';
 import { interceptUpdate } from '../common/intercept.mjs';
 import { TextStyle } from '../style/text-style.mjs';
-import { createCanvasFontString } from '../utils.mjs';
+import { createCanvasFontString, formatValue } from '../utils.mjs';
 import { Display } from './display.mjs';
 import '../app.mjs';
 import '../const.mjs';
@@ -32,12 +32,12 @@ class Text extends Display {
         ctx.textBaseline = 'top';
         ctx.fillStyle = this.style.fill;
         ctx.font = createCanvasFontString(this.style);
-        // ctx.fontStretch = _style.fontStretch
-        // ctx.fontVariantCaps = _style.fontVariantCaps
-        // ctx.letterSpacing = formatValue(_style.letterSpacing)
-        // ctx.wordSpacing = formatValue(_style.wordSpacing)
-        // ctx.textAlign = _style.textAlign
-        // ctx.textBaseline = _style.textBaseline
+        ctx.fontStretch = this.style.fontStretch;
+        ctx.fontVariantCaps = this.style.fontVariantCaps;
+        ctx.letterSpacing = formatValue(this.style.letterSpacing);
+        ctx.wordSpacing = formatValue(this.style.wordSpacing);
+        ctx.textAlign = this.style.textAlign;
+        ctx.textBaseline = this.style.textBaseline;
         ctx.fillText(this.text, this.position.x, this.position.y);
     }
 }

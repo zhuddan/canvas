@@ -10,6 +10,7 @@ require('../const.js');
 require('../utils.js');
 
 class TextStyle extends style_baseStyle.BaseStyle {
+    textBaseline = 'top';
     _fontSize = 12;
     set fontSize(value) {
         this._fontSize = value;
@@ -38,6 +39,41 @@ class TextStyle extends style_baseStyle.BaseStyle {
     get fontWeight() {
         return this._fontWeight;
     }
+    _fontStretch = 'normal';
+    set fontStretch(value) {
+        this._fontStretch = value;
+    }
+    get fontStretch() {
+        return this._fontStretch;
+    }
+    _fontVariantCaps = 'normal';
+    set fontVariantCaps(value) {
+        this._fontVariantCaps = value;
+    }
+    get fontVariantCaps() {
+        return this._fontVariantCaps;
+    }
+    _letterSpacing = 0;
+    set letterSpacing(value) {
+        this._letterSpacing = value;
+    }
+    get letterSpacing() {
+        return this._letterSpacing;
+    }
+    _wordSpacing = 'normal';
+    set wordSpacing(value) {
+        this._wordSpacing = value;
+    }
+    get wordSpacing() {
+        return this._wordSpacing;
+    }
+    _textAlign = 'left';
+    set textAlign(value) {
+        this._textAlign = value;
+    }
+    get textAlign() {
+        return this._textAlign;
+    }
 }
 tslib_es6.__decorate([
     common_intercept.interceptUpdate()
@@ -51,6 +87,21 @@ tslib_es6.__decorate([
 tslib_es6.__decorate([
     common_intercept.interceptUpdate()
 ], TextStyle.prototype, "fontWeight", null);
+tslib_es6.__decorate([
+    common_intercept.interceptUpdate()
+], TextStyle.prototype, "fontStretch", null);
+tslib_es6.__decorate([
+    common_intercept.interceptUpdate()
+], TextStyle.prototype, "fontVariantCaps", null);
+tslib_es6.__decorate([
+    common_intercept.interceptUpdate()
+], TextStyle.prototype, "letterSpacing", null);
+tslib_es6.__decorate([
+    common_intercept.interceptUpdate()
+], TextStyle.prototype, "wordSpacing", null);
+tslib_es6.__decorate([
+    common_intercept.interceptUpdate()
+], TextStyle.prototype, "textAlign", null);
 
 exports.TextStyle = TextStyle;
 //# sourceMappingURL=text-style.js.map

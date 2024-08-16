@@ -34,12 +34,12 @@ class Text extends object_display.Display {
         ctx.textBaseline = 'top';
         ctx.fillStyle = this.style.fill;
         ctx.font = utils.createCanvasFontString(this.style);
-        // ctx.fontStretch = _style.fontStretch
-        // ctx.fontVariantCaps = _style.fontVariantCaps
-        // ctx.letterSpacing = formatValue(_style.letterSpacing)
-        // ctx.wordSpacing = formatValue(_style.wordSpacing)
-        // ctx.textAlign = _style.textAlign
-        // ctx.textBaseline = _style.textBaseline
+        ctx.fontStretch = this.style.fontStretch;
+        ctx.fontVariantCaps = this.style.fontVariantCaps;
+        ctx.letterSpacing = utils.formatValue(this.style.letterSpacing);
+        ctx.wordSpacing = utils.formatValue(this.style.wordSpacing);
+        ctx.textAlign = this.style.textAlign;
+        ctx.textBaseline = this.style.textBaseline;
         ctx.fillText(this.text, this.position.x, this.position.y);
     }
 }

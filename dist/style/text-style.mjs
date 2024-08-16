@@ -8,6 +8,7 @@ import '../const.mjs';
 import '../utils.mjs';
 
 class TextStyle extends BaseStyle {
+    textBaseline = 'top';
     _fontSize = 12;
     set fontSize(value) {
         this._fontSize = value;
@@ -36,6 +37,41 @@ class TextStyle extends BaseStyle {
     get fontWeight() {
         return this._fontWeight;
     }
+    _fontStretch = 'normal';
+    set fontStretch(value) {
+        this._fontStretch = value;
+    }
+    get fontStretch() {
+        return this._fontStretch;
+    }
+    _fontVariantCaps = 'normal';
+    set fontVariantCaps(value) {
+        this._fontVariantCaps = value;
+    }
+    get fontVariantCaps() {
+        return this._fontVariantCaps;
+    }
+    _letterSpacing = 0;
+    set letterSpacing(value) {
+        this._letterSpacing = value;
+    }
+    get letterSpacing() {
+        return this._letterSpacing;
+    }
+    _wordSpacing = 'normal';
+    set wordSpacing(value) {
+        this._wordSpacing = value;
+    }
+    get wordSpacing() {
+        return this._wordSpacing;
+    }
+    _textAlign = 'left';
+    set textAlign(value) {
+        this._textAlign = value;
+    }
+    get textAlign() {
+        return this._textAlign;
+    }
 }
 __decorate([
     interceptUpdate()
@@ -49,6 +85,21 @@ __decorate([
 __decorate([
     interceptUpdate()
 ], TextStyle.prototype, "fontWeight", null);
+__decorate([
+    interceptUpdate()
+], TextStyle.prototype, "fontStretch", null);
+__decorate([
+    interceptUpdate()
+], TextStyle.prototype, "fontVariantCaps", null);
+__decorate([
+    interceptUpdate()
+], TextStyle.prototype, "letterSpacing", null);
+__decorate([
+    interceptUpdate()
+], TextStyle.prototype, "wordSpacing", null);
+__decorate([
+    interceptUpdate()
+], TextStyle.prototype, "textAlign", null);
 
 export { TextStyle };
 //# sourceMappingURL=text-style.mjs.map
