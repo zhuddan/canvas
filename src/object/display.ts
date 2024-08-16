@@ -1,3 +1,4 @@
+import { pauseUpdate, shouldUpdate } from '../app'
 import { Event } from '../common/event'
 import type {
   MaybePoint,
@@ -21,22 +22,12 @@ export interface DisplayImpl {
   anchor?: MaybePoint
 }
 
-export abstract class Display extends Event<{ shouldUpdate: any }> implements Required<DisplayImpl> {
+export abstract class Display implements Required<DisplayImpl> {
   constructor() {
-    super()
     console.log('on')
-    this.on('shouldUpdate', () => {
-      if (!this._shouldUpdate)
-        this._shouldUpdate = true
-    })
-    this.position.on('shouldUpdate', () => {
-      if (!this._shouldUpdate)
-        this._shouldUpdate = true
-    })
   }
 
   private _angle = 0
-  _shouldUpdate = false
 
   get angle() {
     return this._angle
@@ -68,11 +59,10 @@ export abstract class Display extends Event<{ shouldUpdate: any }> implements Re
   scale = new Point([1, 1])
 
   onAdd() {
-    this._shouldUpdate = true
   }
 
   onRemove() {
-    this._shouldUpdate = true
+    shouldUpdate()
   }
 
   abstract _render(ctx: CanvasRenderingContext2D): void

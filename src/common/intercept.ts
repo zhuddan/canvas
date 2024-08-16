@@ -1,8 +1,7 @@
-import type { UpdateEvent } from '../types'
-import type { Event } from './event'
+import { shouldUpdate } from '../app'
 
-export function updateIntercept() {
-  return function (target: UpdateEvent, propertyKey: string, descriptor: PropertyDescriptor) {
+export function interceptUpdate() {
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalSet = descriptor.set
 
     const originalGet = descriptor.get
@@ -12,11 +11,10 @@ export function updateIntercept() {
         const oldValue = originalGet?.call(this)
         if (newValue !== oldValue) {
           originalSet.call(this, newValue)
-          // target.on('shouldUpdate', console.log)
-          target.emit.call(this, 'shouldUpdate', propertyKey)
+          shouldUpdate()
         }
         else {
-          console.log([newValue, oldValue], '新旧值相同')
+          console.warn([newValue, oldValue], '新旧值相同')
         }
       }
     }

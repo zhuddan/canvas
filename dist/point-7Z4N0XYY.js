@@ -3,6 +3,7 @@
 'use strict';
 
 var common_event = require('./common/event.js');
+var common_intercept = require('./common/intercept.js');
 
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -32,27 +33,6 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
     var e = new Error(message);
     return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
 };
-
-function updateIntercept() {
-    return function (target, propertyKey, descriptor) {
-        const originalSet = descriptor.set;
-        const originalGet = descriptor.get;
-        descriptor.set = function (newValue) {
-            if (originalSet) {
-                const oldValue = originalGet?.call(this);
-                if (newValue !== oldValue) {
-                    originalSet.call(this, newValue);
-                    // target.on('shouldUpdate', console.log)
-                    target.emit.call(this, 'shouldUpdate', propertyKey);
-                }
-                else {
-                    console.log([newValue, oldValue], '新旧值相同');
-                }
-            }
-        };
-        Object.defineProperty(target, propertyKey, descriptor);
-    };
-}
 
 class Point extends common_event.Event {
     shouldUpdate = false;
@@ -96,10 +76,10 @@ class Point extends common_event.Event {
     }
 }
 __decorate([
-    updateIntercept()
+    common_intercept.interceptUpdate()
 ], Point.prototype, "x", null);
 __decorate([
-    updateIntercept()
+    common_intercept.interceptUpdate()
 ], Point.prototype, "y", null);
 function createPoint(maybePoint) {
     if (maybePoint instanceof Point) {
@@ -111,5 +91,4 @@ function createPoint(maybePoint) {
 exports.Point = Point;
 exports.__decorate = __decorate;
 exports.createPoint = createPoint;
-exports.updateIntercept = updateIntercept;
-//# sourceMappingURL=point-DiKax5LN.js.map
+//# sourceMappingURL=point-7Z4N0XYY.js.map

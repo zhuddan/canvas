@@ -1,2 +1,1 @@
-import type { UpdateEvent } from '../types';
-export declare function updateIntercept(): (target: UpdateEvent, propertyKey: string, descriptor: PropertyDescriptor) => void;
+export declare function interceptUpdate(): (target: any, propertyKey: string, descriptor: PropertyDescriptor) => void;

@@ -1,5 +1,5 @@
 import { Event } from '../common/event'
-import { updateIntercept } from '../common/intercept'
+import { interceptUpdate } from '../common/intercept'
 
 export interface PointObject { x: number, y: number }
 export type PointArray = [number, number]
@@ -11,7 +11,7 @@ export class Point extends Event<{
   shouldUpdate = false
 
   _x = -Infinity
-  @updateIntercept()
+  @interceptUpdate()
   set x(x) {
     this._x = x
   }
@@ -22,7 +22,7 @@ export class Point extends Event<{
 
   private _y = -Infinity
 
-  @updateIntercept()
+  @interceptUpdate()
   set y(y) {
     this._y = y
   }

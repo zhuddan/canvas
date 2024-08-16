@@ -1,5 +1,5 @@
 import type { Properties } from 'csstype'
-import { updateIntercept } from '../common/intercept'
+import { interceptUpdate } from '../common/intercept'
 import { Display } from './display'
 
 export interface IFont {
@@ -28,7 +28,7 @@ export interface IFont {
 export class Text extends Display {
   _text = ''
 
-  @updateIntercept()
+  @interceptUpdate()
   set text(text) {
     console.log('text', text)
     this._text = text
@@ -50,6 +50,5 @@ export class Text extends Display {
     ctx.textBaseline = 'top'
     ctx.font = '48px bold 宋体 '
     ctx.fillText(this.text, this.position.x, this.position.y)
-    this._shouldUpdate = false
   }
 };

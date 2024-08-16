@@ -27,14 +27,23 @@ function animate(time) {
   requestAnimationFrame(animate)
 }
 
-const btn = document.getElementById('button')
+const setText = document.getElementById('button')
+const remove = document.getElementById('remove')
+const add = document.getElementById('add-btn')
 
 const input = /** @type {HTMLInputElement} */(document.getElementById('input'))
 
-btn?.addEventListener('click', () => {
-  console.log(input.value)
+setText?.addEventListener('click', () => {
   if (input) {
     text.text = input.value
   }
+})
+
+remove?.addEventListener('click', () => {
+  app.remove(text)
+})
+
+add?.addEventListener('click', () => {
+  app.add(text)
 })
 requestAnimationFrame(animate)

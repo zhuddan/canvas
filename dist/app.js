@@ -4,6 +4,15 @@
 
 var utils = require('./utils.js');
 
+let __shouldUpdate = false;
+function shouldUpdate() {
+    if (!__shouldUpdate)
+        __shouldUpdate = true;
+}
+function pauseUpdate() {
+    if (__shouldUpdate)
+        __shouldUpdate = false;
+}
 class App {
     canvas;
     ctx;
@@ -55,29 +64,35 @@ class App {
     }
     children = [];
     add(object) {
+        console.log(object);
+        object.onAdd();
         this.children.push(object);
+        shouldUpdate();
+    }
+    remove(object) {
+        const index = this.children.indexOf(object);
+        if (index !== -1) {
+            this.children.splice(index, 1);
+            shouldUpdate();
+        }
     }
     update() {
         window.requestAnimationFrame(() => {
             this.update();
         });
-        const needUpdateObject = [];
-        for (let index = 0; index < this.children.length; index++) {
-            const object = this.children[index];
-            if (object._shouldUpdate) {
-                needUpdateObject.push(object);
-            }
-        }
-        if (needUpdateObject.length) {
+        if (__shouldUpdate) {
             this.ctx.clearRect(-this.width, -this.height, this.width * 2, this.height * 2);
             this.debug();
             const children = [...this.children];
             while (children.length) {
                 children.shift()?.render(this.ctx);
             }
+            pauseUpdate();
         }
     }
 }
 
 exports.App = App;
+exports.pauseUpdate = pauseUpdate;
+exports.shouldUpdate = shouldUpdate;
 //# sourceMappingURL=app.js.map

@@ -6,7 +6,16 @@ interface AppConstructorOptions {
   width?: number
   height?: number
   dpr?: boolean
+}
 
+let __shouldUpdate = false
+export function shouldUpdate() {
+  if (!__shouldUpdate)
+    __shouldUpdate = true
+}
+export function pauseUpdate() {
+  if (__shouldUpdate)
+    __shouldUpdate = false
 }
 export class App {
   canvas: HTMLCanvasElement
@@ -66,8 +75,20 @@ export class App {
   }
 
   children: Display[] = []
+
   add(object: Display) {
+    console.log(object)
+    object.onAdd()
     this.children.push(object)
+    shouldUpdate()
+  }
+
+  remove(object: Display) {
+    const index = this.children.indexOf(object)
+    if (index !== -1) {
+      this.children.splice(index, 1)
+      shouldUpdate()
+    }
   }
 
   private update() {
@@ -75,16 +96,7 @@ export class App {
       this.update()
     })
 
-    const needUpdateObject: Display[] = []
-
-    for (let index = 0; index < this.children.length; index++) {
-      const object = this.children[index]
-      if (object._shouldUpdate) {
-        needUpdateObject.push(object)
-      }
-    }
-
-    if (needUpdateObject.length) {
+    if (__shouldUpdate) {
       this.ctx.clearRect(
         -this.width,
         -this.height,
@@ -97,6 +109,7 @@ export class App {
       while (children.length) {
         children.shift()?.render(this.ctx)
       }
+      pauseUpdate()
     }
   }
 }

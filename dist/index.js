@@ -6,13 +6,16 @@ var app = require('./app.js');
 var object_display = require('./object/display.js');
 var object_text = require('./object/text.js');
 var position_bounds = require('./position/bounds.js');
-var position_point = require('./point-DiKax5LN.js');
+var position_point = require('./point-7Z4N0XYY.js');
 require('./utils.js');
+require('./common/intercept.js');
 require('./common/event.js');
 
 
 
 exports.App = app.App;
+exports.pauseUpdate = app.pauseUpdate;
+exports.shouldUpdate = app.shouldUpdate;
 exports.Display = object_display.Display;
 exports.Text = object_text.Text;
 exports.Bounds = position_bounds.Bounds;

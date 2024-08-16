@@ -2,24 +2,17 @@
 (function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
 'use strict';
 
-var common_event = require('../common/event.js');
-var position_point = require('../point-DiKax5LN.js');
+var app = require('../app.js');
+var position_point = require('../point-7Z4N0XYY.js');
+require('../utils.js');
+require('../common/event.js');
+require('../common/intercept.js');
 
-class Display extends common_event.Event {
+class Display {
     constructor() {
-        super();
         console.log('on');
-        this.on('shouldUpdate', () => {
-            if (!this._shouldUpdate)
-                this._shouldUpdate = true;
-        });
-        this.position.on('shouldUpdate', () => {
-            if (!this._shouldUpdate)
-                this._shouldUpdate = true;
-        });
     }
     _angle = 0;
-    _shouldUpdate = false;
     get angle() {
         return this._angle;
     }
@@ -43,10 +36,9 @@ class Display extends common_event.Event {
     anchor = new position_point.Point([0, 0]);
     scale = new position_point.Point([1, 1]);
     onAdd() {
-        this._shouldUpdate = true;
     }
     onRemove() {
-        this._shouldUpdate = true;
+        app.shouldUpdate();
     }
     render(ctx) {
         this._render(ctx);

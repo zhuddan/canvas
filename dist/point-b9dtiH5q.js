@@ -1,6 +1,7 @@
 
 (function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
 import { Event } from './common/event.mjs';
+import { interceptUpdate } from './common/intercept.mjs';
 
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -30,27 +31,6 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
     var e = new Error(message);
     return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
 };
-
-function updateIntercept() {
-    return function (target, propertyKey, descriptor) {
-        const originalSet = descriptor.set;
-        const originalGet = descriptor.get;
-        descriptor.set = function (newValue) {
-            if (originalSet) {
-                const oldValue = originalGet?.call(this);
-                if (newValue !== oldValue) {
-                    originalSet.call(this, newValue);
-                    // target.on('shouldUpdate', console.log)
-                    target.emit.call(this, 'shouldUpdate', propertyKey);
-                }
-                else {
-                    console.log([newValue, oldValue], '新旧值相同');
-                }
-            }
-        };
-        Object.defineProperty(target, propertyKey, descriptor);
-    };
-}
 
 class Point extends Event {
     shouldUpdate = false;
@@ -94,10 +74,10 @@ class Point extends Event {
     }
 }
 __decorate([
-    updateIntercept()
+    interceptUpdate()
 ], Point.prototype, "x", null);
 __decorate([
-    updateIntercept()
+    interceptUpdate()
 ], Point.prototype, "y", null);
 function createPoint(maybePoint) {
     if (maybePoint instanceof Point) {
@@ -106,5 +86,5 @@ function createPoint(maybePoint) {
     return new Point(maybePoint);
 }
 
-export { Point as P, __decorate as _, createPoint as c, updateIntercept as u };
-//# sourceMappingURL=point-D9q2E1O2.js.map
+export { Point as P, __decorate as _, createPoint as c };
+//# sourceMappingURL=point-b9dtiH5q.js.map

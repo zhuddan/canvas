@@ -4,6 +4,8 @@ interface AppConstructorOptions {
     height?: number;
     dpr?: boolean;
 }
+export declare function shouldUpdate(): void;
+export declare function pauseUpdate(): void;
 export declare class App {
     canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
@@ -16,6 +18,7 @@ export declare class App {
     private debug;
     children: Display[];
     add(object: Display): void;
+    remove(object: Display): void;
     private update;
 }
 export {};
