@@ -47,7 +47,6 @@ export class App {
     const ctx = this.ctx
     this.ctx.strokeStyle = '#00ffcc'
     this.beforeRender()
-    ctx.stroke()
     ctx.textBaseline = 'top'
     ctx.font = '12px 黑体'
     for (let row = 0; row < Math.ceil((this.width + 1) / 100); row++) {
@@ -62,6 +61,7 @@ export class App {
         // ctx.stroke()
       }
     }
+    ctx.stroke()
     this.afterRender()
   }
 
