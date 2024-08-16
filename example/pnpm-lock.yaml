@@ -1,13 +1,39 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@tweakpane/core': ^2.0.4
   '@tweenjs/tween.js': ^25.0.0
+  '@types/lodash-es': ^4.17.12
+  tweakpane: ^4.0.4
 
 dependencies:
   '@tweenjs/tween.js': 25.0.0
+  tweakpane: 4.0.4
+
+devDependencies:
+  '@tweakpane/core': 2.0.4
+  '@types/lodash-es': 4.17.12
 
 packages:
 
+  /@tweakpane/core/2.0.4:
+    resolution: {integrity: sha512-0P3xcmvjBr8AmqMOEDNYIbkiaPwvQPkj8VeJX+8ZYkpRgWWbNp1HLbld0MDI0WJHdom89osH3MmCDLnWEXKI2w==}
+    dev: true
+
   /@tweenjs/tween.js/25.0.0:
     resolution: {integrity: sha512-XKLA6syeBUaPzx4j3qwMqzzq+V4uo72BnlbOjmuljLrRqdsd3qnzvZZoxvMHZ23ndsRS4aufU6JOZYpCbU6T1A==}
+    dev: false
+
+  /@types/lodash-es/4.17.12:
+    resolution: {integrity: sha512-0NgftHUcV4v34VhXm8QBSftKVXtbkBG3ViCjs6+eJ5a6y6Mi/jiFGPc1sC7QK+9BFhWrURE3EOggmWaSxL9OzQ==}
+    dependencies:
+      '@types/lodash': 4.17.7
+    dev: true
+
+  /@types/lodash/4.17.7:
+    resolution: {integrity: sha512-8wTvZawATi/lsmNu10/j2hk1KEP0IvjubqPE3cu1Xz7xfXXt5oCq3SNUz4fMIP4XGF9Ky+Ue2tBA3hcS7LSBlA==}
+    dev: true
+
+  /tweakpane/4.0.4:
+    resolution: {integrity: sha512-RkWD54zDlEbnN01wQPk0ANHGbdCvlJx/E8A1QxhTfCbX+ROWos1Ws2MnhOm39aUGMOh+36TjUwpDmLfmwTr1Fg==}
     dev: false

@@ -33,6 +33,12 @@
     "paths": {
       "https://cdn.jsdelivr.net/npm/@tweenjs/tween.js@25.0.0/dist/tween.esm.js": [
         "./node_modules/@tweenjs/tween.js/dist/tween.d.ts"
+      ],
+      "https://cdn.jsdelivr.net/npm/tweakpane@4.0.4/dist/tweakpane.min.js": [
+        "./node_modules/tweakpane/dist/types/index.d.ts"
+      ],
+      "https://cdn.jsdelivr.net/npm/lodash-es/*": [
+        "./node_modules/@types/lodash-es/*"
       ]
     },
     /* Specify a set of entries that re-map imports to additional lookup locations. */

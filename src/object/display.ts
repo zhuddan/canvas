@@ -1,5 +1,6 @@
 import { pauseUpdate, shouldUpdate } from '../app'
 import { Event } from '../common/event'
+import { interceptUpdate } from '../common/intercept'
 import type {
   MaybePoint,
 } from '../position/point'
@@ -20,11 +21,24 @@ export interface DisplayImpl {
   skew?: MaybePoint
 
   anchor?: MaybePoint
+
+  visible?: boolean
 }
 
 export abstract class Display implements Required<DisplayImpl> {
   constructor() {
     console.log('on')
+  }
+
+  private _visible = true
+
+  get visible() {
+    return this._visible
+  }
+
+  @interceptUpdate()
+  set visible(value) {
+    this._visible = value
   }
 
   private _angle = 0
@@ -58,12 +72,9 @@ export abstract class Display implements Required<DisplayImpl> {
   anchor = new Point([0, 0])
   scale = new Point([1, 1])
 
-  onAdd() {
-  }
+  onAdd() { }
 
-  onRemove() {
-    shouldUpdate()
-  }
+  onRemove() { }
 
   abstract _render(ctx: CanvasRenderingContext2D): void
 

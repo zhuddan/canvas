@@ -2,6 +2,8 @@
 (function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
 import { formatValue } from './utils.mjs';
 
+function NOOP() { }
+
 let __shouldUpdate = false;
 function shouldUpdate() {
     if (!__shouldUpdate)
@@ -17,10 +19,12 @@ class App {
     dpr = 1;
     width;
     height;
-    constructor({ width = 600, height = 800, dpr = true, } = {}) {
+    onUpdate;
+    constructor({ width = 600, height = 800, dpr = true, onUpdate, } = {}) {
         if (dpr) {
             this.dpr = window.devicePixelRatio ?? 1;
         }
+        this.onUpdate = onUpdate ?? NOOP;
         this.canvas = document.createElement('canvas');
         this.ctx = this.canvas.getContext('2d');
         this.canvas.style.width = formatValue(width);
@@ -81,10 +85,11 @@ class App {
         if (__shouldUpdate) {
             this.ctx.clearRect(-this.width, -this.height, this.width * 2, this.height * 2);
             this.debug();
-            const children = [...this.children];
+            const children = [...this.children.filter(e => e.visible)];
             while (children.length) {
                 children.shift()?.render(this.ctx);
             }
+            this.onUpdate();
             pauseUpdate();
         }
     }

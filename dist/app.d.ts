@@ -3,6 +3,7 @@ interface AppConstructorOptions {
     width?: number;
     height?: number;
     dpr?: boolean;
+    onUpdate?: () => void;
 }
 export declare function shouldUpdate(): void;
 export declare function pauseUpdate(): void;
@@ -12,7 +13,8 @@ export declare class App {
     dpr: number;
     width: number;
     height: number;
-    constructor({ width, height, dpr, }?: AppConstructorOptions);
+    onUpdate: () => void;
+    constructor({ width, height, dpr, onUpdate, }?: AppConstructorOptions);
     private beforeRender;
     private afterRender;
     private debug;

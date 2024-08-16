@@ -8,9 +8,13 @@ export interface DisplayImpl {
     scale?: MaybePoint;
     skew?: MaybePoint;
     anchor?: MaybePoint;
+    visible?: boolean;
 }
 export declare abstract class Display implements Required<DisplayImpl> {
     constructor();
+    private _visible;
+    get visible(): boolean;
+    set visible(value: boolean);
     private _angle;
     get angle(): number;
     set angle(value: number);

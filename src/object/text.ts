@@ -26,7 +26,7 @@ export interface IFont {
 }
 
 export class Text extends Display {
-  _text = ''
+  private _text = ''
 
   @interceptUpdate()
   set text(text) {
@@ -43,7 +43,6 @@ export class Text extends Display {
     this.position.x = x
     this.position.y = y
     this.text = text
-    console.log(this)
   }
 
   _render(ctx: CanvasRenderingContext2D) {

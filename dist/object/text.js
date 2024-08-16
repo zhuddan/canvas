@@ -23,7 +23,6 @@ class Text extends object_display.Display {
         this.position.x = x;
         this.position.y = y;
         this.text = text;
-        console.log(this);
     }
     _render(ctx) {
         ctx.textBaseline = 'top';

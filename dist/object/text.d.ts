@@ -23,7 +23,7 @@ export interface IFont {
     fontWeight?: Properties['fontWeight'];
 }
 export declare class Text extends Display {
-    _text: string;
+    private _text;
     set text(text: string);
     get text(): string;
     constructor(text: string, x: number, y: number);

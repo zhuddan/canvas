@@ -1,3 +1,4 @@
+import { NOOP } from './const'
 import type { Display } from './object/display'
 import type { RenderImpl } from './types'
 import { formatValue } from './utils'
@@ -6,6 +7,7 @@ interface AppConstructorOptions {
   width?: number
   height?: number
   dpr?: boolean
+  onUpdate?: () => void
 }
 
 let __shouldUpdate = false
@@ -23,14 +25,19 @@ export class App {
   dpr = 1
   width: number
   height: number
-  constructor({
+  onUpdate: () => void
+  constructor(
+    {
     width = 600,
     height = 800,
-   dpr = true,
-  }: AppConstructorOptions = {}) {
+    dpr = true,
+    onUpdate,
+  }: AppConstructorOptions = {},
+  ) {
     if (dpr) {
       this.dpr = window.devicePixelRatio ?? 1
     }
+    this.onUpdate = onUpdate ?? NOOP
     this.canvas = document.createElement('canvas')!
     this.ctx = this.canvas.getContext('2d')!
     this.canvas.style.width = formatValue(width)
@@ -95,7 +102,6 @@ export class App {
     window.requestAnimationFrame(() => {
       this.update()
     })
-
     if (__shouldUpdate) {
       this.ctx.clearRect(
         -this.width,
@@ -104,11 +110,11 @@ export class App {
         this.height * 2,
       )
       this.debug()
-
-      const children = [...this.children]
+      const children = [...this.children.filter(e => e.visible)]
       while (children.length) {
         children.shift()?.render(this.ctx)
       }
+      this.onUpdate()
       pauseUpdate()
     }
   }
