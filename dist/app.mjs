@@ -31,8 +31,9 @@ class App {
         this.ctx.restore();
     }
     debug() {
-        this.beforeRender();
         const ctx = this.ctx;
+        this.ctx.strokeStyle = '#00ffcc';
+        this.beforeRender();
         ctx.stroke();
         ctx.textBaseline = 'top';
         ctx.font = '12px 黑体';
