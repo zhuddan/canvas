@@ -14,7 +14,7 @@ class Text extends Display {
     }
     _render(ctx) {
         ctx.textBaseline = 'top';
-        ctx.font = '19px 黑体';
+        ctx.font = '18px 黑体';
         ctx.fillText(this.text, this.position.x, this.position.y);
         this._shouldUpdate = false;
     }
