@@ -1,0 +1,1 @@
+{"version":3,"file":"const.mjs","sources":["../src/const.ts"],"sourcesContent":["export function NOOP() {}\n"],"names":[],"mappings":";;AAAM,SAAU,IAAI,GAAA;;;;"}

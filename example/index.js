@@ -28,16 +28,21 @@ pane.addBinding(text, 'y', {
   min: 0,
   max: app.height,
 })
+
+pane.addBinding(text.style, 'fontSize', {
+  min: 12,
+  max: 80,
+})
+
 pane.addBinding(text, 'text')
+pane.addBinding(text.style, 'fill')
 
 const tween = new Tween(text)
   .to({ x: 300, y: 200 }, 1500)
   .easing(Easing.Quadratic.InOut)
   .start()
   .onComplete(() => {
-    setTimeout(() => {
-      text.x = 0
-    }, 100)
+
   })
 
 /**

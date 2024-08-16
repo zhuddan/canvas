@@ -14,7 +14,7 @@ export function interceptUpdate() {
           shouldUpdate()
         }
         else {
-          console.warn([newValue, oldValue], '新旧值相同')
+          // console.warn([newValue, oldValue], '新旧值相同')
         }
       }
     }

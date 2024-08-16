@@ -3,10 +3,12 @@
 'use strict';
 
 var utils = require('../utils.js');
-var position_point = require('../point-7Z4N0XYY.js');
+var position_point = require('./point.js');
+require('../tslib.es6-E-TKQeY2.js');
 require('../common/event.js');
 require('../common/intercept.js');
 require('../app.js');
+require('../const.js');
 
 class Bounds {
     min;

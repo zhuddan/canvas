@@ -1,3 +1,4 @@
+import type { TextStyle } from './style/text-style'
 import type { IFont } from './types'
 
 export function formatValue(val: string | number) {
@@ -13,9 +14,9 @@ export function createCanvasFontString({
   fontSize,
   fontStyle = 'normal',
   fontWeight = 'normal',
-}: IFont): string {
-  fontSize = typeof fontSize === 'string' ? fontSize : `${fontSize}px`
-  return `${fontStyle} ${fontWeight} ${fontSize} ${fontFamily}`
+}: TextStyle): string {
+  const _fontSize = typeof fontSize === 'string' ? fontSize : `${fontSize}px`
+  return `${fontStyle} ${fontWeight} ${_fontSize} ${fontFamily}`
 }
 
 export function calcMin(numbers: number[]) {

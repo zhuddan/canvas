@@ -112,7 +112,9 @@ export class App {
       this.debug()
       const children = [...this.children.filter(e => e.visible)]
       while (children.length) {
+        this.beforeRender()
         children.shift()?.render(this.ctx)
+        this.afterRender()
       }
       this.onUpdate()
       pauseUpdate()

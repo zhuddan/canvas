@@ -7,6 +7,7 @@ import type {
 import {
   Point,
 } from '../position/point'
+import type { BaseStyle } from '../style/base-style'
 import type { RenderImpl } from '../types'
 
 /**
@@ -29,6 +30,8 @@ export abstract class Display implements Required<DisplayImpl> {
   constructor() {
     console.log('on')
   }
+
+  abstract style: BaseStyle
 
   private _visible = true
 

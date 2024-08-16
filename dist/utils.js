@@ -10,8 +10,8 @@ function formatValue(val) {
  * 由于 canvas 绘制的差异性部分属性不生效故舍弃
  */
 function createCanvasFontString({ fontFamily, fontSize, fontStyle = 'normal', fontWeight = 'normal', }) {
-    fontSize = typeof fontSize === 'string' ? fontSize : `${fontSize}px`;
-    return `${fontStyle} ${fontWeight} ${fontSize} ${fontFamily}`;
+    const _fontSize = typeof fontSize === 'string' ? fontSize : `${fontSize}px`;
+    return `${fontStyle} ${fontWeight} ${_fontSize} ${fontFamily}`;
 }
 function calcMin(numbers) {
     return numbers.reduce((a, b) => {

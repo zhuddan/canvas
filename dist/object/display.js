@@ -2,11 +2,13 @@
 (function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
 'use strict';
 
-var position_point = require('../point-7Z4N0XYY.js');
+var tslib_es6 = require('../tslib.es6-E-TKQeY2.js');
 var common_intercept = require('../common/intercept.js');
-require('../common/event.js');
+var position_point = require('../position/point.js');
 require('../app.js');
+require('../const.js');
 require('../utils.js');
+require('../common/event.js');
 
 class Display {
     constructor() {
@@ -48,7 +50,7 @@ class Display {
         this._render(ctx);
     }
 }
-position_point.__decorate([
+tslib_es6.__decorate([
     common_intercept.interceptUpdate()
 ], Display.prototype, "visible", null);
 

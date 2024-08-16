@@ -1,10 +1,10 @@
-import type { IFont } from './types';
+import type { TextStyle } from './style/text-style';
 export declare function formatValue(val: string | number): string;
 /**
  * 创造 [CSS-font](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font) 字符串
  * 由于 canvas 绘制的差异性部分属性不生效故舍弃
  */
-export declare function createCanvasFontString({ fontFamily, fontSize, fontStyle, fontWeight, }: IFont): string;
+export declare function createCanvasFontString({ fontFamily, fontSize, fontStyle, fontWeight, }: TextStyle): string;
 export declare function calcMin(numbers: number[]): number;
 export declare function calcMax(numbers: number[]): number;
 /**

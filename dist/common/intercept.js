@@ -3,6 +3,7 @@
 'use strict';
 
 var app = require('../app.js');
+require('../const.js');
 require('../utils.js');
 
 function interceptUpdate() {
@@ -15,9 +16,6 @@ function interceptUpdate() {
                 if (newValue !== oldValue) {
                     originalSet.call(this, newValue);
                     app.shouldUpdate();
-                }
-                else {
-                    console.warn([newValue, oldValue], '新旧值相同');
                 }
             }
         };

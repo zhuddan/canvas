@@ -6,9 +6,13 @@ var app = require('./app.js');
 var object_display = require('./object/display.js');
 var object_text = require('./object/text.js');
 var position_bounds = require('./position/bounds.js');
-var position_point = require('./point-7Z4N0XYY.js');
+var position_point = require('./position/point.js');
+require('./const.js');
 require('./utils.js');
+require('./tslib.es6-E-TKQeY2.js');
 require('./common/intercept.js');
+require('./style/text-style.js');
+require('./style/base-style.js');
 require('./common/event.js');
 
 

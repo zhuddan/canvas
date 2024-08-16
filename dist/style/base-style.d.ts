@@ -23,8 +23,10 @@ export interface BaseStyleImpl {
     alpha?: number;
 }
 export declare abstract class BaseStyle implements Required<BaseStyleImpl> {
-    fill: string;
     stroke: string;
     strokeWeight: number;
     alpha: number;
+    private _fill;
+    set fill(value: string);
+    get fill(): string;
 }

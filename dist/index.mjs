@@ -4,8 +4,12 @@ export { App, pauseUpdate, shouldUpdate } from './app.mjs';
 export { Display } from './object/display.mjs';
 export { Text } from './object/text.mjs';
 export { Bounds, createBounds } from './position/bounds.mjs';
-export { P as Point, c as createPoint } from './point-b9dtiH5q.js';
+export { Point, createPoint } from './position/point.mjs';
+import './const.mjs';
 import './utils.mjs';
+import './tslib.es6-Dn8e3nS6.js';
 import './common/intercept.mjs';
+import './style/text-style.mjs';
+import './style/base-style.mjs';
 import './common/event.mjs';
 //# sourceMappingURL=index.mjs.map

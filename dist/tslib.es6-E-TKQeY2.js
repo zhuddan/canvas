@@ -1,7 +1,6 @@
 
 (function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
-import { Event } from './common/event.mjs';
-import { interceptUpdate } from './common/intercept.mjs';
+'use strict';
 
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -32,59 +31,5 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
     return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
 };
 
-class Point extends Event {
-    shouldUpdate = false;
-    _x = -Infinity;
-    set x(x) {
-        this._x = x;
-    }
-    get x() {
-        return this._x;
-    }
-    _y = -Infinity;
-    set y(y) {
-        this._y = y;
-    }
-    get y() {
-        return this._y;
-    }
-    constructor(arg1) {
-        super();
-        if (Array.isArray(arg1)) {
-            [this._x, this._y] = arg1;
-        }
-        else {
-            this._x = arg1.x;
-            this._y = arg1.y;
-        }
-    }
-    translate(p) {
-        p = createPoint(p);
-        this.x += p.x;
-        this.y += p.y;
-        return this;
-    }
-    reverse() {
-        this.x *= -1;
-        this.y *= -1;
-        return this;
-    }
-    clone() {
-        return new Point([this.x, this.y]);
-    }
-}
-__decorate([
-    interceptUpdate()
-], Point.prototype, "x", null);
-__decorate([
-    interceptUpdate()
-], Point.prototype, "y", null);
-function createPoint(maybePoint) {
-    if (maybePoint instanceof Point) {
-        return maybePoint;
-    }
-    return new Point(maybePoint);
-}
-
-export { Point as P, __decorate as _, createPoint as c };
-//# sourceMappingURL=point-b9dtiH5q.js.map
+exports.__decorate = __decorate;
+//# sourceMappingURL=tslib.es6-E-TKQeY2.js.map

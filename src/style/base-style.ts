@@ -1,3 +1,5 @@
+import { interceptUpdate } from '../common/intercept'
+
 export interface BaseStyleImpl {
   /**
    * 填充颜色
@@ -23,8 +25,18 @@ export interface BaseStyleImpl {
   alpha?: number
 }
 export abstract class BaseStyle implements Required<BaseStyleImpl> {
-  fill = '#000'
   stroke = '#000'
   strokeWeight = 1
   alpha = 1
+
+  private _fill = '#000'
+
+  @interceptUpdate()
+  set fill(value) {
+    this._fill = value
+  }
+
+  get fill() {
+    return this._fill
+  }
 }
