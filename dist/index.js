@@ -3,9 +3,20 @@
 'use strict';
 
 var app = require('./app.js');
+var object_display = require('./object/display.js');
+var object_text = require('./object/text.js');
+var position_bounds = require('./position/bounds.js');
+var position_point = require('./position/point.js');
 require('./utils.js');
+require('./common/event.js');
 
 
 
 exports.App = app.App;
+exports.Display = object_display.Display;
+exports.Text = object_text.Text;
+exports.Bounds = position_bounds.Bounds;
+exports.createBounds = position_bounds.createBounds;
+exports.Point = position_point.Point;
+exports.createPoint = position_point.createPoint;
 //# sourceMappingURL=index.js.map

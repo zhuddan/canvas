@@ -1,4 +1,5 @@
 import type { Properties } from 'csstype'
+import { Point } from '../position/point'
 import { Display } from './display'
 
 export interface IFont {
@@ -25,5 +26,16 @@ export interface IFont {
 }
 
 export class Text extends Display {
+  constructor(public text: string, x: number, y: number) {
+    super()
+    this.position.x = x
+    this.position.y = y
+  }
 
+  _render(ctx: CanvasRenderingContext2D) {
+    ctx.textBaseline = 'top'
+    ctx.font = '100px 黑体'
+    ctx.fillText(this.text, this.position.x, this.position.y)
+    this._shouldUpdate = false
+  }
 };

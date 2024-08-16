@@ -1,3 +1,5 @@
+import type { Display } from './object/display'
+import type { RenderImpl } from './types'
 import { formatValue } from './utils'
 
 interface AppConstructorOptions {
@@ -30,6 +32,7 @@ export class App {
     this.width = width
     this.height = height
     this.debug()
+    this.update()
   }
 
   private beforeRender() {
@@ -59,5 +62,39 @@ export class App {
       }
     }
     this.afterRender()
+  }
+
+  children: Display[] = []
+  add(object: Display) {
+    this.children.push(object)
+  }
+
+  // renders: ((ctx: CanvasRenderingContext2D) => void)[] = []
+
+  private update() {
+    // window.requestAnimationFrame(() => {
+    //   this.update()
+    // })
+    const needUpdateObject: Display[] = []
+    for (let index = 0; index < this.children.length; index++) {
+      const object = this.children[index]
+      if (object._shouldUpdate) {
+        needUpdateObject.push(object)
+      }
+    }
+    if (needUpdateObject.length) {
+      this.ctx.clearRect(
+        -this.width,
+        -this.height,
+        this.width * 2,
+        this.height * 2,
+      )
+      this.debug()
+    }
+
+    const children = [...this.children]
+    while (children.length) {
+      children.shift()?.render(this.ctx)
+    }
   }
 }

@@ -4,8 +4,22 @@
 
 var object_display = require('./display.js');
 require('../position/point.js');
+require('../common/event.js');
 
 class Text extends object_display.Display {
+    text;
+    constructor(text, x, y) {
+        super();
+        this.text = text;
+        this.position.x = x;
+        this.position.y = y;
+    }
+    _render(ctx) {
+        ctx.textBaseline = 'top';
+        ctx.font = '100px 黑体';
+        ctx.fillText(this.text, this.position.x, this.position.y);
+        this._shouldUpdate = false;
+    }
 }
 
 exports.Text = Text;

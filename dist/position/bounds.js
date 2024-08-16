@@ -4,6 +4,7 @@
 
 var utils = require('../utils.js');
 var position_point = require('./point.js');
+require('../common/event.js');
 
 class Bounds {
     min;

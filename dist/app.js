@@ -24,6 +24,7 @@ class App {
         this.width = width;
         this.height = height;
         this.debug();
+        this.update();
     }
     beforeRender() {
         this.ctx.save();
@@ -50,6 +51,31 @@ class App {
             }
         }
         this.afterRender();
+    }
+    children = [];
+    add(object) {
+        this.children.push(object);
+    }
+    // renders: ((ctx: CanvasRenderingContext2D) => void)[] = []
+    update() {
+        // window.requestAnimationFrame(() => {
+        //   this.update()
+        // })
+        const needUpdateObject = [];
+        for (let index = 0; index < this.children.length; index++) {
+            const object = this.children[index];
+            if (object._shouldUpdate) {
+                needUpdateObject.push(object);
+            }
+        }
+        if (needUpdateObject.length) {
+            this.ctx.clearRect(-this.width, -this.height, this.width * 2, this.height * 2);
+            this.debug();
+        }
+        const children = [...this.children];
+        while (children.length) {
+            children.shift()?.render(this.ctx);
+        }
     }
 }
 

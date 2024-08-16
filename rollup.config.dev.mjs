@@ -24,6 +24,9 @@ const devOptions = {
       sourcemap: true,
     },
   ],
+  external: [
+    'mitt',
+  ],
   plugins: [
     del({
       targets: 'dist/*',

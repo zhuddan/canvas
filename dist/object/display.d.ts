@@ -11,9 +11,16 @@ export interface DisplayImpl {
 }
 export declare abstract class Display implements Required<DisplayImpl> {
     _angle: number;
+    _shouldUpdate: boolean;
     get angle(): number;
+    position: Point;
+    constructor();
     set angle(value: number);
     skew: Point;
     anchor: Point;
     scale: Point;
+    onAdd(): void;
+    onRemove(): void;
+    abstract _render(ctx: CanvasRenderingContext2D): void;
+    render(ctx: CanvasRenderingContext2D): void;
 }

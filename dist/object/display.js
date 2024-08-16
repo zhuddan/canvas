@@ -3,11 +3,20 @@
 'use strict';
 
 var position_point = require('../position/point.js');
+require('../common/event.js');
 
 class Display {
     _angle = 1;
+    _shouldUpdate = false;
     get angle() {
         return this._angle;
+    }
+    position;
+    constructor() {
+        this.position = new position_point.Point([-Infinity, -Infinity]);
+        this.position.on('shouldUpdate', () => {
+            this._shouldUpdate = true;
+        });
     }
     set angle(value) {
         this._angle = value;
@@ -15,6 +24,15 @@ class Display {
     skew = new position_point.Point([0, 0]);
     anchor = new position_point.Point([0, 0]);
     scale = new position_point.Point([1, 1]);
+    onAdd() {
+        this._shouldUpdate = true;
+    }
+    onRemove() {
+        this._shouldUpdate = true;
+    }
+    render(ctx) {
+        this._render(ctx);
+    }
 }
 
 exports.Display = Display;

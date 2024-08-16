@@ -126,4 +126,5 @@ export interface ImageStyle extends LineBaseStyle {
     crop?: MaybeBounds;
     objectFit?: Properties['objectFit'];
 }
+export type RenderImpl = (ctx: CanvasRenderingContext2D) => void;
 export {};

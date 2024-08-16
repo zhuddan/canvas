@@ -82,5 +82,8 @@
     "typedoc": "^0.26.5",
     "typedoc-plugin-markdown": "^4.2.3",
     "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "mitt": "^3.0.1"
   }
 }

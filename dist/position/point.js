@@ -2,10 +2,32 @@
 (function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
 'use strict';
 
-class Point {
-    x;
-    y;
+var common_event = require('../common/event.js');
+
+class Point extends common_event.Event {
+    shouldUpdate = false;
+    _x = -Infinity;
+    set x(x) {
+        if (x !== this._x) {
+            this._x = x;
+            this.emit('shouldUpdate', 'update');
+        }
+    }
+    get x() {
+        return this._x;
+    }
+    _y = -Infinity;
+    set y(y) {
+        if (y !== this._y) {
+            this._y = y;
+            this.emit('shouldUpdate', 'update');
+        }
+    }
+    get y() {
+        return this._y;
+    }
     constructor(arg1) {
+        super();
         if (Array.isArray(arg1)) {
             [this.x, this.y] = arg1;
         }
