@@ -45,7 +45,7 @@ class App {
                 ctx.moveTo(row * 100 - 100, col * 100);
                 ctx.lineTo(row * 100, col * 100);
                 ctx.lineTo(row * 100, col * 100 - 100);
-                ctx.stroke();
+                // ctx.stroke()
             }
         }
         this.afterRender();

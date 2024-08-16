@@ -56,6 +56,9 @@
     "doc": "npx typedoc --out docs src/index.ts",
     "serve": "http-server -c-0 -p 3033 --cors"
   },
+  "dependencies": {
+    "mitt": "^3.0.1"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^2.24.1",
     "@dcloudio/types": "^3.4.12",
@@ -82,8 +85,5 @@
     "typedoc": "^0.26.5",
     "typedoc-plugin-markdown": "^4.2.3",
     "typescript": "^5.5.4"
-  },
-  "dependencies": {
-    "mitt": "^3.0.1"
   }
 }
