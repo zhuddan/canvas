@@ -40,7 +40,7 @@ const devOptions = {
       port: 13000,
       contentBase: '.',
       openPage: '/example/index.html',
-      open: true,
+      // open: true,
     }),
   ],
 }

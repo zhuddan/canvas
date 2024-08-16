@@ -4,7 +4,7 @@ export { App } from './app.mjs';
 export { Display } from './object/display.mjs';
 export { Text } from './object/text.mjs';
 export { Bounds, createBounds } from './position/bounds.mjs';
-export { Point, createPoint } from './position/point.mjs';
+export { P as Point, c as createPoint } from './point-D9q2E1O2.js';
 import './utils.mjs';
 import './common/event.mjs';
 //# sourceMappingURL=index.mjs.map

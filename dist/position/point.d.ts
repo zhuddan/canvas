@@ -6,10 +6,10 @@ export interface PointObject {
 export type PointArray = [number, number];
 export type MaybePoint = PointObject | PointArray | Point;
 export declare class Point extends Event<{
-    shouldUpdate: 'update';
+    shouldUpdate: any;
 }> {
     shouldUpdate: boolean;
-    private _x;
+    _x: number;
     set x(x: number);
     get x(): number;
     private _y;

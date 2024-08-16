@@ -1,3 +1,4 @@
+import { Event } from '../common/event';
 import type { MaybePoint } from '../position/point';
 import { Point } from '../position/point';
 /**
@@ -9,13 +10,19 @@ export interface DisplayImpl {
     skew?: MaybePoint;
     anchor?: MaybePoint;
 }
-export declare abstract class Display implements Required<DisplayImpl> {
-    _angle: number;
+export declare abstract class Display extends Event<{
+    shouldUpdate: any;
+}> implements Required<DisplayImpl> {
+    constructor();
+    private _angle;
     _shouldUpdate: boolean;
     get angle(): number;
-    position: Point;
-    constructor();
     set angle(value: number);
+    get x(): number;
+    set x(val: number);
+    get y(): number;
+    set y(val: number);
+    position: Point;
     skew: Point;
     anchor: Point;
     scale: Point;

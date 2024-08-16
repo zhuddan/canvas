@@ -15,7 +15,6 @@ specifiers:
   eslint: 9.5.0
   eslint-plugin-format: ^0.1.2
   miniprogram-api-typings: ^3.12.3
-  mitt: ^3.0.1
   picocolors: ^1.0.1
   rollup: ^4.20.0
   rollup-plugin-delete: ^2.0.0
@@ -24,12 +23,10 @@ specifiers:
   rollup-plugin-serve: ^1.1.1
   rollup-plugin-terser: ^7.0.2
   serve: ^14.2.3
+  tslib: ^2.6.3
   typedoc: ^0.26.5
   typedoc-plugin-markdown: ^4.2.3
   typescript: ^5.5.4
-
-dependencies:
-  mitt: 3.0.1
 
 devDependencies:
   '@antfu/eslint-config': 2.25.2_jlqojokxmqrij5zpca5urs32aq
@@ -38,7 +35,7 @@ devDependencies:
   '@rollup/plugin-json': 6.1.0_rollup@4.20.0
   '@rollup/plugin-node-resolve': 15.2.3_rollup@4.20.0
   '@rollup/plugin-terser': 0.4.4_rollup@4.20.0
-  '@rollup/plugin-typescript': 11.1.6_4dmnxq52hyi3qht3ljxkwvrksu
+  '@rollup/plugin-typescript': 11.1.6_xkndef6vcoucnol3va4ourrlv4
   '@vue/compiler-sfc': 3.4.38
   bumpp: 9.5.1
   cross-env: 7.0.3
@@ -54,6 +51,7 @@ devDependencies:
   rollup-plugin-serve: 1.1.1
   rollup-plugin-terser: 7.0.2_rollup@4.20.0
   serve: 14.2.3
+  tslib: 2.6.3
   typedoc: 0.26.5_typescript@5.5.4
   typedoc-plugin-markdown: 4.2.5_typedoc@0.26.5
   typescript: 5.5.4
@@ -491,7 +489,7 @@ packages:
       terser: 5.31.6
     dev: true
 
-  /@rollup/plugin-typescript/11.1.6_4dmnxq52hyi3qht3ljxkwvrksu:
+  /@rollup/plugin-typescript/11.1.6_xkndef6vcoucnol3va4ourrlv4:
     resolution: {integrity: sha512-R92yOmIACgYdJ7dJ97p4K69I8gg6IEHt8M7dUBxN3W6nrO8uUxX5ixl0yU/N3aZTi8WhPuICvOHXQvF6FaykAA==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -507,6 +505,7 @@ packages:
       '@rollup/pluginutils': 5.1.0_rollup@4.20.0
       resolve: 1.22.8
       rollup: 4.20.0
+      tslib: 2.6.3
       typescript: 5.5.4
     dev: true
 
@@ -2901,10 +2900,6 @@ packages:
       minipass: 3.3.6
       yallist: 4.0.0
     dev: true
-
-  /mitt/3.0.1:
-    resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
-    dev: false
 
   /mkdirp/1.0.4:
     resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}

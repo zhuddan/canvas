@@ -1,20 +1,19 @@
-import mitt from 'mitt'
 import { Event } from '../common/event'
+import { updateIntercept } from '../common/intercept'
 
 export interface PointObject { x: number, y: number }
 export type PointArray = [number, number]
 export type MaybePoint = PointObject | PointArray | Point
+
 export class Point extends Event<{
-  shouldUpdate: 'update'
+  shouldUpdate: any
 }> {
   shouldUpdate = false
-  private _x = -Infinity
 
+  _x = -Infinity
+  @updateIntercept()
   set x(x) {
-    if (x !== this._x) {
-      this._x = x
-      this.emit('shouldUpdate', 'update')
-    }
+    this._x = x
   }
 
   get x() {
@@ -23,11 +22,9 @@ export class Point extends Event<{
 
   private _y = -Infinity
 
+  @updateIntercept()
   set y(y) {
-    if (y !== this._y) {
-      this._y = y
-      this.emit('shouldUpdate', 'update')
-    }
+    this._y = y
   }
 
   get y() {
@@ -37,14 +34,11 @@ export class Point extends Event<{
   constructor(arg1: PointObject | PointArray) {
     super()
     if (Array.isArray(arg1)) {
-      [this.x, this.y] = arg1
-    }
-    else if (typeof arg1 === 'number') {
-      this.x = this.y = arg1
+      [this._x, this._y] = arg1
     }
     else {
-      this.x = arg1.x
-      this.y = arg1.y
+      this._x = arg1.x
+      this._y = arg1.y
     }
   }
 

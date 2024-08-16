@@ -1,5 +1,5 @@
 import type { Properties } from 'csstype'
-import { Point } from '../position/point'
+import { updateIntercept } from '../common/intercept'
 import { Display } from './display'
 
 export interface IFont {
@@ -26,15 +26,29 @@ export interface IFont {
 }
 
 export class Text extends Display {
-  constructor(public text: string, x: number, y: number) {
+  _text = ''
+
+  @updateIntercept()
+  set text(text) {
+    console.log('text', text)
+    this._text = text
+  }
+
+  get text() {
+    return this._text
+  }
+
+  constructor(text: string, x: number, y: number) {
     super()
     this.position.x = x
     this.position.y = y
+    this.text = text
+    console.log(this)
   }
 
   _render(ctx: CanvasRenderingContext2D) {
     ctx.textBaseline = 'top'
-    ctx.font = '18px 黑体'
+    ctx.font = '48px bold 宋体 '
     ctx.fillText(this.text, this.position.x, this.position.y)
     this._shouldUpdate = false
   }

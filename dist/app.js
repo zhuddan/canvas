@@ -40,6 +40,7 @@ class App {
         ctx.font = '12px 黑体';
         for (let row = 0; row < Math.ceil((this.width + 1) / 100); row++) {
             for (let col = 0; col < Math.ceil((this.height + 1) / 100); col++) {
+                ctx.beginPath();
                 ctx.fillText(`${row * 100},${col * 100}`, row * 100, col * 100);
                 if (row === 0 || col === 0) {
                     continue;
@@ -47,21 +48,19 @@ class App {
                 ctx.moveTo(row * 100 - 100, col * 100);
                 ctx.lineTo(row * 100, col * 100);
                 ctx.lineTo(row * 100, col * 100 - 100);
-                // ctx.stroke()
+                ctx.stroke();
             }
         }
-        ctx.stroke();
         this.afterRender();
     }
     children = [];
     add(object) {
         this.children.push(object);
     }
-    // renders: ((ctx: CanvasRenderingContext2D) => void)[] = []
     update() {
-        // window.requestAnimationFrame(() => {
-        //   this.update()
-        // })
+        window.requestAnimationFrame(() => {
+            this.update();
+        });
         const needUpdateObject = [];
         for (let index = 0; index < this.children.length; index++) {
             const object = this.children[index];
@@ -72,10 +71,10 @@ class App {
         if (needUpdateObject.length) {
             this.ctx.clearRect(-this.width, -this.height, this.width * 2, this.height * 2);
             this.debug();
-        }
-        const children = [...this.children];
-        while (children.length) {
-            children.shift()?.render(this.ctx);
+            const children = [...this.children];
+            while (children.length) {
+                children.shift()?.render(this.ctx);
+            }
         }
     }
 }

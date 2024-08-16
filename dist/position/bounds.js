@@ -3,7 +3,7 @@
 'use strict';
 
 var utils = require('../utils.js');
-var position_point = require('./point.js');
+var position_point = require('../point-DiKax5LN.js');
 require('../common/event.js');
 
 class Bounds {

@@ -5,7 +5,7 @@
 class Event {
     all = new Map();
     on(type, handler) {
-        const handlers = this.all.get(type);
+        const handlers = this.all?.get(type);
         if (handlers) {
             handlers.push(handler);
         }
@@ -21,7 +21,7 @@ class Event {
      * @memberOf mitt
      */
     off(type, handler) {
-        const handlers = this.all.get(type);
+        const handlers = this.all?.get(type);
         if (handlers) {
             if (handler) {
                 handlers.splice(handlers.indexOf(handler) >>> 0, 1);
@@ -42,7 +42,7 @@ class Event {
      * @memberOf mitt
      */
     emit(type, evt) {
-        let handlers = this.all.get(type);
+        let handlers = this.all?.get(type);
         if (handlers) {
             handlers
                 .slice()
@@ -50,7 +50,7 @@ class Event {
                 handler(evt);
             });
         }
-        handlers = this.all.get('*');
+        handlers = this.all?.get('*');
         if (handlers) {
             handlers
                 .slice()

@@ -23,7 +23,9 @@ export interface IFont {
     fontWeight?: Properties['fontWeight'];
 }
 export declare class Text extends Display {
-    text: string;
+    _text: string;
+    set text(text: string);
+    get text(): string;
     constructor(text: string, x: number, y: number);
     _render(ctx: CanvasRenderingContext2D): void;
 }

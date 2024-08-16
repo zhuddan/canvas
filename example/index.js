@@ -1,36 +1,40 @@
 // @ts-check
+import { Easing, Tween } from 'https://cdn.jsdelivr.net/npm/@tweenjs/tween.js@25.0.0/dist/tween.esm.js'
 import { App, Text } from '../dist/index.mjs'
 
 const app = new App({
 
 })
 
-const text = new Text('哈哈', 100, 100)
+const text = new Text('哈哈', 150, 150)
 app.add(text)
 document.body.appendChild(app.canvas)
 
-const start = performance.now()
-let _last = performance.now()
+const tween = new Tween(text)
+  .to({ x: 300, y: 200 }, 1500)
+  .easing(Easing.Quadratic.InOut)
+  .start()
+  .onComplete(() => {
 
-function update() {
-  const now = performance.now()
-  if (text.position.x > 200) {
-    const text2 = new Text(`共耗时${now - start}`, 100, 550)
-    app.add(text2)
-    app.update()
-    return
-  }
-  text.position.x += 10
-  app.update()
-  console.log(now - _last)
-  _last = now
-  window.requestAnimationFrame(update)
+  })
+
+/**
+ *
+ * @param {number} time
+ */
+function animate(time) {
+  tween.update(time)
+  requestAnimationFrame(animate)
 }
 
-update()
+const btn = document.getElementById('button')
 
-// function test() {
-//   window.requestAnimationFrame(test)
-// }
+const input = /** @type {HTMLInputElement} */(document.getElementById('input'))
 
-// test()
+btn?.addEventListener('click', () => {
+  console.log(input.value)
+  if (input) {
+    text.text = input.value
+  }
+})
+requestAnimationFrame(animate)

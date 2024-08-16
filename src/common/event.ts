@@ -37,7 +37,7 @@ export class Event<Events extends Record<EventType, unknown>, GenericEventHandle
   all: EventHandlerMap<Events> = new Map()
 
   on<Key extends keyof Events>(type: Key, handler: GenericEventHandler) {
-    const handlers: Array<GenericEventHandler> | undefined = this.all.get(type) as Array<GenericEventHandler>
+    const handlers: Array<GenericEventHandler> | undefined = this.all?.get(type) as Array<GenericEventHandler>
     if (handlers) {
       handlers.push(handler)
     }
@@ -54,7 +54,7 @@ export class Event<Events extends Record<EventType, unknown>, GenericEventHandle
    * @memberOf mitt
    */
   off<Key extends keyof Events>(type: Key, handler?: GenericEventHandler) {
-    const handlers: Array<GenericEventHandler> | undefined = this.all!.get(type) as Array<GenericEventHandler>
+    const handlers: Array<GenericEventHandler> | undefined = this.all?.get(type) as Array<GenericEventHandler>
     if (handlers) {
       if (handler) {
         handlers.splice(handlers.indexOf(handler) >>> 0, 1)
@@ -76,7 +76,7 @@ export class Event<Events extends Record<EventType, unknown>, GenericEventHandle
    * @memberOf mitt
    */
   emit<Key extends keyof Events>(type: Key, evt?: Events[Key]) {
-    let handlers = this.all!.get(type)
+    let handlers = this.all?.get(type)
     if (handlers) {
       (handlers as EventHandlerList<Events[keyof Events]>)
         .slice()
@@ -85,7 +85,7 @@ export class Event<Events extends Record<EventType, unknown>, GenericEventHandle
         })
     }
 
-    handlers = this.all!.get('*')
+    handlers = this.all?.get('*')
     if (handlers) {
       (handlers as WildCardEventHandlerList<Events>)
         .slice()

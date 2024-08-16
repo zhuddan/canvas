@@ -1,0 +1,13 @@
+lockfileVersion: 5.4
+
+specifiers:
+  '@tweenjs/tween.js': ^25.0.0
+
+dependencies:
+  '@tweenjs/tween.js': 25.0.0
+
+packages:
+
+  /@tweenjs/tween.js/25.0.0:
+    resolution: {integrity: sha512-XKLA6syeBUaPzx4j3qwMqzzq+V4uo72BnlbOjmuljLrRqdsd3qnzvZZoxvMHZ23ndsRS4aufU6JOZYpCbU6T1A==}
+    dev: false
