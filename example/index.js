@@ -125,6 +125,11 @@ pane.addBinding(text.style, 'filter', {
   },
 })
 
+pane.addBinding(text, 'scale', {
+  min: 1,
+  max: 2,
+})
+
 // const tween = new Tween(text)
 //   .to({ x: 300, y: 200 }, 1500)
 //   .easing(Easing.Quadratic.InOut)

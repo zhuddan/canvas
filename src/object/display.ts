@@ -1,3 +1,4 @@
+import type { App } from '../app'
 import { Dirty } from '../common/dirty'
 import { interceptDirty as displayIntercept } from '../common/intercept'
 import type {
@@ -7,6 +8,7 @@ import {
   Point,
 } from '../position/point'
 import type { BaseStyle } from '../style/base-style'
+import type { FixedLengthArray } from '../types'
 
 /**
  * [单位矩阵变化](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)
@@ -29,6 +31,7 @@ export abstract class Display extends Dirty implements Required<DisplayImpl> {
     super()
   }
 
+  _app: App | null = null
   abstract style: BaseStyle
 
   private _visible = true
@@ -76,7 +79,19 @@ export abstract class Display extends Dirty implements Required<DisplayImpl> {
   abstract _render(ctx: CanvasRenderingContext2D): void
 
   render(ctx: CanvasRenderingContext2D): void {
-    this._render(ctx)
+    if (this.visible) {
+      const dpr = this._app?.dpr ?? 1
+      const transform = [
+        1 * this.scale.x,
+        0,
+        0,
+        1 * this.scale.y,
+        0, // -this.position.x / this.scale.x,
+        0, // -this.position.y / this.scale.y,
+      ].map(e => e * dpr) as FixedLengthArray<6, number>
+      ctx.setTransform(...transform)
+      this._render(ctx)
+    }
   }
 
   onAdd() { }

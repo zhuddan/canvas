@@ -1,3 +1,4 @@
+import type { App } from '../app';
 import { Dirty } from '../common/dirty';
 import type { MaybePoint } from '../position/point';
 import { Point } from '../position/point';
@@ -14,6 +15,7 @@ export interface DisplayImpl {
 }
 export declare abstract class Display extends Dirty implements Required<DisplayImpl> {
     constructor();
+    _app: App | null;
     abstract style: BaseStyle;
     private _visible;
     get visible(): boolean;

@@ -77,6 +77,7 @@ export class App {
 
   add(object: Display) {
     object.onAdd()
+    object._app = this
     this.children.push(object)
   }
 
@@ -84,6 +85,7 @@ export class App {
     const index = this.children.indexOf(object)
     if (index !== -1) {
       this.children.splice(index, 1)
+      object._app = null
     }
   }
 
@@ -91,6 +93,7 @@ export class App {
     window.requestAnimationFrame(() => {
       this.update()
     })
+
     const children = [...this.children.filter(e => e.visible && e.dirty)]
 
     if (!children.length)
