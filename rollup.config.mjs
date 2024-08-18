@@ -80,11 +80,13 @@ function main() {
    *  @type {import('rollup').InputOptions['plugins']}
    */
   const plugins = [
-    del({
-      targets: ['dist/*', 'temp/*'],
-      force: true,
-      hook: 'buildStart',
-    }),
+    isProduction
+      ? del({
+        targets: ['dist/*', 'temp/*'],
+        force: true,
+        hook: 'buildStart',
+      })
+      : null,
     typescript(isProduction
       ? {
           declaration: false,
