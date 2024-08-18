@@ -1,4 +1,4 @@
-import { interceptUpdate } from '../common/intercept'
+import { interceptDirty } from '../common/intercept'
 import { TextStyle } from '../style/text-style'
 import { createCanvasFontString, formatValue } from '../utils'
 import { Display } from './display'
@@ -7,17 +7,16 @@ export class Text extends Display {
   style: TextStyle
   constructor(text: string, x: number, y: number) {
     super()
-    this.style = new TextStyle()
     this.position.x = x
     this.position.y = y
     this.text = text
+    this.style = new TextStyle(this)
   }
 
   private _text = ''
 
-  @interceptUpdate()
+  @interceptDirty()
   set text(text) {
-    console.log('text', text)
     this._text = text
   }
 

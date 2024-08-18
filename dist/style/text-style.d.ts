@@ -1,4 +1,5 @@
 import type { Properties, Property } from 'csstype';
+import type { Display } from '../object/display';
 import { BaseStyle } from './base-style';
 export interface IFont {
     /**
@@ -48,6 +49,7 @@ export interface IFont {
     textAlign: CanvasTextAlign;
 }
 export declare class TextStyle extends BaseStyle implements Required<IFont> {
+    constructor(display?: Display);
     readonly textBaseline = "top";
     private _fontSize;
     set fontSize(value: Property.FontSize<0 | (string & {})> | (number & {}) | undefined);

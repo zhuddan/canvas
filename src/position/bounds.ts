@@ -1,4 +1,6 @@
+import type { Display } from '../object/display'
 import { calcMax, calcMin } from '../utils'
+import { Coordinate } from './coordinate'
 import type { MaybePoint, PointArray, PointObject } from './point'
 import { Point, createPoint } from './point'
 
@@ -7,12 +9,13 @@ export type MaybeBounds = [
   PointObject | PointArray | Point,
 ] | Bounds
 
-export class Bounds {
+export class Bounds extends Coordinate {
   min: Point
   max: Point
-  constructor(point1: MaybePoint, point2: MaybePoint) {
-    point1 = createPoint(point1)
-    point2 = createPoint(point2)
+  constructor(point1: MaybePoint, point2: MaybePoint, _display?: Display) {
+    super(_display)
+    point1 = createPoint(point1, _display)
+    point2 = createPoint(point2, _display)
     const minX = calcMin([point1.x, point2.x])
     const minY = calcMin([point1.y, point2.y])
     const maxX = calcMax([point1.x, point2.x])
@@ -45,9 +48,9 @@ export class Bounds {
   }
 }
 
-export function createBounds(b: MaybeBounds): Bounds {
+export function createBounds(b: MaybeBounds, _display: Display): Bounds {
   if (b instanceof Bounds) {
     return b
   }
-  return new Bounds(...b)
+  return new Bounds(...b, _display)
 }

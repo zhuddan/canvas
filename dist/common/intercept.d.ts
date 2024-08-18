@@ -1,3 +1,2 @@
-import type { Display } from '../object/display';
-export declare function interceptUpdate(): (target: Display, propertyKey: string, descriptor: PropertyDescriptor) => void;
-export declare function interceptUpdate2(): (target: any, propertyKey: string, descriptor: PropertyDescriptor) => void;
+import type { Dirty } from '../types';
+export declare function interceptDirty(): (target: Dirty, propertyKey: string, descriptor: PropertyDescriptor) => void;

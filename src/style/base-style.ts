@@ -1,4 +1,5 @@
-import { interceptUpdate2 as interceptUpdate } from '../common/intercept'
+import type { Display } from '../object/display'
+import type { Dirty } from '../types'
 
 export interface BaseStyleImpl {
   /**
@@ -24,14 +25,28 @@ export interface BaseStyleImpl {
    */
   alpha?: number
 }
-export abstract class BaseStyle implements Required<BaseStyleImpl> {
+export abstract class BaseStyle implements Required<BaseStyleImpl>, Dirty {
+  display?: Display
+  constructor(_display?: Display) {
+    this.display = _display
+  }
+
+  protected _dirty = true
+
+  set dirty(value) {
+    if (this._dirty !== value) {
+      this._dirty = value
+    }
+  }
+
+  get dirty() {
+    return this._dirty
+  }
+
   stroke = '#000'
   strokeWeight = 1
   alpha = 1
-
   private _fill = '#000'
-
-  @interceptUpdate()
   set fill(value) {
     this._fill = value
   }

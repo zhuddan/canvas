@@ -9,19 +9,19 @@ var utils = require('../utils.js');
 var object_display = require('./display.js');
 require('../style/base-style.js');
 require('../position/point.js');
+require('../position/coordinate.js');
 
 class Text extends object_display.Display {
     style;
     constructor(text, x, y) {
         super();
-        this.style = new style_textStyle.TextStyle();
         this.position.x = x;
         this.position.y = y;
         this.text = text;
+        this.style = new style_textStyle.TextStyle(this);
     }
     _text = '';
     set text(text) {
-        console.log('text', text);
         this._text = text;
     }
     get text() {
@@ -41,7 +41,7 @@ class Text extends object_display.Display {
     }
 }
 tslib_es6.__decorate([
-    common_intercept.interceptUpdate()
+    common_intercept.interceptDirty()
 ], Text.prototype, "text", null);
 
 exports.Text = Text;

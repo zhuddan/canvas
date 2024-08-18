@@ -3,14 +3,18 @@
 'use strict';
 
 var utils = require('../utils.js');
+var position_coordinate = require('./coordinate.js');
 var position_point = require('./point.js');
+require('../tslib.es6-E-TKQeY2.js');
+require('../common/intercept.js');
 
-class Bounds {
+class Bounds extends position_coordinate.Coordinate {
     min;
     max;
-    constructor(point1, point2) {
-        point1 = position_point.createPoint(point1);
-        point2 = position_point.createPoint(point2);
+    constructor(point1, point2, _display) {
+        super(_display);
+        point1 = position_point.createPoint(point1, _display);
+        point2 = position_point.createPoint(point2, _display);
         const minX = utils.calcMin([point1.x, point2.x]);
         const minY = utils.calcMin([point1.y, point2.y]);
         const maxX = utils.calcMax([point1.x, point2.x]);
@@ -37,11 +41,11 @@ class Bounds {
         return new Bounds(this.min, this.max);
     }
 }
-function createBounds(b) {
+function createBounds(b, _display) {
     if (b instanceof Bounds) {
         return b;
     }
-    return new Bounds(...b);
+    return new Bounds(...b, _display);
 }
 
 exports.Bounds = Bounds;

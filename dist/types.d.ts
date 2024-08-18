@@ -1,7 +1,7 @@
 import type { Properties } from 'csstype';
 import type { MaybePoint } from './position/point';
 import type { MaybeBounds } from './position/bounds';
-import type { Event } from './common/event';
+import type { Display } from './object/display';
 /**
  * 由于某些属性不支持CanvasRenderingContext2D 故舍弃
  * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/font)
@@ -128,7 +128,8 @@ export interface ImageStyle extends LineBaseStyle {
     objectFit?: Properties['objectFit'];
 }
 export type RenderImpl = (ctx: CanvasRenderingContext2D) => void;
-export type UpdateEvent = Event<{
-    shouldUpdate: any;
-}>;
+export declare class Dirty {
+    dirty: boolean;
+    display?: Display;
+}
 export {};

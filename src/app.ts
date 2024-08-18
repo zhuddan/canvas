@@ -91,6 +91,10 @@ export class App {
     window.requestAnimationFrame(() => {
       this.update()
     })
+    const children = [...this.children.filter(e => e.visible && e.dirty)]
+
+    if (!children.length)
+      return
     this.ctx.clearRect(
       -this.width,
       -this.height,
@@ -99,10 +103,12 @@ export class App {
     )
 
     this.debug()
-    const children = [...this.children.filter(e => e.visible)]
+
     while (children.length) {
       this.beforeRender()
-      children.shift()?.render(this.ctx)
+      const child = children.shift()!
+      child.render(this.ctx)
+      child.dirty = false
       this.afterRender()
     }
     this.onUpdate()

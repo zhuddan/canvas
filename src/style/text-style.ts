@@ -1,5 +1,6 @@
 import type { Properties, Property } from 'csstype'
-import { interceptUpdate2 as interceptUpdate } from '../common/intercept'
+import { interceptDirty } from '../common/intercept'
+import type { Display } from '../object/display'
 import { BaseStyle } from './base-style'
 
 export interface IFont {
@@ -56,11 +57,15 @@ export interface IFont {
   // textBaseline?: CanvasTextBaseline
 }
 export class TextStyle extends BaseStyle implements Required<IFont> {
+  constructor(display?: Display) {
+    super(display)
+  }
+
   readonly textBaseline = 'top'
 
   private _fontSize: IFont['fontSize'] = 12
 
-  @interceptUpdate()
+  @interceptDirty()
   set fontSize(value) {
     this._fontSize = value
   }
@@ -71,7 +76,7 @@ export class TextStyle extends BaseStyle implements Required<IFont> {
 
   private _fontFamily = 'serif'
 
-  @interceptUpdate()
+  @interceptDirty()
   set fontFamily(value) {
     this._fontFamily = value
   }
@@ -82,7 +87,7 @@ export class TextStyle extends BaseStyle implements Required<IFont> {
 
   private _fontStyle = 'normal'
 
-  @interceptUpdate()
+  @interceptDirty()
   set fontStyle(value) {
     this._fontStyle = value
   }
@@ -92,7 +97,7 @@ export class TextStyle extends BaseStyle implements Required<IFont> {
   }
 
   private _fontWeight = 'normal'
-  @interceptUpdate()
+  @interceptDirty()
   set fontWeight(value) {
     this._fontWeight = value
   }
@@ -102,7 +107,7 @@ export class TextStyle extends BaseStyle implements Required<IFont> {
   }
 
   private _fontStretch: IFont['fontStretch'] = 'normal'
-  @interceptUpdate()
+  @interceptDirty()
   set fontStretch(value) {
     this._fontStretch = value
   }
@@ -112,7 +117,7 @@ export class TextStyle extends BaseStyle implements Required<IFont> {
   }
 
   private _fontVariantCaps: IFont['fontVariantCaps'] = 'normal'
-  @interceptUpdate()
+  @interceptDirty()
   set fontVariantCaps(value) {
     this._fontVariantCaps = value
   }
@@ -122,6 +127,8 @@ export class TextStyle extends BaseStyle implements Required<IFont> {
   }
 
   private _letterSpacing: IFont['letterSpacing'] = 0
+
+  @interceptDirty()
   set letterSpacing(value) {
     this._letterSpacing = value
   }
@@ -131,7 +138,7 @@ export class TextStyle extends BaseStyle implements Required<IFont> {
   }
 
   private _wordSpacing: IFont['wordSpacing'] = 'normal'
-  @interceptUpdate()
+  @interceptDirty()
   set wordSpacing(value) {
     this._wordSpacing = value
   }
@@ -141,7 +148,7 @@ export class TextStyle extends BaseStyle implements Required<IFont> {
   }
 
   private _textAlign: IFont['textAlign'] = 'left'
-  @interceptUpdate()
+  @interceptDirty()
   set textAlign(value) {
     this._textAlign = value
   }

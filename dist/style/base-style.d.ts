@@ -1,3 +1,5 @@
+import type { Display } from '../object/display';
+import type { Dirty } from '../types';
 export interface BaseStyleImpl {
     /**
      * 填充颜色
@@ -22,7 +24,12 @@ export interface BaseStyleImpl {
      */
     alpha?: number;
 }
-export declare abstract class BaseStyle implements Required<BaseStyleImpl> {
+export declare abstract class BaseStyle implements Required<BaseStyleImpl>, Dirty {
+    display?: Display;
+    constructor(_display?: Display);
+    protected _dirty: boolean;
+    set dirty(value: boolean);
+    get dirty(): boolean;
     stroke: string;
     strokeWeight: number;
     alpha: number;

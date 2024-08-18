@@ -13,6 +13,7 @@ require('./const.js');
 require('./utils.js');
 require('./style/text-style.js');
 require('./style/base-style.js');
+require('./position/coordinate.js');
 
 
 

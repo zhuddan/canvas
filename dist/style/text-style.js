@@ -7,6 +7,9 @@ var common_intercept = require('../common/intercept.js');
 var style_baseStyle = require('./base-style.js');
 
 class TextStyle extends style_baseStyle.BaseStyle {
+    constructor(display) {
+        super(display);
+    }
     textBaseline = 'top';
     _fontSize = 12;
     set fontSize(value) {
@@ -73,28 +76,31 @@ class TextStyle extends style_baseStyle.BaseStyle {
     }
 }
 tslib_es6.__decorate([
-    common_intercept.interceptUpdate2()
+    common_intercept.interceptDirty()
 ], TextStyle.prototype, "fontSize", null);
 tslib_es6.__decorate([
-    common_intercept.interceptUpdate2()
+    common_intercept.interceptDirty()
 ], TextStyle.prototype, "fontFamily", null);
 tslib_es6.__decorate([
-    common_intercept.interceptUpdate2()
+    common_intercept.interceptDirty()
 ], TextStyle.prototype, "fontStyle", null);
 tslib_es6.__decorate([
-    common_intercept.interceptUpdate2()
+    common_intercept.interceptDirty()
 ], TextStyle.prototype, "fontWeight", null);
 tslib_es6.__decorate([
-    common_intercept.interceptUpdate2()
+    common_intercept.interceptDirty()
 ], TextStyle.prototype, "fontStretch", null);
 tslib_es6.__decorate([
-    common_intercept.interceptUpdate2()
+    common_intercept.interceptDirty()
 ], TextStyle.prototype, "fontVariantCaps", null);
 tslib_es6.__decorate([
-    common_intercept.interceptUpdate2()
+    common_intercept.interceptDirty()
+], TextStyle.prototype, "letterSpacing", null);
+tslib_es6.__decorate([
+    common_intercept.interceptDirty()
 ], TextStyle.prototype, "wordSpacing", null);
 tslib_es6.__decorate([
-    common_intercept.interceptUpdate2()
+    common_intercept.interceptDirty()
 ], TextStyle.prototype, "textAlign", null);
 
 exports.TextStyle = TextStyle;

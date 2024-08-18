@@ -11,3 +11,4 @@ import './const.mjs';
 import './utils.mjs';
 import './style/text-style.mjs';
 import './style/base-style.mjs';
+import './position/coordinate.mjs';

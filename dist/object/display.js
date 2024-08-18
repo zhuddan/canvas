@@ -5,14 +5,16 @@
 var tslib_es6 = require('../tslib.es6-E-TKQeY2.js');
 var common_intercept = require('../common/intercept.js');
 var position_point = require('../position/point.js');
+require('../position/coordinate.js');
 
 class Display {
     constructor() {
     }
     _dirty = true;
     set dirty(value) {
-        if (this._dirty !== value)
+        if (this._dirty !== value) {
             this._dirty = value;
+        }
     }
     get dirty() {
         return this._dirty;
@@ -43,18 +45,18 @@ class Display {
     set y(val) {
         this.position.y = val;
     }
-    position = new position_point.Point([-Infinity, -Infinity]);
-    skew = new position_point.Point([0, 0]);
-    anchor = new position_point.Point([0, 0]);
-    scale = new position_point.Point([1, 1]);
-    onAdd() { }
-    onRemove() { }
+    position = new position_point.Point([-Infinity, -Infinity], this);
+    skew = new position_point.Point([0, 0], this);
+    anchor = new position_point.Point([0, 0], this);
+    scale = new position_point.Point([1, 1], this);
     render(ctx) {
         this._render(ctx);
     }
+    onAdd() { }
+    onRemove() { }
 }
 tslib_es6.__decorate([
-    common_intercept.interceptUpdate()
+    common_intercept.interceptDirty()
 ], Display.prototype, "visible", null);
 
 exports.Display = Display;
