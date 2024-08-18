@@ -1,11 +1,14 @@
-import type { Display } from './object/display';
+import { Display } from './object/display.js';
+import './position/point.js';
+import './style/base-style.js';
+
 interface AppConstructorOptions {
     width?: number;
     height?: number;
     dpr?: boolean;
     onUpdate?: () => void;
 }
-export declare class App {
+declare class App {
     canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
     dpr: number;
@@ -21,4 +24,5 @@ export declare class App {
     remove(object: Display): void;
     private update;
 }
-export {};
+
+export { App };

@@ -1,4 +1,4 @@
-export interface BaseStyleImpl {
+interface BaseStyleImpl {
     /**
      * 填充颜色
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/fillStyle)
@@ -22,7 +22,7 @@ export interface BaseStyleImpl {
      */
     alpha?: number;
 }
-export declare abstract class BaseStyle implements Required<BaseStyleImpl> {
+declare abstract class BaseStyle implements Required<BaseStyleImpl> {
     stroke: string;
     strokeWeight: number;
     alpha: number;
@@ -30,3 +30,5 @@ export declare abstract class BaseStyle implements Required<BaseStyleImpl> {
     set fill(value: string);
     get fill(): string;
 }
+
+export { BaseStyle, type BaseStyleImpl };

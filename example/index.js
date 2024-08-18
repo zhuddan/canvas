@@ -48,12 +48,8 @@ const tween = new Tween(text)
 
   })
 
-/**
- *
- * @param {number} time
- */
-function animate(time) {
-  tween.update(time)
+function animate(/** @type {number}  */ time) {
+  // tween.update(time)
   requestAnimationFrame(animate)
 }
 

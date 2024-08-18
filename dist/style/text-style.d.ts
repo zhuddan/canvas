@@ -1,6 +1,7 @@
-import type { Properties, Property } from 'csstype';
-import { BaseStyle } from './base-style';
-export interface IFont {
+import { P as Properties, a as Property } from '../index.d-BUkyRbYY.js';
+import { BaseStyle } from './base-style.js';
+
+interface IFont {
     /**
      * @description 字体
      * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family)
@@ -47,7 +48,7 @@ export interface IFont {
      */
     textAlign: CanvasTextAlign;
 }
-export declare class TextStyle extends BaseStyle implements Required<IFont> {
+declare class TextStyle extends BaseStyle implements Required<IFont> {
     readonly textBaseline = "top";
     private _fontSize;
     set fontSize(value: Property.FontSize<0 | (string & {})> | (number & {}) | undefined);
@@ -77,3 +78,5 @@ export declare class TextStyle extends BaseStyle implements Required<IFont> {
     set textAlign(value: CanvasTextAlign);
     get textAlign(): CanvasTextAlign;
 }
+
+export { type IFont, TextStyle };

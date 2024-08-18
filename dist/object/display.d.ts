@@ -1,17 +1,17 @@
-import type { MaybePoint } from '../position/point';
-import { Point } from '../position/point';
-import type { BaseStyle } from '../style/base-style';
+import { MaybePoint, Point } from '../position/point.js';
+import { BaseStyle } from '../style/base-style.js';
+
 /**
  * [单位矩阵变化](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)
  */
-export interface DisplayImpl {
+interface DisplayImpl {
     angle?: number;
     scale?: MaybePoint;
     skew?: MaybePoint;
     anchor?: MaybePoint;
     visible?: boolean;
 }
-export declare abstract class Display implements Required<DisplayImpl> {
+declare abstract class Display implements Required<DisplayImpl> {
     constructor();
     private _dirty;
     set dirty(value: boolean);
@@ -36,3 +36,5 @@ export declare abstract class Display implements Required<DisplayImpl> {
     abstract _render(ctx: CanvasRenderingContext2D): void;
     render(ctx: CanvasRenderingContext2D): void;
 }
+
+export { Display, type DisplayImpl };

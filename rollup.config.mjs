@@ -1,6 +1,6 @@
 // @ts-check
 import process from 'node:process'
-import fs, { readFileSync } from 'node:fs'
+import fs from 'node:fs'
 import path from 'node:path'
 import { defineConfig } from 'rollup'
 import typescript from '@rollup/plugin-typescript'
@@ -9,12 +9,14 @@ import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
 import terser from '@rollup/plugin-terser'
 import { dts } from 'rollup-plugin-dts'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
 import { exec } from './scripts/exec.mjs'
 
-const repo = JSON.parse(readFileSync('./package.json').toString())
+// const repo = JSON.parse(readFileSync('./package.json').toString())
 const isProduction = process.env.NODE_ENV === 'production'
 
-export function createInput(root = 'src') {
+export function createInput(root = 'src', extname = '.ts') {
   const files = fs.readdirSync(root)
   /**
    * @type {{ [entryAlias: string]: string }}
@@ -27,12 +29,11 @@ export function createInput(root = 'src') {
     if (stat.isDirectory()) {
       input = {
         ...input,
-        ...createInput(filePath),
+        ...createInput(filePath, extname),
       }
     }
     else if (stat.isFile()) {
-      const extname = path.extname(filePath)
-      if (extname === '.ts' || '.d.ts') {
+      if (filePath.endsWith(extname)) {
         const root = `${filePath.split('\\').shift()}\\`
         const inputFile = filePath.replace(root, '').replace(extname, '')
         input[inputFile] = filePath
@@ -42,29 +43,30 @@ export function createInput(root = 'src') {
   return input
 }
 
-/**
- * Escapes the `RegExp` special characters.
- * @param {string} str
- */
-function escapeRegExp(str) {
-  return str.replace(/[$()*+.?[\\\]^{|}]/g, '\\$&')
-}
+// /**
+//  * Escapes the `RegExp` special characters.
+//  * @param {string} str
+//  */
+// function escapeRegExp(str) {
+//   return str.replace(/[$()*+.?[\\\]^{|}]/g, '\\$&')
+// }
 
-/**
- * Convert the name of a package to a `RegExp` that matches the package's export names.
- * @param {string} packageName
- */
-function convertPackageNameToRegExp(packageName) {
-  return new RegExp(`^${escapeRegExp(packageName)}(/.+)?$`)
-}
+// /**
+//  * Convert the name of a package to a `RegExp` that matches the package's export names.
+//  * @param {string} packageName
+//  */
+// function convertPackageNameToRegExp(packageName) {
+//   return new RegExp(`^${escapeRegExp(packageName)}(/.+)?$`)
+// }
 
-const {
-  dependencies = {},
-} = repo
+// const {
+//   dependencies = {},
+// } = repo
 
-const external = Object.keys(dependencies)
-  .map(convertPackageNameToRegExp)
+// let external = Object.keys(dependencies)
+//   .map(convertPackageNameToRegExp)
 
+// external = []
 function main() {
   /**
    * @type {import('rollup').RollupOptions[]}
@@ -92,12 +94,18 @@ function main() {
    */
   const plugins = [
     del({
-      targets: 'dist/*',
+      targets: ['dist/*', 'temp/*'],
       force: true,
       hook: 'buildEnd',
       ignore: ['dist/types/**'],
     }),
-    typescript(),
+    typescript(isProduction
+      ? {
+          declaration: false,
+        }
+      : {}),
+    nodeResolve(),
+    commonjs(),
   ]
 
   if (isProduction) {
@@ -118,12 +126,14 @@ function main() {
     )
   }
 
-  result.push({
-    input: inputTs,
-    output: outputJs,
-    external,
-    plugins,
-  })
+  result.push(
+    {
+      input: inputTs,
+      output: outputJs,
+      // external,
+      plugins,
+    },
+  )
 
   /**
    * 打包类型声明
@@ -132,7 +142,7 @@ function main() {
     /**
      * @type {import('rollup').InputOption}
      */
-    const inputDTs = createInput('temp')
+    const inputDTs = createInput('temp', '.d.ts')
     /**
      * @type {import('rollup').OutputOptions[]}
      */
@@ -144,7 +154,11 @@ function main() {
      *  @type {import('rollup').InputOptions['plugins']}
      */
     const plugins = [
-      dts(),
+      nodeResolve(),
+      commonjs(),
+      dts({
+        respectExternal: true,
+      }),
       {
         name: 'before',
         buildStart: async () => {
@@ -160,7 +174,11 @@ function main() {
       input: inputDTs,
       output: outputDts,
       plugins,
-      external,
+      // external: [
+      //   ...external,
+      //   // 'csstype',
+      //   // convertPackageNameToRegExp('csstype'),
+      // ],
     })
   }
 

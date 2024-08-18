@@ -1,11 +1,11 @@
+import EventEmitter from 'eventemitter3'
 import { Event } from '../common/event'
-import { interceptUpdate } from '../common/intercept'
 
 export interface PointObject { x: number, y: number }
 export type PointArray = [number, number]
 export type MaybePoint = PointObject | PointArray | Point
 
-export class Point extends Event<{
+export class Point extends EventEmitter<{
   shouldUpdate: any
 }> {
   shouldUpdate = false
