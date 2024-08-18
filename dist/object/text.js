@@ -7,8 +7,6 @@ var common_intercept = require('../common/intercept.js');
 var style_textStyle = require('../style/text-style.js');
 var utils = require('../utils.js');
 var object_display = require('./display.js');
-require('../app.js');
-require('../const.js');
 require('../style/base-style.js');
 require('../position/point.js');
 require('../common/event.js');
@@ -48,4 +46,3 @@ tslib_es6.__decorate([
 ], Text.prototype, "text", null);
 
 exports.Text = Text;
-//# sourceMappingURL=text.js.map

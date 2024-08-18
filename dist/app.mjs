@@ -3,15 +3,6 @@
 import { NOOP } from './const.mjs';
 import { formatValue } from './utils.mjs';
 
-let __shouldUpdate = false;
-function shouldUpdate() {
-    if (!__shouldUpdate)
-        __shouldUpdate = true;
-}
-function pauseUpdate() {
-    if (__shouldUpdate)
-        __shouldUpdate = false;
-}
 class App {
     canvas;
     ctx;
@@ -68,33 +59,27 @@ class App {
         console.log(object);
         object.onAdd();
         this.children.push(object);
-        shouldUpdate();
     }
     remove(object) {
         const index = this.children.indexOf(object);
         if (index !== -1) {
             this.children.splice(index, 1);
-            shouldUpdate();
         }
     }
     update() {
         window.requestAnimationFrame(() => {
             this.update();
         });
-        if (__shouldUpdate) {
-            this.ctx.clearRect(-this.width, -this.height, this.width * 2, this.height * 2);
-            this.debug();
-            const children = [...this.children.filter(e => e.visible)];
-            while (children.length) {
-                this.beforeRender();
-                children.shift()?.render(this.ctx);
-                this.afterRender();
-            }
-            this.onUpdate();
-            pauseUpdate();
+        this.ctx.clearRect(-this.width, -this.height, this.width * 2, this.height * 2);
+        this.debug();
+        const children = [...this.children.filter(e => e.visible)];
+        while (children.length) {
+            this.beforeRender();
+            children.shift()?.render(this.ctx);
+            this.afterRender();
         }
+        this.onUpdate();
     }
 }
 
-export { App, pauseUpdate, shouldUpdate };
-//# sourceMappingURL=app.mjs.map
+export { App };

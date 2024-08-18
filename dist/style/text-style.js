@@ -5,9 +5,6 @@
 var tslib_es6 = require('../tslib.es6-E-TKQeY2.js');
 var common_intercept = require('../common/intercept.js');
 var style_baseStyle = require('./base-style.js');
-require('../app.js');
-require('../const.js');
-require('../utils.js');
 
 class TextStyle extends style_baseStyle.BaseStyle {
     textBaseline = 'top';
@@ -76,32 +73,28 @@ class TextStyle extends style_baseStyle.BaseStyle {
     }
 }
 tslib_es6.__decorate([
-    common_intercept.interceptUpdate()
+    common_intercept.interceptUpdate2()
 ], TextStyle.prototype, "fontSize", null);
 tslib_es6.__decorate([
-    common_intercept.interceptUpdate()
+    common_intercept.interceptUpdate2()
 ], TextStyle.prototype, "fontFamily", null);
 tslib_es6.__decorate([
-    common_intercept.interceptUpdate()
+    common_intercept.interceptUpdate2()
 ], TextStyle.prototype, "fontStyle", null);
 tslib_es6.__decorate([
-    common_intercept.interceptUpdate()
+    common_intercept.interceptUpdate2()
 ], TextStyle.prototype, "fontWeight", null);
 tslib_es6.__decorate([
-    common_intercept.interceptUpdate()
+    common_intercept.interceptUpdate2()
 ], TextStyle.prototype, "fontStretch", null);
 tslib_es6.__decorate([
-    common_intercept.interceptUpdate()
+    common_intercept.interceptUpdate2()
 ], TextStyle.prototype, "fontVariantCaps", null);
 tslib_es6.__decorate([
-    common_intercept.interceptUpdate()
-], TextStyle.prototype, "letterSpacing", null);
-tslib_es6.__decorate([
-    common_intercept.interceptUpdate()
+    common_intercept.interceptUpdate2()
 ], TextStyle.prototype, "wordSpacing", null);
 tslib_es6.__decorate([
-    common_intercept.interceptUpdate()
+    common_intercept.interceptUpdate2()
 ], TextStyle.prototype, "textAlign", null);
 
 exports.TextStyle = TextStyle;
-//# sourceMappingURL=text-style.js.map

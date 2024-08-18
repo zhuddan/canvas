@@ -110,4 +110,3 @@ exports.calcMin = calcMin;
 exports.createCanvasFontString = createCanvasFontString;
 exports.ensureBetween = ensureBetween;
 exports.formatValue = formatValue;
-//# sourceMappingURL=utils.js.map

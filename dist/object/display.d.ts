@@ -13,6 +13,9 @@ export interface DisplayImpl {
 }
 export declare abstract class Display implements Required<DisplayImpl> {
     constructor();
+    private _dirty;
+    set dirty(value: boolean);
+    get dirty(): boolean;
     abstract style: BaseStyle;
     private _visible;
     get visible(): boolean;

@@ -20,7 +20,7 @@ export function createInput(root = 'src') {
     }
     else if (stat.isFile()) {
       const extname = path.extname(filePath)
-      if (extname === '.ts') {
+      if (extname === '.ts' || '.d.ts') {
         const root = `${filePath.split('\\').shift()}\\`
         const inputFile = filePath.replace(root, '').replace(extname, '')
         input[inputFile] = filePath

@@ -102,4 +102,3 @@ function calcCenter(num1, num2) {
 // console.log(`Transformed ellipse radii: Rx = ${newRx}, Ry = ${newRy}`)
 
 export { calcCenter, calcDiff, calcMax, calcMin, createCanvasFontString, ensureBetween, formatValue };
-//# sourceMappingURL=utils.mjs.map

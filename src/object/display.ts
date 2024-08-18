@@ -1,4 +1,3 @@
-import { pauseUpdate, shouldUpdate } from '../app'
 import { Event } from '../common/event'
 import { interceptUpdate } from '../common/intercept'
 import type {
@@ -28,7 +27,18 @@ export interface DisplayImpl {
 
 export abstract class Display implements Required<DisplayImpl> {
   constructor() {
-    console.log('on')
+
+  }
+
+  private _dirty = true
+
+  set dirty(value) {
+    if (this._dirty !== value)
+      this._dirty = value
+  }
+
+  get dirty() {
+    return this._dirty
   }
 
   abstract style: BaseStyle

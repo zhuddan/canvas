@@ -5,8 +5,6 @@ import { interceptUpdate } from '../common/intercept.mjs';
 import { TextStyle } from '../style/text-style.mjs';
 import { createCanvasFontString, formatValue } from '../utils.mjs';
 import { Display } from './display.mjs';
-import '../app.mjs';
-import '../const.mjs';
 import '../style/base-style.mjs';
 import '../position/point.mjs';
 import '../common/event.mjs';
@@ -46,4 +44,3 @@ __decorate([
 ], Text.prototype, "text", null);
 
 export { Text };
-//# sourceMappingURL=text.mjs.map

@@ -60,4 +60,3 @@ class Event {
 }
 
 export { Event };
-//# sourceMappingURL=event.mjs.map

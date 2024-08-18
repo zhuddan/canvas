@@ -1,4 +1,4 @@
-import { interceptUpdate } from '../common/intercept'
+import { interceptUpdate2 as interceptUpdate } from '../common/intercept'
 
 export interface BaseStyleImpl {
   /**

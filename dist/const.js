@@ -5,4 +5,3 @@
 function NOOP() { }
 
 exports.NOOP = NOOP;
-//# sourceMappingURL=const.js.map

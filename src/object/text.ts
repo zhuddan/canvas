@@ -35,7 +35,6 @@ export class Text extends Display {
     ctx.wordSpacing = formatValue(this.style.wordSpacing)
     ctx.textAlign = this.style.textAlign
     ctx.textBaseline = this.style.textBaseline
-
     ctx.fillText(this.text, this.position.x, this.position.y)
   }
 };

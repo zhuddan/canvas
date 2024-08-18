@@ -1,5 +1,5 @@
 import type { Properties, Property } from 'csstype'
-import { interceptUpdate } from '../common/intercept'
+import { interceptUpdate2 as interceptUpdate } from '../common/intercept'
 import { BaseStyle } from './base-style'
 
 export interface IFont {
@@ -122,7 +122,6 @@ export class TextStyle extends BaseStyle implements Required<IFont> {
   }
 
   private _letterSpacing: IFont['letterSpacing'] = 0
-  @interceptUpdate()
   set letterSpacing(value) {
     this._letterSpacing = value
   }

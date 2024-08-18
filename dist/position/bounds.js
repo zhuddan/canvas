@@ -4,11 +4,7 @@
 
 var utils = require('../utils.js');
 var position_point = require('./point.js');
-require('../tslib.es6-E-TKQeY2.js');
 require('../common/event.js');
-require('../common/intercept.js');
-require('../app.js');
-require('../const.js');
 
 class Bounds {
     min;
@@ -51,4 +47,3 @@ function createBounds(b) {
 
 exports.Bounds = Bounds;
 exports.createBounds = createBounds;
-//# sourceMappingURL=bounds.js.map

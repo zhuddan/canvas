@@ -1,37 +1,17 @@
 import process from 'node:process'
-import fs from 'node:fs'
 import { defineConfig } from 'rollup'
 import typescript from '@rollup/plugin-typescript'
 import del from 'rollup-plugin-delete'
 import { dts } from 'rollup-plugin-dts'
 import terser from '@rollup/plugin-terser'
 import { exec } from './scripts/exec.mjs'
+import { createInput } from './input.mjs'
 
-/**
- *
- * @param {'d.ts' | 'ts'} suffix
- */
-function createInput(suffix = 'ts') {
-  const files = fs.readdirSync('./src')
-  /**
-   * @type {{ [entryAlias: string]: string }}
-   */
-  const input = {}
-
-  for (let index = 0; index < files.length; index++) {
-    if (!/^(?!.*\.d\.ts$).+ts$/.test(files[index])) {
-      continue
-    }
-    const file = files[index].replace('.ts', '')
-    input[file] = `./${suffix === 'd.ts' ? 'temp' : 'src'}/${file}.${suffix}`
-  }
-  return input
-}
 /**
  * @type {import('rollup').RollupOptions}
  */
 const buildOptions = {
-  input: createInput('ts'),
+  input: createInput('temp'),
   output: [
     {
       dir: 'dist',

@@ -11,7 +11,7 @@ export class Point extends Event<{
   shouldUpdate = false
 
   _x = -Infinity
-  @interceptUpdate()
+
   set x(x) {
     this._x = x
   }
@@ -22,7 +22,6 @@ export class Point extends Event<{
 
   private _y = -Infinity
 
-  @interceptUpdate()
   set y(y) {
     this._y = y
   }

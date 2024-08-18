@@ -5,14 +5,18 @@
 var tslib_es6 = require('../tslib.es6-E-TKQeY2.js');
 var common_intercept = require('../common/intercept.js');
 var position_point = require('../position/point.js');
-require('../app.js');
-require('../const.js');
-require('../utils.js');
 require('../common/event.js');
 
 class Display {
     constructor() {
-        console.log('on');
+    }
+    _dirty = true;
+    set dirty(value) {
+        if (this._dirty !== value)
+            this._dirty = value;
+    }
+    get dirty() {
+        return this._dirty;
     }
     _visible = true;
     get visible() {
@@ -55,4 +59,3 @@ tslib_es6.__decorate([
 ], Display.prototype, "visible", null);
 
 exports.Display = Display;
-//# sourceMappingURL=display.js.map

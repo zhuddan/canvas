@@ -3,14 +3,18 @@
 import { _ as __decorate } from '../tslib.es6-Dn8e3nS6.js';
 import { interceptUpdate } from '../common/intercept.mjs';
 import { Point } from '../position/point.mjs';
-import '../app.mjs';
-import '../const.mjs';
-import '../utils.mjs';
 import '../common/event.mjs';
 
 class Display {
     constructor() {
-        console.log('on');
+    }
+    _dirty = true;
+    set dirty(value) {
+        if (this._dirty !== value)
+            this._dirty = value;
+    }
+    get dirty() {
+        return this._dirty;
     }
     _visible = true;
     get visible() {
@@ -53,4 +57,3 @@ __decorate([
 ], Display.prototype, "visible", null);
 
 export { Display };
-//# sourceMappingURL=display.mjs.map

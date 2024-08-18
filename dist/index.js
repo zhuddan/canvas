@@ -18,12 +18,9 @@ require('./common/event.js');
 
 
 exports.App = app.App;
-exports.pauseUpdate = app.pauseUpdate;
-exports.shouldUpdate = app.shouldUpdate;
 exports.Display = object_display.Display;
 exports.Text = object_text.Text;
 exports.Bounds = position_bounds.Bounds;
 exports.createBounds = position_bounds.createBounds;
 exports.Point = position_point.Point;
 exports.createPoint = position_point.createPoint;
-//# sourceMappingURL=index.js.map

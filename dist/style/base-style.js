@@ -4,9 +4,6 @@
 
 var tslib_es6 = require('../tslib.es6-E-TKQeY2.js');
 var common_intercept = require('../common/intercept.js');
-require('../app.js');
-require('../const.js');
-require('../utils.js');
 
 class BaseStyle {
     stroke = '#000';
@@ -21,8 +18,7 @@ class BaseStyle {
     }
 }
 tslib_es6.__decorate([
-    common_intercept.interceptUpdate()
+    common_intercept.interceptUpdate2()
 ], BaseStyle.prototype, "fill", null);
 
 exports.BaseStyle = BaseStyle;
-//# sourceMappingURL=base-style.js.map

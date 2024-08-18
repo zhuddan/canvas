@@ -48,13 +48,13 @@
     "scripts/*"
   ],
   "scripts": {
-    "dev": "rollup -c rollup.config.dev.mjs -w",
-    "builds": "tsc -p tsconfig.build.json && cross-env NODE_ENV=production rollup -c",
-    "build": "rollup -c rollup.config.prod.mjs -w",
+    "dev": "cross-env NODE_ENV=development rollup -c -w",
+    "build": "cross-env NODE_ENV=production rollup -c",
     "publish": "node ./scripts/publish.mjs",
-    "release": "bumpp",
-    "doc": "npx typedoc --out docs src/index.ts",
-    "serve": "http-server -c-0 -p 3033 --cors"
+    "release": "bumpp"
+  },
+  "dependencies": {
+    "eventemitter3": "^5.0.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.24.1",
@@ -78,10 +78,7 @@
     "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-serve": "^1.1.1",
     "rollup-plugin-terser": "^7.0.2",
-    "serve": "^14.2.3",
     "tslib": "^2.6.3",
-    "typedoc": "^0.26.5",
-    "typedoc-plugin-markdown": "^4.2.3",
     "typescript": "^5.5.4"
   }
 }

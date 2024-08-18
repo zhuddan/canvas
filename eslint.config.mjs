@@ -6,6 +6,7 @@ export default antfu({
     'no-console': 'off',
     'antfu/no-import-dist': 'off',
     'antfu/no-import-node-modules-by-path': 'off',
+    'eslint-comments/no-unlimited-disable': 'off',
   },
   vue: true,
 }, {

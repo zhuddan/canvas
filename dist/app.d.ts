@@ -5,8 +5,6 @@ interface AppConstructorOptions {
     dpr?: boolean;
     onUpdate?: () => void;
 }
-export declare function shouldUpdate(): void;
-export declare function pauseUpdate(): void;
 export declare class App {
     canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;

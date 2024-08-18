@@ -1,11 +1,8 @@
 
 (function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
 import { _ as __decorate } from '../tslib.es6-Dn8e3nS6.js';
-import { interceptUpdate } from '../common/intercept.mjs';
+import { interceptUpdate2 } from '../common/intercept.mjs';
 import { BaseStyle } from './base-style.mjs';
-import '../app.mjs';
-import '../const.mjs';
-import '../utils.mjs';
 
 class TextStyle extends BaseStyle {
     textBaseline = 'top';
@@ -74,32 +71,28 @@ class TextStyle extends BaseStyle {
     }
 }
 __decorate([
-    interceptUpdate()
+    interceptUpdate2()
 ], TextStyle.prototype, "fontSize", null);
 __decorate([
-    interceptUpdate()
+    interceptUpdate2()
 ], TextStyle.prototype, "fontFamily", null);
 __decorate([
-    interceptUpdate()
+    interceptUpdate2()
 ], TextStyle.prototype, "fontStyle", null);
 __decorate([
-    interceptUpdate()
+    interceptUpdate2()
 ], TextStyle.prototype, "fontWeight", null);
 __decorate([
-    interceptUpdate()
+    interceptUpdate2()
 ], TextStyle.prototype, "fontStretch", null);
 __decorate([
-    interceptUpdate()
+    interceptUpdate2()
 ], TextStyle.prototype, "fontVariantCaps", null);
 __decorate([
-    interceptUpdate()
-], TextStyle.prototype, "letterSpacing", null);
-__decorate([
-    interceptUpdate()
+    interceptUpdate2()
 ], TextStyle.prototype, "wordSpacing", null);
 __decorate([
-    interceptUpdate()
+    interceptUpdate2()
 ], TextStyle.prototype, "textAlign", null);
 
 export { TextStyle };
-//# sourceMappingURL=text-style.mjs.map
