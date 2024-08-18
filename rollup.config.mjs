@@ -113,6 +113,7 @@ function main() {
         port: 13000,
         contentBase: '.',
         openPage: '/example/index.html',
+        open: true,
       }),
     )
   }

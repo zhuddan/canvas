@@ -1,8 +1,7 @@
 // @ts-check
-import { Easing, Tween } from 'https://cdn.jsdelivr.net/npm/@tweenjs/tween.js@25.0.0/dist/tween.esm.js'
-
-import { Pane } from 'https://cdn.jsdelivr.net/npm/tweakpane@4.0.4/dist/tweakpane.min.js'
-import throttle from 'https://cdn.jsdelivr.net/npm/lodash-es/throttle.js'
+import { Easing, Tween } from '@tweenjs/tween.js'
+import { Pane } from 'tweakpane'
+import throttle from 'lodash-es/throttle.js'
 import { App, Text } from '../dist/index.mjs'
 
 const text = new Text('这是文字', 150, 150)
