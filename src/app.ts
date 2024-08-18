@@ -38,7 +38,6 @@ export class App {
     this.ctx.scale(this.dpr, this.dpr)
     this.width = width
     this.height = height
-    this.debug()
     this.update()
   }
 
@@ -51,11 +50,12 @@ export class App {
   }
 
   private debug() {
-    const ctx = this.ctx
-    this.ctx.strokeStyle = '#00ffcc'
     this.beforeRender()
+    const ctx = this.ctx
+    this.ctx.strokeStyle = '#cccccc80'
+    this.ctx.fillStyle = '#cccccc80'
     ctx.textBaseline = 'top'
-    ctx.font = '12px 黑体'
+    ctx.font = '10px 黑体'
     for (let row = 0; row < Math.ceil((this.width + 1) / 100); row++) {
       for (let col = 0; col < Math.ceil((this.height + 1) / 100); col++) {
         ctx.beginPath()
@@ -75,7 +75,6 @@ export class App {
   children: Display[] = []
 
   add(object: Display) {
-    console.log(object)
     object.onAdd()
     this.children.push(object)
   }

@@ -1,2 +1,1 @@
-import type { Dirty } from '../types';
-export declare function interceptDirty(): (target: Dirty, propertyKey: string, descriptor: PropertyDescriptor) => void;
+export declare function interceptDirty(): (prototype: object, propertyKey: string, descriptor: PropertyDescriptor) => void;

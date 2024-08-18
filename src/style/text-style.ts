@@ -1,9 +1,10 @@
 import type { Properties, Property } from 'csstype'
 import { interceptDirty } from '../common/intercept'
 import type { Display } from '../object/display'
+import type { IBaseStyle } from './base-style'
 import { BaseStyle } from './base-style'
 
-export interface IFont {
+export interface TextStyleOptions extends IBaseStyle {
   /**
    * @description 字体
    * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family)
@@ -24,7 +25,6 @@ export interface IFont {
    * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-weight)
    */
   fontWeight: Properties['fontWeight']
-
   /**
    * 指定绘制文本时字体如何被扩展或压缩
    * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/fontStretch)
@@ -50,21 +50,46 @@ export interface IFont {
    * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/textAlign)
    */
   textAlign: CanvasTextAlign
-  // /**
-  //  * 绘制文本时使用的文本基线 建议使用top 即文本坐标为右上角(由于设备差异或者字体差异导致这个坐标是预估的, 尤其是y坐标, 不适合精细的绘制)
-  //  * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/textBaseline)
-  //  */
-  // textBaseline?: CanvasTextBaseline
 }
-export class TextStyle extends BaseStyle implements Required<IFont> {
-  constructor(display?: Display) {
-    super(display)
+
+export class TextStyle extends BaseStyle {
+  public static defaultTextStyle: TextStyleOptions = {
+    fill: 'black',
+    stroke: null,
+    strokeWeight: 0,
+    alpha: 1,
+    fontFamily: 'Arial',
+    fontSize: 12,
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontStretch: 'condensed',
+    fontVariantCaps: 'normal',
+    letterSpacing: 0,
+    wordSpacing: 0,
+    textAlign: 'left',
   }
 
-  readonly textBaseline = 'top'
+  _isStroke: boolean
+  constructor(style: Partial<TextStyleOptions> = {}, display?: Display) {
+    super(display)
+    this._isStroke = !!style.stroke
+    const fullStyle = Object.assign({}, TextStyle.defaultTextStyle, style)
+    for (const key in fullStyle) {
+      const thisKey = key as keyof typeof this
+      this[thisKey] = fullStyle[key as keyof TextStyleOptions] as any
+    }
+  }
 
-  private _fontSize: IFont['fontSize'] = 12
+  public reset() {
+    const defaultStyle = TextStyle.defaultTextStyle
+    for (const key in defaultStyle) {
+      this[key as keyof typeof this] = defaultStyle[key as keyof TextStyleOptions] as any
+    }
+  }
 
+  protected readonly textBaseline = 'top'
+
+  private _fontSize: TextStyleOptions['fontSize']
   @interceptDirty()
   set fontSize(value) {
     this._fontSize = value
@@ -74,8 +99,7 @@ export class TextStyle extends BaseStyle implements Required<IFont> {
     return this._fontSize
   }
 
-  private _fontFamily = 'serif'
-
+  private _fontFamily: TextStyleOptions['fontFamily']
   @interceptDirty()
   set fontFamily(value) {
     this._fontFamily = value
@@ -85,8 +109,7 @@ export class TextStyle extends BaseStyle implements Required<IFont> {
     return this._fontFamily
   }
 
-  private _fontStyle = 'normal'
-
+  private _fontStyle: TextStyleOptions['fontStyle']
   @interceptDirty()
   set fontStyle(value) {
     this._fontStyle = value
@@ -96,7 +119,7 @@ export class TextStyle extends BaseStyle implements Required<IFont> {
     return this._fontStyle
   }
 
-  private _fontWeight = 'normal'
+  private _fontWeight: TextStyleOptions['fontWeight']
   @interceptDirty()
   set fontWeight(value) {
     this._fontWeight = value
@@ -106,7 +129,7 @@ export class TextStyle extends BaseStyle implements Required<IFont> {
     return this._fontWeight
   }
 
-  private _fontStretch: IFont['fontStretch'] = 'normal'
+  private _fontStretch: TextStyleOptions['fontStretch'] = TextStyle.defaultTextStyle.fontStretch
   @interceptDirty()
   set fontStretch(value) {
     this._fontStretch = value
@@ -116,7 +139,7 @@ export class TextStyle extends BaseStyle implements Required<IFont> {
     return this._fontStretch
   }
 
-  private _fontVariantCaps: IFont['fontVariantCaps'] = 'normal'
+  private _fontVariantCaps: TextStyleOptions['fontVariantCaps'] = TextStyle.defaultTextStyle.fontVariantCaps
   @interceptDirty()
   set fontVariantCaps(value) {
     this._fontVariantCaps = value
@@ -126,7 +149,7 @@ export class TextStyle extends BaseStyle implements Required<IFont> {
     return this._fontVariantCaps
   }
 
-  private _letterSpacing: IFont['letterSpacing'] = 0
+  private _letterSpacing: TextStyleOptions['letterSpacing'] = TextStyle.defaultTextStyle.letterSpacing
 
   @interceptDirty()
   set letterSpacing(value) {
@@ -137,7 +160,7 @@ export class TextStyle extends BaseStyle implements Required<IFont> {
     return this._letterSpacing
   }
 
-  private _wordSpacing: IFont['wordSpacing'] = 'normal'
+  private _wordSpacing: TextStyleOptions['wordSpacing'] = TextStyle.defaultTextStyle.wordSpacing
   @interceptDirty()
   set wordSpacing(value) {
     this._wordSpacing = value
@@ -147,7 +170,7 @@ export class TextStyle extends BaseStyle implements Required<IFont> {
     return this._wordSpacing
   }
 
-  private _textAlign: IFont['textAlign'] = 'left'
+  private _textAlign: TextStyleOptions['textAlign'] = TextStyle.defaultTextStyle.textAlign
   @interceptDirty()
   set textAlign(value) {
     this._textAlign = value

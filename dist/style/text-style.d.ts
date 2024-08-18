@@ -1,7 +1,8 @@
 import type { Properties, Property } from 'csstype';
 import type { Display } from '../object/display';
+import type { IBaseStyle } from './base-style';
 import { BaseStyle } from './base-style';
-export interface IFont {
+export interface TextStyleOptions extends IBaseStyle {
     /**
      * @description 字体
      * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family)
@@ -48,21 +49,24 @@ export interface IFont {
      */
     textAlign: CanvasTextAlign;
 }
-export declare class TextStyle extends BaseStyle implements Required<IFont> {
-    constructor(display?: Display);
-    readonly textBaseline = "top";
+export declare class TextStyle extends BaseStyle {
+    static defaultTextStyle: TextStyleOptions;
+    _isStroke: boolean;
+    constructor(style?: Partial<TextStyleOptions>, display?: Display);
+    reset(): void;
+    protected readonly textBaseline = "top";
     private _fontSize;
     set fontSize(value: Property.FontSize<0 | (string & {})> | (number & {}) | undefined);
     get fontSize(): Property.FontSize<0 | (string & {})> | (number & {}) | undefined;
     private _fontFamily;
-    set fontFamily(value: string);
-    get fontFamily(): string;
+    set fontFamily(value: Property.FontFamily | undefined);
+    get fontFamily(): Property.FontFamily | undefined;
     private _fontStyle;
-    set fontStyle(value: string);
-    get fontStyle(): string;
+    set fontStyle(value: Property.FontStyle | undefined);
+    get fontStyle(): Property.FontStyle | undefined;
     private _fontWeight;
-    set fontWeight(value: string);
-    get fontWeight(): string;
+    set fontWeight(value: Property.FontWeight | undefined);
+    get fontWeight(): Property.FontWeight | undefined;
     private _fontStretch;
     set fontStretch(value: CanvasFontStretch);
     get fontStretch(): CanvasFontStretch;

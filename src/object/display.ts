@@ -1,3 +1,4 @@
+import { Dirty } from '../common/dirty'
 import { interceptDirty as displayIntercept } from '../common/intercept'
 import type {
   MaybePoint,
@@ -6,7 +7,6 @@ import {
   Point,
 } from '../position/point'
 import type { BaseStyle } from '../style/base-style'
-import type { Dirty } from '../types'
 
 /**
  * [单位矩阵变化](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)
@@ -24,20 +24,9 @@ export interface DisplayImpl {
   visible?: boolean
 }
 
-export abstract class Display implements Required<DisplayImpl>, Dirty {
+export abstract class Display extends Dirty implements Required<DisplayImpl> {
   constructor() {
-
-  }
-
-  private _dirty = true
-  set dirty(value) {
-    if (this._dirty !== value) {
-      this._dirty = value
-    }
-  }
-
-  get dirty() {
-    return this._dirty
+    super()
   }
 
   abstract style: BaseStyle

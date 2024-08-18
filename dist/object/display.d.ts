@@ -1,7 +1,7 @@
+import { Dirty } from '../common/dirty';
 import type { MaybePoint } from '../position/point';
 import { Point } from '../position/point';
 import type { BaseStyle } from '../style/base-style';
-import type { Dirty } from '../types';
 /**
  * [单位矩阵变化](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)
  */
@@ -12,11 +12,8 @@ export interface DisplayImpl {
     anchor?: MaybePoint;
     visible?: boolean;
 }
-export declare abstract class Display implements Required<DisplayImpl>, Dirty {
+export declare abstract class Display extends Dirty implements Required<DisplayImpl> {
     constructor();
-    private _dirty;
-    set dirty(value: boolean);
-    get dirty(): boolean;
     abstract style: BaseStyle;
     private _visible;
     get visible(): boolean;

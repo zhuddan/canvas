@@ -1,28 +1,15 @@
 import EventEmitter from 'eventemitter3'
 import type { Display } from '../object/display'
-import type { Dirty } from '../types'
+import { Dirty } from '../common/dirty'
 
-interface CoordinateEventEmitter {
-  shouldUpdate: []
-}
+// interface CoordinateEventEmitter {
+//   shouldUpdate: []
+// }
+// EventEmitter<CoordinateEventEmitter>
 
-export abstract class Coordinate extends EventEmitter<CoordinateEventEmitter> implements Dirty {
-  display?: Display
+export abstract class Coordinate extends Dirty {
   constructor(_display?: Display) {
-    super()
-    this.display = _display
-  }
-
-  protected _dirty = true
-
-  set dirty(value) {
-    if (this._dirty !== value) {
-      this._dirty = value
-    }
-  }
-
-  get dirty() {
-    return this._dirty
+    super(_display)
   }
   abstract clone(): Coordinate
 }

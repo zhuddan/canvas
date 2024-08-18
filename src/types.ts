@@ -133,8 +133,3 @@ export interface ImageStyle extends LineBaseStyle {
 }
 
 export type RenderImpl = (ctx: CanvasRenderingContext2D) => void
-
-export declare class Dirty {
-  dirty: boolean
-  display?: Display
-}

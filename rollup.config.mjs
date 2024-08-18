@@ -51,10 +51,7 @@ function main() {
   /**
    * @type {import('rollup').InputOption}
    */
-  // const inputTs = createInput('src')
-  const inputTs = {
-    dev: './src/index.ts',
-  }
+  const inputTs = createInput('src')
   /**
    * @type {import('rollup').OutputOptions[]}
    */
@@ -68,7 +65,11 @@ function main() {
    *  @type {import('rollup').InputOptions['plugins']}
    */
   const plugins = [
-
+    del({
+      targets: ['dist/*', 'temp/*'],
+      force: true,
+      hook: 'buildStart',
+    }),
     typescript(isProduction
       ? {
           declaration: false,
@@ -81,13 +82,6 @@ function main() {
   ]
 
   if (isProduction) {
-    plugins.push(
-      del({
-        targets: ['dist/*', 'temp/*'],
-        force: true,
-        hook: 'buildStart',
-      }),
-    )
     plugins.push(terser())
     outputJs.push({
       dir: 'dist',
