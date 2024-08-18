@@ -1,2 +1,60 @@
-"use strict";var t=require("../tslib.es6-DNmfn3FS.js"),e=require("../common/intercept.js"),i=require("../position/point.js");class s{constructor(){}_dirty=!0;set dirty(t){this._dirty!==t&&(this._dirty=t)}get dirty(){return this._dirty}_visible=!0;get visible(){return this._visible}set visible(t){this._visible=t}_angle=0;get angle(){return this._angle}set angle(t){this._angle=t}get x(){return this.position.x}set x(t){this.position.x=t}get y(){return this.position.y}set y(t){this.position.y=t}position=new i.Point([-1/0,-1/0]);skew=new i.Point([0,0]);anchor=new i.Point([0,0]);scale=new i.Point([1,1]);onAdd(){}onRemove(){}render(t){this._render(t)}}t.__decorate([e.interceptUpdate()],s.prototype,"visible",null),exports.Display=s;
-//# sourceMappingURL=display.js.map
+
+(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
+'use strict';
+
+var tslib_es6 = require('../tslib.es6-E-TKQeY2.js');
+var common_intercept = require('../common/intercept.js');
+var position_point = require('../position/point.js');
+
+class Display {
+    constructor() {
+    }
+    _dirty = true;
+    set dirty(value) {
+        if (this._dirty !== value)
+            this._dirty = value;
+    }
+    get dirty() {
+        return this._dirty;
+    }
+    _visible = true;
+    get visible() {
+        return this._visible;
+    }
+    set visible(value) {
+        this._visible = value;
+    }
+    _angle = 0;
+    get angle() {
+        return this._angle;
+    }
+    set angle(value) {
+        this._angle = value;
+    }
+    get x() {
+        return this.position.x;
+    }
+    set x(val) {
+        this.position.x = val;
+    }
+    get y() {
+        return this.position.y;
+    }
+    set y(val) {
+        this.position.y = val;
+    }
+    position = new position_point.Point([-Infinity, -Infinity]);
+    skew = new position_point.Point([0, 0]);
+    anchor = new position_point.Point([0, 0]);
+    scale = new position_point.Point([1, 1]);
+    onAdd() { }
+    onRemove() { }
+    render(ctx) {
+        this._render(ctx);
+    }
+}
+tslib_es6.__decorate([
+    common_intercept.interceptUpdate()
+], Display.prototype, "visible", null);
+
+exports.Display = Display;

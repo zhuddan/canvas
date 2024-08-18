@@ -1,2 +1,100 @@
-"use strict";var t=require("../tslib.es6-DNmfn3FS.js"),e=require("../common/intercept.js"),n=require("./base-style.js");class r extends n.BaseStyle{textBaseline="top";_fontSize=12;set fontSize(t){this._fontSize=t}get fontSize(){return this._fontSize}_fontFamily="serif";set fontFamily(t){this._fontFamily=t}get fontFamily(){return this._fontFamily}_fontStyle="normal";set fontStyle(t){this._fontStyle=t}get fontStyle(){return this._fontStyle}_fontWeight="normal";set fontWeight(t){this._fontWeight=t}get fontWeight(){return this._fontWeight}_fontStretch="normal";set fontStretch(t){this._fontStretch=t}get fontStretch(){return this._fontStretch}_fontVariantCaps="normal";set fontVariantCaps(t){this._fontVariantCaps=t}get fontVariantCaps(){return this._fontVariantCaps}_letterSpacing=0;set letterSpacing(t){this._letterSpacing=t}get letterSpacing(){return this._letterSpacing}_wordSpacing="normal";set wordSpacing(t){this._wordSpacing=t}get wordSpacing(){return this._wordSpacing}_textAlign="left";set textAlign(t){this._textAlign=t}get textAlign(){return this._textAlign}}t.__decorate([e.interceptUpdate2()],r.prototype,"fontSize",null),t.__decorate([e.interceptUpdate2()],r.prototype,"fontFamily",null),t.__decorate([e.interceptUpdate2()],r.prototype,"fontStyle",null),t.__decorate([e.interceptUpdate2()],r.prototype,"fontWeight",null),t.__decorate([e.interceptUpdate2()],r.prototype,"fontStretch",null),t.__decorate([e.interceptUpdate2()],r.prototype,"fontVariantCaps",null),t.__decorate([e.interceptUpdate2()],r.prototype,"wordSpacing",null),t.__decorate([e.interceptUpdate2()],r.prototype,"textAlign",null),exports.TextStyle=r;
-//# sourceMappingURL=text-style.js.map
+
+(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
+'use strict';
+
+var tslib_es6 = require('../tslib.es6-E-TKQeY2.js');
+var common_intercept = require('../common/intercept.js');
+var style_baseStyle = require('./base-style.js');
+
+class TextStyle extends style_baseStyle.BaseStyle {
+    textBaseline = 'top';
+    _fontSize = 12;
+    set fontSize(value) {
+        this._fontSize = value;
+    }
+    get fontSize() {
+        return this._fontSize;
+    }
+    _fontFamily = 'serif';
+    set fontFamily(value) {
+        this._fontFamily = value;
+    }
+    get fontFamily() {
+        return this._fontFamily;
+    }
+    _fontStyle = 'normal';
+    set fontStyle(value) {
+        this._fontStyle = value;
+    }
+    get fontStyle() {
+        return this._fontStyle;
+    }
+    _fontWeight = 'normal';
+    set fontWeight(value) {
+        this._fontWeight = value;
+    }
+    get fontWeight() {
+        return this._fontWeight;
+    }
+    _fontStretch = 'normal';
+    set fontStretch(value) {
+        this._fontStretch = value;
+    }
+    get fontStretch() {
+        return this._fontStretch;
+    }
+    _fontVariantCaps = 'normal';
+    set fontVariantCaps(value) {
+        this._fontVariantCaps = value;
+    }
+    get fontVariantCaps() {
+        return this._fontVariantCaps;
+    }
+    _letterSpacing = 0;
+    set letterSpacing(value) {
+        this._letterSpacing = value;
+    }
+    get letterSpacing() {
+        return this._letterSpacing;
+    }
+    _wordSpacing = 'normal';
+    set wordSpacing(value) {
+        this._wordSpacing = value;
+    }
+    get wordSpacing() {
+        return this._wordSpacing;
+    }
+    _textAlign = 'left';
+    set textAlign(value) {
+        this._textAlign = value;
+    }
+    get textAlign() {
+        return this._textAlign;
+    }
+}
+tslib_es6.__decorate([
+    common_intercept.interceptUpdate2()
+], TextStyle.prototype, "fontSize", null);
+tslib_es6.__decorate([
+    common_intercept.interceptUpdate2()
+], TextStyle.prototype, "fontFamily", null);
+tslib_es6.__decorate([
+    common_intercept.interceptUpdate2()
+], TextStyle.prototype, "fontStyle", null);
+tslib_es6.__decorate([
+    common_intercept.interceptUpdate2()
+], TextStyle.prototype, "fontWeight", null);
+tslib_es6.__decorate([
+    common_intercept.interceptUpdate2()
+], TextStyle.prototype, "fontStretch", null);
+tslib_es6.__decorate([
+    common_intercept.interceptUpdate2()
+], TextStyle.prototype, "fontVariantCaps", null);
+tslib_es6.__decorate([
+    common_intercept.interceptUpdate2()
+], TextStyle.prototype, "wordSpacing", null);
+tslib_es6.__decorate([
+    common_intercept.interceptUpdate2()
+], TextStyle.prototype, "textAlign", null);
+
+exports.TextStyle = TextStyle;

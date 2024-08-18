@@ -96,14 +96,16 @@ function main() {
     del({
       targets: ['dist/*', 'temp/*'],
       force: true,
-      hook: 'buildEnd',
-      ignore: ['dist/types/**'],
+      hook: 'buildStart',
+      // ignore: ['dist/types/**'],
     }),
     typescript(isProduction
       ? {
           declaration: false,
         }
-      : {}),
+      : {
+
+        }),
     nodeResolve(),
     commonjs(),
   ]

@@ -1,10 +1,10 @@
-import { PointObject, PointArray, Point, MaybePoint } from './point.js';
-
-type MaybeBounds = [
+import type { MaybePoint, PointArray, PointObject } from './point';
+import { Point } from './point';
+export type MaybeBounds = [
     PointObject | PointArray | Point,
     PointObject | PointArray | Point
 ] | Bounds;
-declare class Bounds {
+export declare class Bounds {
     min: Point;
     max: Point;
     constructor(point1: MaybePoint, point2: MaybePoint);
@@ -14,6 +14,4 @@ declare class Bounds {
     origin(): this;
     clone(): Bounds;
 }
-declare function createBounds(b: MaybeBounds): Bounds;
-
-export { Bounds, type MaybeBounds, createBounds };
+export declare function createBounds(b: MaybeBounds): Bounds;

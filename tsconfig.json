@@ -5,10 +5,6 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
-    "types": [
-      "@dcloudio/types",
-      "miniprogram-api-typings"
-    ],
     "strict": true,
     "declaration": true,
     "declarationMap": false,
