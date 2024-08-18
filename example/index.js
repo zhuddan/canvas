@@ -2,7 +2,7 @@
 import { Easing, Tween } from '@tweenjs/tween.js'
 import { Pane } from 'tweakpane'
 import throttle from 'lodash-es/throttle.js'
-import { App, Text } from '../dist/index.mjs'
+import { App, Text } from '../dist/dev.mjs'
 
 const text = new Text('这是文字', 150, 150)
 const pane = new Pane()

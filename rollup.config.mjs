@@ -43,30 +43,6 @@ export function createInput(root = 'src', extname = '.ts') {
   return input
 }
 
-// /**
-//  * Escapes the `RegExp` special characters.
-//  * @param {string} str
-//  */
-// function escapeRegExp(str) {
-//   return str.replace(/[$()*+.?[\\\]^{|}]/g, '\\$&')
-// }
-
-// /**
-//  * Convert the name of a package to a `RegExp` that matches the package's export names.
-//  * @param {string} packageName
-//  */
-// function convertPackageNameToRegExp(packageName) {
-//   return new RegExp(`^${escapeRegExp(packageName)}(/.+)?$`)
-// }
-
-// const {
-//   dependencies = {},
-// } = repo
-
-// let external = Object.keys(dependencies)
-//   .map(convertPackageNameToRegExp)
-
-// external = []
 function main() {
   /**
    * @type {import('rollup').RollupOptions[]}
@@ -75,7 +51,10 @@ function main() {
   /**
    * @type {import('rollup').InputOption}
    */
-  const inputTs = createInput('src')
+  // const inputTs = createInput('src')
+  const inputTs = {
+    dev: './src/index.ts',
+  }
   /**
    * @type {import('rollup').OutputOptions[]}
    */
@@ -83,22 +62,13 @@ function main() {
     dir: 'dist',
     format: 'esm',
     entryFileNames: '[name].mjs',
-  }, {
-    dir: 'dist',
-    format: 'cjs',
-    entryFileNames: '[name].js',
   }]
 
   /**
    *  @type {import('rollup').InputOptions['plugins']}
    */
   const plugins = [
-    del({
-      targets: ['dist/*', 'temp/*'],
-      force: true,
-      hook: 'buildStart',
-      // ignore: ['dist/types/**'],
-    }),
+
     typescript(isProduction
       ? {
           declaration: false,
@@ -111,7 +81,19 @@ function main() {
   ]
 
   if (isProduction) {
+    plugins.push(
+      del({
+        targets: ['dist/*', 'temp/*'],
+        force: true,
+        hook: 'buildStart',
+      }),
+    )
     plugins.push(terser())
+    outputJs.push({
+      dir: 'dist',
+      format: 'cjs',
+      entryFileNames: '[name].js',
+    })
     outputJs.forEach((e) => {
       e.sourcemap = true
     })
