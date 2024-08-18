@@ -24,11 +24,27 @@ export interface IBaseStyle {
      */
     alpha: number;
     shadow?: {
+        /**
+         * [CanvasRenderingContext2D.shadowOffsetX](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowOffsetX)
+         */
         x?: number;
+        /**
+         * [CanvasRenderingContext2D.shadowOffsetY](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowOffsetY)
+         */
         y?: number;
+        /**
+         * [CanvasRenderingContext2D.shadowBlur](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowBlur)
+         */
         blur?: number;
+        /**
+         * [CanvasRenderingContext2D.shadowColor](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowColor)
+         */
         color?: string;
     };
+    /**
+     * [CanvasRenderingContext2D.filter](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/filter)
+     */
+    filter: CanvasRenderingContext2D['filter'];
 }
 export declare abstract class BaseStyle extends Dirty implements IBaseStyle {
     constructor(_display?: Display);
@@ -47,16 +63,43 @@ export declare abstract class BaseStyle extends Dirty implements IBaseStyle {
     static defaultShadow: IBaseStyle['shadow'];
     private _shadow;
     set shadow(value: {
+        /**
+         * [CanvasRenderingContext2D.shadowOffsetX](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowOffsetX)
+         */
         x?: number;
+        /**
+         * [CanvasRenderingContext2D.shadowOffsetY](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowOffsetY)
+         */
         y?: number;
+        /**
+         * [CanvasRenderingContext2D.shadowBlur](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowBlur)
+         */
         blur?: number;
+        /**
+         * [CanvasRenderingContext2D.shadowColor](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowColor)
+         */
         color?: string;
     } | undefined);
     get shadow(): {
+        /**
+         * [CanvasRenderingContext2D.shadowOffsetX](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowOffsetX)
+         */
         x?: number;
+        /**
+         * [CanvasRenderingContext2D.shadowOffsetY](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowOffsetY)
+         */
         y?: number;
+        /**
+         * [CanvasRenderingContext2D.shadowBlur](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowBlur)
+         */
         blur?: number;
+        /**
+         * [CanvasRenderingContext2D.shadowColor](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowColor)
+         */
         color?: string;
     } | undefined;
+    private _filter;
+    set filter(value: string);
+    get filter(): string;
     setBaseStyle(ctx: CanvasRenderingContext2D): void;
 }

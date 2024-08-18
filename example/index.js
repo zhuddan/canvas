@@ -26,6 +26,7 @@ const text = new Text('这是文字', 150, 150, {
     y: 5,
     blur: 5,
   },
+  filter: 'blur(4px)',
 })
 
 app.add(text)
@@ -115,6 +116,14 @@ if (text.style.shadow) {
   //   }
   // })
 }
+
+pane.addBinding(text.style, 'filter', {
+  options: {
+    'none': 'none',
+    'blur(10px)': 'blur(10px)',
+    'Multiple': 'contrast(1.4) sepia(1) drop-shadow(-9px 9px 3px #e81)',
+  },
+})
 
 // const tween = new Tween(text)
 //   .to({ x: 300, y: 200 }, 1500)

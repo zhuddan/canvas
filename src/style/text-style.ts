@@ -67,6 +67,7 @@ export class TextStyle extends BaseStyle {
     letterSpacing: 0,
     wordSpacing: 0,
     textAlign: 'left',
+    filter: 'none',
   }
 
   _isStroke: boolean
