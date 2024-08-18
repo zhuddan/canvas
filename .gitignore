@@ -1,4 +1,3 @@
 node_modules
 temp
-dist/dev.js
-dist/dev.mjs
+dist/**/*.dev.mjs

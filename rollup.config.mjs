@@ -16,7 +16,13 @@ import { exec } from './scripts/exec.mjs'
 // const repo = JSON.parse(readFileSync('./package.json').toString())
 const isProduction = process.env.NODE_ENV === 'production'
 
-export function createInput(root = 'src', extname = '.ts') {
+/**
+ *
+ * @param {string} root
+ * @param {string} extname
+ * @param {string} append
+ */
+export function createInput(root, extname, append = '') {
   const files = fs.readdirSync(root)
   /**
    * @type {{ [entryAlias: string]: string }}
@@ -29,14 +35,14 @@ export function createInput(root = 'src', extname = '.ts') {
     if (stat.isDirectory()) {
       input = {
         ...input,
-        ...createInput(filePath, extname),
+        ...createInput(filePath, extname, append),
       }
     }
     else if (stat.isFile()) {
       if (filePath.endsWith(extname)) {
         const root = `${filePath.split('\\').shift()}\\`
         const inputFile = filePath.replace(root, '').replace(extname, '')
-        input[inputFile] = filePath
+        input[inputFile + append] = filePath
       }
     }
   }
@@ -51,7 +57,16 @@ function main() {
   /**
    * @type {import('rollup').InputOption}
    */
-  const inputTs = createInput('src')
+  const inputTs = createInput('src', '.ts', '.dev')
+  if (!isProduction) {
+    for (const key in inputTs) {
+      if (Object.hasOwnProperty.call(inputTs, key)) {
+        const element = inputTs[key]
+        console.log(key)
+        console.log(element)
+      }
+    }
+  }
   /**
    * @type {import('rollup').OutputOptions[]}
    */
