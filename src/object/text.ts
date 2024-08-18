@@ -28,7 +28,6 @@ export class Text extends Display {
   _render(ctx: CanvasRenderingContext2D) {
     if (this.style.fill || (this.style.stroke && this.style.strokeWeight)) {
       ctx.textBaseline = 'top'
-      this.style.setBaseStyle(ctx)
       ctx.font = createCanvasFontString(this.style)
       ctx.fontStretch = this.style.fontStretch
       ctx.fontVariantCaps = this.style.fontVariantCaps
@@ -36,6 +35,7 @@ export class Text extends Display {
       ctx.wordSpacing = formatValue(this.style.wordSpacing)
       ctx.textAlign = this.style.textAlign
 
+      this.style.setBaseStyle(ctx)
       if (this.style.fill) {
         ctx.fillText(this.text, this.position.x, this.position.y)
       }

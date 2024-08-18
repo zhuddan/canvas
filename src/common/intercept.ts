@@ -11,9 +11,6 @@ export function interceptDirty() {
           originalSet.call(this, newValue);
           (this as any).dirty = true
         }
-        else {
-          // console.warn([newValue, oldValue], '新旧值相同')
-        }
       }
     }
     Object.defineProperty(prototype, propertyKey, descriptor)

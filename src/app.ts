@@ -56,6 +56,7 @@ export class App {
     this.ctx.fillStyle = '#cccccc80'
     ctx.textBaseline = 'top'
     ctx.font = '10px 黑体'
+    ctx.setLineDash([4, 10])
     for (let row = 0; row < Math.ceil((this.width + 1) / 100); row++) {
       for (let col = 0; col < Math.ceil((this.height + 1) / 100); col++) {
         ctx.beginPath()

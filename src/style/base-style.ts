@@ -25,8 +25,15 @@ export interface IBaseStyle {
    * 或者你喜欢16进制颜色也可以使用[这种方法](https://blog.csdn.net/ezconn/article/details/90052114)设置透明度
    */
   alpha: number
+
+  shadow?: {
+    x?: number
+    y?: number
+    blur?: number
+    color?: string
+  }
 }
-export abstract class BaseStyle extends Dirty implements Required<IBaseStyle> {
+export abstract class BaseStyle extends Dirty implements IBaseStyle {
   constructor(_display?: Display) {
     super(_display)
   }
@@ -71,12 +78,45 @@ export abstract class BaseStyle extends Dirty implements Required<IBaseStyle> {
     return this._stroke
   }
 
+  static defaultShadow: IBaseStyle['shadow'] = {
+
+  }
+
+  private _shadow: IBaseStyle['shadow'] = {}
+
+  @interceptDirty()
+  set shadow(value) {
+    this._shadow = value
+  }
+
+  get shadow() {
+    return this._shadow
+  }
+
   setBaseStyle(ctx: CanvasRenderingContext2D) {
     ctx.globalAlpha = this.alpha
     if (this.strokeWeight && this.stroke) {
       ctx.lineWidth = this.strokeWeight
       ctx.strokeStyle = this.stroke
     }
-    ctx.fillStyle = this.fill
+    if (this.fill) {
+      ctx.fillStyle = this.fill
+    }
+    if ((this.shadow?.x || this.shadow?.y)
+      && (this.shadow?.blur || this.shadow?.color)) {
+      if (this.shadow.color) {
+        console.log('set')
+        ctx.shadowColor = this.shadow.color
+      }
+      if (this.shadow.blur) {
+        ctx.shadowBlur = this.shadow.blur
+      }
+      if (this.shadow.x) {
+        ctx.shadowOffsetX = this.shadow.x
+      }
+      if (this.shadow.y) {
+        ctx.shadowOffsetY = this.shadow.y
+      }
+    }
   }
 }

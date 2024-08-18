@@ -23,8 +23,14 @@ export interface IBaseStyle {
      * 或者你喜欢16进制颜色也可以使用[这种方法](https://blog.csdn.net/ezconn/article/details/90052114)设置透明度
      */
     alpha: number;
+    shadow?: {
+        x?: number;
+        y?: number;
+        blur?: number;
+        color?: string;
+    };
 }
-export declare abstract class BaseStyle extends Dirty implements Required<IBaseStyle> {
+export declare abstract class BaseStyle extends Dirty implements IBaseStyle {
     constructor(_display?: Display);
     private _alpha;
     set alpha(value: number);
@@ -38,5 +44,19 @@ export declare abstract class BaseStyle extends Dirty implements Required<IBaseS
     private _stroke;
     set stroke(value: string | CanvasGradient | CanvasPattern | null);
     get stroke(): string | CanvasGradient | CanvasPattern | null;
+    static defaultShadow: IBaseStyle['shadow'];
+    private _shadow;
+    set shadow(value: {
+        x?: number;
+        y?: number;
+        blur?: number;
+        color?: string;
+    } | undefined);
+    get shadow(): {
+        x?: number;
+        y?: number;
+        blur?: number;
+        color?: string;
+    } | undefined;
     setBaseStyle(ctx: CanvasRenderingContext2D): void;
 }
