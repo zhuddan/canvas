@@ -15,5 +15,9 @@ export declare class Text extends Display {
     set text(text: string);
     get text(): string;
     get _shouldUpdate(): boolean;
-    render(ctx: CanvasRenderingContext2D): void;
+    getSplitText(ctx: CanvasRenderingContext2D): string[];
+    _render(ctx: CanvasRenderingContext2D): void;
+    updateBounds(): void;
+    width: number;
+    height: number;
 }

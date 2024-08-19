@@ -51,9 +51,13 @@ export interface TextStyleOptions extends IBaseStyle {
    * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/textAlign)
    */
   textAlign: CanvasTextAlign
+
+  lineHeight: number
+  wordWrap: boolean
+  wordWrapWidth: number
 }
 
-export class TextStyle extends BaseStyle {
+export class TextStyle extends BaseStyle implements TextStyleOptions {
   public static defaultTextStyle: TextStyleOptions = {
     fill: 'black',
     stroke: null,
@@ -70,6 +74,9 @@ export class TextStyle extends BaseStyle {
     textAlign: 'left',
     filter: 'none',
     shadow: {},
+    lineHeight: 0,
+    wordWrap: false,
+    wordWrapWidth: 0,
   }
 
   _isStroke: boolean
@@ -188,6 +195,48 @@ export class TextStyle extends BaseStyle {
 
   get textAlign() {
     return this._textAlign
+  }
+
+  private _lineHeight = 0
+
+  set lineHeight(value) {
+    if (this.lineHeight !== value) {
+      this.update()
+      this._lineHeight = value
+    }
+  }
+
+  get lineHeight() {
+    if (!this._lineHeight) {
+      this._lineHeight = typeof this.fontSize == 'number' ? this.fontSize : Number.parseInt(`${this.fontSize}`)
+    }
+    return this._lineHeight
+  }
+
+  private _wordWrap = false
+
+  set wordWrap(value) {
+    if (this.wordWrap !== value) {
+      this._wordWrap = value
+      this.update()
+    }
+  }
+
+  get wordWrap() {
+    return this._wordWrap
+  }
+
+  private _wordWrapWidth = 0
+
+  set wordWrapWidth(value) {
+    if (this.wordWrapWidth !== value) {
+      this._wordWrapWidth = value
+      this.update()
+    }
+  }
+
+  get wordWrapWidth() {
+    return this._wordWrapWidth
   }
 
   clone() {

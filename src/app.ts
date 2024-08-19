@@ -115,4 +115,10 @@ export class App {
     }
     this.onUpdate()
   }
+
+  onContext(fn: (ctx: CanvasRenderingContext2D) => any) {
+    this.beforeRender()
+    fn(this.ctx)
+    this.afterRender()
+  }
 }

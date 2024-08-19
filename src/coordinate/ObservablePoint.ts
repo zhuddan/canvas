@@ -25,7 +25,6 @@ export class ObservablePoint implements PointLike {
       this._y = y
       this._observer?._onUpdate(this)
     }
-
     return this
   }
 
@@ -54,6 +53,7 @@ export class ObservablePoint implements PointLike {
   set x(value: number) {
     if (this._x !== value) {
       this._x = value
+      console.log(this._observer)
       this._observer?._onUpdate(this)
     }
   }

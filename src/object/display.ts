@@ -2,17 +2,20 @@ import type { App } from '../app'
 import type { Observer } from '../coordinate/ObservablePoint'
 import { ObservablePoint } from '../coordinate/ObservablePoint'
 import type { PointData } from '../coordinate/PointData'
+import { ensureBetween } from '../utils'
 
 /**
  * [单位矩阵变化](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)
  */
 export interface DisplayOptions {
 
-  angle?: number
+  rotation?: number
 
   scale?: PointData | number
 
   anchor?: PointData | number
+
+  pivot?: PointData | number
 
   skew?: PointData
 
@@ -28,7 +31,8 @@ export interface DisplayOptions {
 }
 
 const defaultSkew = new ObservablePoint(null)
-// const defaultPivot = new ObservablePoint(null)
+const defaultPivot = new ObservablePoint(null)
+const defaultAnchor = new ObservablePoint(null)
 const defaultScale = new ObservablePoint(null, 1, 1)
 
 export abstract class Display implements Observer<ObservablePoint> {
@@ -49,6 +53,10 @@ export abstract class Display implements Observer<ObservablePoint> {
 
     if (options.skew) {
       this.skew = options.skew
+    }
+
+    if (options.pivot) {
+      this.pivot = options.pivot
     }
   }
 
@@ -148,7 +156,7 @@ export abstract class Display implements Observer<ObservablePoint> {
 
   get skew(): ObservablePoint {
     if (this._skew === defaultSkew) {
-      this._skew = new ObservablePoint(this, 1, 1)
+      this._skew = new ObservablePoint(this, 0, 0)
     }
     return this._skew
   }
@@ -164,6 +172,61 @@ export abstract class Display implements Observer<ObservablePoint> {
 
   get alpha() {
     return this._alpha
+  }
+
+  private _rotation = 0
+
+  set rotation(value) {
+    if (this.rotation !== value) {
+      this._rotation = value
+      this._onUpdate()
+    }
+  }
+
+  get rotation() {
+    return this._rotation
+  }
+
+  private _anchor = defaultAnchor
+
+  set anchor(value: PointData | number) {
+    if (this._anchor === defaultAnchor) {
+      this._anchor = new ObservablePoint(this, 0, 0)
+    }
+    if (typeof value === 'number') {
+      this._anchor.set(value)
+    }
+    else {
+      this._anchor.copyFrom(value)
+    }
+  }
+
+  get anchor(): ObservablePoint {
+    if (this._anchor === defaultAnchor) {
+      this._anchor = new ObservablePoint(this)
+    }
+    return this._anchor
+  }
+
+  private _pivot: ObservablePoint = defaultPivot
+
+  set pivot(value: PointData | number) {
+    if (this._pivot === defaultPivot) {
+      this._pivot = new ObservablePoint(this, 0, 0)
+    }
+    if (typeof value === 'number') {
+      this._pivot.set(value)
+    }
+    else {
+      this._pivot.copyFrom(value)
+    }
+  }
+
+  get pivot(): ObservablePoint {
+    if (this._pivot === defaultPivot) {
+      this._pivot = new ObservablePoint(this)
+    }
+    return this._pivot
   }
 
   _onUpdate(point?: ObservablePoint | undefined) {
@@ -182,11 +245,78 @@ export abstract class Display implements Observer<ObservablePoint> {
     return this._visible
   }
 
-  abstract render(ctx: CanvasRenderingContext2D): void
+  private shouldUpdateBounds = true
+  needUpdateBounds() {
+    if (!this.shouldUpdateBounds)
+      this.shouldUpdateBounds = true
+  }
+
+  public render(ctx: CanvasRenderingContext2D) {
+    if (this.shouldUpdateBounds) {
+      this.updateBounds()
+      this.shouldUpdateBounds = false
+    }
+    const scaleX = this.scale.x
+    const scaleY = this.scale.y
+    const skewX = this.skew.x
+    const skewY = this.skew.y
+    const positionX = this.position.x
+    const positionY = this.position.y
+    const pivotX = this.pivot.x
+    const pivotY = this.pivot.y
+    const rotation = this.rotation
+    // Calculate rotation matrix components
+    const cos = Math.cos(rotation)
+    const sin = Math.sin(rotation)
+
+    const anchorX = ensureBetween(this.anchor.x, 0, 1)
+    const anchorY = ensureBetween(this.anchor.y, 0, 1)
+
+    // Adjust origin based on anchor
+    const originX = this.width * anchorX
+    const originY = this.height * anchorY
+
+    // Apply pivot translation
+    // const dx = positionX - pivotX * cos * scaleX + pivotY * sin * scaleY
+    // const dy = positionY - pivotX * sin * scaleX - pivotY * cos * scaleY
+
+    const dx = positionX - (pivotX + originX) * cos * scaleX + (pivotY + originY) * sin * scaleY
+    const dy = positionY - (pivotX + originX) * sin * scaleX - (pivotY + originY) * cos * scaleY
+
+    // Set transformation matrix
+    // a = scaleX * cos + skewY * -sin
+    // b = scaleX * sin + skewY * cos
+    // c = skewX * cos + scaleY * -sin
+    // d = skewX * sin + scaleY * cos
+    // e = dx
+    // f = dy
+
+    const dpr = this._app?.dpr ?? 1
+    ctx.setTransform(
+      scaleX * cos + skewY * -sin, // a
+      scaleX * sin + skewY * cos, // b
+      skewX * cos + scaleY * -sin, // c
+      skewX * sin + scaleY * cos, // d
+      dx * dpr, // e
+      dy * dpr, // f
+    )
+    const _position = this.position.clone()
+    ctx.scale(dpr, dpr)
+    this.position.set(0)
+    this._render(ctx)
+    this.position = _position
+    ctx.resetTransform()
+  }
+
+  protected abstract _render(ctx: CanvasRenderingContext2D): void
 
   set visible(value) {
     this._visible = value
   }
+
+  abstract width: number
+  abstract height: number
+  abstract updateBounds(): void
 
   onAdd() { }
 

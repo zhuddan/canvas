@@ -47,8 +47,11 @@ export interface TextStyleOptions extends IBaseStyle {
      * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/textAlign)
      */
     textAlign: CanvasTextAlign;
+    lineHeight: number;
+    wordWrap: boolean;
+    wordWrapWidth: number;
 }
-export declare class TextStyle extends BaseStyle {
+export declare class TextStyle extends BaseStyle implements TextStyleOptions {
     static defaultTextStyle: TextStyleOptions;
     _isStroke: boolean;
     constructor(style?: Partial<TextStyleOptions>);
@@ -81,6 +84,15 @@ export declare class TextStyle extends BaseStyle {
     private _textAlign;
     set textAlign(value: CanvasTextAlign);
     get textAlign(): CanvasTextAlign;
+    private _lineHeight;
+    set lineHeight(value: number);
+    get lineHeight(): number;
+    private _wordWrap;
+    set wordWrap(value: boolean);
+    get wordWrap(): boolean;
+    private _wordWrapWidth;
+    set wordWrapWidth(value: number);
+    get wordWrapWidth(): number;
     clone(): TextStyle;
     render(ctx: CanvasRenderingContext2D): this;
 }

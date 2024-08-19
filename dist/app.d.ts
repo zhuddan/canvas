@@ -20,5 +20,6 @@ export declare class App {
     add(object: Display): void;
     remove(object: Display): void;
     private update;
+    onContext(fn: (ctx: CanvasRenderingContext2D) => any): void;
 }
 export {};
