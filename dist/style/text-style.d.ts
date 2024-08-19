@@ -1,7 +1,7 @@
-import type { Properties, Property } from 'csstype';
-import type { IBaseStyle } from './base-style';
-import { BaseStyle } from './base-style';
-export interface TextStyleOptions extends IBaseStyle {
+import { P as Properties, a as Property } from '../index.d-BUkyRbYY.js';
+import { IBaseStyle, BaseStyle } from './base-style.js';
+
+interface TextStyleOptions extends IBaseStyle {
     /**
      * @description 字体
      * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family)
@@ -51,7 +51,7 @@ export interface TextStyleOptions extends IBaseStyle {
     wordWrap: boolean;
     wordWrapWidth: number;
 }
-export declare class TextStyle extends BaseStyle implements TextStyleOptions {
+declare class TextStyle extends BaseStyle implements TextStyleOptions {
     static defaultTextStyle: TextStyleOptions;
     _isStroke: boolean;
     constructor(style?: Partial<TextStyleOptions>);
@@ -96,3 +96,5 @@ export declare class TextStyle extends BaseStyle implements TextStyleOptions {
     clone(): TextStyle;
     render(ctx: CanvasRenderingContext2D): this;
 }
+
+export { TextStyle, type TextStyleOptions };

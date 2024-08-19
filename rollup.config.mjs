@@ -57,7 +57,7 @@ function main() {
   /**
    * @type {import('rollup').InputOption}
    */
-  const inputTs = createInput('src', '.ts', '.dev')
+  const inputTs = createInput('src', '.ts', isProduction ? '' : '.dev')
   if (!isProduction) {
     for (const key in inputTs) {
       if (Object.hasOwnProperty.call(inputTs, key)) {

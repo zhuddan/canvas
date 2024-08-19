@@ -1,12 +1,16 @@
-import type { TextStyleOptions } from '../style/text-style';
-import { TextStyle } from '../style/text-style';
-import type { DisplayOptions } from './display';
-import { Display } from './display';
-export interface TextOptions extends DisplayOptions {
+import { D as DisplayOptions, a as Display } from '../app.d-B6dmCDYo.js';
+import { TextStyleOptions, TextStyle } from '../style/text-style.js';
+import '../coordinate/ObservablePoint.js';
+import '../coordinate/PointData.js';
+import '../coordinate/PointLike.js';
+import '../index.d-BUkyRbYY.js';
+import '../style/base-style.js';
+
+interface TextOptions extends DisplayOptions {
     text: string;
     style?: Partial<TextStyleOptions> | TextStyle;
 }
-export declare class Text extends Display {
+declare class Text extends Display {
     constructor(options: TextOptions);
     private _style;
     set style(style: Partial<TextStyleOptions> | TextStyle);
@@ -21,3 +25,5 @@ export declare class Text extends Display {
     width: number;
     height: number;
 }
+
+export { Text, type TextOptions };

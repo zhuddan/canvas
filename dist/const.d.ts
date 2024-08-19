@@ -1,1 +1,3 @@
-export declare function NOOP(): void;
+declare function NOOP(): void;
+
+export { NOOP };

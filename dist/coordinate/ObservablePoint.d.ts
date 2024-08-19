@@ -1,9 +1,10 @@
-import type { PointData } from './PointData';
-import type { PointLike } from './PointLike';
-export interface Observer<T> {
+import { PointData } from './PointData.js';
+import { PointLike } from './PointLike.js';
+
+interface Observer<T> {
     _onUpdate: (point?: T) => void;
 }
-export declare class ObservablePoint implements PointLike {
+declare class ObservablePoint implements PointLike {
     _x: number;
     _y: number;
     private readonly _observer;
@@ -18,3 +19,5 @@ export declare class ObservablePoint implements PointLike {
     get y(): number;
     set y(value: number);
 }
+
+export { ObservablePoint, type Observer };

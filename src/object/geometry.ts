@@ -21,8 +21,8 @@ export class Geometry extends Display {
     throw new Error('Method not implemented.')
   }
 
-  protected _render(ctx: CanvasRenderingContext2D): void {
-    // throw new Error('Method not implemented.')
+  protected _render(_ctx: CanvasRenderingContext2D): void {
+    throw new Error('Method not implemented.')
   }
 
   width = 0
