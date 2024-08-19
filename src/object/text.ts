@@ -137,7 +137,6 @@ export class Text extends Display {
         }
         if (splitText.length > 1) {
           this.height = (splitText.length - 1) * lineHeight + height
-          console.log(this.height)
         }
       }
     })
