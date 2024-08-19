@@ -9,12 +9,10 @@ export abstract class Dirty {
 
   protected _dirty = true
   set dirty(value) {
-    // if (this._dirty !== value) {
     this._dirty = value
     if (this.display) {
       this.display.dirty = value
     }
-    // }
   }
 
   get dirty() {

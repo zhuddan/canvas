@@ -1,38 +1,180 @@
 import type { App } from '../app'
-import { Dirty } from '../common/dirty'
-import { interceptDirty as displayIntercept } from '../common/intercept'
-import type {
-  MaybePoint,
-} from '../position/point'
-import {
-  Point,
-} from '../position/point'
-import type { BaseStyle } from '../style/base-style'
-import type { FixedLengthArray } from '../types'
+import type { Observer } from '../coordinate/ObservablePoint'
+import { ObservablePoint } from '../coordinate/ObservablePoint'
+import type { PointData } from '../coordinate/PointData'
 
 /**
  * [单位矩阵变化](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)
  */
-export interface DisplayImpl {
+export interface DisplayOptions {
 
   angle?: number
 
-  scale?: MaybePoint
+  scale?: PointData | number
 
-  skew?: MaybePoint
+  anchor?: PointData | number
 
-  anchor?: MaybePoint
+  skew?: PointData
 
   visible?: boolean
+
+  x?: number
+
+  y?: number
+
+  position?: PointData
+
+  alpha?: number
 }
 
-export abstract class Display extends Dirty implements Required<DisplayImpl> {
-  constructor() {
-    super()
+const defaultSkew = new ObservablePoint(null)
+// const defaultPivot = new ObservablePoint(null)
+const defaultScale = new ObservablePoint(null, 1, 1)
+
+export abstract class Display implements Observer<ObservablePoint> {
+  constructor(options: DisplayOptions = {}) {
+    if (options.position) {
+      this.position = options.position
+    }
+    else {
+      this.x = options.x ?? 0
+      this.y = options.y ?? 0
+    }
+
+    if (options.scale) {
+      this.scale = options.scale
+    }
+
+    if (options.skew) {
+      this.skew = options.skew
+    }
+  }
+
+  /**
+   * 更新优化
+   */
+
+  private get ___shouldRender() {
+    if (!this.visible) {
+      return false
+    }
+    if (this.scale.x === 0 || this.scale.y === 0) {
+      return false
+    }
+    return true
+  }
+  /**
+   * 更新优化
+   * 如果_shouldRender为true 则渲染
+   * 否则跳过渲染
+   */
+  abstract get _shouldRender(): boolean
+
+  get shouldRender() {
+    return !this.___shouldRender || !this._shouldRender
+  }
+
+  protected _dirty = true
+  set dirty(value) {
+    if (this._dirty === value)
+      return
+    this._dirty = value
+  }
+
+  get dirty() {
+    return this._dirty
+  }
+
+  set x(value) {
+    if (this.x !== value) {
+      this.position.x = value
+    }
+  }
+
+  get x() {
+    return this.position.x
+  }
+
+  set y(value) {
+    if (this.y !== value) {
+      this.position.y = value
+    }
+  }
+
+  get y() {
+    return this.position.y
+  }
+
+  private _position = new ObservablePoint(this, 0, 0)
+
+  set position(value: PointData) {
+    if (this.position !== value) {
+      this._position.copyFrom(value)
+    }
+  }
+
+  get position(): ObservablePoint {
+    return this._position
+  }
+
+  private _scale: ObservablePoint = defaultScale
+
+  set scale(value: PointData | number) {
+    if (this._scale === defaultScale) {
+      this._scale = new ObservablePoint(this, 1, 1)
+    }
+    if (typeof value === 'number') {
+      this._scale.set(value)
+    }
+    else {
+      this._scale.copyFrom(value)
+    }
+  }
+
+  get scale(): ObservablePoint {
+    if (this._scale === defaultScale) {
+      this._scale = new ObservablePoint(this, 1, 1)
+    }
+    return this._scale
+  }
+
+  private _skew: ObservablePoint = defaultSkew
+
+  set skew(value: PointData) {
+    if (this._skew === defaultSkew) {
+      this._skew = new ObservablePoint(this)
+    }
+    this._skew.copyFrom(value)
+  }
+
+  get skew(): ObservablePoint {
+    if (this._skew === defaultSkew) {
+      this._skew = new ObservablePoint(this, 1, 1)
+    }
+    return this._skew
+  }
+
+  private _alpha = 1
+
+  set alpha(value) {
+    if (this.alpha !== value) {
+      this._alpha = value
+      this._onUpdate()
+    }
+  }
+
+  get alpha() {
+    return this._alpha
+  }
+
+  _onUpdate(point?: ObservablePoint | undefined) {
+    if (!point)
+      return
+    this.dirty = true
   }
 
   _app: App | null = null
-  abstract style: BaseStyle
+  // abstract style: BaseStyle
 
   private _visible = true
 
@@ -40,58 +182,10 @@ export abstract class Display extends Dirty implements Required<DisplayImpl> {
     return this._visible
   }
 
-  @displayIntercept()
+  abstract render(ctx: CanvasRenderingContext2D): void
+
   set visible(value) {
     this._visible = value
-  }
-
-  private _angle = 0
-
-  get angle() {
-    return this._angle
-  }
-
-  set angle(value) {
-    this._angle = value
-  }
-
-  get x() {
-    return this.position.x
-  }
-
-  set x(val) {
-    this.position.x = val
-  }
-
-  get y() {
-    return this.position.y
-  }
-
-  set y(val) {
-    this.position.y = val
-  }
-
-  position = new Point([-Infinity, -Infinity], this)
-  skew = new Point([0, 0], this)
-  anchor = new Point([0, 0], this)
-  scale = new Point([1, 1], this)
-
-  abstract _render(ctx: CanvasRenderingContext2D): void
-
-  render(ctx: CanvasRenderingContext2D): void {
-    if (this.visible) {
-      const dpr = this._app?.dpr ?? 1
-      const transform = [
-        1 * this.scale.x,
-        0,
-        0,
-        1 * this.scale.y,
-        0, // -this.position.x / this.scale.x,
-        0, // -this.position.y / this.scale.y,
-      ].map(e => e * dpr) as FixedLengthArray<6, number>
-      ctx.setTransform(...transform)
-      this._render(ctx)
-    }
   }
 
   onAdd() { }

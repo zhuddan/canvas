@@ -101,5 +101,5 @@ export declare abstract class BaseStyle extends Dirty implements IBaseStyle {
     private _filter;
     set filter(value: string);
     get filter(): string;
-    setBaseStyle(ctx: CanvasRenderingContext2D): void;
+    render(ctx: CanvasRenderingContext2D): this;
 }

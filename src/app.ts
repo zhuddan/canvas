@@ -94,9 +94,8 @@ export class App {
       this.update()
     })
 
-    const children = [...this.children.filter(e => e.visible && e.dirty)]
-
-    if (!children.length)
+    const isDirty = !![...this.children.filter(e => e.dirty)].length
+    if (!isDirty)
       return
     this.ctx.clearRect(
       -this.width,
@@ -107,9 +106,10 @@ export class App {
 
     this.debug()
 
-    while (children.length) {
+    const shouldRender = [...this.children]
+    while (this.children.length) {
       this.beforeRender()
-      const child = children.shift()!
+      const child = shouldRender.shift()!
       child.render(this.ctx)
       child.dirty = false
       this.afterRender()

@@ -82,4 +82,6 @@ export declare class TextStyle extends BaseStyle {
     private _textAlign;
     set textAlign(value: CanvasTextAlign);
     get textAlign(): CanvasTextAlign;
+    clone(): TextStyle;
+    render(ctx: CanvasRenderingContext2D): this;
 }

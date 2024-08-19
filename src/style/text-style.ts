@@ -1,6 +1,7 @@
 import type { Properties, Property } from 'csstype'
 import { interceptDirty } from '../common/intercept'
 import type { Display } from '../object/display'
+import { createCanvasFontString, formatValue } from '../utils'
 import type { IBaseStyle } from './base-style'
 import { BaseStyle } from './base-style'
 
@@ -179,5 +180,36 @@ export class TextStyle extends BaseStyle {
 
   get textAlign() {
     return this._textAlign
+  }
+
+  clone() {
+    return new TextStyle({
+      fill: this.fill,
+      stroke: this.stroke,
+      strokeWeight: this.strokeWeight,
+      alpha: this.alpha,
+      fontFamily: this.fontFamily,
+      fontSize: this.fontSize,
+      fontStyle: this.fontStyle,
+      fontWeight: this.fontWeight,
+      fontStretch: this.fontStretch,
+      fontVariantCaps: this.fontVariantCaps,
+      letterSpacing: this.letterSpacing,
+      wordSpacing: this.wordSpacing,
+      textAlign: this.textAlign,
+      filter: this.filter,
+    })
+  }
+
+  render(ctx: CanvasRenderingContext2D) {
+    super.render(ctx)
+    ctx.textBaseline = 'top'
+    ctx.font = createCanvasFontString(this)
+    ctx.fontStretch = this.fontStretch
+    ctx.fontVariantCaps = this.fontVariantCaps
+    ctx.letterSpacing = formatValue(this.letterSpacing)
+    ctx.wordSpacing = formatValue(this.wordSpacing)
+    ctx.textAlign = this.textAlign
+    return this
   }
 };

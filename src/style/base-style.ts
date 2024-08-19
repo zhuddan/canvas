@@ -119,7 +119,7 @@ export abstract class BaseStyle extends Dirty implements IBaseStyle {
     return this._filter
   }
 
-  setBaseStyle(ctx: CanvasRenderingContext2D) {
+  render(ctx: CanvasRenderingContext2D) {
     ctx.globalAlpha = this.alpha
     if (this.strokeWeight && this.stroke) {
       ctx.lineWidth = this.strokeWeight
@@ -147,5 +147,6 @@ export abstract class BaseStyle extends Dirty implements IBaseStyle {
         ctx.shadowOffsetY = this.shadow.y
       }
     }
+    return this
   }
 }

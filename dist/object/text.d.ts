@@ -1,11 +1,18 @@
 import type { TextStyleOptions } from '../style/text-style';
 import { TextStyle } from '../style/text-style';
+import type { DisplayOptions } from './display';
 import { Display } from './display';
+export interface TextOptions extends DisplayOptions {
+    text: string;
+    style?: Partial<TextStyleOptions> | TextStyle;
+}
 export declare class Text extends Display {
-    style: TextStyle;
-    constructor(text: string, x: number, y: number, style?: Partial<TextStyleOptions>);
+    constructor(options: TextOptions);
+    private _style;
+    set style(value: Partial<TextStyleOptions> | TextStyle);
+    get style(): TextStyle;
     private _text;
     set text(text: string);
     get text(): string;
-    _render(ctx: CanvasRenderingContext2D): void;
+    render(ctx: CanvasRenderingContext2D): void;
 }
