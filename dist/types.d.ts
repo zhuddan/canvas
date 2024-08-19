@@ -1,6 +1,4 @@
 import type { Properties } from 'csstype';
-import type { MaybePoint } from './position/point';
-import type { MaybeBounds } from './position/bounds';
 /**
  * 由于某些属性不支持CanvasRenderingContext2D 故舍弃
  * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/font)
@@ -122,8 +120,6 @@ export interface ArcToStyle extends LineBaseStyle {
 export interface BezierStyle extends LineBaseStyle {
 }
 export interface ImageStyle extends LineBaseStyle {
-    size?: MaybePoint;
-    crop?: MaybeBounds;
     objectFit?: Properties['objectFit'];
 }
 export type RenderImpl = (ctx: CanvasRenderingContext2D) => void;

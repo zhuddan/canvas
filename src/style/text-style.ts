@@ -1,5 +1,5 @@
 import type { Properties, Property } from 'csstype'
-import { interceptDirty } from '../common/intercept'
+// import { interceptDirty } from '../common/intercept'
 import type { Display } from '../object/display'
 import { createCanvasFontString, formatValue } from '../utils'
 import type { IBaseStyle } from './base-style'
@@ -72,8 +72,8 @@ export class TextStyle extends BaseStyle {
   }
 
   _isStroke: boolean
-  constructor(style: Partial<TextStyleOptions> = {}, display?: Display) {
-    super(display)
+  constructor(style: Partial<TextStyleOptions> = {}) {
+    super()
     this._isStroke = !!style.stroke
     const fullStyle = Object.assign({}, TextStyle.defaultTextStyle, style)
     for (const key in fullStyle) {
@@ -87,14 +87,15 @@ export class TextStyle extends BaseStyle {
     for (const key in defaultStyle) {
       this[key as keyof typeof this] = defaultStyle[key as keyof TextStyleOptions] as any
     }
+    this.emit('update')
   }
 
   protected readonly textBaseline = 'top'
 
   private _fontSize: TextStyleOptions['fontSize']
-  @interceptDirty()
   set fontSize(value) {
     this._fontSize = value
+    this.emit('update')
   }
 
   get fontSize() {
@@ -102,9 +103,9 @@ export class TextStyle extends BaseStyle {
   }
 
   private _fontFamily: TextStyleOptions['fontFamily']
-  @interceptDirty()
   set fontFamily(value) {
     this._fontFamily = value
+    this.emit('update')
   }
 
   get fontFamily() {
@@ -112,9 +113,10 @@ export class TextStyle extends BaseStyle {
   }
 
   private _fontStyle: TextStyleOptions['fontStyle']
-  @interceptDirty()
+
   set fontStyle(value) {
     this._fontStyle = value
+    this.emit('update')
   }
 
   get fontStyle() {
@@ -122,9 +124,10 @@ export class TextStyle extends BaseStyle {
   }
 
   private _fontWeight: TextStyleOptions['fontWeight']
-  @interceptDirty()
+
   set fontWeight(value) {
     this._fontWeight = value
+    this.emit('update')
   }
 
   get fontWeight() {
@@ -132,9 +135,10 @@ export class TextStyle extends BaseStyle {
   }
 
   private _fontStretch: TextStyleOptions['fontStretch'] = TextStyle.defaultTextStyle.fontStretch
-  @interceptDirty()
+
   set fontStretch(value) {
     this._fontStretch = value
+    this.emit('update')
   }
 
   get fontStretch() {
@@ -142,9 +146,10 @@ export class TextStyle extends BaseStyle {
   }
 
   private _fontVariantCaps: TextStyleOptions['fontVariantCaps'] = TextStyle.defaultTextStyle.fontVariantCaps
-  @interceptDirty()
+
   set fontVariantCaps(value) {
     this._fontVariantCaps = value
+    this.emit('update')
   }
 
   get fontVariantCaps() {
@@ -153,9 +158,9 @@ export class TextStyle extends BaseStyle {
 
   private _letterSpacing: TextStyleOptions['letterSpacing'] = TextStyle.defaultTextStyle.letterSpacing
 
-  @interceptDirty()
   set letterSpacing(value) {
     this._letterSpacing = value
+    this.emit('update')
   }
 
   get letterSpacing() {
@@ -163,9 +168,10 @@ export class TextStyle extends BaseStyle {
   }
 
   private _wordSpacing: TextStyleOptions['wordSpacing'] = TextStyle.defaultTextStyle.wordSpacing
-  @interceptDirty()
+
   set wordSpacing(value) {
     this._wordSpacing = value
+    this.emit('update')
   }
 
   get wordSpacing() {
@@ -173,9 +179,10 @@ export class TextStyle extends BaseStyle {
   }
 
   private _textAlign: TextStyleOptions['textAlign'] = TextStyle.defaultTextStyle.textAlign
-  @interceptDirty()
+
   set textAlign(value) {
     this._textAlign = value
+    this.emit('update')
   }
 
   get textAlign() {

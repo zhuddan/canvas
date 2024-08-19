@@ -1,5 +1,4 @@
 import type { Properties, Property } from 'csstype';
-import type { Display } from '../object/display';
 import type { IBaseStyle } from './base-style';
 import { BaseStyle } from './base-style';
 export interface TextStyleOptions extends IBaseStyle {
@@ -52,7 +51,7 @@ export interface TextStyleOptions extends IBaseStyle {
 export declare class TextStyle extends BaseStyle {
     static defaultTextStyle: TextStyleOptions;
     _isStroke: boolean;
-    constructor(style?: Partial<TextStyleOptions>, display?: Display);
+    constructor(style?: Partial<TextStyleOptions>);
     reset(): void;
     protected readonly textBaseline = "top";
     private _fontSize;

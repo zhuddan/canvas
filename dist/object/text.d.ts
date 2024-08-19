@@ -9,10 +9,11 @@ export interface TextOptions extends DisplayOptions {
 export declare class Text extends Display {
     constructor(options: TextOptions);
     private _style;
-    set style(value: Partial<TextStyleOptions> | TextStyle);
+    set style(style: Partial<TextStyleOptions> | TextStyle);
     get style(): TextStyle;
     private _text;
     set text(text: string);
     get text(): string;
+    get _shouldRender(): boolean;
     render(ctx: CanvasRenderingContext2D): void;
 }

@@ -1,5 +1,4 @@
-import { Dirty } from '../common/dirty'
-import { interceptDirty } from '../common/intercept'
+import EventEmitter from 'eventemitter3'
 import type { Display } from '../object/display'
 
 export interface IBaseStyle {
@@ -49,15 +48,18 @@ export interface IBaseStyle {
    */
   filter: CanvasRenderingContext2D['filter']
 }
-export abstract class BaseStyle extends Dirty implements IBaseStyle {
-  constructor(_display?: Display) {
-    super(_display)
+export abstract class BaseStyle extends EventEmitter<{
+  update: []
+}> implements IBaseStyle {
+  constructor() {
+    super()
   }
 
   private _alpha = 1
-  @interceptDirty()
+
   set alpha(value) {
     this._alpha = value
+    this.update()
   }
 
   get alpha() {
@@ -65,9 +67,10 @@ export abstract class BaseStyle extends Dirty implements IBaseStyle {
   }
 
   private _strokeWeight = 0
-  @interceptDirty()
+
   set strokeWeight(value) {
     this._strokeWeight = value
+    this.update()
   }
 
   get strokeWeight() {
@@ -75,9 +78,10 @@ export abstract class BaseStyle extends Dirty implements IBaseStyle {
   }
 
   private _fill = '#000'
-  @interceptDirty()
+
   set fill(value) {
     this._fill = value
+    this.update()
   }
 
   get fill() {
@@ -85,9 +89,10 @@ export abstract class BaseStyle extends Dirty implements IBaseStyle {
   }
 
   private _stroke: IBaseStyle['stroke'] = null
-  @interceptDirty()
+
   set stroke(value) {
     this._stroke = value
+    this.update()
   }
 
   get stroke() {
@@ -100,9 +105,9 @@ export abstract class BaseStyle extends Dirty implements IBaseStyle {
 
   private _shadow: IBaseStyle['shadow'] = {}
 
-  @interceptDirty()
   set shadow(value) {
     this._shadow = value
+    this.update()
   }
 
   get shadow() {
@@ -110,13 +115,18 @@ export abstract class BaseStyle extends Dirty implements IBaseStyle {
   }
 
   private _filter = 'none'
-  @interceptDirty()
+
   set filter(value) {
     this._filter = value
+    this.update()
   }
 
   get filter() {
     return this._filter
+  }
+
+  update() {
+    this.emit('update')
   }
 
   render(ctx: CanvasRenderingContext2D) {

@@ -1,6 +1,6 @@
 import type { Properties } from 'csstype'
-import type { MaybePoint } from './position/point'
-import type { MaybeBounds } from './position/bounds'
+// import type { MaybePoint } from './position/point'
+// import type { MaybeBounds } from './position/bounds'
 import type { Display } from './object/display'
 
 /**
@@ -127,8 +127,8 @@ export interface ArcStyle extends LineBaseStyle {
 export interface ArcToStyle extends LineBaseStyle {}
 export interface BezierStyle extends LineBaseStyle {}
 export interface ImageStyle extends LineBaseStyle {
-  size?: MaybePoint
-  crop?: MaybeBounds
+  // size?: PointData
+  // crop?: MaybeBounds
   objectFit?: Properties['objectFit']
 }
 

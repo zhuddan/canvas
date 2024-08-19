@@ -19,13 +19,17 @@ export class Text extends Display {
 
   private _style = new TextStyle()
 
-  set style(value: Partial<TextStyleOptions> | TextStyle) {
-    if (value instanceof TextStyle) {
-      this._style = value
+  set style(style: Partial<TextStyleOptions> | TextStyle) {
+    style = style || {}
+    this._style?.off('update', this._onUpdate, this)
+    if (style instanceof TextStyle) {
+      this._style = style
     }
     else {
-      this._style = new TextStyle(value)
+      this._style = new TextStyle(style)
     }
+    this._style.on('update', this._onUpdate, this)
+    this._onUpdate()
   }
 
   get style(): TextStyle {
@@ -57,6 +61,7 @@ export class Text extends Display {
       }
       if (this.style.stroke && this.style.strokeWeight) {
         ctx.strokeText(this.text, this.position.x, this.position.y)
+        // ctx.setTransform()
       }
     }
   }

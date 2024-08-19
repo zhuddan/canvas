@@ -1,5 +1,4 @@
-import { Dirty } from '../common/dirty';
-import type { Display } from '../object/display';
+import EventEmitter from 'eventemitter3';
 export interface IBaseStyle {
     /**
      * 填充颜色
@@ -46,8 +45,10 @@ export interface IBaseStyle {
      */
     filter: CanvasRenderingContext2D['filter'];
 }
-export declare abstract class BaseStyle extends Dirty implements IBaseStyle {
-    constructor(_display?: Display);
+export declare abstract class BaseStyle extends EventEmitter<{
+    update: [];
+}> implements IBaseStyle {
+    constructor();
     private _alpha;
     set alpha(value: number);
     get alpha(): number;
@@ -101,5 +102,6 @@ export declare abstract class BaseStyle extends Dirty implements IBaseStyle {
     private _filter;
     set filter(value: string);
     get filter(): string;
+    update(): void;
     render(ctx: CanvasRenderingContext2D): this;
 }
