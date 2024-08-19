@@ -1,7 +1,7 @@
 // @ts-check
 import { Pane } from 'tweakpane'
 import throttle from 'lodash-es/throttle.js'
-import { App, Text } from '../dist/index'
+import { App, Text } from '../../dist/index'
 
 const pane = new Pane()
 
