@@ -63,13 +63,13 @@ export declare abstract class Display implements Observer<ObservablePoint> {
     private _visible;
     get visible(): boolean;
     private shouldUpdateBounds;
-    needUpdateBounds(): void;
+    protected needUpdateBounds(): void;
     render(ctx: CanvasRenderingContext2D): void;
     protected abstract _render(ctx: CanvasRenderingContext2D): void;
     set visible(value: boolean);
     abstract width: number;
     abstract height: number;
-    abstract updateBounds(): void;
+    abstract _updateBounds(): void;
     onAdd(): void;
     onRemove(): void;
 }

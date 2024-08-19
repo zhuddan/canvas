@@ -246,14 +246,14 @@ export abstract class Display implements Observer<ObservablePoint> {
   }
 
   private shouldUpdateBounds = true
-  needUpdateBounds() {
+  protected needUpdateBounds() {
     if (!this.shouldUpdateBounds)
       this.shouldUpdateBounds = true
   }
 
   public render(ctx: CanvasRenderingContext2D) {
     if (this.shouldUpdateBounds) {
-      this.updateBounds()
+      this._updateBounds()
       this.shouldUpdateBounds = false
     }
     const scaleX = this.scale.x
@@ -316,7 +316,7 @@ export abstract class Display implements Observer<ObservablePoint> {
 
   abstract width: number
   abstract height: number
-  abstract updateBounds(): void
+  abstract _updateBounds(): void
 
   onAdd() { }
 

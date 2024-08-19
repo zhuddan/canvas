@@ -47,6 +47,7 @@ export interface IBaseStyle {
 }
 export declare abstract class BaseStyle extends EventEmitter<{
     update: [];
+    updateBounds: [];
 }> implements IBaseStyle {
     constructor();
     private _alpha;
@@ -102,5 +103,6 @@ export declare abstract class BaseStyle extends EventEmitter<{
     set filter(value: string);
     get filter(): string;
     update(): void;
+    updateBounds(): void;
     render(ctx: CanvasRenderingContext2D): this;
 }

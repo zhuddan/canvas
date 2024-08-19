@@ -22,6 +22,7 @@ export class Text extends Display {
   set style(style: Partial<TextStyleOptions> | TextStyle) {
     style = style || {}
     this._style?.off('update', this._onUpdate, this)
+    this._style?.off('updateBounds', this._updateBounds, this)
     if (style instanceof TextStyle) {
       this._style = style
     }
@@ -29,6 +30,7 @@ export class Text extends Display {
       this._style = new TextStyle(style)
     }
     this._style.on('update', this._onUpdate, this)
+    this._style?.on('updateBounds', this._updateBounds, this)
     this._onUpdate()
   }
 
@@ -101,7 +103,7 @@ export class Text extends Display {
     }
   }
 
-  updateBounds() {
+  _updateBounds() {
     if (!this._app)
       return
     this._app.onContext((ctx) => {

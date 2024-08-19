@@ -95,7 +95,8 @@ export class TextStyle extends BaseStyle implements TextStyleOptions {
     for (const key in defaultStyle) {
       this[key as keyof typeof this] = defaultStyle[key as keyof TextStyleOptions] as any
     }
-    this.emit('update')
+    this.updateBounds()
+    this.update()
   }
 
   protected readonly textBaseline = 'top'
@@ -103,7 +104,8 @@ export class TextStyle extends BaseStyle implements TextStyleOptions {
   private _fontSize: TextStyleOptions['fontSize']
   set fontSize(value) {
     this._fontSize = value
-    this.emit('update')
+    this.updateBounds()
+    this.update()
   }
 
   get fontSize() {
@@ -113,7 +115,8 @@ export class TextStyle extends BaseStyle implements TextStyleOptions {
   private _fontFamily: TextStyleOptions['fontFamily']
   set fontFamily(value) {
     this._fontFamily = value
-    this.emit('update')
+    this.updateBounds()
+    this.update()
   }
 
   get fontFamily() {
@@ -124,7 +127,8 @@ export class TextStyle extends BaseStyle implements TextStyleOptions {
 
   set fontStyle(value) {
     this._fontStyle = value
-    this.emit('update')
+    this.updateBounds()
+    this.update()
   }
 
   get fontStyle() {
@@ -135,7 +139,8 @@ export class TextStyle extends BaseStyle implements TextStyleOptions {
 
   set fontWeight(value) {
     this._fontWeight = value
-    this.emit('update')
+    this.updateBounds()
+    this.update()
   }
 
   get fontWeight() {
@@ -146,7 +151,8 @@ export class TextStyle extends BaseStyle implements TextStyleOptions {
 
   set fontStretch(value) {
     this._fontStretch = value
-    this.emit('update')
+    this.updateBounds()
+    this.update()
   }
 
   get fontStretch() {
@@ -157,7 +163,8 @@ export class TextStyle extends BaseStyle implements TextStyleOptions {
 
   set fontVariantCaps(value) {
     this._fontVariantCaps = value
-    this.emit('update')
+    this.updateBounds()
+    this.update()
   }
 
   get fontVariantCaps() {
@@ -168,7 +175,8 @@ export class TextStyle extends BaseStyle implements TextStyleOptions {
 
   set letterSpacing(value) {
     this._letterSpacing = value
-    this.emit('update')
+    this.update()
+    this.updateBounds()
   }
 
   get letterSpacing() {
@@ -179,7 +187,8 @@ export class TextStyle extends BaseStyle implements TextStyleOptions {
 
   set wordSpacing(value) {
     this._wordSpacing = value
-    this.emit('update')
+    this.update()
+    this.updateBounds()
   }
 
   get wordSpacing() {
@@ -190,7 +199,7 @@ export class TextStyle extends BaseStyle implements TextStyleOptions {
 
   set textAlign(value) {
     this._textAlign = value
-    this.emit('update')
+    this.update()
   }
 
   get textAlign() {
@@ -201,8 +210,9 @@ export class TextStyle extends BaseStyle implements TextStyleOptions {
 
   set lineHeight(value) {
     if (this.lineHeight !== value) {
-      this.update()
       this._lineHeight = value
+      this.update()
+      this.updateBounds()
     }
   }
 
@@ -219,6 +229,7 @@ export class TextStyle extends BaseStyle implements TextStyleOptions {
     if (this.wordWrap !== value) {
       this._wordWrap = value
       this.update()
+      this.updateBounds()
     }
   }
 
@@ -232,6 +243,7 @@ export class TextStyle extends BaseStyle implements TextStyleOptions {
     if (this.wordWrapWidth !== value) {
       this._wordWrapWidth = value
       this.update()
+      this.updateBounds()
     }
   }
 

@@ -51,6 +51,7 @@ export interface IBaseStyle {
 }
 export abstract class BaseStyle extends EventEmitter<{
   update: []
+  updateBounds: []
 }> implements IBaseStyle {
   constructor() {
     super()
@@ -130,6 +131,10 @@ export abstract class BaseStyle extends EventEmitter<{
 
   update() {
     this.emit('update')
+  }
+
+  updateBounds() {
+    this.emit('updateBounds')
   }
 
   render(ctx: CanvasRenderingContext2D) {
