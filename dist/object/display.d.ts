@@ -21,14 +21,14 @@ export declare abstract class Display implements Observer<ObservablePoint> {
     /**
      * 更新优化
      */
-    private get ___shouldRender();
+    private get __shouldUpdate();
     /**
      * 更新优化
      * 如果_shouldRender为true 则渲染
      * 否则跳过渲染
      */
-    abstract get _shouldRender(): boolean;
-    get shouldRender(): boolean;
+    abstract get _shouldUpdate(): boolean;
+    get shouldUpdate(): boolean;
     protected _dirty: boolean;
     set dirty(value: boolean);
     get dirty(): boolean;

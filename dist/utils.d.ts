@@ -20,3 +20,4 @@ export declare function calcDiff(numbers: number[]): number;
  */
 export declare function ensureBetween(input: number, min?: number, max?: number): number;
 export declare function calcCenter(num1: number, num2: number): number;
+export declare function createProxy<T extends object>(value: T, cb?: (property: string, newValue: any) => void): T;

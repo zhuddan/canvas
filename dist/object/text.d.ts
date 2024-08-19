@@ -14,6 +14,6 @@ export declare class Text extends Display {
     private _text;
     set text(text: string);
     get text(): string;
-    get _shouldRender(): boolean;
+    get _shouldUpdate(): boolean;
     render(ctx: CanvasRenderingContext2D): void;
 }

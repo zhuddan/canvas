@@ -22,7 +22,7 @@ export interface IBaseStyle {
      * 或者你喜欢16进制颜色也可以使用[这种方法](https://blog.csdn.net/ezconn/article/details/90052114)设置透明度
      */
     alpha: number;
-    shadow?: {
+    shadow: {
         /**
          * [CanvasRenderingContext2D.shadowOffsetX](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowOffsetX)
          */
@@ -61,7 +61,6 @@ export declare abstract class BaseStyle extends EventEmitter<{
     private _stroke;
     set stroke(value: string | CanvasGradient | CanvasPattern | null);
     get stroke(): string | CanvasGradient | CanvasPattern | null;
-    static defaultShadow: IBaseStyle['shadow'];
     private _shadow;
     set shadow(value: {
         /**
@@ -80,7 +79,7 @@ export declare abstract class BaseStyle extends EventEmitter<{
          * [CanvasRenderingContext2D.shadowColor](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowColor)
          */
         color?: string;
-    } | undefined);
+    });
     get shadow(): {
         /**
          * [CanvasRenderingContext2D.shadowOffsetX](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowOffsetX)
@@ -98,7 +97,7 @@ export declare abstract class BaseStyle extends EventEmitter<{
          * [CanvasRenderingContext2D.shadowColor](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowColor)
          */
         color?: string;
-    } | undefined;
+    };
     private _filter;
     set filter(value: string);
     get filter(): string;

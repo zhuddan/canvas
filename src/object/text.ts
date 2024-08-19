@@ -49,7 +49,7 @@ export class Text extends Display {
     return this._text
   }
 
-  get _shouldRender(): boolean {
+  get _shouldUpdate(): boolean {
     return !!(this.style.fill) || !!(this.style.stroke && this.style.strokeWeight)
   }
 
@@ -61,7 +61,6 @@ export class Text extends Display {
       }
       if (this.style.stroke && this.style.strokeWeight) {
         ctx.strokeText(this.text, this.position.x, this.position.y)
-        // ctx.setTransform()
       }
     }
   }

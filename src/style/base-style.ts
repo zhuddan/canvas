@@ -1,5 +1,6 @@
 import EventEmitter from 'eventemitter3'
 import type { Display } from '../object/display'
+import { createProxy } from '../utils'
 
 export interface IBaseStyle {
   /**
@@ -25,7 +26,7 @@ export interface IBaseStyle {
    */
   alpha: number
 
-  shadow?: {
+  shadow: {
     /**
      * [CanvasRenderingContext2D.shadowOffsetX](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowOffsetX)
      */
@@ -99,15 +100,17 @@ export abstract class BaseStyle extends EventEmitter<{
     return this._stroke
   }
 
-  static defaultShadow: IBaseStyle['shadow'] = {
-
-  }
-
   private _shadow: IBaseStyle['shadow'] = {}
 
   set shadow(value) {
-    this._shadow = value
-    this.update()
+    if (value === this._shadow)
+      return
+    if (value) {
+      this._shadow = createProxy(value, () => {
+        this.update()
+      })
+      this.update()
+    }
   }
 
   get shadow() {
@@ -144,7 +147,6 @@ export abstract class BaseStyle extends EventEmitter<{
     if ((this.shadow?.x || this.shadow?.y)
       && (this.shadow?.blur || this.shadow?.color)) {
       if (this.shadow.color) {
-        console.log('set')
         ctx.shadowColor = this.shadow.color
       }
       if (this.shadow.blur) {

@@ -69,6 +69,7 @@ export class TextStyle extends BaseStyle {
     wordSpacing: 0,
     textAlign: 'left',
     filter: 'none',
+    shadow: {},
   }
 
   _isStroke: boolean

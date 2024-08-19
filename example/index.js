@@ -20,122 +20,66 @@ const text = new Text({
   // strokeWeight: 2,
   // fontWeight: 600,
   // textAlign: 'left',
-  // shadow: {
-  //   color: '#d11257',
-  //   x: 5,
-  //   y: 5,
-  //   blur: 5,
-  // },
+
   // filter: 'blur(4px)',
   text: '这是文字',
+  visible: true,
   style: {
     stroke: '#10d74d',
     strokeWeight: 1,
-    fontSize: 99,
+    fontSize: 45,
     fill: '#ffff',
+    shadow: {
+      color: '#d11257',
+      x: 5,
+      y: 5,
+      blur: 5,
+    },
   },
 })
 app.add(text)
 document.body.appendChild(app.canvas)
-pane.addBinding(text, 'x', {
-  min: 0,
-  max: app.width,
+/**
+ *
+ * @param {number} min
+ * @param {number} max
+ */
+const range = (min, max) => ({ min, max })
+const color = () => ({ color: {} })
+function options(/** @type {any[]} */...args) {
+  const options = /** @type {Record<string,any>} */ ({})
+  for (let index = 0; index < args.length; index++) {
+    const key = args[index]
+    options[`${key}`] = key
+  }
+  return {
+    options,
+  }
+}
+pane.addBinding(text, 'text')
+pane.addBinding(text.style, 'textAlign', options('left', 'right', 'center'))
+pane.addBinding(text, 'x', range(0, app.width))
+pane.addBinding(text, 'y', range(0, app.height))
+pane.addBinding(text.style, 'fontSize', range(12, 80))
+pane.addBinding(text.style, 'letterSpacing', range(0, 20))
+pane.addBinding(text.style, 'fill', color())
+pane.addBinding(text.style, 'stroke', color())
+pane.addBinding(text.style, 'strokeWeight', range(0, 10))
+pane.addBinding(text.style, 'shadow')
+pane.addBinding(text.style.shadow, 'color', { label: 'shadow.fill' })
+pane.addBinding(text.style.shadow, 'blur', { label: 'shadow.blur' })
+pane.addBinding(text.style, 'filter', {
+  options: {
+    'none': 'none',
+    'blur(10px)': 'blur(10px)',
+    'Multiple': 'contrast(1.4) sepia(1) drop-shadow(-9px 9px 3px #e81)',
+  },
 })
-pane.addBinding(text, 'y', {
-  min: 0,
-  max: app.height,
+
+pane.addBinding(text, 'scale', {
+  min: 1,
+  max: 2,
 })
-
-// pane.addBinding(text.style, 'fontSize', {
-//   min: 12,
-//   max: 80,
-// })
-// pane.addBinding(text.style, 'letterSpacing', {
-//   min: 0,
-//   max: 80,
-// })
-// pane.addBinding(text, 'text')
-// pane.addBinding(text.style, 'fill', {
-//   color: {
-//   },
-// })
-// pane.addBinding(text.style, 'stroke', {
-//   color: {
-//   },
-// })
-// pane.addBinding(text.style, 'strokeWeight', {
-//   min: 0,
-//   max: 10,
-// })
-// pane.addBinding(text.style, 'textAlign', {
-//   options: {
-//     right: 'right',
-//     left: 'left',
-//     center: 'center',
-//   },
-// })
-// if (text.style.shadow) {
-//   /**
-//    *
-//    * @param {Partial<import('../dist/style/base-style').IBaseStyle>['shadow']} obj
-//    */
-//   function setShadow(obj = {}) {
-//     text.style.shadow = {
-//       ...(text.style.shadow || {}),
-//       ...obj,
-//     }
-//   }
-//   pane.addBinding(text.style.shadow, 'color', {
-//     label: 'shadow.fill',
-//   }).on('change', (e) => {
-//     setShadow({ color: e.value })
-//   })
-
-//   pane.addBinding(text.style.shadow, 'blur', {
-//     label: 'shadow.blur',
-//     min: -50,
-//     max: 50,
-//   }).on('change', (e) => {
-//     setShadow({ blur: e.value })
-//   })
-//   pane.addBinding(text.style.shadow, 'x', {
-//     label: 'shadow.x',
-//     min: -200,
-//     max: 200,
-//   }).on('change', (e) => {
-//     setShadow({ x: e.value })
-//   })
-//   pane.addBinding(text.style.shadow, 'y', {
-//     label: 'shadow.x',
-//     min: -200,
-//     max: 200,
-//   }).on('change', (e) => {
-//     setShadow({ y: e.value })
-//   })
-
-//   // pane.addBinding(text.style.shadow, 'y', {
-//   //   min: -50,
-//   //   max: 50,
-//   // }).on('change', (e) => {
-//   //   text.style.shadow = {
-//   //     ...(text.style.shadow || {}),
-//   //     x: e.value,
-//   //   }
-//   // })
-// }
-
-// pane.addBinding(text.style, 'filter', {
-//   options: {
-//     'none': 'none',
-//     'blur(10px)': 'blur(10px)',
-//     'Multiple': 'contrast(1.4) sepia(1) drop-shadow(-9px 9px 3px #e81)',
-//   },
-// })
-
-// pane.addBinding(text, 'scale', {
-//   min: 1,
-//   max: 2,
-// })
 
 // const tween = new Tween(text)
 //   .to({ x: 300, y: 200 }, 1500)

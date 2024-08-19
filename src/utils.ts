@@ -120,3 +120,13 @@ export function calcCenter(num1: number, num2: number) {
 // const { newRx, newRy } = calculateEllipseRadii(originalRadius, originalRadius, ...transformMatrix)
 
 // console.log(`Transformed ellipse radii: Rx = ${newRx}, Ry = ${newRy}`)
+
+export function createProxy<T extends object>(value: T, cb?: (property: string, newValue: any) => void): T {
+  return new Proxy<T>(value, {
+    set: (target, property, newValue) => {
+      target[property as keyof T] = newValue
+      cb?.(property as string, newValue)
+      return true
+    },
+  })
+}

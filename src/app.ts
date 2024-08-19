@@ -105,9 +105,8 @@ export class App {
     )
 
     this.debug()
-
-    const shouldRender = [...this.children]
-    while (this.children.length) {
+    const shouldRender = [...this.children].filter(e => e.shouldUpdate)
+    while (shouldRender.length) {
       this.beforeRender()
       const child = shouldRender.shift()!
       child.render(this.ctx)

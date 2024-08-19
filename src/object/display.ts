@@ -33,6 +33,8 @@ const defaultScale = new ObservablePoint(null, 1, 1)
 
 export abstract class Display implements Observer<ObservablePoint> {
   constructor(options: DisplayOptions = {}) {
+    this.visible = !!options.visible
+
     if (options.position) {
       this.position = options.position
     }
@@ -54,24 +56,21 @@ export abstract class Display implements Observer<ObservablePoint> {
    * 更新优化
    */
 
-  private get ___shouldRender() {
-    if (!this.visible) {
-      return false
-    }
-    if (this.scale.x === 0 || this.scale.y === 0) {
-      return false
-    }
-    return true
+  private get __shouldUpdate() {
+    return !(!this.visible
+      || this.scale.x === 0
+      || this.scale.y === 0
+      || this.alpha === 0)
   }
   /**
    * 更新优化
    * 如果_shouldRender为true 则渲染
    * 否则跳过渲染
    */
-  abstract get _shouldRender(): boolean
+  abstract get _shouldUpdate(): boolean
 
-  get shouldRender() {
-    return !this.___shouldRender || !this._shouldRender
+  get shouldUpdate() {
+    return this.__shouldUpdate && this._shouldUpdate
   }
 
   protected _dirty = true
@@ -168,8 +167,9 @@ export abstract class Display implements Observer<ObservablePoint> {
   }
 
   _onUpdate(point?: ObservablePoint | undefined) {
-    if (!point)
-      return
+    if (!point) {
+      //
+    }
     this.dirty = true
   }
 
