@@ -336,8 +336,8 @@ export abstract class Display implements Observer<ObservablePoint> {
     const anchorX = ensureBetween(this.anchor.x, 0, 1)
     const anchorY = ensureBetween(this.anchor.y, 0, 1)
 
-    const originX = this.width * anchorX
-    const originY = this.height * anchorY
+    const originX = this.transformWidth * anchorX
+    const originY = this.transformHeight * anchorY
 
     const dx = positionX - (pivotX + originX) * cos * scaleX + (pivotY + originY) * sin * scaleY
     const dy = positionY - (pivotX + originX) * sin * scaleX - (pivotY + originY) * cos * scaleY
@@ -360,8 +360,15 @@ export abstract class Display implements Observer<ObservablePoint> {
 
   protected abstract _render(ctx: CanvasRenderingContext2D): void
 
-  abstract width: number
-  abstract height: number
+  /**
+   * 同于形变转换的宽度
+   */
+  abstract transformWidth: number
+  /**
+   * 同于形变转换的高度
+   */
+  abstract transformHeight: number
+
   abstract _updateBounds(): void
 
   onAdd() { }

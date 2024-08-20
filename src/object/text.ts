@@ -118,13 +118,13 @@ export class Text extends Display {
         if (this.style.stroke && this.style.strokeWeight) {
           height += this.style.strokeWeight
         }
-        this.height = height
+        this.transformHeight = height
       }
       else {
         const splitText = this.getSplitText(ctx)
-        this.width = this.style.wordWrapWidth
+        this.transformWidth = this.style.wordWrapWidth
         if (!splitText.length) {
-          this.height = 0
+          this.transformHeight = 0
           return
         }
         const measure = ctx.measureText(this.getSplitText(ctx)[0])
@@ -137,13 +137,13 @@ export class Text extends Display {
           height += this.style.strokeWeight
         }
         if (splitText.length > 1) {
-          this.height = (splitText.length - 1) * lineHeight + height
+          this.transformHeight = (splitText.length - 1) * lineHeight + height
         }
       }
     })
   }
 
-  width = 0
+  transformWidth = 0
 
-  height = 0
+  transformHeight = 0
 };

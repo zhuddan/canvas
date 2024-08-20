@@ -18,6 +18,6 @@ export declare class Text extends Display {
     getSplitText(ctx: CanvasRenderingContext2D): string[];
     _render(ctx: CanvasRenderingContext2D): void;
     _updateBounds(): void;
-    width: number;
-    height: number;
+    transformWidth: number;
+    transformHeight: number;
 }

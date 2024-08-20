@@ -90,8 +90,14 @@ export declare abstract class Display implements Observer<ObservablePoint> {
     private _baseRender;
     render(ctx: CanvasRenderingContext2D): void;
     protected abstract _render(ctx: CanvasRenderingContext2D): void;
-    abstract width: number;
-    abstract height: number;
+    /**
+     * 同于形变转换的宽度
+     */
+    abstract transformWidth: number;
+    /**
+     * 同于形变转换的高度
+     */
+    abstract transformHeight: number;
     abstract _updateBounds(): void;
     onAdd(): void;
     onRemove(): void;

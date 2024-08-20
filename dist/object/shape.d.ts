@@ -37,8 +37,8 @@ export declare class Shape extends Display implements IShape {
     private _strokeStyle;
     set strokeStyle(value: StrokeInput | InputColor);
     get strokeStyle(): StrokeInput;
-    width: number;
-    height: number;
+    transformWidth: number;
+    transformHeight: number;
     _updateBounds(): void;
     private _strokeWeight;
     set strokeWeight(value: number);

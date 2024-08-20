@@ -229,8 +229,8 @@ export class Shape extends Display implements IShape {
     return this._strokeStyle
   }
 
-  width = 100
-  height = 100
+  transformWidth = 100
+  transformHeight = 100
   _updateBounds(): void {
     // throw new Error('Method not implemented.')
   }
