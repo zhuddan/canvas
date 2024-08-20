@@ -313,7 +313,7 @@ export abstract class Display implements Observer<ObservablePoint> {
 
   public render(ctx: CanvasRenderingContext2D) {
     if (this.shouldUpdateBounds) {
-      this._updateBounds()
+      this._updateTransformBounds()
       this.shouldUpdateBounds = false
     }
     if (this.alpha !== 1) {
@@ -369,9 +369,67 @@ export abstract class Display implements Observer<ObservablePoint> {
    */
   abstract transformHeight: number
 
-  abstract _updateBounds(): void
+  /**
+   * 同于形变转换的边界
+   */
+  abstract _updateTransformBounds(): void
 
-  onAdd() { }
+  onAdd(_app: App) {
+    this._app = _app
+    this._onUpdate()
+  }
 
-  onRemove() { }
+  onRemove() {
+    this._app = null
+    this._onUpdate()
+  }
+}
+
+export class DisplayGroup {
+  private children: Display[] = []
+  private _app: App | null = null
+
+  private get app() {
+    return this._app
+  }
+
+  private set app(app) {
+    this._app = app ?? null
+    this.children.forEach(child => child._app = app ?? null)
+  }
+
+  constructor(children: Display[] = []) {
+    this.children = children
+  }
+
+  add(object: Display) {
+    this.children.push(object)
+    if (this._app) {
+      this._app.add(object)
+    }
+  }
+
+  remove(object: Display) {
+    const index = this.children.indexOf(object)
+    if (index !== -1) {
+      this.children.splice(index, 1)
+    }
+    if (this._app) {
+      this._app.remove(object)
+    }
+  }
+
+  onRemove() {
+    for (let index = 0; index < this.children.length; index++) {
+      this.app?.remove(this.children[index])
+    }
+    this.app = null
+  }
+
+  onAdd(app: App) {
+    this.app = app
+    for (let index = 0; index < this.children.length; index++) {
+      app.add(this.children[index])
+    }
+  }
 }

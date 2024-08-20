@@ -12,6 +12,7 @@ interface IShape {
     fill: (color?: InputColor) => Shape;
     rect: (...args: Parameters<CanvasRenderingContext2D['rect']>) => Shape;
     roundRect: (...args: Parameters<CanvasRenderingContext2D['roundRect']>) => Shape;
+    arc: (...args: Parameters<CanvasRenderingContext2D['arc']>) => Shape;
     arcTo: (...args: Parameters<CanvasRenderingContext2D['arcTo']>) => Shape;
     bezierCurveTo: (...args: Parameters<CanvasRenderingContext2D['bezierCurveTo']>) => Shape;
     ellipse: (...args: Parameters<CanvasRenderingContext2D['ellipse']>) => Shape;
@@ -26,6 +27,7 @@ export declare class Shape extends Display implements IShape {
     lineTo(...args: Parameters<CanvasRenderingContext2D['lineTo']>): this;
     rect(...args: Parameters<CanvasRenderingContext2D['rect']>): this;
     roundRect(...args: Parameters<CanvasRenderingContext2D['roundRect']>): this;
+    arc(...args: Parameters<CanvasRenderingContext2D['arc']>): this;
     arcTo(...args: Parameters<CanvasRenderingContext2D['arcTo']>): this;
     bezierCurveTo(...args: Parameters<CanvasRenderingContext2D['bezierCurveTo']>): this;
     ellipse(...args: Parameters<CanvasRenderingContext2D['ellipse']>): this;
@@ -39,10 +41,7 @@ export declare class Shape extends Display implements IShape {
     get strokeStyle(): StrokeInput;
     transformWidth: number;
     transformHeight: number;
-    _updateBounds(): void;
-    private _strokeWeight;
-    set strokeWeight(value: number);
-    get strokeWeight(): number;
+    _updateTransformBounds(): void;
     private _fillStyle;
     set fillStyle(value: string | CanvasGradient | CanvasPattern | null);
     get fillStyle(): string | CanvasGradient | CanvasPattern | null;

@@ -1,5 +1,6 @@
 import { NOOP } from './const'
 import type { Display } from './object/display'
+import { DisplayGroup } from './object/display'
 import type { RenderImpl } from './types'
 import { formatValue } from './utils'
 
@@ -75,17 +76,26 @@ export class App {
 
   children: Display[] = []
 
-  add(object: Display) {
-    object.onAdd()
-    object._app = this
-    this.children.push(object)
+  add(object: Display | DisplayGroup) {
+    if (object instanceof DisplayGroup) {
+      object.onAdd(this)
+    }
+    else {
+      this.children.push(object)
+      object.onAdd(this)
+    }
   }
 
-  remove(object: Display) {
-    const index = this.children.indexOf(object)
-    if (index !== -1) {
-      this.children.splice(index, 1)
-      object._app = null
+  remove(object: Display | DisplayGroup) {
+    if (object instanceof DisplayGroup) {
+      object.onRemove()
+    }
+    else {
+      const index = this.children.indexOf(object)
+      if (index !== -1) {
+        object.onRemove()
+        this.children.splice(index, 1)
+      }
     }
   }
 

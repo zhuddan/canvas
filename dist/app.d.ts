@@ -1,4 +1,5 @@
 import type { Display } from './object/display';
+import { DisplayGroup } from './object/display';
 interface AppConstructorOptions {
     width?: number;
     height?: number;
@@ -17,8 +18,8 @@ export declare class App {
     private afterRender;
     private debug;
     children: Display[];
-    add(object: Display): void;
-    remove(object: Display): void;
+    add(object: Display | DisplayGroup): void;
+    remove(object: Display | DisplayGroup): void;
     private update;
     onContext(fn: (ctx: CanvasRenderingContext2D) => any): void;
 }

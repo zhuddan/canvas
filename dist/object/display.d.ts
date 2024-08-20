@@ -98,8 +98,22 @@ export declare abstract class Display implements Observer<ObservablePoint> {
      * 同于形变转换的高度
      */
     abstract transformHeight: number;
-    abstract _updateBounds(): void;
-    onAdd(): void;
+    /**
+     * 同于形变转换的边界
+     */
+    abstract _updateTransformBounds(): void;
+    onAdd(_app: App): void;
     onRemove(): void;
+}
+export declare class DisplayGroup {
+    private children;
+    private _app;
+    private get app();
+    private set app(value);
+    constructor(children?: Display[]);
+    add(object: Display): void;
+    remove(object: Display): void;
+    onRemove(): void;
+    onAdd(app: App): void;
 }
 export {};

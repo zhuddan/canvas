@@ -1,6 +1,6 @@
 import type { AbstractStyle, IAbstractStyle, InputColor, StrokeInput, renderAbstractStyle } from '../style/abstract-style'
 import type { FunctionKeys, ModifyReturnType } from '../types'
-import { createProxy } from '../utils'
+import { calcDiff, calcMax, createProxy } from '../utils'
 import type { DisplayOptions } from './display'
 import { Display } from './display'
 
@@ -14,16 +14,17 @@ type Methods =
   | 'beginPath'
   | 'closePath'
   | 'moveTo'
-  | 'lineTo'
-  | 'rect'
   | 'fill'
   | 'stroke'
-  | 'roundRect'
-  | 'arcTo'
-  | 'bezierCurveTo'
-  | 'ellipse'
-  | 'fillRect'
+  | 'lineTo' //
+  | 'rect' //
+  | 'roundRect' //
+  | 'fillRect' //
   | 'strokeRect'
+  | 'arc' //
+  | 'arcTo' //
+  | 'bezierCurveTo' //
+  | 'ellipse'
 type PathInstruction = PathData<Methods>
 export interface ShapeOptions extends DisplayOptions {
 
@@ -38,6 +39,7 @@ interface IShape {
   fill: (color?: InputColor) => Shape
   rect: (...args: Parameters<CanvasRenderingContext2D['rect']>) => Shape
   roundRect: (...args: Parameters<CanvasRenderingContext2D['roundRect']>) => Shape
+  arc: (...args: Parameters<CanvasRenderingContext2D['arc']>) => Shape
   arcTo: (...args: Parameters<CanvasRenderingContext2D['arcTo']>) => Shape
   bezierCurveTo: (...args: Parameters<CanvasRenderingContext2D['bezierCurveTo']>) => Shape
   ellipse: (...args: Parameters<CanvasRenderingContext2D['ellipse']>) => Shape
@@ -99,6 +101,14 @@ export class Shape extends Display implements IShape {
     return this
   }
 
+  arc(...args: Parameters<CanvasRenderingContext2D['arc']>) {
+    this.pathInstruction.push({
+      action: 'arc',
+      args: [...args],
+    })
+    return this
+  }
+
   arcTo(...args: Parameters<CanvasRenderingContext2D['arcTo']>) {
     this.pathInstruction.push({
       action: 'arcTo',
@@ -141,8 +151,12 @@ export class Shape extends Display implements IShape {
 
   private pathInstruction: PathInstruction[] = []
   get _shouldUpdate(): boolean {
-    // throw new Error('Method not implemented.')
-    return true
+    const actions = this.pathInstruction.map(item => item.action)
+    if (actions.includes('fill')
+      || actions.includes('stroke')) {
+      return true
+    }
+    return false
   }
 
   protected _render(_ctx: CanvasRenderingContext2D): void {
@@ -229,21 +243,51 @@ export class Shape extends Display implements IShape {
     return this._strokeStyle
   }
 
-  transformWidth = 100
-  transformHeight = 100
-  _updateBounds(): void {
-    // throw new Error('Method not implemented.')
-  }
+  transformWidth = 0
+  transformHeight = 0
+  _updateTransformBounds(): void {
+    // 所有坐标的最大值放进来
+    const allX: number[] = []
+    const allY: number[] = []
 
-  private _strokeWeight = 0
-
-  set strokeWeight(value) {
-    this._strokeWeight = value
-    this._onUpdate()
-  }
-
-  get strokeWeight() {
-    return this._strokeWeight
+    for (let index = 0; index < this.pathInstruction.length; index++) {
+      const { action, args } = this.pathInstruction[index]
+      switch (action) {
+        case 'lineTo':
+          allX.push(args[0])
+          allY.push(args[1])
+          break
+        case 'fillRect':
+        case 'strokeRect':
+        case 'roundRect':
+        case 'rect':{
+          let strokeWeight = 0
+          if (action === 'strokeRect') {
+            strokeWeight = this.strokeStyle.width ?? 1
+          }
+          allX.push(args[0] + args[2] + strokeWeight)
+          allY.push(args[1] + args[2] + strokeWeight)
+          break
+        }
+        case 'arc':
+          allX.push(args[0] + args[2])
+          allY.push(args[1] + args[2])
+          break
+        case 'arcTo':
+          allX.push(args[0] + args[2])
+          allY.push(args[1] + args[2])
+          break
+        case 'bezierCurveTo':
+          allX.push(args[2] + args[4])
+          allY.push(args[3] + args[5])
+          break
+        case 'ellipse':
+          allX.push(args[0] + args[2])
+          allY.push(args[1] + args[3])
+      }
+    }
+    this.transformWidth = calcDiff(allX)
+    this.transformHeight = calcDiff(allY)
   }
 
   private _fillStyle: InputColor | null = null
