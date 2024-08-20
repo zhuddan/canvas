@@ -1,8 +1,10 @@
 import EventEmitter from 'eventemitter3';
-export type StrokeInputColor = CanvasRenderingContext2D['strokeStyle'];
+export type InputColor = CanvasRenderingContext2D['strokeStyle'];
+export type LineDash = Iterable<number>;
 export interface StrokeInput {
-    color?: StrokeInputColor;
+    color?: InputColor;
     width?: number;
+    dash?: LineDash;
 }
 export interface IAbstractStyle {
     /**
@@ -31,7 +33,7 @@ export declare abstract class AbstractStyle extends EventEmitter<{
     set fill(value: string);
     get fill(): string;
     private _stroke;
-    set stroke(value: StrokeInput | StrokeInputColor);
+    set stroke(value: StrokeInput | InputColor);
     get stroke(): StrokeInput;
     private _filter;
     set filter(value: string);

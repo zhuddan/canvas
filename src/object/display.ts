@@ -56,7 +56,7 @@ const defaultScale = new ObservablePoint(null, 1, 1)
 
 export abstract class Display implements Observer<ObservablePoint> {
   constructor(options: DisplayOptions = {}) {
-    this.visible = !!options.visible
+    this.visible = options.visible ?? true
     if (options.position) {
       this.position = options.position
     }

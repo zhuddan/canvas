@@ -1,10 +1,12 @@
 import EventEmitter from 'eventemitter3'
 import { createProxy } from '../utils'
 
-export type StrokeInputColor = CanvasRenderingContext2D['strokeStyle']
+export type InputColor = CanvasRenderingContext2D['strokeStyle']
+export type LineDash = Iterable<number>
 export interface StrokeInput {
-  color?: StrokeInputColor
+  color?: InputColor
   width?: number
+  dash?: LineDash
 }
 
 // | CanvasRenderingContext2D['strokeStyle']
@@ -52,7 +54,7 @@ export abstract class AbstractStyle extends EventEmitter<{
 
   private _stroke: StrokeInput = {}
 
-  set stroke(value: StrokeInput | StrokeInputColor) {
+  set stroke(value: StrokeInput | InputColor) {
     if (value === this._stroke)
       return
     if (
