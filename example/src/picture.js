@@ -2,7 +2,7 @@
 import { Pane } from 'tweakpane'
 import throttle from 'lodash-es/throttle.js'
 import { App, Picture } from '../../dist/index'
-import { createBaseFolder } from './common.js'
+import { createBaseFolder, range } from './common.js'
 
 const pane = new Pane()
 
@@ -20,10 +20,22 @@ const app = new App({
 const img = document.createElement('img')
 img.src = './scene.jpg'
 img.onload = () => {
-  const text = new Picture(img, {
+  const p = new Picture(img, {
 
   })
-  app.add(text)
+  app.add(p)
   document.body.appendChild(app.canvas)
-  createBaseFolder(pane, text, app)
+  createBaseFolder(pane, p, app)
+  const folderPicture = pane.addFolder({
+    title: 'Picture',
+  })
+  folderPicture.addBinding(p, 'size')
+  folderPicture.addBinding(p, 'slice', {
+    x: range(0, img.width),
+    y: range(0, img.height),
+  })
+  folderPicture.addBinding(p, 'sliceSize', {
+    x: range(0, img.width),
+    y: range(0, img.height),
+  })
 }
