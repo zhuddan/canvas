@@ -1,7 +1,7 @@
 import type { Properties, Property } from 'csstype';
-import type { IBaseStyle } from './base-style';
-import { BaseStyle } from './base-style';
-export interface TextStyleOptions extends IBaseStyle {
+import type { IAbstractStyle } from './abstract-style';
+import { AbstractStyle } from './abstract-style';
+export interface TextStyleOptions extends IAbstractStyle {
     /**
      * @description 字体
      * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family)
@@ -51,7 +51,7 @@ export interface TextStyleOptions extends IBaseStyle {
     wordWrap: boolean;
     wordWrapWidth: number;
 }
-export declare class TextStyle extends BaseStyle implements TextStyleOptions {
+export declare class TextStyle extends AbstractStyle implements TextStyleOptions {
     static defaultTextStyle: TextStyleOptions;
     _isStroke: boolean;
     constructor(style?: Partial<TextStyleOptions>);

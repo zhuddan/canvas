@@ -2,10 +2,10 @@ import type { Properties, Property } from 'csstype'
 // import { interceptDirty } from '../common/intercept'
 import type { Display } from '../object/display'
 import { createCanvasFontString, formatValue } from '../utils'
-import type { IBaseStyle } from './base-style'
-import { BaseStyle } from './base-style'
+import type { IAbstractStyle } from './abstract-style'
+import { AbstractStyle } from './abstract-style'
 
-export interface TextStyleOptions extends IBaseStyle {
+export interface TextStyleOptions extends IAbstractStyle {
   /**
    * @description 字体
    * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family)
@@ -57,11 +57,12 @@ export interface TextStyleOptions extends IBaseStyle {
   wordWrapWidth: number
 }
 
-export class TextStyle extends BaseStyle implements TextStyleOptions {
+export class TextStyle extends AbstractStyle implements TextStyleOptions {
   public static defaultTextStyle: TextStyleOptions = {
     fill: 'black',
-    stroke: null,
-    strokeWeight: 0,
+    stroke: {
+      width: 1,
+    },
     fontFamily: 'Arial',
     fontSize: 12,
     fontStyle: 'normal',
@@ -72,7 +73,6 @@ export class TextStyle extends BaseStyle implements TextStyleOptions {
     wordSpacing: 0,
     textAlign: 'left',
     filter: 'none',
-    shadow: {},
     lineHeight: 0,
     wordWrap: false,
     wordWrapWidth: 0,
@@ -85,7 +85,13 @@ export class TextStyle extends BaseStyle implements TextStyleOptions {
     const fullStyle = Object.assign({}, TextStyle.defaultTextStyle, style)
     for (const key in fullStyle) {
       const thisKey = key as keyof typeof this
-      this[thisKey] = fullStyle[key as keyof TextStyleOptions] as any
+      const data = fullStyle[key as keyof TextStyleOptions] as any
+      if (key === 'stroke') {
+        this[thisKey] = Object.assign({}, TextStyle.defaultTextStyle[key] as unknown as object, data)
+      }
+      else {
+        this[thisKey] = data
+      }
     }
   }
 
@@ -254,7 +260,6 @@ export class TextStyle extends BaseStyle implements TextStyleOptions {
     return new TextStyle({
       fill: this.fill,
       stroke: this.stroke,
-      strokeWeight: this.strokeWeight,
       fontFamily: this.fontFamily,
       fontSize: this.fontSize,
       fontStyle: this.fontStyle,

@@ -2,8 +2,26 @@ import type { App } from '../app'
 import type { Observer } from '../coordinate/ObservablePoint'
 import { ObservablePoint } from '../coordinate/ObservablePoint'
 import type { PointData } from '../coordinate/PointData'
-import { ensureBetween } from '../utils'
+import { createProxy, ensureBetween } from '../utils'
 
+interface ShadowType {
+  /**
+   * [CanvasRenderingContext2D.shadowOffsetX](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowOffsetX)
+   */
+  x?: number
+  /**
+   * [CanvasRenderingContext2D.shadowOffsetY](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowOffsetY)
+   */
+  y?: number
+  /**
+   * [CanvasRenderingContext2D.shadowBlur](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowBlur)
+   */
+  blur?: number
+  /**
+   * [CanvasRenderingContext2D.shadowColor](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowColor)
+   */
+  color?: string
+}
 /**
  * [单位矩阵变化](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)
  */
@@ -27,6 +45,8 @@ export interface DisplayOptions {
   skew?: PointData
 
   alpha?: number
+  // 特殊样式
+  shadow?: ShadowType
 }
 
 const defaultSkew = new ObservablePoint(null)
@@ -54,6 +74,9 @@ export abstract class Display implements Observer<ObservablePoint> {
     }
     if (options.pivot) {
       this.pivot = options.pivot
+    }
+    if (options.shadow) {
+      this.shadow = options.shadow
     }
   }
 
@@ -226,6 +249,23 @@ export abstract class Display implements Observer<ObservablePoint> {
     return this._pivot
   }
 
+  private _shadow: ShadowType = { x: 0, y: 0 }
+
+  set shadow(value) {
+    if (value === this._shadow)
+      return
+    if (value) {
+      this._shadow = createProxy(value, () => {
+        this._onUpdate()
+      })
+      this._onUpdate()
+    }
+  }
+
+  get shadow(): ShadowType {
+    return this._shadow
+  }
+
   _onUpdate(point?: ObservablePoint | undefined) {
     if (!point) {
       //
@@ -253,6 +293,24 @@ export abstract class Display implements Observer<ObservablePoint> {
       this.shouldUpdateBounds = true
   }
 
+  private _baseRender(ctx: CanvasRenderingContext2D) {
+    if ((this.shadow?.x || this.shadow?.y)
+      && (this.shadow?.blur || this.shadow?.color)) {
+      if (this.shadow.color) {
+        ctx.shadowColor = this.shadow.color
+      }
+      if (this.shadow.blur) {
+        ctx.shadowBlur = this.shadow.blur
+      }
+      if (this.shadow.x) {
+        ctx.shadowOffsetX = this.shadow.x
+      }
+      if (this.shadow.y) {
+        ctx.shadowOffsetY = this.shadow.y
+      }
+    }
+  }
+
   public render(ctx: CanvasRenderingContext2D) {
     if (this.shouldUpdateBounds) {
       this._updateBounds()
@@ -261,12 +319,13 @@ export abstract class Display implements Observer<ObservablePoint> {
     if (this.alpha !== 1) {
       ctx.globalAlpha = this.alpha
     }
-    const scaleX = this.scale.x
-    const scaleY = this.scale.y
+    const dpr = this._app?.dpr ?? 1
+    const scaleX = this.scale.x * dpr
+    const scaleY = this.scale.y * dpr
     const skewX = this.skew.x
     const skewY = this.skew.y
-    const positionX = this.position.x
-    const positionY = this.position.y
+    const positionX = this.position.x * dpr
+    const positionY = this.position.y * dpr
     const pivotX = this.pivot.x
     const pivotY = this.pivot.y
     const rotation = this.rotation
@@ -277,37 +336,23 @@ export abstract class Display implements Observer<ObservablePoint> {
     const anchorX = ensureBetween(this.anchor.x, 0, 1)
     const anchorY = ensureBetween(this.anchor.y, 0, 1)
 
-    // Adjust origin based on anchor
     const originX = this.width * anchorX
     const originY = this.height * anchorY
-
-    // Apply pivot translation
-    // const dx = positionX - pivotX * cos * scaleX + pivotY * sin * scaleY
-    // const dy = positionY - pivotX * sin * scaleX - pivotY * cos * scaleY
 
     const dx = positionX - (pivotX + originX) * cos * scaleX + (pivotY + originY) * sin * scaleY
     const dy = positionY - (pivotX + originX) * sin * scaleX - (pivotY + originY) * cos * scaleY
 
-    // Set transformation matrix
-    // a = scaleX * cos + skewY * -sin
-    // b = scaleX * sin + skewY * cos
-    // c = skewX * cos + scaleY * -sin
-    // d = skewX * sin + scaleY * cos
-    // e = dx
-    // f = dy
-
-    const dpr = this._app?.dpr ?? 1
     ctx.setTransform(
       scaleX * cos + skewY * -sin, // a
       scaleX * sin + skewY * cos, // b
       skewX * cos + scaleY * -sin, // c
       skewX * sin + scaleY * cos, // d
-      dx * dpr, // e
-      dy * dpr, // f
+      dx, // e
+      dy, // f
     )
     const _position = this.position.clone()
-    ctx.scale(dpr, dpr)
     this.position.set(0)
+    this._baseRender(ctx)
     this._render(ctx)
     this.position = _position
     ctx.resetTransform()

@@ -1,3 +1,5 @@
+// @ts-check
+
 /**
  *
  * @param {number} min
@@ -19,44 +21,47 @@ export function options(/** @type {any[]} */...args) {
 /**
  *
  * @param {import('tweakpane').Pane} pane
- * @param {import('../../dist/index').Text} text
+ * @param {import('../../dist/index').Display} display
  * @param {import('../../dist/index').App} app
  */
-export function createBaseFolder(pane, text, app) {
+export function createBaseFolder(pane, display, app) {
   const folderDisplay = pane.addFolder({
     title: 'base',
   })
-  folderDisplay.addBinding(text, 'visible')
-  folderDisplay.addBinding(text, 'x', range(0, app.width))
-  folderDisplay.addBinding(text, 'y', range(0, app.height))
-  folderDisplay.addBinding(text, 'position', {
+  folderDisplay.addBinding(display, 'visible')
+  folderDisplay.addBinding(display, 'x', range(0, app.width))
+  folderDisplay.addBinding(display, 'y', range(0, app.height))
+  folderDisplay.addBinding(display, 'position', {
     x: range(0, app.width),
     y: range(0, app.height),
   })
-  folderDisplay.addBinding(text, 'rotation', range(-Math.PI * 2, Math.PI * 2))
-  folderDisplay.addBinding(text, 'scale', range(-2, 2))
-  folderDisplay.addBinding(text, 'anchor', range(0, 1))
-  folderDisplay.addBinding(text, 'pivot', range(-100, 100))
-  folderDisplay.addBinding(text, 'skew', range(-2, 2))
-  folderDisplay.addBinding(text, 'alpha', range(0, 1))
+  folderDisplay.addBinding(display, 'rotation', range(-Math.PI * 2, Math.PI * 2))
+  folderDisplay.addBinding(display, 'scale', range(-2, 2))
+  folderDisplay.addBinding(display, 'anchor', range(0, 1))
+  folderDisplay.addBinding(display, 'pivot', range(-100, 100))
+  folderDisplay.addBinding(display, 'skew', range(-2, 2))
+  folderDisplay.addBinding(display, 'alpha', range(0, 1))
+
+  if (display.shadow?.color) {
+    folderDisplay.addBinding(display, 'shadow', { label: 'shadow' })
+    folderDisplay.addBinding(display.shadow, 'color', { label: 'shadow.fill' })
+    folderDisplay.addBinding(display.shadow, 'blur', { label: 'shadow.blur' })
+  }
 }
 
 /**
  *
  * @param {import('tweakpane').Pane} pane
  * @param {import('../../dist/index').Text} text
- * @param {import('../../dist/index').App} appx
  */
 export function createBaseStyleFolder(pane, text) {
   const baseStyle = pane.addFolder({
     title: 'text.baseStyle',
   })
   baseStyle.addBinding(text.style, 'fill', color())
-  baseStyle.addBinding(text.style, 'stroke', color())
-  baseStyle.addBinding(text.style, 'shadow')
-  baseStyle.addBinding(text.style.shadow, 'color', { label: 'shadow.fill' })
-  baseStyle.addBinding(text.style.shadow, 'blur', { label: 'shadow.blur' })
-  baseStyle.addBinding(text.style, 'shadow', { label: 'shadow' })
+  baseStyle.addBinding(text.style.stroke, 'color', color())
+  baseStyle.addBinding(text.style.stroke, 'width', range(0, 10))
+
   baseStyle.addBinding(text.style, 'filter', {
     options: {
       'none': 'none',

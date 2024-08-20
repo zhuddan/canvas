@@ -127,4 +127,7 @@ export type FixedLengthArray<T, L extends number, R extends any[] = []> = R['len
 export type FunctionKeys<T> = {
     [K in keyof T]: T[K] extends (...args: any[]) => any ? K : never;
 }[keyof T];
+export type ModifyReturnType<T, R> = {
+    [K in keyof T]: T[K] extends (...args: infer A) => any ? (...args: A) => R : T[K];
+};
 export {};

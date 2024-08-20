@@ -2,6 +2,24 @@ import type { App } from '../app';
 import type { Observer } from '../coordinate/ObservablePoint';
 import { ObservablePoint } from '../coordinate/ObservablePoint';
 import type { PointData } from '../coordinate/PointData';
+interface ShadowType {
+    /**
+     * [CanvasRenderingContext2D.shadowOffsetX](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowOffsetX)
+     */
+    x?: number;
+    /**
+     * [CanvasRenderingContext2D.shadowOffsetY](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowOffsetY)
+     */
+    y?: number;
+    /**
+     * [CanvasRenderingContext2D.shadowBlur](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowBlur)
+     */
+    blur?: number;
+    /**
+     * [CanvasRenderingContext2D.shadowColor](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowColor)
+     */
+    color?: string;
+}
 /**
  * [单位矩阵变化](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)
  */
@@ -16,6 +34,7 @@ export interface DisplayOptions {
     pivot?: PointData | number;
     skew?: PointData;
     alpha?: number;
+    shadow?: ShadowType;
 }
 export declare abstract class Display implements Observer<ObservablePoint> {
     constructor(options?: DisplayOptions);
@@ -58,6 +77,9 @@ export declare abstract class Display implements Observer<ObservablePoint> {
     private _pivot;
     set pivot(value: PointData | number);
     get pivot(): ObservablePoint;
+    private _shadow;
+    set shadow(value: ShadowType);
+    get shadow(): ShadowType;
     _onUpdate(point?: ObservablePoint | undefined): void;
     _app: App | null;
     private _visible;
@@ -65,6 +87,7 @@ export declare abstract class Display implements Observer<ObservablePoint> {
     set visible(value: boolean);
     private shouldUpdateBounds;
     protected needUpdateBounds(): void;
+    private _baseRender;
     render(ctx: CanvasRenderingContext2D): void;
     protected abstract _render(ctx: CanvasRenderingContext2D): void;
     abstract width: number;
@@ -73,3 +96,4 @@ export declare abstract class Display implements Observer<ObservablePoint> {
     onAdd(): void;
     onRemove(): void;
 }
+export {};

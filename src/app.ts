@@ -28,6 +28,7 @@ export class App {
     if (dpr) {
       this.dpr = window.devicePixelRatio ?? 1
     }
+    // this.dpr = 1
     this.onUpdate = onUpdate ?? NOOP
     this.canvas = document.createElement('canvas')!
     this.ctx = this.canvas.getContext('2d')!
@@ -35,7 +36,6 @@ export class App {
     this.canvas.style.height = formatValue(height)
     this.canvas.width = width * this.dpr
     this.canvas.height = height * this.dpr
-    this.ctx.scale(this.dpr, this.dpr)
     this.width = width
     this.height = height
     this.update()
@@ -60,13 +60,13 @@ export class App {
     for (let row = 0; row < Math.ceil((this.width + 1) / 100); row++) {
       for (let col = 0; col < Math.ceil((this.height + 1) / 100); col++) {
         ctx.beginPath()
-        ctx.fillText(`${row * 100},${col * 100}`, row * 100, col * 100)
+        ctx.fillText(`${row * 100},${col * 100}`, row * 100 * this.dpr, col * 100 * this.dpr)
         if (row === 0 || col === 0) {
           continue
         }
-        ctx.moveTo(row * 100 - 100, col * 100)
-        ctx.lineTo(row * 100, col * 100)
-        ctx.lineTo(row * 100, col * 100 - 100)
+        ctx.moveTo((row * 100 - 100) * this.dpr, col * 100 * this.dpr)
+        ctx.lineTo(row * 100 * this.dpr, col * 100 * this.dpr)
+        ctx.lineTo(row * 100 * this.dpr, (col * 100 - 100) * this.dpr)
         ctx.stroke()
       }
     }
@@ -98,10 +98,10 @@ export class App {
     if (!isDirty)
       return
     this.ctx.clearRect(
-      -this.width,
-      -this.height,
-      this.width * 2,
-      this.height * 2,
+      -this.canvas.width,
+      -this.canvas.height,
+      this.canvas.width * 2,
+      this.canvas.height * 2,
     )
 
     this.debug()

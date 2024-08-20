@@ -10,6 +10,8 @@ const refresh = throttle(() => {
   pane.refresh()
 })
 const app = new App({
+  width: document.documentElement.clientWidth,
+  height: document.documentElement.clientHeight,
   // dpr: false,
   onUpdate() {
     refresh()
@@ -24,19 +26,21 @@ const text = new Text({
   text: '这是文字这是文字这是文字这是文字这是文字',
   visible: true,
   anchor: 0,
+  shadow: {
+    color: '#d11257',
+    x: 5,
+    y: 5,
+    blur: 5,
+  },
   style: {
     wordWrapWidth: 100,
     wordWrap: true,
-    stroke: '#10d74d',
+    stroke: {
+      color: '#10d74d',
+    },
     strokeWeight: 1,
     fontSize: 40,
     fill: '#ffff',
-    shadow: {
-      color: '#d11257',
-      x: 5,
-      y: 5,
-      blur: 5,
-    },
   },
 })
 app.add(text)
