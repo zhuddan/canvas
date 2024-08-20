@@ -124,4 +124,7 @@ export interface ImageStyle extends LineBaseStyle {
 }
 export type RenderImpl = (ctx: CanvasRenderingContext2D) => void;
 export type FixedLengthArray<T, L extends number, R extends any[] = []> = R['length'] extends L ? R : FixedLengthArray<T, L, [T, ...R]>;
+export type FunctionKeys<T> = {
+    [K in keyof T]: T[K] extends (...args: any[]) => any ? K : never;
+}[keyof T];
 export {};

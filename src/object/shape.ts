@@ -1,22 +1,22 @@
+import type { IBaseStyle } from '../style/base-style'
+import type { FunctionKeys } from '../types'
 import type { DisplayOptions } from './display'
 import { Display } from './display'
 
-export interface GeometryOptions extends DisplayOptions {
+export interface ShapeOptions extends DisplayOptions, IBaseStyle {
   // text: string
   // style?: Partial<TextStyleOptions> | TextStyle
 }
 
-export interface PathInstruction {
-  action: 'moveTo' | 'lineTo' | 'quadraticCurveTo' |
-  'bezierCurveTo' | 'arc' | 'closePath' |
-  'addPath' | 'arcTo' | 'ellipse' |
-  'rect' | 'roundRect' | 'arcToSvg' |
-  'poly' | 'circle' |
-  'regularPoly' | 'roundPoly' | 'roundShape' | 'filletRect' | 'chamferRect'
-  data: any[]
+export interface PathData<T extends FunctionKeys<CanvasRenderingContext2D>> {
+  action: T
+  args: Parameters<CanvasRenderingContext2D[T]>
 }
 
-export class Geometry extends Display {
+type PathInstruction = PathData<'moveTo'> | PathData<'lineTo'>
+
+export class Shape extends Display {
+  pathInstruction: PathInstruction[] = []
   get _shouldUpdate(): boolean {
     throw new Error('Method not implemented.')
   }
