@@ -67,4 +67,20 @@ export class ObservablePoint implements PointLike {
       this._observer?._onUpdate(this)
     }
   }
+
+  [Symbol.iterator]() {
+    let step = 0
+    const properties = [this.x, this.y]
+
+    return {
+      next: () => {
+        if (step < properties.length) {
+          return { value: properties[step++], done: false }
+        }
+        else {
+          return { done: true, value: undefined }
+        }
+      },
+    }
+  }
 }

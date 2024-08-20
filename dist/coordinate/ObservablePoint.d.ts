@@ -17,4 +17,13 @@ export declare class ObservablePoint implements PointLike {
     set x(value: number);
     get y(): number;
     set y(value: number);
+    [Symbol.iterator](): {
+        next: () => {
+            value: number;
+            done: boolean;
+        } | {
+            done: boolean;
+            value: undefined;
+        };
+    };
 }
