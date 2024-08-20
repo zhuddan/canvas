@@ -17,14 +17,14 @@ export interface IBaseStyle {
    * 描边宽度? 默认为1
    */
   strokeWeight: number
-  /**
-   * 透明度<br/>此透明度为 [CanvasRenderingContext2D.globalAlpha](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/globalAlpha)
-   *
-   * 你也可以设置fill或者stroke为rgba实现透明效果
-   *
-   * 或者你喜欢16进制颜色也可以使用[这种方法](https://blog.csdn.net/ezconn/article/details/90052114)设置透明度
-   */
-  alpha: number
+  // /**
+  //  * 透明度<br/>此透明度为 [CanvasRenderingContext2D.globalAlpha](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/globalAlpha)
+  //  *
+  //  * 你也可以设置fill或者stroke为rgba实现透明效果
+  //  *
+  //  * 或者你喜欢16进制颜色也可以使用[这种方法](https://blog.csdn.net/ezconn/article/details/90052114)设置透明度
+  //  */
+  // alpha: number
 
   shadow: {
     /**
@@ -55,17 +55,6 @@ export abstract class BaseStyle extends EventEmitter<{
 }> implements IBaseStyle {
   constructor() {
     super()
-  }
-
-  private _alpha = 1
-
-  set alpha(value) {
-    this._alpha = value
-    this.update()
-  }
-
-  get alpha() {
-    return this._alpha
   }
 
   private _strokeWeight = 0
@@ -138,7 +127,6 @@ export abstract class BaseStyle extends EventEmitter<{
   }
 
   render(ctx: CanvasRenderingContext2D) {
-    ctx.globalAlpha = this.alpha
     if (this.strokeWeight && this.stroke) {
       ctx.lineWidth = this.strokeWeight
       ctx.strokeStyle = this.stroke

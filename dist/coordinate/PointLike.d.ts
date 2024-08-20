@@ -1,10 +1,9 @@
-import { PointData } from './PointData.js';
-
+import type { PointData } from './PointData';
 /**
  * Common interface for points. Both Point and ObservablePoint implement it
  * @memberof maths
  */
-interface PointLike extends PointData {
+export interface PointLike extends PointData {
     /**
      * Copies x and y from the given point
      * @param {PointData} p - The point to copy from
@@ -31,5 +30,3 @@ interface PointLike extends PointData {
      */
     set: (x?: number, y?: number) => void;
 }
-
-export type { PointLike };

@@ -8,6 +8,13 @@ import { ensureBetween } from '../utils'
  * [单位矩阵变化](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)
  */
 export interface DisplayOptions {
+  visible?: boolean
+
+  x?: number
+
+  y?: number
+
+  position?: PointData
 
   rotation?: number
 
@@ -18,14 +25,6 @@ export interface DisplayOptions {
   pivot?: PointData | number
 
   skew?: PointData
-
-  visible?: boolean
-
-  x?: number
-
-  y?: number
-
-  position?: PointData
 
   alpha?: number
 }
@@ -38,7 +37,6 @@ const defaultScale = new ObservablePoint(null, 1, 1)
 export abstract class Display implements Observer<ObservablePoint> {
   constructor(options: DisplayOptions = {}) {
     this.visible = !!options.visible
-
     if (options.position) {
       this.position = options.position
     }
@@ -54,7 +52,6 @@ export abstract class Display implements Observer<ObservablePoint> {
     if (options.skew) {
       this.skew = options.skew
     }
-
     if (options.pivot) {
       this.pivot = options.pivot
     }
@@ -245,6 +242,11 @@ export abstract class Display implements Observer<ObservablePoint> {
     return this._visible
   }
 
+  set visible(value) {
+    this._visible = value
+    this._onUpdate()
+  }
+
   private shouldUpdateBounds = true
   protected needUpdateBounds() {
     if (!this.shouldUpdateBounds)
@@ -255,6 +257,9 @@ export abstract class Display implements Observer<ObservablePoint> {
     if (this.shouldUpdateBounds) {
       this._updateBounds()
       this.shouldUpdateBounds = false
+    }
+    if (this.alpha !== 1) {
+      ctx.globalAlpha = this.alpha
     }
     const scaleX = this.scale.x
     const scaleY = this.scale.y
@@ -309,10 +314,6 @@ export abstract class Display implements Observer<ObservablePoint> {
   }
 
   protected abstract _render(ctx: CanvasRenderingContext2D): void
-
-  set visible(value) {
-    this._visible = value
-  }
 
   abstract width: number
   abstract height: number

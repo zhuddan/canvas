@@ -106,6 +106,7 @@ export class Text extends Display {
   _updateBounds() {
     if (!this._app)
       return
+
     this._app.onContext((ctx) => {
       this.style.render(ctx)
       if (!this.style.wordWrap || !this.style.wordWrapWidth) {
