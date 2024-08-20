@@ -385,6 +385,9 @@ export abstract class Display implements Observer<ObservablePoint> {
   }
 }
 
+/**
+ * @deprecated
+ */
 export class DisplayGroup {
   private children: Display[] = []
   private _app: App | null = null

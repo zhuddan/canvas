@@ -105,6 +105,9 @@ export declare abstract class Display implements Observer<ObservablePoint> {
     onAdd(_app: App): void;
     onRemove(): void;
 }
+/**
+ * @deprecated
+ */
 export declare class DisplayGroup {
     private children;
     private _app;
