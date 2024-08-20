@@ -53,8 +53,8 @@ export class App {
   private debug() {
     this.beforeRender()
     const ctx = this.ctx
-    this.ctx.strokeStyle = '#cccccc80'
-    this.ctx.fillStyle = '#cccccc80'
+    this.ctx.strokeStyle = '#cccccc'
+    this.ctx.fillStyle = '#cccccc'
     ctx.textBaseline = 'top'
     ctx.font = '10px 黑体'
     ctx.setLineDash([4, 10])

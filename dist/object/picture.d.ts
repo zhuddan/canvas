@@ -12,6 +12,7 @@ interface PictureOptions extends DisplayOptions {
 export declare class Picture extends Display {
     img: HTMLImageElement;
     private _size;
+    imgSize: ObservablePoint;
     set size(value: PointData);
     get size(): ObservablePoint;
     private _slice;
@@ -20,8 +21,12 @@ export declare class Picture extends Display {
     private _sliceSize;
     set sliceSize(value: PointData);
     get sliceSize(): ObservablePoint;
+    private _objectFit;
+    set objectFit(value: import("csstype").Property.ObjectFit | undefined);
+    get objectFit(): import("csstype").Property.ObjectFit | undefined;
     constructor(img: HTMLImageElement, options?: PictureOptions);
     get _shouldUpdate(): boolean;
+    private get _isSlice();
     protected _render(ctx: CanvasRenderingContext2D): void;
     transformWidth: number;
     transformHeight: number;

@@ -21,7 +21,11 @@ const img = document.createElement('img')
 img.src = './scene.jpg'
 img.onload = () => {
   const p = new Picture(img, {
-
+    objectFit: 'contain',
+    size: {
+      x: 600,
+      y: 600,
+    },
   })
   app.add(p)
   document.body.appendChild(app.canvas)
