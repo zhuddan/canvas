@@ -1,2 +1,2 @@
-export{Display}from"./object/display.mjs";export{App}from"./app.mjs";export{Text}from"./object/text.mjs";export{ObservablePoint}from"./coordinate/ObservablePoint.mjs";import"./utils.mjs";import"./const.mjs";import"./style/text-style.mjs";import"./style/base-style.mjs";
+export{Shape}from"./object/shape.mjs";export{Text}from"./object/text.mjs";export{Display}from"./object/display.mjs";export{Picture}from"./object/picture.mjs";export{App}from"./app.mjs";export{ObservablePoint}from"./coordinate/ObservablePoint.mjs";import"./utils.mjs";import"./style/text-style.mjs";import"./style/abstract-style.mjs";import"./index-Bbw8-MRv.js";import"./const.mjs";
 //# sourceMappingURL=index.mjs.map

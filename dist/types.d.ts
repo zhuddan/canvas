@@ -1,9 +1,10 @@
-import type { Properties } from 'csstype';
+import { a as Properties } from './index.d-CPSGt-W-.js';
+
 /**
  * 由于某些属性不支持CanvasRenderingContext2D 故舍弃
  * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/font)
  */
-export interface IFont {
+interface IFont {
     /**
      * @description 字体
      * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family)
@@ -25,7 +26,7 @@ export interface IFont {
      */
     fontWeight?: Properties['fontWeight'];
 }
-export interface TextBaseStyle {
+interface TextBaseStyle {
     /**
      * 指定绘制文本时字体如何被扩展或压缩
      * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/fontStretch)
@@ -57,7 +58,7 @@ export interface TextBaseStyle {
      */
     textBaseline?: CanvasTextBaseline;
 }
-export interface TextMultilineStyle extends TextBaseStyle {
+interface TextMultilineStyle extends TextBaseStyle {
     /**
      * 多行文本属性 行高 单位px
      */
@@ -69,8 +70,8 @@ export interface TextMultilineStyle extends TextBaseStyle {
 }
 type x = number;
 type y = number;
-export type ILinePosition = Array<[x, y]>;
-export interface LineBaseStyle {
+type ILinePosition = Array<[x, y]>;
+interface LineBaseStyle {
     /**
      * 虚线 为 true 时候取 [2,2]
      *[MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setLineDash)
@@ -92,14 +93,14 @@ export interface LineBaseStyle {
      */
     lineJoin?: CanvasLineJoin;
 }
-export interface LineStyle extends LineBaseStyle {
+interface LineStyle extends LineBaseStyle {
     /**
      * 当前点添加一条直线到当前子路径的起点。如果形状已经闭合或只有一个点，此函数将不执行任何操作
      * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/closePath)
      */
     close?: boolean;
 }
-export interface RectStyle extends LineBaseStyle {
+interface RectStyle extends LineBaseStyle {
     /**
      * 圆角
      */
@@ -108,26 +109,27 @@ export interface RectStyle extends LineBaseStyle {
 /**
  * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/arc)
  */
-export interface ArcStyle extends LineBaseStyle {
+interface ArcStyle extends LineBaseStyle {
     startAngle?: number;
     startDeg?: number;
     endAngle?: number;
     endDeg?: number;
     counterclockwise?: boolean;
 }
-export interface ArcToStyle extends LineBaseStyle {
+interface ArcToStyle extends LineBaseStyle {
 }
-export interface BezierStyle extends LineBaseStyle {
+interface BezierStyle extends LineBaseStyle {
 }
-export interface ImageStyle extends LineBaseStyle {
+interface ImageStyle extends LineBaseStyle {
     objectFit?: Properties['objectFit'];
 }
-export type RenderImpl = (ctx: CanvasRenderingContext2D) => void;
-export type FixedLengthArray<T, L extends number, R extends any[] = []> = R['length'] extends L ? R : FixedLengthArray<T, L, [T, ...R]>;
-export type FunctionKeys<T> = {
+type RenderImpl = (ctx: CanvasRenderingContext2D) => void;
+type FixedLengthArray<T, L extends number, R extends any[] = []> = R['length'] extends L ? R : FixedLengthArray<T, L, [T, ...R]>;
+type FunctionKeys<T> = {
     [K in keyof T]: T[K] extends (...args: any[]) => any ? K : never;
 }[keyof T];
-export type ModifyReturnType<T, R> = {
+type ModifyReturnType<T, R> = {
     [K in keyof T]: T[K] extends (...args: infer A) => any ? (...args: A) => R : T[K];
 };
-export {};
+
+export type { ArcStyle, ArcToStyle, BezierStyle, FixedLengthArray, FunctionKeys, IFont, ILinePosition, ImageStyle, LineBaseStyle, LineStyle, ModifyReturnType, RectStyle, RenderImpl, TextBaseStyle, TextMultilineStyle };

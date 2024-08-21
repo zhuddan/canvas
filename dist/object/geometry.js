@@ -1,2 +1,0 @@
-"use strict";var e=require("./display.js");require("../coordinate/ObservablePoint.js"),require("../utils.js");class r extends e.Display{get _shouldUpdate(){throw new Error("Method not implemented.")}_render(e){throw new Error("Method not implemented.")}width=0;height=0;_updateBounds(){throw new Error("Method not implemented.")}constructor(){super()}}exports.Geometry=r;
-//# sourceMappingURL=geometry.js.map

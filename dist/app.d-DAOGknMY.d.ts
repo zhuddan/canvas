@@ -1,22 +1,44 @@
+import { E as EventEmitter } from './index.d-CXdzLWZ3.js';
 import { Observer, ObservablePoint } from './coordinate/ObservablePoint.js';
 import { PointData } from './coordinate/PointData.js';
 
+interface ShadowType {
+    /**
+     * [CanvasRenderingContext2D.shadowOffsetX](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowOffsetX)
+     */
+    x?: number;
+    /**
+     * [CanvasRenderingContext2D.shadowOffsetY](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowOffsetY)
+     */
+    y?: number;
+    /**
+     * [CanvasRenderingContext2D.shadowBlur](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowBlur)
+     */
+    blur?: number;
+    /**
+     * [CanvasRenderingContext2D.shadowColor](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowColor)
+     */
+    color?: string;
+}
 /**
  * [单位矩阵变化](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)
  */
 interface DisplayOptions {
+    visible?: boolean;
+    x?: number;
+    y?: number;
+    position?: PointData;
     rotation?: number;
     scale?: PointData | number;
     anchor?: PointData | number;
     pivot?: PointData | number;
     skew?: PointData;
-    visible?: boolean;
-    x?: number;
-    y?: number;
-    position?: PointData;
     alpha?: number;
+    shadow?: ShadowType;
 }
-declare abstract class Display implements Observer<ObservablePoint> {
+declare abstract class Display extends EventEmitter<{
+    ready: [];
+}> implements Observer<ObservablePoint> {
     constructor(options?: DisplayOptions);
     /**
      * 更新优化
@@ -57,20 +79,35 @@ declare abstract class Display implements Observer<ObservablePoint> {
     private _pivot;
     set pivot(value: PointData | number);
     get pivot(): ObservablePoint;
-    _onUpdate(point?: ObservablePoint | undefined): void;
+    private _shadow;
+    set shadow(value: ShadowType);
+    get shadow(): ShadowType;
+    _onUpdate(_point?: ObservablePoint | undefined): void;
     _app: App | null;
     private _visible;
     get visible(): boolean;
-    private shouldUpdateBounds;
-    protected needUpdateBounds(): void;
-    render(ctx: CanvasRenderingContext2D): void;
-    protected abstract _render(ctx: CanvasRenderingContext2D): void;
     set visible(value: boolean);
-    abstract width: number;
-    abstract height: number;
-    abstract _updateBounds(): void;
-    onAdd(): void;
+    protected _shouldUpdateBounds: boolean;
+    protected shouldUpdateBounds(): void;
+    private _baseRender;
+    render(ctx: CanvasRenderingContext2D): void;
+    _renderId: number;
+    protected abstract _render(ctx: CanvasRenderingContext2D): void;
+    /**
+     * 同于形变转换的宽度
+     */
+    abstract transformWidth: number;
+    /**
+     * 同于形变转换的高度
+     */
+    abstract transformHeight: number;
+    /**
+     * 同于形变转换的边界
+     */
+    abstract updateTransformBounds(): void;
+    onAdd(_app: App): void;
     onRemove(): void;
+    destroy(): void;
 }
 
 interface AppConstructorOptions {
@@ -78,22 +115,27 @@ interface AppConstructorOptions {
     height?: number;
     dpr?: boolean;
     onUpdate?: () => void;
+    createImage?: () => HTMLImageElement;
 }
-declare class App {
+declare class App extends EventEmitter<{
+    render: [];
+}> {
     canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
     dpr: number;
     width: number;
     height: number;
     onUpdate: () => void;
-    constructor({ width, height, dpr, onUpdate, }?: AppConstructorOptions);
+    static createImage: () => HTMLImageElement;
+    constructor({ width, height, dpr, createImage, onUpdate, }?: AppConstructorOptions);
     private beforeRender;
     private afterRender;
-    private debug;
     children: Display[];
     add(object: Display): void;
     remove(object: Display): void;
     private update;
+    toDataURL(type?: string, quality?: any): string;
+    toDataURLAsync(type?: string, quality?: any): Promise<string>;
     onContext(fn: (ctx: CanvasRenderingContext2D) => any): void;
 }
 

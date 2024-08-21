@@ -11241,4 +11241,4 @@ declare namespace DataType {
   type VisualBox = "border-box" | "content-box" | "padding-box";
 }
 
-export { type Properties as P, Property as a };
+export { Property as P, type Properties as a };

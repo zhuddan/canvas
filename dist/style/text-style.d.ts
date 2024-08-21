@@ -1,7 +1,8 @@
-import type { Properties, Property } from 'csstype';
-import type { IAbstractStyle } from './abstract-style';
-import { AbstractStyle } from './abstract-style';
-export interface TextStyleOptions extends IAbstractStyle {
+import { a as Properties, P as Property } from '../index.d-CPSGt-W-.js';
+import { IAbstractStyle, AbstractStyle } from './abstract-style.js';
+import '../index.d-CXdzLWZ3.js';
+
+interface TextStyleOptions extends IAbstractStyle {
     /**
      * @description 字体
      * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family)
@@ -51,7 +52,7 @@ export interface TextStyleOptions extends IAbstractStyle {
     wordWrap: boolean;
     wordWrapWidth: number;
 }
-export declare class TextStyle extends AbstractStyle implements TextStyleOptions {
+declare class TextStyle extends AbstractStyle implements TextStyleOptions {
     static defaultTextStyle: TextStyleOptions;
     _isStroke: boolean;
     constructor(style?: Partial<TextStyleOptions>);
@@ -96,3 +97,5 @@ export declare class TextStyle extends AbstractStyle implements TextStyleOptions
     clone(): TextStyle;
     render(ctx: CanvasRenderingContext2D): this;
 }
+
+export { TextStyle, type TextStyleOptions };

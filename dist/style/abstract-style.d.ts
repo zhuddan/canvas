@@ -1,12 +1,13 @@
-import EventEmitter from 'eventemitter3';
-export type InputColor = CanvasRenderingContext2D['strokeStyle'];
-export type LineDash = Iterable<number>;
-export interface StrokeInput {
+import { E as EventEmitter } from '../index.d-CXdzLWZ3.js';
+
+type InputColor = CanvasRenderingContext2D['strokeStyle'];
+type LineDash = Iterable<number>;
+interface StrokeInput {
     color?: InputColor;
     width?: number;
     dash?: LineDash;
 }
-export interface IAbstractStyle {
+interface IAbstractStyle {
     /**
      * 填充颜色
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/fillStyle)
@@ -22,7 +23,7 @@ export interface IAbstractStyle {
      */
     filter: CanvasRenderingContext2D['filter'];
 }
-export declare abstract class AbstractStyle extends EventEmitter<{
+declare abstract class AbstractStyle extends EventEmitter<{
     update: [];
     updateBounds: [];
 }> implements IAbstractStyle {
@@ -40,3 +41,5 @@ export declare abstract class AbstractStyle extends EventEmitter<{
     render(ctx: CanvasRenderingContext2D): this;
     destroy(): void;
 }
+
+export { AbstractStyle, type IAbstractStyle, type InputColor, type LineDash, type StrokeInput };
