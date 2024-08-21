@@ -1,7 +1,6 @@
 import { NOOP } from './const'
 import type { Display } from './object/display'
 import { DisplayGroup } from './object/display'
-import type { RenderImpl } from './types'
 import { formatValue } from './utils'
 
 interface AppConstructorOptions {
@@ -29,7 +28,7 @@ export class App {
     if (dpr) {
       this.dpr = window.devicePixelRatio ?? 1
     }
-    // this.dpr = 1
+    this.dpr = 1
     this.onUpdate = onUpdate ?? NOOP
     this.canvas = document.createElement('canvas')!
     this.ctx = this.canvas.getContext('2d')!

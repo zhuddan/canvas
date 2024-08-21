@@ -8,6 +8,7 @@ interface PictureOptions extends DisplayOptions {
     slice?: PointData;
     sliceSize?: PointData;
     objectFit?: Properties['objectFit'];
+    rounded?: number;
 }
 export declare class Picture extends Display {
     img: HTMLImageElement;
@@ -24,6 +25,9 @@ export declare class Picture extends Display {
     private _objectFit;
     set objectFit(value: import("csstype").Property.ObjectFit | undefined);
     get objectFit(): import("csstype").Property.ObjectFit | undefined;
+    private _rounded;
+    set rounded(value: number);
+    get rounded(): number;
     constructor(img: HTMLImageElement, options?: PictureOptions);
     get _shouldUpdate(): boolean;
     private get _isSlice();

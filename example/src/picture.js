@@ -2,7 +2,7 @@
 import { Pane } from 'tweakpane'
 import throttle from 'lodash-es/throttle.js'
 import { App, Picture } from '../../dist/index'
-import { createBaseFolder, range } from './common.js'
+import { createBaseFolder, options, range } from './common.js'
 
 const pane = new Pane()
 
@@ -21,7 +21,7 @@ const img = document.createElement('img')
 img.src = './scene.jpg'
 img.onload = () => {
   const p = new Picture(img, {
-    objectFit: 'contain',
+    objectFit: 'cover',
     size: {
       x: 600,
       y: 600,
@@ -42,4 +42,12 @@ img.onload = () => {
     x: range(0, img.width),
     y: range(0, img.height),
   })
+
+  folderPicture.addBinding(p, 'objectFit', options(
+    'contain',
+    'cover',
+    'fill',
+  ))
+
+  folderPicture.addBinding(p, 'rounded', range(0, 600))
 }
