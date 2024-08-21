@@ -291,10 +291,10 @@ export abstract class Display extends EventEmitter<{
     this._onUpdate()
   }
 
-  private shouldUpdateBounds = true
-  protected needUpdateBounds() {
-    if (!this.shouldUpdateBounds)
-      this.shouldUpdateBounds = true
+  protected _shouldUpdateBounds = true
+
+  protected shouldUpdateBounds() {
+    this._shouldUpdateBounds = true
   }
 
   private _baseRender(ctx: CanvasRenderingContext2D) {
@@ -316,9 +316,9 @@ export abstract class Display extends EventEmitter<{
   }
 
   public render(ctx: CanvasRenderingContext2D) {
-    if (this.shouldUpdateBounds) {
-      this._updateTransformBounds()
-      this.shouldUpdateBounds = false
+    if (this._shouldUpdateBounds) {
+      this.updateTransformBounds()
+      this._shouldUpdateBounds = false
     }
     if (this.alpha !== 1) {
       ctx.globalAlpha = this.alpha
@@ -376,7 +376,7 @@ export abstract class Display extends EventEmitter<{
   /**
    * 同于形变转换的边界
    */
-  abstract _updateTransformBounds(): void
+  abstract updateTransformBounds(): void
 
   onAdd(_app: App) {
     this._app = _app

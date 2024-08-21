@@ -13,6 +13,7 @@ interface PictureOptions extends DisplayOptions {
   objectFit?: Properties['objectFit']
   rounded?: number
 }
+
 export class Picture extends Display {
   constructor(maybeImage: HTMLImageElement | string, private options?: PictureOptions) {
     super(options)
@@ -42,6 +43,7 @@ export class Picture extends Display {
   set size(value: PointData) {
     if (this.size !== value) {
       this._size.copyFrom(value)
+      this.shouldUpdateBounds()
     }
   }
 
@@ -54,6 +56,7 @@ export class Picture extends Display {
   set slice(value: PointData) {
     if (this.slice !== value) {
       this._slice.copyFrom(value)
+      this.shouldUpdateBounds()
     }
   }
 
@@ -66,6 +69,8 @@ export class Picture extends Display {
   set sliceSize(value: PointData) {
     if (this.sliceSize !== value) {
       this._sliceSize.copyFrom(value)
+      this._onUpdate()
+      this.shouldUpdateBounds()
     }
   }
 
@@ -78,6 +83,7 @@ export class Picture extends Display {
   set objectFit(value) {
     if (this.objectFit !== value) {
       this._objectFit = value
+      this.shouldUpdateBounds()
       this._onUpdate()
     }
   }
@@ -120,8 +126,9 @@ export class Picture extends Display {
     this.objectFit = this.options?.objectFit ?? this.objectFit
 
     this.rounded = this.options?.rounded ?? this.rounded
-
+    this.emit('ready')
     this._onUpdate()
+    this.shouldUpdateBounds()
   }
 
   get _shouldUpdate(): boolean {
@@ -152,7 +159,6 @@ export class Picture extends Display {
               this.position.set(this.position.x, this.position.y + diff / 2)
               this.size.set(this.size.x, this.size.y - diff)
             }
-
             ctx.beginPath()
             if (this.rounded) {
               ctx.roundRect(this.x, this.y, this.size.x, this.size.y, this.rounded)
@@ -222,7 +228,8 @@ export class Picture extends Display {
 
   transformWidth: number = 0
   transformHeight: number = 0
-  _updateTransformBounds(): void {
-    // throw new Error('Method not implemented.')
+  updateTransformBounds(): void {
+    this.transformHeight = this.size.x
+    this.transformWidth = this.size.y
   }
 }

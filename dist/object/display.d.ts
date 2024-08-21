@@ -88,8 +88,8 @@ export declare abstract class Display extends EventEmitter<{
     private _visible;
     get visible(): boolean;
     set visible(value: boolean);
-    private shouldUpdateBounds;
-    protected needUpdateBounds(): void;
+    protected _shouldUpdateBounds: boolean;
+    protected shouldUpdateBounds(): void;
     private _baseRender;
     render(ctx: CanvasRenderingContext2D): void;
     protected abstract _render(ctx: CanvasRenderingContext2D): void;
@@ -104,7 +104,7 @@ export declare abstract class Display extends EventEmitter<{
     /**
      * 同于形变转换的边界
      */
-    abstract _updateTransformBounds(): void;
+    abstract updateTransformBounds(): void;
     onAdd(_app: App): void;
     onRemove(): void;
     destroy(): void;

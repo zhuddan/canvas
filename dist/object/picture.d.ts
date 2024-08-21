@@ -36,6 +36,6 @@ export declare class Picture extends Display {
     protected _render(ctx: CanvasRenderingContext2D): void;
     transformWidth: number;
     transformHeight: number;
-    _updateTransformBounds(): void;
+    updateTransformBounds(): void;
 }
 export {};

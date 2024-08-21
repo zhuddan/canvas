@@ -53,9 +53,14 @@ export class Shape extends Display implements IShape {
     this.emit('ready')
   }
 
+  addPath(...items: PathInstruction[]) {
+    this.pathInstruction.push(...items)
+    this.shouldUpdateBounds()
+  }
+
   // CanvasRenderingContext2DMethods
   beginPath(): Shape {
-    this.pathInstruction.push({
+    this.addPath({
       action: 'beginPath',
       args: [],
     })
@@ -63,7 +68,7 @@ export class Shape extends Display implements IShape {
   }
 
   closePath() {
-    this.pathInstruction.push({
+    this.addPath({
       action: 'closePath',
       args: [],
     })
@@ -71,7 +76,7 @@ export class Shape extends Display implements IShape {
   }
 
   moveTo(...args: Parameters<CanvasRenderingContext2D['lineTo']>) {
-    this.pathInstruction.push({
+    this.addPath({
       action: 'moveTo',
       args: [...args],
     })
@@ -79,7 +84,7 @@ export class Shape extends Display implements IShape {
   }
 
   lineTo(...args: Parameters<CanvasRenderingContext2D['lineTo']>) {
-    this.pathInstruction.push({
+    this.addPath({
       action: 'lineTo',
       args: [...args],
     })
@@ -87,7 +92,7 @@ export class Shape extends Display implements IShape {
   }
 
   rect(...args: Parameters<CanvasRenderingContext2D['rect']>) {
-    this.pathInstruction.push({
+    this.addPath({
       action: 'rect',
       args: [...args],
     })
@@ -95,7 +100,7 @@ export class Shape extends Display implements IShape {
   }
 
   roundRect(...args: Parameters<CanvasRenderingContext2D['roundRect']>) {
-    this.pathInstruction.push({
+    this.addPath({
       action: 'roundRect',
       args: [...args],
     })
@@ -103,7 +108,7 @@ export class Shape extends Display implements IShape {
   }
 
   arc(...args: Parameters<CanvasRenderingContext2D['arc']>) {
-    this.pathInstruction.push({
+    this.addPath({
       action: 'arc',
       args: [...args],
     })
@@ -111,7 +116,7 @@ export class Shape extends Display implements IShape {
   }
 
   arcTo(...args: Parameters<CanvasRenderingContext2D['arcTo']>) {
-    this.pathInstruction.push({
+    this.addPath({
       action: 'arcTo',
       args: [...args],
     })
@@ -119,7 +124,7 @@ export class Shape extends Display implements IShape {
   }
 
   bezierCurveTo(...args: Parameters<CanvasRenderingContext2D['bezierCurveTo']>) {
-    this.pathInstruction.push({
+    this.addPath({
       action: 'bezierCurveTo',
       args: [...args],
     })
@@ -127,7 +132,7 @@ export class Shape extends Display implements IShape {
   }
 
   ellipse(...args: Parameters<CanvasRenderingContext2D['ellipse']>) {
-    this.pathInstruction.push({
+    this.addPath({
       action: 'ellipse',
       args: [...args],
     })
@@ -135,7 +140,7 @@ export class Shape extends Display implements IShape {
   }
 
   fillRect(...args: Parameters<CanvasRect['fillRect']>) {
-    this.pathInstruction.push({
+    this.addPath({
       action: 'fillRect',
       args: [...args],
     })
@@ -143,7 +148,7 @@ export class Shape extends Display implements IShape {
   }
 
   strokeRect(...args: Parameters<CanvasRect['strokeRect']>) {
-    this.pathInstruction.push({
+    this.addPath({
       action: 'strokeRect',
       args: [...args],
     })
@@ -246,7 +251,7 @@ export class Shape extends Display implements IShape {
 
   transformWidth = 0
   transformHeight = 0
-  _updateTransformBounds(): void {
+  updateTransformBounds(): void {
     // 所有坐标的最大值放进来
     const allX: number[] = []
     const allY: number[] = []
@@ -304,7 +309,7 @@ export class Shape extends Display implements IShape {
 
   fill(color?: IAbstractStyle['fill']) {
     if (color) {
-      this.pathInstruction.push({
+      this.addPath({
         action: 'fill',
         args: [color],
       })
@@ -313,7 +318,7 @@ export class Shape extends Display implements IShape {
   }
 
   stroke(value?: StrokeInput | InputColor) {
-    this.pathInstruction.push({
+    this.addPath({
       action: 'stroke',
       args: value ? [value] : [],
     })

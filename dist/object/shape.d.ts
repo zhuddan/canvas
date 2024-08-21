@@ -1,6 +1,14 @@
 import type { IAbstractStyle, InputColor, StrokeInput } from '../style/abstract-style';
+import type { FunctionKeys } from '../types';
 import type { DisplayOptions } from './display';
 import { Display } from './display';
+type CanvasRenderingContext2DMethods = FunctionKeys<CanvasRenderingContext2D>;
+interface PathData<T extends CanvasRenderingContext2DMethods> {
+    action: T;
+    args: any[];
+}
+type Methods = 'beginPath' | 'closePath' | 'moveTo' | 'fill' | 'stroke' | 'lineTo' | 'rect' | 'roundRect' | 'fillRect' | 'strokeRect' | 'arc' | 'arcTo' | 'bezierCurveTo' | 'ellipse';
+type PathInstruction = PathData<Methods>;
 export interface ShapeOptions extends DisplayOptions {
 }
 interface IShape {
@@ -21,6 +29,7 @@ interface IShape {
 }
 export declare class Shape extends Display implements IShape {
     constructor(options?: Partial<ShapeOptions>);
+    addPath(...items: PathInstruction[]): void;
     beginPath(): Shape;
     closePath(): this;
     moveTo(...args: Parameters<CanvasRenderingContext2D['lineTo']>): this;
@@ -41,7 +50,7 @@ export declare class Shape extends Display implements IShape {
     get strokeStyle(): StrokeInput;
     transformWidth: number;
     transformHeight: number;
-    _updateTransformBounds(): void;
+    updateTransformBounds(): void;
     private _fillStyle;
     set fillStyle(value: string | CanvasGradient | CanvasPattern | null);
     get fillStyle(): string | CanvasGradient | CanvasPattern | null;
