@@ -135,6 +135,14 @@ export class App extends EventEmitter<{
     return this.canvas.toDataURL(type, quality)
   }
 
+  toDataURLAsync(type?: string, quality?: any) {
+    return new Promise<string>((resolve) => {
+      this.once('render', () => {
+        resolve(this.toDataURL(type, quality))
+      })
+    })
+  }
+
   onContext(fn: (ctx: CanvasRenderingContext2D) => any) {
     this.beforeRender()
     fn(this.ctx)
