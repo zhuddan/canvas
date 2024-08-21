@@ -17,7 +17,6 @@ interface PictureOptions extends DisplayOptions {
 export class Picture extends Display {
   constructor(maybeImage: HTMLImageElement | string, private options?: PictureOptions) {
     super(options)
-    this.dirty = false
     if (typeof maybeImage == 'string') {
       this.image = App.createImage()
       this.image.src = maybeImage
@@ -35,6 +34,18 @@ export class Picture extends Display {
       })
     }
   }
+
+  private image: HTMLImageElement
+
+  // set image(value) {
+  //   if (this.image !== value) {
+  //     this._image = value
+  //   }
+  // }
+
+  // get image() {
+  //   return this._image
+  // }
 
   private _size = new ObservablePoint(this, 0, 0)
 
@@ -102,11 +113,16 @@ export class Picture extends Display {
     }
   }
 
+  _onUpdate(_point?: ObservablePoint | undefined) {
+    if (this._ready)
+      super._onUpdate(_point)
+  }
+
   get rounded() {
     return this._rounded
   }
 
-  private image: HTMLImageElement
+  private _ready = false
 
   private _onImageComplete() {
     this._imageSize = new ObservablePoint(this, this.image.width, this.image.height)
@@ -127,6 +143,7 @@ export class Picture extends Display {
 
     this.rounded = this.options?.rounded ?? this.rounded
     this.emit('ready')
+    this._ready = true
     this._onUpdate()
     this.shouldUpdateBounds()
   }

@@ -105,7 +105,7 @@ export abstract class Display extends EventEmitter<{
     return this.__shouldUpdate && this._shouldUpdate
   }
 
-  protected _dirty = true
+  protected _dirty = false
   set dirty(value) {
     if (this._dirty === value)
       return
@@ -270,10 +270,7 @@ export abstract class Display extends EventEmitter<{
     return this._shadow
   }
 
-  _onUpdate(point?: ObservablePoint | undefined) {
-    if (!point) {
-      //
-    }
+  _onUpdate(_point?: ObservablePoint | undefined) {
     this.dirty = true
   }
 
@@ -362,6 +359,7 @@ export abstract class Display extends EventEmitter<{
     ctx.resetTransform()
   }
 
+  _renderId = 0
   protected abstract _render(ctx: CanvasRenderingContext2D): void
 
   /**

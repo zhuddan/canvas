@@ -83,7 +83,7 @@ export declare abstract class Display extends EventEmitter<{
     private _shadow;
     set shadow(value: ShadowType);
     get shadow(): ShadowType;
-    _onUpdate(point?: ObservablePoint | undefined): void;
+    _onUpdate(_point?: ObservablePoint | undefined): void;
     _app: App | null;
     private _visible;
     get visible(): boolean;
@@ -92,6 +92,7 @@ export declare abstract class Display extends EventEmitter<{
     protected shouldUpdateBounds(): void;
     private _baseRender;
     render(ctx: CanvasRenderingContext2D): void;
+    _renderId: number;
     protected abstract _render(ctx: CanvasRenderingContext2D): void;
     /**
      * 同于形变转换的宽度

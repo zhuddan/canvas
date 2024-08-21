@@ -1,3 +1,4 @@
+import EventEmitter from 'eventemitter3';
 import type { Display } from './object/display';
 interface AppConstructorOptions {
     width?: number;
@@ -6,7 +7,9 @@ interface AppConstructorOptions {
     onUpdate?: () => void;
     createImage?: () => HTMLImageElement;
 }
-export declare class App {
+export declare class App extends EventEmitter<{
+    render: [];
+}> {
     canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
     dpr: number;

@@ -1,3 +1,4 @@
+import EventEmitter from 'eventemitter3'
 import { NOOP } from './const'
 import type { Display } from './object/display'
 import { formatValue } from './utils'
@@ -10,7 +11,9 @@ interface AppConstructorOptions {
   createImage?: () => HTMLImageElement
 }
 
-export class App {
+export class App extends EventEmitter<{
+  render: []
+}> {
   canvas: HTMLCanvasElement
   ctx: CanvasRenderingContext2D
   dpr = 1
@@ -26,10 +29,11 @@ export class App {
     onUpdate,
   }: AppConstructorOptions = {},
   ) {
+    super()
     if (dpr) {
       this.dpr = window.devicePixelRatio ?? 1
     }
-    this.dpr = 1
+    // this.dpr = 1
     this.onUpdate = onUpdate ?? NOOP
     this.canvas = document.createElement('canvas')!
     this.ctx = this.canvas.getContext('2d')!
@@ -95,6 +99,13 @@ export class App {
       this.update()
     })
 
+    if (!this.children.length) {
+      return
+    }
+    const _renderIds = this.children.every(e => !!e._renderId)
+    if (_renderIds) {
+      this.emit('render')
+    }
     const isDirty = !![...this.children.filter(e => e.dirty)].length
     if (!isDirty)
       return
@@ -113,6 +124,7 @@ export class App {
       const child = shouldRender.shift()!
       child.render(this.ctx)
       child.dirty = false
+      child._renderId++
       this.afterRender()
     }
     this.onUpdate()

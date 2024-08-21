@@ -51,6 +51,7 @@ export class Shape extends Display implements IShape {
   constructor(options: Partial<ShapeOptions> = {}) {
     super(options)
     this.emit('ready')
+    this._onUpdate()
   }
 
   addPath(...items: PathInstruction[]) {
