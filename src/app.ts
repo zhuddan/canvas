@@ -1,6 +1,5 @@
 import { NOOP } from './const'
 import type { Display } from './object/display'
-import { DisplayGroup } from './object/display'
 import { formatValue } from './utils'
 
 interface AppConstructorOptions {
@@ -78,26 +77,16 @@ export class App {
 
   children: Display[] = []
 
-  add(object: Display | DisplayGroup) {
-    if (object instanceof DisplayGroup) {
-      object.onAdd(this)
-    }
-    else {
-      this.children.push(object)
-      object.onAdd(this)
-    }
+  add(object: Display) {
+    this.children.push(object)
+    object.onAdd(this)
   }
 
-  remove(object: Display | DisplayGroup) {
-    if (object instanceof DisplayGroup) {
+  remove(object: Display) {
+    const index = this.children.indexOf(object)
+    if (index !== -1) {
       object.onRemove()
-    }
-    else {
-      const index = this.children.indexOf(object)
-      if (index !== -1) {
-        object.onRemove()
-        this.children.splice(index, 1)
-      }
+      this.children.splice(index, 1)
     }
   }
 

@@ -109,18 +109,4 @@ export declare abstract class Display extends EventEmitter<{
     onRemove(): void;
     destroy(): void;
 }
-/**
- * @deprecated
- */
-export declare class DisplayGroup {
-    private children;
-    private _app;
-    private get app();
-    private set app(value);
-    constructor(children?: Display[]);
-    add(object: Display): void;
-    remove(object: Display): void;
-    onRemove(): void;
-    onAdd(app: App): void;
-}
 export {};
