@@ -25,6 +25,7 @@ export declare class App extends EventEmitter<{
     add(object: Display): void;
     remove(object: Display): void;
     private update;
+    toDataURL(type?: string, quality?: any): string;
     onContext(fn: (ctx: CanvasRenderingContext2D) => any): void;
 }
 export {};

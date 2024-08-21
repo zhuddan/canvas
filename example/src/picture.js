@@ -20,7 +20,7 @@ const app = new App({
 const img = document.createElement('img')
 img.src = './scene.jpg'
 const p = new Picture('http://localhost:13000/example/scene.jpg', {
-  objectFit: 'cover',
+  // objectFit: 'cover',
   size: {
     x: 600,
     y: 600,
@@ -48,8 +48,42 @@ p.once('ready', () => {
   folderPicture.addBinding(p, 'objectFit', options(
     'contain',
     'cover',
+    'none',
     'fill',
   ))
 
   folderPicture.addBinding(p, 'rounded', range(0, 600))
 })
+
+/**
+ * @type {Map<string, HTMLImageElement>}
+ */
+const map = new Map()
+
+let t = 5
+app.on('render', async () => {
+  while (t-- > 0) {
+    const base64 = app.toDataURL()
+    downloadBase64File(base64, 'scene.jpg')
+    if (!map.has(base64)) {
+      const img = new Image()
+      img.src = base64
+      map.set(base64, img)
+    }
+    else {
+      console.log(base64 === map.get(base64)?.src)
+    }
+  }
+})
+
+/**
+ *
+ * @param {*} base64
+ * @param {*} download
+ */
+function downloadBase64File(base64, download) {
+  const link = document.createElement('a')
+  link.href = base64
+  link.download = download
+  link.click()
+}

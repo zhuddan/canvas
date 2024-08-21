@@ -33,17 +33,22 @@ const text = new Text({
     blur: 5,
   },
   style: {
-    wordWrapWidth: 100,
+    wordWrapWidth: 200,
     wordWrap: true,
     stroke: {
       color: '#10d74d',
     },
     strokeWeight: 1,
-    fontSize: 40,
+    fontSize: 32,
     fill: '#ffff',
   },
 })
 app.add(text)
+
+app.once('render', () => {
+
+  // window.open(s, '_blank')
+})
 document.body.appendChild(app.canvas)
 
 createBaseFolder(pane, text, app)

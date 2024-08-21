@@ -102,11 +102,12 @@ export class App extends EventEmitter<{
     if (!this.children.length) {
       return
     }
-    const _renderIds = this.children.every(e => !!e._renderId)
-    if (_renderIds) {
+
+    const isDirty = !![...this.children.filter(e => e.dirty)].length
+    const _renderIds = this.children.every(e => e._renderId > 0)
+    if (_renderIds && this.children.length) {
       this.emit('render')
     }
-    const isDirty = !![...this.children.filter(e => e.dirty)].length
     if (!isDirty)
       return
     this.ctx.clearRect(
@@ -118,7 +119,6 @@ export class App extends EventEmitter<{
 
     this.debug()
     const shouldRender = [...this.children].filter(e => e.shouldUpdate)
-
     while (shouldRender.length) {
       this.beforeRender()
       const child = shouldRender.shift()!
@@ -127,7 +127,12 @@ export class App extends EventEmitter<{
       child._renderId++
       this.afterRender()
     }
+
     this.onUpdate()
+  }
+
+  toDataURL(type?: string, quality?: any) {
+    return this.canvas.toDataURL(type, quality)
   }
 
   onContext(fn: (ctx: CanvasRenderingContext2D) => any) {
