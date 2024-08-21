@@ -8,6 +8,7 @@ interface AppConstructorOptions {
   height?: number
   dpr?: boolean
   onUpdate?: () => void
+  createImage?: () => HTMLImageElement
 }
 
 export class App {
@@ -17,11 +18,12 @@ export class App {
   width: number
   height: number
   onUpdate: () => void
-  constructor(
-    {
+  static createImage: () => HTMLImageElement
+  constructor({
     width = 600,
     height = 800,
     dpr = true,
+    createImage = () => document.createElement('img'),
     onUpdate,
   }: AppConstructorOptions = {},
   ) {
@@ -38,6 +40,7 @@ export class App {
     this.canvas.height = height * this.dpr
     this.width = width
     this.height = height
+    App.createImage = createImage
     this.update()
   }
 

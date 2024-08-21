@@ -11,9 +11,10 @@ interface PictureOptions extends DisplayOptions {
     rounded?: number;
 }
 export declare class Picture extends Display {
-    img: HTMLImageElement;
+    private options?;
+    constructor(maybeImage: HTMLImageElement | string, options?: PictureOptions | undefined);
     private _size;
-    imgSize: ObservablePoint;
+    private _imageSize;
     set size(value: PointData);
     get size(): ObservablePoint;
     private _slice;
@@ -28,7 +29,8 @@ export declare class Picture extends Display {
     private _rounded;
     set rounded(value: number);
     get rounded(): number;
-    constructor(img: HTMLImageElement, options?: PictureOptions);
+    private image;
+    private _onImageComplete;
     get _shouldUpdate(): boolean;
     private get _isSlice();
     protected _render(ctx: CanvasRenderingContext2D): void;

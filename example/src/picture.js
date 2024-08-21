@@ -19,35 +19,35 @@ const app = new App({
 })
 const img = document.createElement('img')
 img.src = './scene.jpg'
-img.onload = () => {
-  const p = new Picture(img, {
-    objectFit: 'cover',
-    size: {
-      x: 600,
-      y: 600,
-    },
-  })
-  app.add(p)
-  document.body.appendChild(app.canvas)
-  createBaseFolder(pane, p, app)
-  const folderPicture = pane.addFolder({
-    title: 'Picture',
-  })
-  folderPicture.addBinding(p, 'size')
-  folderPicture.addBinding(p, 'slice', {
-    x: range(0, img.width),
-    y: range(0, img.height),
-  })
-  folderPicture.addBinding(p, 'sliceSize', {
-    x: range(0, img.width),
-    y: range(0, img.height),
-  })
+const p = new Picture('http://localhost:13000/example/scene.jpg', {
+  objectFit: 'cover',
+  size: {
+    x: 600,
+    y: 600,
+  },
+  // onImageLoad
+})
+app.add(p)
+document.body.appendChild(app.canvas)
 
-  folderPicture.addBinding(p, 'objectFit', options(
-    'contain',
-    'cover',
-    'fill',
-  ))
+createBaseFolder(pane, p, app)
+const folderPicture = pane.addFolder({
+  title: 'Picture',
+})
+folderPicture.addBinding(p, 'size')
+folderPicture.addBinding(p, 'slice', {
+  x: range(0, img.width),
+  y: range(0, img.height),
+})
+folderPicture.addBinding(p, 'sliceSize', {
+  x: range(0, img.width),
+  y: range(0, img.height),
+})
 
-  folderPicture.addBinding(p, 'rounded', range(0, 600))
-}
+folderPicture.addBinding(p, 'objectFit', options(
+  'contain',
+  'cover',
+  'fill',
+))
+
+folderPicture.addBinding(p, 'rounded', range(0, 600))

@@ -5,6 +5,7 @@ interface AppConstructorOptions {
     height?: number;
     dpr?: boolean;
     onUpdate?: () => void;
+    createImage?: () => HTMLImageElement;
 }
 export declare class App {
     canvas: HTMLCanvasElement;
@@ -13,7 +14,8 @@ export declare class App {
     width: number;
     height: number;
     onUpdate: () => void;
-    constructor({ width, height, dpr, onUpdate, }?: AppConstructorOptions);
+    static createImage: () => HTMLImageElement;
+    constructor({ width, height, dpr, createImage, onUpdate, }?: AppConstructorOptions);
     private beforeRender;
     private afterRender;
     private debug;

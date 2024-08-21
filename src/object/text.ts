@@ -15,6 +15,7 @@ export class Text extends Display {
     if (options.style)
       this.style = options.style
     this.text = options.text ?? ''
+    this.emit('ready')
   }
 
   private _style = new TextStyle()

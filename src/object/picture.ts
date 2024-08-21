@@ -2,6 +2,7 @@ import type { Properties } from 'csstype'
 import type { PointData } from '../coordinate/PointData'
 import { ObservablePoint } from '../coordinate/ObservablePoint'
 import { calcDiff } from '../utils'
+import { App } from '../app'
 import type { DisplayOptions } from './display'
 import { Display } from './display'
 
@@ -13,8 +14,30 @@ interface PictureOptions extends DisplayOptions {
   rounded?: number
 }
 export class Picture extends Display {
+  constructor(maybeImage: HTMLImageElement | string, private options?: PictureOptions) {
+    super(options)
+    this.dirty = false
+    if (typeof maybeImage == 'string') {
+      this.image = App.createImage()
+      this.image.src = maybeImage
+    }
+    else {
+      this.image = maybeImage
+    }
+
+    if (this.image.complete) {
+      this._onImageComplete()
+    }
+    else {
+      this.image.addEventListener('load', () => {
+        this._onImageComplete()
+      })
+    }
+  }
+
   private _size = new ObservablePoint(this, 0, 0)
-  imgSize: ObservablePoint
+
+  private _imageSize = new ObservablePoint(this, 0, 0)
 
   set size(value: PointData) {
     if (this.size !== value) {
@@ -77,26 +100,28 @@ export class Picture extends Display {
     return this._rounded
   }
 
-  constructor(public img: HTMLImageElement, options?: PictureOptions) {
-    super(options)
+  private image: HTMLImageElement
 
-    this.imgSize = new ObservablePoint(this, this.img.width, this.img.height)
+  private _onImageComplete() {
+    this._imageSize = new ObservablePoint(this, this.image.width, this.image.height)
 
-    this.size = options?.size ?? {
-      x: this.img.width,
-      y: this.img.height,
+    this.size = this.options?.size ?? {
+      x: this.image.width,
+      y: this.image.height,
     }
 
-    this.slice = options?.slice ?? this.slice
+    this.slice = this.options?.slice ?? this.slice
 
-    this.sliceSize = options?.sliceSize ?? {
-      x: this.img.width,
-      y: this.img.height,
+    this.sliceSize = this.options?.sliceSize ?? {
+      x: this.image.width,
+      y: this.image.height,
     }
 
-    this.objectFit = options?.objectFit ?? this.objectFit
+    this.objectFit = this.options?.objectFit ?? this.objectFit
 
-    this.rounded = options?.rounded ?? this.rounded
+    this.rounded = this.options?.rounded ?? this.rounded
+
+    this._onUpdate()
   }
 
   get _shouldUpdate(): boolean {
@@ -111,12 +136,11 @@ export class Picture extends Display {
     if (!this._isSlice) {
       const _size = this.size.clone()
       const _position = this.position.clone()
-      const scaleDiff = _size.x / this.imgSize.x
-      const diffSize = calcDiff([this.imgSize.x, this.imgSize.y])
+      const scaleDiff = _size.x / this._imageSize.x
+      const diffSize = calcDiff([this._imageSize.x, this._imageSize.y])
       const diff = diffSize * scaleDiff
-      const slim = this.imgSize.x < this.imgSize.y
-      const fat = this.imgSize.x > this.imgSize.y
-
+      const slim = this._imageSize.x < this._imageSize.y
+      const fat = this._imageSize.x > this._imageSize.y
       if ((slim || fat)) {
         switch (this.objectFit) {
           case 'contain':
@@ -161,7 +185,7 @@ export class Picture extends Display {
         }
       }
       ctx.drawImage(
-        this.img,
+        this.image,
         this.position.x,
         this.position.y,
         this.size.x,
@@ -173,7 +197,7 @@ export class Picture extends Display {
     }
     else {
       const args = [
-        this.img,
+        this.image,
         this.slice.x,
         this.slice.y,
         this.sliceSize.x,

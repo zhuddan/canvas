@@ -41,5 +41,5 @@ export declare abstract class AbstractStyle extends EventEmitter<{
     update(): void;
     updateBounds(): void;
     render(ctx: CanvasRenderingContext2D): this;
+    destroy(): void;
 }
-export declare function renderAbstractStyle(style: IAbstractStyle, ctx: CanvasRenderingContext2D): void;

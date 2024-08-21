@@ -101,23 +101,20 @@ export abstract class AbstractStyle extends EventEmitter<{
   }
 
   render(ctx: CanvasRenderingContext2D) {
-    renderAbstractStyle(this, ctx)
+    if (this.stroke.color && this.stroke.width) {
+      ctx.lineWidth = this.stroke.width
+      ctx.strokeStyle = this.stroke.color
+    }
+    if (this.fill) {
+      ctx.fillStyle = this.fill
+    }
+    if (this.filter) {
+      ctx.filter = this.filter
+    }
     return this
   }
-}
 
-export function renderAbstractStyle(
-  style: IAbstractStyle,
-  ctx: CanvasRenderingContext2D,
-) {
-  if (style.stroke.color && style.stroke.width) {
-    ctx.lineWidth = style.stroke.width
-    ctx.strokeStyle = style.stroke.color
-  }
-  if (style.fill) {
-    ctx.fillStyle = style.fill
-  }
-  if (style.filter) {
-    ctx.filter = style.filter
+  destroy() {
+    this.removeAllListeners()
   }
 }

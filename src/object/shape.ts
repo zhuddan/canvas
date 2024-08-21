@@ -1,4 +1,4 @@
-import type { AbstractStyle, IAbstractStyle, InputColor, StrokeInput, renderAbstractStyle } from '../style/abstract-style'
+import type { AbstractStyle, IAbstractStyle, InputColor, StrokeInput } from '../style/abstract-style'
 import type { FunctionKeys, ModifyReturnType } from '../types'
 import { calcDiff, calcMax, createProxy } from '../utils'
 import type { DisplayOptions } from './display'
@@ -50,6 +50,7 @@ interface IShape {
 export class Shape extends Display implements IShape {
   constructor(options: Partial<ShapeOptions> = {}) {
     super(options)
+    this.emit('ready')
   }
 
   // CanvasRenderingContext2DMethods

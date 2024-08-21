@@ -1,3 +1,4 @@
+import EventEmitter from 'eventemitter3'
 import type { App } from '../app'
 import type { Observer } from '../coordinate/ObservablePoint'
 import { ObservablePoint } from '../coordinate/ObservablePoint'
@@ -54,8 +55,11 @@ const defaultPivot = new ObservablePoint(null)
 const defaultAnchor = new ObservablePoint(null)
 const defaultScale = new ObservablePoint(null, 1, 1)
 
-export abstract class Display implements Observer<ObservablePoint> {
+export abstract class Display extends EventEmitter<{
+  ready: []
+}> implements Observer<ObservablePoint> {
   constructor(options: DisplayOptions = {}) {
+    super()
     this.visible = options.visible ?? true
     if (options.position) {
       this.position = options.position
@@ -382,6 +386,10 @@ export abstract class Display implements Observer<ObservablePoint> {
   onRemove() {
     this._app = null
     this._onUpdate()
+  }
+
+  destroy() {
+    this.removeAllListeners()
   }
 }
 

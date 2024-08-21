@@ -1,3 +1,4 @@
+import EventEmitter from 'eventemitter3';
 import type { App } from '../app';
 import type { Observer } from '../coordinate/ObservablePoint';
 import { ObservablePoint } from '../coordinate/ObservablePoint';
@@ -36,7 +37,9 @@ export interface DisplayOptions {
     alpha?: number;
     shadow?: ShadowType;
 }
-export declare abstract class Display implements Observer<ObservablePoint> {
+export declare abstract class Display extends EventEmitter<{
+    ready: [];
+}> implements Observer<ObservablePoint> {
     constructor(options?: DisplayOptions);
     /**
      * 更新优化
@@ -104,6 +107,7 @@ export declare abstract class Display implements Observer<ObservablePoint> {
     abstract _updateTransformBounds(): void;
     onAdd(_app: App): void;
     onRemove(): void;
+    destroy(): void;
 }
 /**
  * @deprecated
