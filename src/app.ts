@@ -55,29 +55,29 @@ export class App extends EventEmitter<{
     this.ctx.restore()
   }
 
-  private debug() {
-    this.beforeRender()
-    const ctx = this.ctx
-    this.ctx.strokeStyle = '#cccccc'
-    this.ctx.fillStyle = '#cccccc'
-    ctx.textBaseline = 'top'
-    ctx.font = '10px 黑体'
-    ctx.setLineDash([4, 10])
-    for (let row = 0; row < Math.ceil((this.width + 1) / 100); row++) {
-      for (let col = 0; col < Math.ceil((this.height + 1) / 100); col++) {
-        ctx.beginPath()
-        ctx.fillText(`${row * 100},${col * 100}`, row * 100 * this.dpr, col * 100 * this.dpr)
-        if (row === 0 || col === 0) {
-          continue
-        }
-        ctx.moveTo((row * 100 - 100) * this.dpr, col * 100 * this.dpr)
-        ctx.lineTo(row * 100 * this.dpr, col * 100 * this.dpr)
-        ctx.lineTo(row * 100 * this.dpr, (col * 100 - 100) * this.dpr)
-        ctx.stroke()
-      }
-    }
-    this.afterRender()
-  }
+  // private debug() {
+  //   this.beforeRender()
+  //   const ctx = this.ctx
+  //   this.ctx.strokeStyle = '#cccccc'
+  //   this.ctx.fillStyle = '#cccccc'
+  //   ctx.textBaseline = 'top'
+  //   ctx.font = '10px 黑体'
+  //   ctx.setLineDash([4, 10])
+  //   for (let row = 0; row < Math.ceil((this.width + 1) / 100); row++) {
+  //     for (let col = 0; col < Math.ceil((this.height + 1) / 100); col++) {
+  //       ctx.beginPath()
+  //       ctx.fillText(`${row * 100},${col * 100}`, row * 100 * this.dpr, col * 100 * this.dpr)
+  //       if (row === 0 || col === 0) {
+  //         continue
+  //       }
+  //       ctx.moveTo((row * 100 - 100) * this.dpr, col * 100 * this.dpr)
+  //       ctx.lineTo(row * 100 * this.dpr, col * 100 * this.dpr)
+  //       ctx.lineTo(row * 100 * this.dpr, (col * 100 - 100) * this.dpr)
+  //       ctx.stroke()
+  //     }
+  //   }
+  //   this.afterRender()
+  // }
 
   children: Display[] = []
 
@@ -117,7 +117,7 @@ export class App extends EventEmitter<{
       this.canvas.height * 2,
     )
 
-    this.debug()
+    // this.debug()
     const shouldRender = [...this.children].filter(e => e.shouldUpdate)
     while (shouldRender.length) {
       this.beforeRender()

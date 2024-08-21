@@ -3,6 +3,7 @@ import { Pane } from 'tweakpane'
 import throttle from 'lodash-es/throttle.js'
 import { App, Shape } from '../../dist/index'
 import { createBaseFolder } from './common.js'
+import { debug } from './_debug.js'
 
 const pane = new Pane()
 
@@ -17,6 +18,7 @@ const app = new App({
     refresh()
   },
 })
+debug(app)
 const shape = new Shape()
 shape.beginPath()
 shape.moveTo(50, 50)

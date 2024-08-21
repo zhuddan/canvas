@@ -3,6 +3,7 @@ import { Pane } from 'tweakpane'
 import throttle from 'lodash-es/throttle.js'
 import { App, Picture } from '../../dist/index'
 import { createBaseFolder, options, range } from './common.js'
+import { debug } from './_debug.js'
 
 const pane = new Pane()
 
@@ -26,6 +27,7 @@ const p = new Picture('http://localhost:13000/example/scene.jpg', {
     y: 300,
   },
 })
+debug(app)
 app.add(p)
 
 document.body.appendChild(app.canvas)

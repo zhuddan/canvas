@@ -82,6 +82,12 @@ export abstract class Display extends EventEmitter<{
     if (options.shadow) {
       this.shadow = options.shadow
     }
+    if (options.anchor) {
+      this.anchor = options.anchor
+    }
+    if (options.rotation) {
+      this.rotation = options.rotation
+    }
   }
 
   /**

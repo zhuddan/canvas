@@ -20,7 +20,6 @@ export declare class App extends EventEmitter<{
     constructor({ width, height, dpr, createImage, onUpdate, }?: AppConstructorOptions);
     private beforeRender;
     private afterRender;
-    private debug;
     children: Display[];
     add(object: Display): void;
     remove(object: Display): void;

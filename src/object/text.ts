@@ -54,7 +54,7 @@ export class Text extends Display {
   }
 
   get _shouldUpdate(): boolean {
-    return !!(this.style.fill) || !!(this.style.stroke && this.style.strokeWeight)
+    return !!(this.style.fill) || !!(this.style.stroke.color && this.style.stroke.width)
   }
 
   getSplitText(ctx: CanvasRenderingContext2D) {
@@ -79,14 +79,14 @@ export class Text extends Display {
   }
 
   _render(ctx: CanvasRenderingContext2D) {
-    if (this.style.fill || (this.style.stroke && this.style.strokeWeight)) {
+    if (this.style.fill || (this.style.stroke?.color && this.style.stroke?.width)) {
       this.style.render(ctx)
       // 绘制单行文本
       if (!this.style.wordWrap || !this.style.wordWrapWidth) {
         if (this.style.fill) {
           ctx.fillText(this.text, this.position.x, this.position.y)
         }
-        if (this.style.stroke && this.style.strokeWeight) {
+        if (this.style.stroke?.color && this.style.stroke?.width) {
           ctx.strokeText(this.text, this.position.x, this.position.y)
         }
       }
@@ -97,7 +97,7 @@ export class Text extends Display {
           if (this.style.fill) {
             ctx.strokeText(text, this.position.x, this.position.y + i * this.style.lineHeight)
           }
-          if (this.style.stroke && this.style.strokeWeight) {
+          if (this.style.stroke?.color && this.style.stroke?.width) {
             ctx.strokeText(text, this.position.x, this.position.y + i * this.style.lineHeight)
           }
         }
@@ -112,12 +112,13 @@ export class Text extends Display {
       this.style.render(ctx)
       if (!this.style.wordWrap || !this.style.wordWrapWidth) {
         const measure = ctx.measureText(this.text)
+        this.transformWidth = measure.width
         let height = Math.max(...[
           measure.actualBoundingBoxDescent - measure.actualBoundingBoxAscent,
           typeof this.style.fontSize == 'number' ? this.style.fontSize : Number.parseInt(`${this.style.fontSize}`),
         ])
-        if (this.style.stroke && this.style.strokeWeight) {
-          height += this.style.strokeWeight
+        if (this.style.stroke && this.style.stroke.width) {
+          height += this.style.stroke.width
         }
         this.transformHeight = height
       }
@@ -134,8 +135,8 @@ export class Text extends Display {
           measure.actualBoundingBoxDescent - measure.actualBoundingBoxAscent,
           lineHeight,
         ])
-        if (this.style.stroke && this.style.strokeWeight) {
-          height += this.style.strokeWeight
+        if (this.style.stroke && this.style.stroke.width) {
+          height += this.style.stroke.width
         }
         if (splitText.length > 1) {
           this.transformHeight = (splitText.length - 1) * lineHeight + height

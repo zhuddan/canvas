@@ -26,9 +26,6 @@ export declare abstract class AbstractStyle extends EventEmitter<{
     update: [];
     updateBounds: [];
 }> implements IAbstractStyle {
-    private _strokeWeight;
-    set strokeWeight(value: number);
-    get strokeWeight(): number;
     private _fill;
     set fill(value: string);
     get fill(): string;

@@ -1,6 +1,7 @@
 // @ts-check
 import { Easing, Group, Tween } from '@tweenjs/tween.js'
 import { App, Picture } from '../../dist/index'
+import { debug } from './_debug.js'
 
 const app = new App({
   width: document.documentElement.clientWidth,
@@ -18,7 +19,9 @@ const p = new Picture('http://localhost:13000/example/scene.jpg', {
     y: 300,
   },
 })
+debug(app)
 app.add(p)
+
 document.body.appendChild(app.canvas)
 
 const tween = new Tween(p)

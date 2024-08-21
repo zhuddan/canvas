@@ -3,6 +3,7 @@ import { Pane } from 'tweakpane'
 import throttle from 'lodash-es/throttle.js'
 import { App, Text } from '../../dist/index'
 import { createBaseFolder, createBaseStyleFolder, options, range } from './common.js'
+import { debug } from './_debug.js'
 
 const pane = new Pane()
 
@@ -17,6 +18,7 @@ const app = new App({
     refresh()
   },
 })
+debug(app)
 const text = new Text({
   position: {
     x: 200,
@@ -25,7 +27,7 @@ const text = new Text({
   scale: 1.5,
   text: '这是文字这是文字这是文字这是文字这是文字',
   visible: true,
-  anchor: 0,
+  // anchor: 0.5,
   shadow: {
     color: '#d11257',
     x: 5,
@@ -38,7 +40,6 @@ const text = new Text({
     stroke: {
       color: '#10d74d',
     },
-    strokeWeight: 1,
     fontSize: 32,
     fill: '#ffff',
   },

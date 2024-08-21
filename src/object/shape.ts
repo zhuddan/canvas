@@ -196,6 +196,7 @@ export class Shape extends Display implements IShape {
               _ctx.strokeStyle = color
 
             const width = strokeInput.width ?? this.strokeStyle.width
+
             if (width)
               _ctx.lineWidth = width
 
@@ -212,6 +213,12 @@ export class Shape extends Display implements IShape {
             _ctx.strokeStyle = this.strokeStyle.color
           if (this.strokeStyle.width)
             _ctx.lineWidth = this.strokeStyle.width
+          if (this.strokeStyle.dash) {
+            _ctx.setLineDash(this.strokeStyle.dash)
+          }
+          else {
+            _ctx.setLineDash([])
+          }
         }
         _ctx.stroke()
       }
