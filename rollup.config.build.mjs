@@ -103,7 +103,7 @@ function main() {
   ]
 
   if (isProduction) {
-    // commonPlugins.push(terser())
+    commonPlugins.push(terser())
     outputJs.push({
       dir: 'dist',
       format: 'cjs',
