@@ -1,2 +1,79 @@
-import{E as t}from"../index-Bbw8-MRv.js";import{createProxy as e}from"../utils.mjs";class s extends t{_fill="#000";set fill(t){this._fill=t,this.update()}get fill(){return this._fill}_stroke={};set stroke(t){t!==this._stroke&&("string"==typeof t||t instanceof CanvasGradient||t instanceof CanvasPattern?this._stroke=e({...this._stroke,color:t},(()=>{this.update()})):(this._stroke=e(t,(()=>{this.update()})),this.update()))}get stroke(){return this._stroke}_filter="none";set filter(t){this._filter=t,this.update()}get filter(){return this._filter}update(){this.emit("update")}updateBounds(){this.emit("updateBounds")}render(t){return this.stroke.color&&this.stroke.width&&(t.lineWidth=this.stroke.width,t.strokeStyle=this.stroke.color),this.fill&&(t.fillStyle=this.fill),this.filter&&(t.filter=this.filter),this}destroy(){this.removeAllListeners()}}export{s as AbstractStyle};
-//# sourceMappingURL=abstract-style.mjs.map
+
+(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
+import { E as EventEmitter } from '../index-BYsAzWpY.js';
+import { createProxy } from '../utils.mjs';
+
+class AbstractStyle extends EventEmitter {
+    // private _strokeWeight = 0
+    // set strokeWeight(value) {
+    //   this._strokeWeight = value
+    //   this.update()
+    // }
+    // get strokeWeight() {
+    //   return this._strokeWeight
+    // }
+    _fill = '#000';
+    set fill(value) {
+        this._fill = value;
+        this.update();
+    }
+    get fill() {
+        return this._fill;
+    }
+    _stroke = {};
+    set stroke(value) {
+        if (value === this._stroke)
+            return;
+        if (typeof value === 'string'
+            || value instanceof CanvasGradient
+            || value instanceof CanvasPattern) {
+            this._stroke = createProxy({
+                ...this._stroke,
+                color: value,
+            }, () => {
+                this.update();
+            });
+        }
+        else {
+            this._stroke = createProxy(value, () => {
+                this.update();
+            });
+            this.update();
+        }
+    }
+    get stroke() {
+        return this._stroke;
+    }
+    _filter = 'none';
+    set filter(value) {
+        this._filter = value;
+        this.update();
+    }
+    get filter() {
+        return this._filter;
+    }
+    update() {
+        this.emit('update');
+    }
+    updateBounds() {
+        this.emit('updateBounds');
+    }
+    render(ctx) {
+        if (this.stroke.color && this.stroke.width) {
+            ctx.lineWidth = this.stroke.width;
+            ctx.strokeStyle = this.stroke.color;
+        }
+        if (this.fill) {
+            ctx.fillStyle = this.fill;
+        }
+        if (this.filter) {
+            ctx.filter = this.filter;
+        }
+        return this;
+    }
+    destroy() {
+        this.removeAllListeners();
+    }
+}
+
+export { AbstractStyle };

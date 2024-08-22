@@ -1,10 +1,8 @@
-import { P as Property, a as Properties } from '../index.d-CPSGt-W-.js';
-import { PointData } from '../coordinate/PointData.js';
-import { ObservablePoint } from '../coordinate/ObservablePoint.js';
-import { a as Display, D as DisplayOptions } from '../app.d-DAOGknMY.js';
-import '../coordinate/PointLike.js';
-import '../index.d-CXdzLWZ3.js';
-
+import type { Properties } from 'csstype';
+import type { PointData } from '../coordinate/PointData';
+import { ObservablePoint } from '../coordinate/ObservablePoint';
+import type { DisplayOptions } from './display';
+import { Display } from './display';
 interface PictureOptions extends DisplayOptions {
     size?: PointData;
     slice?: PointData;
@@ -12,7 +10,7 @@ interface PictureOptions extends DisplayOptions {
     objectFit?: Properties['objectFit'];
     rounded?: number;
 }
-declare class Picture extends Display {
+export declare class Picture extends Display {
     private options?;
     constructor(maybeImage: HTMLImageElement | string, options?: PictureOptions | undefined);
     private image;
@@ -27,8 +25,8 @@ declare class Picture extends Display {
     set sliceSize(value: PointData);
     get sliceSize(): ObservablePoint;
     private _objectFit;
-    set objectFit(value: Property.ObjectFit | undefined);
-    get objectFit(): Property.ObjectFit | undefined;
+    set objectFit(value: import("csstype").Property.ObjectFit | undefined);
+    get objectFit(): import("csstype").Property.ObjectFit | undefined;
     private _rounded;
     set rounded(value: number);
     _onUpdate(_point?: ObservablePoint | undefined): void;
@@ -42,5 +40,4 @@ declare class Picture extends Display {
     transformHeight: number;
     updateTransformBounds(): void;
 }
-
-export { Picture };
+export {};

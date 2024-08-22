@@ -1,2 +1,273 @@
-import{createProxy as t,calcDiff as e}from"../utils.mjs";import{Display as s}from"./display.mjs";import"../index-Bbw8-MRv.js";import"../coordinate/ObservablePoint.mjs";class i extends s{constructor(t={}){super(t),this.emit("ready"),this._onUpdate()}addPath(...t){this.pathInstruction.push(...t),this.shouldUpdateBounds()}beginPath(){return this.addPath({action:"beginPath",args:[]}),this}closePath(){return this.addPath({action:"closePath",args:[]}),this}moveTo(...t){return this.addPath({action:"moveTo",args:[...t]}),this}lineTo(...t){return this.addPath({action:"lineTo",args:[...t]}),this}rect(...t){return this.addPath({action:"rect",args:[...t]}),this}roundRect(...t){return this.addPath({action:"roundRect",args:[...t]}),this}arc(...t){return this.addPath({action:"arc",args:[...t]}),this}arcTo(...t){return this.addPath({action:"arcTo",args:[...t]}),this}bezierCurveTo(...t){return this.addPath({action:"bezierCurveTo",args:[...t]}),this}ellipse(...t){return this.addPath({action:"ellipse",args:[...t]}),this}fillRect(...t){return this.addPath({action:"fillRect",args:[...t]}),this}strokeRect(...t){return this.addPath({action:"strokeRect",args:[...t]}),this}pathInstruction=[];get _shouldUpdate(){const t=this.pathInstruction.map((t=>t.action));return!(!t.includes("fill")&&!t.includes("stroke"))}_render(t){if(!t)throw new Error("CanvasRenderingContext2D is null or undefined");for(let e=0;e<this.pathInstruction.length;e++){const{action:s,args:i}=this.pathInstruction[e];if("fill"===s)i[0]?t.fillStyle=i[0]:this.fillStyle&&(t.fillStyle=this.fillStyle),t.fill();else if("stroke"===s){if(i[0]){const e=i[0];if("string"==typeof e||e instanceof CanvasGradient||e instanceof CanvasPattern)t.strokeStyle=e,t.lineWidth=this.strokeStyle.width??1;else{const s=e.color??this.strokeStyle.color;s&&(t.strokeStyle=s);const i=e.width??this.strokeStyle.width;i&&(t.lineWidth=i),e.dash?t.setLineDash(e.dash):t.setLineDash([])}}else this.strokeStyle.color&&(t.strokeStyle=this.strokeStyle.color),this.strokeStyle.width&&(t.lineWidth=this.strokeStyle.width),this.strokeStyle.dash?t.setLineDash(this.strokeStyle.dash):t.setLineDash([]);t.stroke()}else t[s](...i)}}_strokeStyle={};set strokeStyle(e){e!==this._strokeStyle&&("string"==typeof e||e instanceof CanvasGradient||e instanceof CanvasPattern?this._strokeStyle=t({...this._strokeStyle,color:e},(()=>{this._onUpdate()})):(this._strokeStyle=t(e,(()=>{this._onUpdate()})),this._onUpdate()))}get strokeStyle(){return this._strokeStyle}transformWidth=0;transformHeight=0;updateTransformBounds(){const t=[],s=[];for(let e=0;e<this.pathInstruction.length;e++){const{action:i,args:r}=this.pathInstruction[e];switch(i){case"lineTo":t.push(r[0]),s.push(r[1]);break;case"fillRect":case"strokeRect":case"roundRect":case"rect":{let e=0;"strokeRect"===i&&(e=this.strokeStyle.width??1),t.push(r[0]+r[2]+e),s.push(r[1]+r[2]+e);break}case"arc":case"arcTo":t.push(r[0]+r[2]),s.push(r[1]+r[2]);break;case"bezierCurveTo":t.push(r[2]+r[4]),s.push(r[3]+r[5]);break;case"ellipse":t.push(r[0]+r[2]),s.push(r[1]+r[3])}}this.transformWidth=e(t),this.transformHeight=e(s)}_fillStyle=null;set fillStyle(t){this._fillStyle=t,this._onUpdate()}get fillStyle(){return this._fillStyle}fill(t){return t&&this.addPath({action:"fill",args:[t]}),this}stroke(t){return this.addPath({action:"stroke",args:t?[t]:[]}),this}_filter="none";set filter(t){this._filter=t,this._onUpdate()}get filter(){return this._filter}}export{i as Shape};
-//# sourceMappingURL=shape.mjs.map
+
+(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
+import { createProxy, calcDiff } from '../utils.mjs';
+import { Display } from './display.mjs';
+import '../index-BYsAzWpY.js';
+import '../coordinate/ObservablePoint.mjs';
+
+class Shape extends Display {
+    constructor(options = {}) {
+        super(options);
+        this.emit('ready');
+        this._onUpdate();
+    }
+    addPath(...items) {
+        this.pathInstruction.push(...items);
+        this.shouldUpdateBounds();
+    }
+    // CanvasRenderingContext2DMethods
+    beginPath() {
+        this.addPath({
+            action: 'beginPath',
+            args: [],
+        });
+        return this;
+    }
+    closePath() {
+        this.addPath({
+            action: 'closePath',
+            args: [],
+        });
+        return this;
+    }
+    moveTo(...args) {
+        this.addPath({
+            action: 'moveTo',
+            args: [...args],
+        });
+        return this;
+    }
+    lineTo(...args) {
+        this.addPath({
+            action: 'lineTo',
+            args: [...args],
+        });
+        return this;
+    }
+    rect(...args) {
+        this.addPath({
+            action: 'rect',
+            args: [...args],
+        });
+        return this;
+    }
+    roundRect(...args) {
+        this.addPath({
+            action: 'roundRect',
+            args: [...args],
+        });
+        return this;
+    }
+    arc(...args) {
+        this.addPath({
+            action: 'arc',
+            args: [...args],
+        });
+        return this;
+    }
+    arcTo(...args) {
+        this.addPath({
+            action: 'arcTo',
+            args: [...args],
+        });
+        return this;
+    }
+    bezierCurveTo(...args) {
+        this.addPath({
+            action: 'bezierCurveTo',
+            args: [...args],
+        });
+        return this;
+    }
+    ellipse(...args) {
+        this.addPath({
+            action: 'ellipse',
+            args: [...args],
+        });
+        return this;
+    }
+    fillRect(...args) {
+        this.addPath({
+            action: 'fillRect',
+            args: [...args],
+        });
+        return this;
+    }
+    strokeRect(...args) {
+        this.addPath({
+            action: 'strokeRect',
+            args: [...args],
+        });
+        return this;
+    }
+    pathInstruction = [];
+    get _shouldUpdate() {
+        const actions = this.pathInstruction.map(item => item.action);
+        if (actions.includes('fill')
+            || actions.includes('stroke')) {
+            return true;
+        }
+        return false;
+    }
+    _render(_ctx) {
+        if (!_ctx) {
+            throw new Error('CanvasRenderingContext2D is null or undefined');
+        }
+        for (let index = 0; index < this.pathInstruction.length; index++) {
+            const { action, args } = this.pathInstruction[index];
+            if (action === 'fill') {
+                if (args[0]) {
+                    _ctx.fillStyle = args[0];
+                }
+                else if (this.fillStyle) {
+                    _ctx.fillStyle = this.fillStyle;
+                }
+                _ctx.fill();
+            }
+            else if (action === 'stroke') {
+                if (args[0]) {
+                    const strokeInput = args[0];
+                    if (typeof strokeInput === 'string'
+                        || strokeInput instanceof CanvasGradient
+                        || strokeInput instanceof CanvasPattern) {
+                        _ctx.strokeStyle = strokeInput;
+                        _ctx.lineWidth = this.strokeStyle.width ?? 1;
+                    }
+                    else {
+                        const color = strokeInput.color ?? this.strokeStyle.color;
+                        if (color)
+                            _ctx.strokeStyle = color;
+                        const width = strokeInput.width ?? this.strokeStyle.width;
+                        if (width)
+                            _ctx.lineWidth = width;
+                        if (strokeInput.dash) {
+                            _ctx.setLineDash(strokeInput.dash);
+                        }
+                        else {
+                            _ctx.setLineDash([]);
+                        }
+                    }
+                }
+                else {
+                    if (this.strokeStyle.color)
+                        _ctx.strokeStyle = this.strokeStyle.color;
+                    if (this.strokeStyle.width)
+                        _ctx.lineWidth = this.strokeStyle.width;
+                    if (this.strokeStyle.dash) {
+                        _ctx.setLineDash(this.strokeStyle.dash);
+                    }
+                    else {
+                        _ctx.setLineDash([]);
+                    }
+                }
+                _ctx.stroke();
+            }
+            else {
+                _ctx[action](...args);
+            }
+        }
+    }
+    _strokeStyle = {};
+    set strokeStyle(value) {
+        if (value === this._strokeStyle)
+            return;
+        if (typeof value === 'string'
+            || value instanceof CanvasGradient
+            || value instanceof CanvasPattern) {
+            this._strokeStyle = createProxy({
+                ...this._strokeStyle,
+                color: value,
+            }, () => {
+                this._onUpdate();
+            });
+        }
+        else {
+            this._strokeStyle = createProxy(value, () => {
+                this._onUpdate();
+            });
+            this._onUpdate();
+        }
+    }
+    get strokeStyle() {
+        return this._strokeStyle;
+    }
+    transformWidth = 0;
+    transformHeight = 0;
+    updateTransformBounds() {
+        // 所有坐标的最大值放进来
+        const allX = [];
+        const allY = [];
+        for (let index = 0; index < this.pathInstruction.length; index++) {
+            const { action, args } = this.pathInstruction[index];
+            switch (action) {
+                case 'lineTo':
+                    allX.push(args[0]);
+                    allY.push(args[1]);
+                    break;
+                case 'fillRect':
+                case 'strokeRect':
+                case 'roundRect':
+                case 'rect': {
+                    let strokeWeight = 0;
+                    if (action === 'strokeRect') {
+                        strokeWeight = this.strokeStyle.width ?? 1;
+                    }
+                    allX.push(args[0] + args[2] + strokeWeight);
+                    allY.push(args[1] + args[2] + strokeWeight);
+                    break;
+                }
+                case 'arc':
+                    allX.push(args[0] + args[2]);
+                    allY.push(args[1] + args[2]);
+                    break;
+                case 'arcTo':
+                    allX.push(args[0] + args[2]);
+                    allY.push(args[1] + args[2]);
+                    break;
+                case 'bezierCurveTo':
+                    allX.push(args[2] + args[4]);
+                    allY.push(args[3] + args[5]);
+                    break;
+                case 'ellipse':
+                    allX.push(args[0] + args[2]);
+                    allY.push(args[1] + args[3]);
+            }
+        }
+        this.transformWidth = calcDiff(allX);
+        this.transformHeight = calcDiff(allY);
+    }
+    _fillStyle = null;
+    set fillStyle(value) {
+        this._fillStyle = value;
+        this._onUpdate();
+    }
+    get fillStyle() {
+        return this._fillStyle;
+    }
+    fill(color) {
+        if (color) {
+            this.addPath({
+                action: 'fill',
+                args: [color],
+            });
+        }
+        return this;
+    }
+    stroke(value) {
+        this.addPath({
+            action: 'stroke',
+            args: value ? [value] : [],
+        });
+        return this;
+    }
+    _filter = 'none';
+    set filter(value) {
+        this._filter = value;
+        this._onUpdate();
+    }
+    get filter() {
+        return this._filter;
+    }
+}
+
+export { Shape };

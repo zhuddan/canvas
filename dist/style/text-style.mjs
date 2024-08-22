@@ -1,2 +1,197 @@
-import{createCanvasFontString as t,formatValue as e}from"../utils.mjs";import{AbstractStyle as i}from"./abstract-style.mjs";import"../index-Bbw8-MRv.js";class n extends i{static defaultTextStyle={fill:"black",stroke:{width:1},fontFamily:"Arial",fontSize:12,fontStyle:"normal",fontWeight:"normal",fontStretch:"condensed",fontVariantCaps:"normal",letterSpacing:0,wordSpacing:0,textAlign:"left",filter:"none",lineHeight:0,wordWrap:!1,wordWrapWidth:0};_isStroke;constructor(t={}){super(),this._isStroke=!!t.stroke;const e=Object.assign({},n.defaultTextStyle,t);for(const t in e){const i=t,s=e[t];this[i]="stroke"===t?Object.assign({},n.defaultTextStyle[t],s):s}}reset(){const t=n.defaultTextStyle;for(const e in t)this[e]=t[e];this.updateBounds(),this.update()}textBaseline="top";_fontSize;set fontSize(t){this._fontSize=t,this.updateBounds(),this.update()}get fontSize(){return this._fontSize}_fontFamily;set fontFamily(t){this._fontFamily=t,this.updateBounds(),this.update()}get fontFamily(){return this._fontFamily}_fontStyle;set fontStyle(t){this._fontStyle=t,this.updateBounds(),this.update()}get fontStyle(){return this._fontStyle}_fontWeight;set fontWeight(t){this._fontWeight=t,this.updateBounds(),this.update()}get fontWeight(){return this._fontWeight}_fontStretch=n.defaultTextStyle.fontStretch;set fontStretch(t){this._fontStretch=t,this.updateBounds(),this.update()}get fontStretch(){return this._fontStretch}_fontVariantCaps=n.defaultTextStyle.fontVariantCaps;set fontVariantCaps(t){this._fontVariantCaps=t,this.updateBounds(),this.update()}get fontVariantCaps(){return this._fontVariantCaps}_letterSpacing=n.defaultTextStyle.letterSpacing;set letterSpacing(t){this._letterSpacing=t,this.update(),this.updateBounds()}get letterSpacing(){return this._letterSpacing}_wordSpacing=n.defaultTextStyle.wordSpacing;set wordSpacing(t){this._wordSpacing=t,this.update(),this.updateBounds()}get wordSpacing(){return this._wordSpacing}_textAlign=n.defaultTextStyle.textAlign;set textAlign(t){this._textAlign=t,this.update()}get textAlign(){return this._textAlign}_lineHeight=0;set lineHeight(t){this.lineHeight!==t&&(this._lineHeight=t,this.update(),this.updateBounds())}get lineHeight(){return this._lineHeight||(this._lineHeight="number"==typeof this.fontSize?this.fontSize:Number.parseInt(`${this.fontSize}`)),this._lineHeight}_wordWrap=!1;set wordWrap(t){this.wordWrap!==t&&(this._wordWrap=t,this.update(),this.updateBounds())}get wordWrap(){return this._wordWrap}_wordWrapWidth=0;set wordWrapWidth(t){this.wordWrapWidth!==t&&(this._wordWrapWidth=t,this.update(),this.updateBounds())}get wordWrapWidth(){return this._wordWrapWidth}clone(){return new n({fill:this.fill,stroke:this.stroke,fontFamily:this.fontFamily,fontSize:this.fontSize,fontStyle:this.fontStyle,fontWeight:this.fontWeight,fontStretch:this.fontStretch,fontVariantCaps:this.fontVariantCaps,letterSpacing:this.letterSpacing,wordSpacing:this.wordSpacing,textAlign:this.textAlign,filter:this.filter})}render(i){return super.render(i),i.textBaseline="top",i.font=t(this),i.fontStretch=this.fontStretch,i.fontVariantCaps=this.fontVariantCaps,i.letterSpacing=e(this.letterSpacing),i.wordSpacing=e(this.wordSpacing),i.textAlign=this.textAlign,this}}export{n as TextStyle};
-//# sourceMappingURL=text-style.mjs.map
+
+(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
+import { createCanvasFontString, formatValue } from '../utils.mjs';
+import { AbstractStyle } from './abstract-style.mjs';
+import '../index-BYsAzWpY.js';
+
+class TextStyle extends AbstractStyle {
+    static defaultTextStyle = {
+        fill: 'black',
+        stroke: {
+            width: 1,
+        },
+        fontFamily: 'Arial',
+        fontSize: 12,
+        fontStyle: 'normal',
+        fontWeight: 'normal',
+        fontStretch: 'condensed',
+        fontVariantCaps: 'normal',
+        letterSpacing: 0,
+        wordSpacing: 0,
+        textAlign: 'left',
+        filter: 'none',
+        lineHeight: 0,
+        wordWrap: false,
+        wordWrapWidth: 0,
+    };
+    _isStroke;
+    constructor(style = {}) {
+        super();
+        this._isStroke = !!style.stroke;
+        const fullStyle = Object.assign({}, TextStyle.defaultTextStyle, style);
+        for (const key in fullStyle) {
+            const thisKey = key;
+            const data = fullStyle[key];
+            if (key === 'stroke') {
+                this[thisKey] = Object.assign({}, TextStyle.defaultTextStyle[key], data);
+            }
+            else {
+                this[thisKey] = data;
+            }
+        }
+    }
+    reset() {
+        const defaultStyle = TextStyle.defaultTextStyle;
+        for (const key in defaultStyle) {
+            this[key] = defaultStyle[key];
+        }
+        this.updateBounds();
+        this.update();
+    }
+    textBaseline = 'top';
+    _fontSize;
+    set fontSize(value) {
+        this._fontSize = value;
+        this.updateBounds();
+        this.update();
+    }
+    get fontSize() {
+        return this._fontSize;
+    }
+    _fontFamily;
+    set fontFamily(value) {
+        this._fontFamily = value;
+        this.updateBounds();
+        this.update();
+    }
+    get fontFamily() {
+        return this._fontFamily;
+    }
+    _fontStyle;
+    set fontStyle(value) {
+        this._fontStyle = value;
+        this.updateBounds();
+        this.update();
+    }
+    get fontStyle() {
+        return this._fontStyle;
+    }
+    _fontWeight;
+    set fontWeight(value) {
+        this._fontWeight = value;
+        this.updateBounds();
+        this.update();
+    }
+    get fontWeight() {
+        return this._fontWeight;
+    }
+    _fontStretch = TextStyle.defaultTextStyle.fontStretch;
+    set fontStretch(value) {
+        this._fontStretch = value;
+        this.updateBounds();
+        this.update();
+    }
+    get fontStretch() {
+        return this._fontStretch;
+    }
+    _fontVariantCaps = TextStyle.defaultTextStyle.fontVariantCaps;
+    set fontVariantCaps(value) {
+        this._fontVariantCaps = value;
+        this.updateBounds();
+        this.update();
+    }
+    get fontVariantCaps() {
+        return this._fontVariantCaps;
+    }
+    _letterSpacing = TextStyle.defaultTextStyle.letterSpacing;
+    set letterSpacing(value) {
+        this._letterSpacing = value;
+        this.update();
+        this.updateBounds();
+    }
+    get letterSpacing() {
+        return this._letterSpacing;
+    }
+    _wordSpacing = TextStyle.defaultTextStyle.wordSpacing;
+    set wordSpacing(value) {
+        this._wordSpacing = value;
+        this.update();
+        this.updateBounds();
+    }
+    get wordSpacing() {
+        return this._wordSpacing;
+    }
+    _textAlign = TextStyle.defaultTextStyle.textAlign;
+    set textAlign(value) {
+        this._textAlign = value;
+        this.update();
+    }
+    get textAlign() {
+        return this._textAlign;
+    }
+    _lineHeight = 0;
+    set lineHeight(value) {
+        if (this.lineHeight !== value) {
+            this._lineHeight = value;
+            this.update();
+            this.updateBounds();
+        }
+    }
+    get lineHeight() {
+        if (!this._lineHeight) {
+            this._lineHeight = typeof this.fontSize == 'number' ? this.fontSize : Number.parseInt(`${this.fontSize}`);
+        }
+        return this._lineHeight;
+    }
+    _wordWrap = false;
+    set wordWrap(value) {
+        if (this.wordWrap !== value) {
+            this._wordWrap = value;
+            this.update();
+            this.updateBounds();
+        }
+    }
+    get wordWrap() {
+        return this._wordWrap;
+    }
+    _wordWrapWidth = 0;
+    set wordWrapWidth(value) {
+        if (this.wordWrapWidth !== value) {
+            this._wordWrapWidth = value;
+            this.update();
+            this.updateBounds();
+        }
+    }
+    get wordWrapWidth() {
+        return this._wordWrapWidth;
+    }
+    clone() {
+        return new TextStyle({
+            fill: this.fill,
+            stroke: this.stroke,
+            fontFamily: this.fontFamily,
+            fontSize: this.fontSize,
+            fontStyle: this.fontStyle,
+            fontWeight: this.fontWeight,
+            fontStretch: this.fontStretch,
+            fontVariantCaps: this.fontVariantCaps,
+            letterSpacing: this.letterSpacing,
+            wordSpacing: this.wordSpacing,
+            textAlign: this.textAlign,
+            filter: this.filter,
+        });
+    }
+    render(ctx) {
+        super.render(ctx);
+        ctx.textBaseline = 'top';
+        ctx.font = createCanvasFontString(this);
+        ctx.fontStretch = this.fontStretch;
+        ctx.fontVariantCaps = this.fontVariantCaps;
+        ctx.letterSpacing = formatValue(this.letterSpacing);
+        ctx.wordSpacing = formatValue(this.wordSpacing);
+        ctx.textAlign = this.textAlign;
+        return this;
+    }
+}
+
+export { TextStyle };

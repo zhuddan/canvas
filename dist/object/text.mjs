@@ -1,2 +1,139 @@
-import{TextStyle as t}from"../style/text-style.mjs";import{Display as s}from"./display.mjs";import"../utils.mjs";import"../style/abstract-style.mjs";import"../index-Bbw8-MRv.js";import"../coordinate/ObservablePoint.mjs";class e extends s{constructor(t){super(t),t.style&&(this.style=t.style),this.text=t.text??"",this.emit("ready"),this._onUpdate()}_style=new t;set style(s){s=s||{},this._style?.off("update",this._onUpdate,this),this._style?.off("updateBounds",this.shouldUpdateBounds,this),this._style=s instanceof t?s:new t(s),this._style.on("update",this._onUpdate,this),this._style?.on("updateBounds",this.shouldUpdateBounds,this),this._onUpdate()}get style(){return this._style}_text="";set text(t){this._text!==t&&(this._text=t,this._onUpdate())}get text(){return this._text}get _shouldUpdate(){return!!this.style.fill||!(!this.style.stroke.color||!this.style.stroke.width)}getSplitText(t){const s=this.text.split(""),e=[];let i=[];for(let h=0;h<s.length;h++){const o=s[h];i.push(o);const l=i.join("");t.measureText(l).width>this.style.wordWrapWidth?(i.pop(),e.push(i.join("")),i=[o]):h===s.length-1&&e.push(l)}return e}_render(t){if(this.style.fill||this.style.stroke?.color&&this.style.stroke?.width)if(this.style.render(t),this.style.wordWrap&&this.style.wordWrapWidth){const s=this.getSplitText(t);for(let e=0;e<s.length;e++){const i=s[e];this.style.fill&&t.strokeText(i,this.position.x,this.position.y+e*this.style.lineHeight),this.style.stroke?.color&&this.style.stroke?.width&&t.strokeText(i,this.position.x,this.position.y+e*this.style.lineHeight)}}else this.style.fill&&t.fillText(this.text,this.position.x,this.position.y),this.style.stroke?.color&&this.style.stroke?.width&&t.strokeText(this.text,this.position.x,this.position.y)}updateTransformBounds(){this._app&&this._app.onContext((t=>{if(this.style.render(t),this.style.wordWrap&&this.style.wordWrapWidth){const s=this.getSplitText(t);if(this.transformWidth=this.style.wordWrapWidth,!s.length)return void(this.transformHeight=0);const e=t.measureText(this.getSplitText(t)[0]),i=this.style.lineHeight;let h=Math.max(e.actualBoundingBoxDescent-e.actualBoundingBoxAscent,i);this.style.stroke&&this.style.stroke.width&&(h+=this.style.stroke.width),s.length>1&&(this.transformHeight=(s.length-1)*i+h)}else{const s=t.measureText(this.text);this.transformWidth=s.width;let e=Math.max(s.actualBoundingBoxDescent-s.actualBoundingBoxAscent,"number"==typeof this.style.fontSize?this.style.fontSize:Number.parseInt(`${this.style.fontSize}`));this.style.stroke&&this.style.stroke.width&&(e+=this.style.stroke.width),this.transformHeight=e}}))}transformWidth=0;transformHeight=0}export{e as Text};
-//# sourceMappingURL=text.mjs.map
+
+(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
+import { TextStyle } from '../style/text-style.mjs';
+import { Display } from './display.mjs';
+import '../utils.mjs';
+import '../style/abstract-style.mjs';
+import '../index-BYsAzWpY.js';
+import '../coordinate/ObservablePoint.mjs';
+
+class Text extends Display {
+    constructor(options) {
+        super(options);
+        if (options.style)
+            this.style = options.style;
+        this.text = options.text ?? '';
+        this.emit('ready');
+        this._onUpdate();
+    }
+    _style = new TextStyle();
+    set style(style) {
+        style = style || {};
+        this._style?.off('update', this._onUpdate, this);
+        this._style?.off('updateBounds', this.shouldUpdateBounds, this);
+        if (style instanceof TextStyle) {
+            this._style = style;
+        }
+        else {
+            this._style = new TextStyle(style);
+        }
+        this._style.on('update', this._onUpdate, this);
+        this._style?.on('updateBounds', this.shouldUpdateBounds, this);
+        this._onUpdate();
+    }
+    get style() {
+        return this._style;
+    }
+    _text = '';
+    set text(text) {
+        if (this._text === text)
+            return;
+        this._text = text;
+        this._onUpdate();
+    }
+    get text() {
+        return this._text;
+    }
+    get _shouldUpdate() {
+        return !!(this.style.fill) || !!(this.style.stroke.color && this.style.stroke.width);
+    }
+    getSplitText(ctx) {
+        const texts = this.text.split('');
+        const splitText = [];
+        let multilineText = [];
+        for (let i = 0; i < texts.length; i++) {
+            const currentStr = texts[i];
+            multilineText.push(currentStr);
+            const rowStr = multilineText.join('');
+            if (ctx.measureText(rowStr).width > this.style.wordWrapWidth) {
+                multilineText.pop();
+                splitText.push(multilineText.join(''));
+                multilineText = [currentStr];
+                continue;
+            }
+            if (i === texts.length - 1) {
+                splitText.push(rowStr);
+            }
+        }
+        return splitText;
+    }
+    _render(ctx) {
+        if (this.style.fill || (this.style.stroke?.color && this.style.stroke?.width)) {
+            this.style.render(ctx);
+            // 绘制单行文本
+            if (!this.style.wordWrap || !this.style.wordWrapWidth) {
+                if (this.style.fill) {
+                    ctx.fillText(this.text, this.position.x, this.position.y);
+                }
+                if (this.style.stroke?.color && this.style.stroke?.width) {
+                    ctx.strokeText(this.text, this.position.x, this.position.y);
+                }
+            }
+            else {
+                const splitText = this.getSplitText(ctx);
+                for (let i = 0; i < splitText.length; i++) {
+                    const text = splitText[i];
+                    if (this.style.fill) {
+                        ctx.strokeText(text, this.position.x, this.position.y + i * this.style.lineHeight);
+                    }
+                    if (this.style.stroke?.color && this.style.stroke?.width) {
+                        ctx.strokeText(text, this.position.x, this.position.y + i * this.style.lineHeight);
+                    }
+                }
+            }
+        }
+    }
+    updateTransformBounds() {
+        if (!this._app)
+            return;
+        this._app.onContext((ctx) => {
+            this.style.render(ctx);
+            if (!this.style.wordWrap || !this.style.wordWrapWidth) {
+                const measure = ctx.measureText(this.text);
+                this.transformWidth = measure.width;
+                let height = Math.max(...[
+                    measure.actualBoundingBoxDescent - measure.actualBoundingBoxAscent,
+                    typeof this.style.fontSize == 'number' ? this.style.fontSize : Number.parseInt(`${this.style.fontSize}`),
+                ]);
+                if (this.style.stroke && this.style.stroke.width) {
+                    height += this.style.stroke.width;
+                }
+                this.transformHeight = height;
+            }
+            else {
+                const splitText = this.getSplitText(ctx);
+                this.transformWidth = this.style.wordWrapWidth;
+                if (!splitText.length) {
+                    this.transformHeight = 0;
+                    return;
+                }
+                const measure = ctx.measureText(this.getSplitText(ctx)[0]);
+                const lineHeight = this.style.lineHeight;
+                let height = Math.max(...[
+                    measure.actualBoundingBoxDescent - measure.actualBoundingBoxAscent,
+                    lineHeight,
+                ]);
+                if (this.style.stroke && this.style.stroke.width) {
+                    height += this.style.stroke.width;
+                }
+                if (splitText.length > 1) {
+                    this.transformHeight = (splitText.length - 1) * lineHeight + height;
+                }
+            }
+        });
+    }
+    transformWidth = 0;
+    transformHeight = 0;
+}
+
+export { Text };

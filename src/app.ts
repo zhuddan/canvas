@@ -149,3 +149,5 @@ export class App extends EventEmitter<{
     this.afterRender()
   }
 }
+
+const v = isNaN(1)

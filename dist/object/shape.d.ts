@@ -1,12 +1,7 @@
-import { StrokeInput, InputColor, IAbstractStyle } from '../style/abstract-style.js';
-import { FunctionKeys } from '../types.js';
-import { D as DisplayOptions, a as Display } from '../app.d-DAOGknMY.js';
-import '../index.d-CXdzLWZ3.js';
-import '../index.d-CPSGt-W-.js';
-import '../coordinate/ObservablePoint.js';
-import '../coordinate/PointData.js';
-import '../coordinate/PointLike.js';
-
+import type { IAbstractStyle, InputColor, StrokeInput } from '../style/abstract-style';
+import type { FunctionKeys } from '../types';
+import type { DisplayOptions } from './display';
+import { Display } from './display';
 type CanvasRenderingContext2DMethods = FunctionKeys<CanvasRenderingContext2D>;
 interface PathData<T extends CanvasRenderingContext2DMethods> {
     action: T;
@@ -14,7 +9,7 @@ interface PathData<T extends CanvasRenderingContext2DMethods> {
 }
 type Methods = 'beginPath' | 'closePath' | 'moveTo' | 'fill' | 'stroke' | 'lineTo' | 'rect' | 'roundRect' | 'fillRect' | 'strokeRect' | 'arc' | 'arcTo' | 'bezierCurveTo' | 'ellipse';
 type PathInstruction = PathData<Methods>;
-interface ShapeOptions extends DisplayOptions {
+export interface ShapeOptions extends DisplayOptions {
 }
 interface IShape {
     beginPath: () => Shape;
@@ -32,7 +27,7 @@ interface IShape {
     fillRect: (...args: Parameters<CanvasRect['fillRect']>) => Shape;
     strokeRect: (...args: Parameters<CanvasRect['strokeRect']>) => Shape;
 }
-declare class Shape extends Display implements IShape {
+export declare class Shape extends Display implements IShape {
     constructor(options?: Partial<ShapeOptions>);
     addPath(...items: PathInstruction[]): void;
     beginPath(): Shape;
@@ -65,5 +60,4 @@ declare class Shape extends Display implements IShape {
     set filter(value: string);
     get filter(): string;
 }
-
-export { Shape, type ShapeOptions };
+export {};

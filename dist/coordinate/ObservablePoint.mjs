@@ -1,2 +1,72 @@
-class t{_x;_y;_observer;constructor(t,s,e){this._x=s||0,this._y=e||0,this._observer=t}clone(s){return new t(s??this._observer,this._x,this._y)}set(t=0,s=t){return this._x===t&&this._y===s||(this._x=t,this._y=s,this._observer?._onUpdate(this)),this}copyFrom(t){return this._x===t.x&&this._y===t.y||(this._x=t.x,this._y=t.y,this._observer?._onUpdate(this)),this}copyTo(t){return t.set(this._x,this._y),t}equals(t){return t.x===this._x&&t.y===this._y}get x(){return this._x}set x(t){this._x!==t&&(this._x=t,this._observer?._onUpdate(this))}get y(){return this._y}set y(t){this._y!==t&&(this._y=t,this._observer?._onUpdate(this))}[Symbol.iterator](){let t=0;const s=[this.x,this.y];return{next:()=>t<s.length?{value:s[t++],done:!1}:{done:!0,value:void 0}}}}export{t as ObservablePoint};
-//# sourceMappingURL=ObservablePoint.mjs.map
+
+(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
+class ObservablePoint {
+    _x;
+    _y;
+    _observer;
+    constructor(observer, x, y) {
+        this._x = x || 0;
+        this._y = y || 0;
+        this._observer = observer;
+    }
+    clone(observer) {
+        return new ObservablePoint(observer ?? this._observer, this._x, this._y);
+    }
+    set(x = 0, y = x) {
+        if (this._x !== x || this._y !== y) {
+            this._x = x;
+            this._y = y;
+            this._observer?._onUpdate(this);
+        }
+        return this;
+    }
+    copyFrom(p) {
+        if (this._x !== p.x || this._y !== p.y) {
+            this._x = p.x;
+            this._y = p.y;
+            this._observer?._onUpdate(this);
+        }
+        return this;
+    }
+    copyTo(p) {
+        p.set(this._x, this._y);
+        return p;
+    }
+    equals(p) {
+        return (p.x === this._x) && (p.y === this._y);
+    }
+    get x() {
+        return this._x;
+    }
+    set x(value) {
+        if (this._x !== value) {
+            this._x = value;
+            this._observer?._onUpdate(this);
+        }
+    }
+    get y() {
+        return this._y;
+    }
+    set y(value) {
+        if (this._y !== value) {
+            this._y = value;
+            this._observer?._onUpdate(this);
+        }
+    }
+    [Symbol.iterator]() {
+        let step = 0;
+        const properties = [this.x, this.y];
+        return {
+            next: () => {
+                if (step < properties.length) {
+                    return { value: properties[step++], done: false };
+                }
+                else {
+                    return { done: true, value: undefined };
+                }
+            },
+        };
+    }
+}
+
+export { ObservablePoint };

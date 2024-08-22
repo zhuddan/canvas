@@ -57,7 +57,7 @@ function main() {
   /**
    * @type {import('rollup').InputOption}
    */
-  const inputTs = createInput('src', '.ts', isProduction ? '' : '.dev')
+  const inputTs = createInput('src', '.ts', isProduction ? '' : '')
   if (!isProduction) {
     for (const key in inputTs) {
       if (Object.hasOwnProperty.call(inputTs, key)) {
@@ -79,14 +79,18 @@ function main() {
   /**
    *  @type {import('rollup').InputOptions['plugins']}
    */
-  const plugins = [
+  const commonPlugins = [
     isProduction
       ? del({
         targets: ['dist/*', 'temp/*'],
         force: true,
         hook: 'buildStart',
       })
-      : null,
+      : del({
+        targets: ['dist/*', 'temp/*'],
+        force: true,
+        hook: 'buildStart',
+      }),
     typescript(isProduction
       ? {
           declaration: false,
@@ -99,7 +103,7 @@ function main() {
   ]
 
   if (isProduction) {
-    plugins.push(terser())
+    // commonPlugins.push(terser())
     outputJs.push({
       dir: 'dist',
       format: 'cjs',
@@ -110,7 +114,7 @@ function main() {
     })
   }
   else {
-    plugins.push(
+    commonPlugins.push(
       livereload(),
       serve({
         port: 13000,
@@ -121,14 +125,11 @@ function main() {
     )
   }
 
-  result.push(
-    {
-      input: inputTs,
-      output: outputJs,
-      // external,
-      plugins,
-    },
-  )
+  result.push({
+    input: inputTs,
+    output: outputJs,
+    plugins: commonPlugins,
+  })
 
   /**
    * 打包类型声明
@@ -141,10 +142,12 @@ function main() {
     /**
      * @type {import('rollup').OutputOptions[]}
      */
-    const outputDts = [{
-      dir: 'dist',
-      format: 'es',
-    }]
+    const outputDts = [
+      {
+        dir: 'dist',
+        format: 'es',
+      },
+    ]
     /**
      *  @type {import('rollup').InputOptions['plugins']}
      */
@@ -177,6 +180,7 @@ function main() {
     })
   }
 
+  console.log(result.length)
   return defineConfig(result)
 }
 

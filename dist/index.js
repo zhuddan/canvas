@@ -1,2 +1,0 @@
-"use strict";var e=require("./object/shape.js"),r=require("./object/text.js"),s=require("./object/display.js"),t=require("./object/picture.js"),i=require("./app.js"),p=require("./coordinate/ObservablePoint.js");require("./utils.js"),require("./style/text-style.js"),require("./style/abstract-style.js"),require("./index-DdxX_nW5.js"),require("./const.js"),exports.Shape=e.Shape,exports.Text=r.Text,exports.Display=s.Display,exports.Picture=t.Picture,exports.App=i.App,exports.ObservablePoint=p.ObservablePoint;
-//# sourceMappingURL=index.js.map
