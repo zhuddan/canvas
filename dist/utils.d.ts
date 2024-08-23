@@ -37,3 +37,9 @@ export declare function ensureBetween(input: number, min?: number, max?: number)
  * @param cb
  */
 export declare function createProxy<T extends object>(value: T, cb?: (property: string, newValue: any) => void): T;
+export declare enum ENV {
+    WX = "WX",
+    WEB = "WEB",
+    UNKNOWN = "UNKNOWN"
+}
+export declare function getEnv(): ENV;

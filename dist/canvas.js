@@ -413,6 +413,19 @@ function createProxy(value, cb) {
         },
     });
 }
+var ENV;
+(function (ENV) {
+    ENV["WX"] = "WX";
+    ENV["WEB"] = "WEB";
+    ENV["UNKNOWN"] = "UNKNOWN";
+})(ENV || (ENV = {}));
+function getEnv() {
+    if (typeof wx !== 'undefined')
+        return ENV.WX;
+    if (typeof window !== 'undefined' && typeof window.document !== 'undefined')
+        return ENV.WEB;
+    return ENV.UNKNOWN;
+}
 
 class App extends EventEmitter {
     canvas;
@@ -421,24 +434,40 @@ class App extends EventEmitter {
     width;
     height;
     onUpdate;
-    static createImage;
-    constructor({ width = 600, height = 800, dpr = true, createImage = () => document.createElement('img'), onUpdate, } = {}) {
+    ticker;
+    get env() {
+        return getEnv();
+    }
+    constructor({ width = 600, height = 800, dpr = true, createCanvas, onUpdate, } = {}) {
         super();
-        if (dpr) {
+        if (typeof dpr === 'boolean') {
             this.dpr = window.devicePixelRatio ?? 1;
         }
-        // this.dpr = 1
+        else if (typeof dpr === 'number') {
+            this.dpr = dpr;
+        }
         this.onUpdate = onUpdate ?? NOOP;
-        this.canvas = document.createElement('canvas');
+        if (createCanvas) {
+            this.canvas = createCanvas();
+        }
+        else {
+            this.canvas = document.createElement('canvas');
+        }
         this.ctx = this.canvas.getContext('2d');
-        this.canvas.style.width = formatWithPx(width);
-        this.canvas.style.height = formatWithPx(height);
-        this.canvas.width = width * this.dpr;
-        this.canvas.height = height * this.dpr;
+        if (this.canvas.style) {
+            this.canvas.style.width = formatWithPx(width);
+            this.canvas.style.height = formatWithPx(height);
+            this.canvas.width = width * this.dpr;
+            this.canvas.height = height * this.dpr;
+        }
+        else {
+            this.canvas.width = width * this.dpr;
+            this.canvas.height = height * this.dpr;
+        }
+        this.ticker = new Ticker(this.canvas);
         this.width = width;
         this.height = height;
-        App.createImage = createImage;
-        this.update();
+        this.ticker.add(this.update.bind(this));
     }
     beforeRender() {
         this.ctx.save();
@@ -446,29 +475,6 @@ class App extends EventEmitter {
     afterRender() {
         this.ctx.restore();
     }
-    // private debug() {
-    //   this.beforeRender()
-    //   const ctx = this.ctx
-    //   this.ctx.strokeStyle = '#cccccc'
-    //   this.ctx.fillStyle = '#cccccc'
-    //   ctx.textBaseline = 'top'
-    //   ctx.font = '10px 黑体'
-    //   ctx.setLineDash([4, 10])
-    //   for (let row = 0; row < Math.ceil((this.width + 1) / 100); row++) {
-    //     for (let col = 0; col < Math.ceil((this.height + 1) / 100); col++) {
-    //       ctx.beginPath()
-    //       ctx.fillText(`${row * 100},${col * 100}`, row * 100 * this.dpr, col * 100 * this.dpr)
-    //       if (row === 0 || col === 0) {
-    //         continue
-    //       }
-    //       ctx.moveTo((row * 100 - 100) * this.dpr, col * 100 * this.dpr)
-    //       ctx.lineTo(row * 100 * this.dpr, col * 100 * this.dpr)
-    //       ctx.lineTo(row * 100 * this.dpr, (col * 100 - 100) * this.dpr)
-    //       ctx.stroke()
-    //     }
-    //   }
-    //   this.afterRender()
-    // }
     children = [];
     add(object) {
         this.children.push(object);
@@ -482,9 +488,6 @@ class App extends EventEmitter {
         }
     }
     update() {
-        window.requestAnimationFrame(() => {
-            this.update();
-        });
         if (!this.children.length) {
             return;
         }
@@ -522,6 +525,58 @@ class App extends EventEmitter {
         this.beforeRender();
         fn(this.ctx);
         this.afterRender();
+    }
+}
+class Ticker {
+    canvas;
+    requestAnimationFrame;
+    cancelAnimationFrame;
+    myReq = 0;
+    isRunning = false;
+    handler = [];
+    constructor(canvas, autoStart = true) {
+        this.canvas = canvas;
+        const env = getEnv();
+        if (env === ENV.WX) {
+            const canvas = this.canvas;
+            this.requestAnimationFrame = canvas.requestAnimationFrame.bind(this);
+            this.cancelAnimationFrame = canvas.requestAnimationFrame.bind(this);
+        }
+        else {
+            this.requestAnimationFrame = requestAnimationFrame.bind(this);
+            this.cancelAnimationFrame = cancelAnimationFrame.bind(this);
+        }
+        if (autoStart) {
+            this.start();
+        }
+    }
+    add(fn) {
+        this.handler.push(fn);
+    }
+    removeAll() {
+        this.handler = [];
+    }
+    remove(fn) {
+        const index = this.handler.indexOf(fn);
+        if (index !== -1) {
+            this.handler.splice(index, 1);
+        }
+    }
+    start() {
+        this.isRunning = true;
+        this.myReq = this.requestAnimationFrame(this.update.bind(this));
+    }
+    stop() {
+        if (this.isRunning && this.myReq) {
+            this.cancelAnimationFrame(this.myReq);
+            this.isRunning = false;
+        }
+    }
+    update() {
+        if (!this.isRunning)
+            return;
+        this.myReq = this.requestAnimationFrame(this.update.bind(this));
+        this.handler.forEach(fn => fn(performance.now()));
     }
 }
 
@@ -609,24 +664,13 @@ class Display extends EventEmitter {
             this.x = options.x ?? 0;
             this.y = options.y ?? 0;
         }
-        if (options.scale) {
-            this.scale = options.scale;
-        }
-        if (options.skew) {
-            this.skew = options.skew;
-        }
-        if (options.pivot) {
-            this.pivot = options.pivot;
-        }
-        if (options.shadow) {
-            this.shadow = options.shadow;
-        }
-        if (options.anchor) {
-            this.anchor = options.anchor;
-        }
-        if (options.rotation) {
-            this.rotation = options.rotation;
-        }
+        this.scale = options.scale ?? 1;
+        this.skew = options.skew ?? { x: 0, y: 0 };
+        this.pivot = options.pivot ?? 0;
+        this.shadow = options.shadow ?? this._shadow;
+        this.rotation = options.rotation ?? 0;
+        this.anchor = options.anchor ?? 0;
+        this.alpha = options.alpha ?? 1;
     }
     /**
      * 更新优化
@@ -850,6 +894,12 @@ class Display extends EventEmitter {
         ctx.resetTransform();
     }
     _renderId = 0;
+    get height() {
+        return this.transformHeight;
+    }
+    get width() {
+        return this.transformWidth;
+    }
     onAdd(_app) {
         this._app = _app;
         this._onUpdate();
@@ -865,16 +915,38 @@ class Display extends EventEmitter {
 
 class Picture extends Display {
     options;
+    src = '';
+    env = getEnv();
     constructor(maybeImage, options) {
         super(options);
         this.options = options;
         if (typeof maybeImage == 'string') {
-            this.image = App.createImage();
-            this.image.src = maybeImage;
+            if (this.env === ENV.WX) {
+                this.src = maybeImage;
+            }
+            else {
+                this.image = document.createElement('img');
+                this.image.src = maybeImage;
+                this.initImageEvents();
+            }
         }
         else {
             this.image = maybeImage;
+            this.initImageEvents();
         }
+    }
+    onAdd(_app) {
+        super.onAdd(_app);
+        const env = getEnv();
+        if (env === ENV.WX) {
+            this.image = _app.canvas.createImage();
+            this.image.src = this.src;
+            this.initImageEvents();
+        }
+    }
+    initImageEvents() {
+        if (!this.image)
+            return;
         if (this.image.complete) {
             this._onImageComplete();
         }
@@ -885,14 +957,6 @@ class Picture extends Display {
         }
     }
     image;
-    // set image(value) {
-    //   if (this.image !== value) {
-    //     this._image = value
-    //   }
-    // }
-    // get image() {
-    //   return this._image
-    // }
     _size = new ObservablePoint(this, 0, 0);
     _imageSize = new ObservablePoint(this, 0, 0);
     set size(value) {
@@ -953,6 +1017,8 @@ class Picture extends Display {
     }
     _ready = false;
     _onImageComplete() {
+        if (!this.image)
+            return;
         this._imageSize = new ObservablePoint(this, this.image.width, this.image.height);
         this.size = this.options?.size ?? {
             x: this.image.width,
@@ -977,6 +1043,9 @@ class Picture extends Display {
         return (!!this.slice.x || !!this.slice.y) || !this.sliceSize.equals(this.size);
     }
     _render(ctx) {
+        if (!this.image) {
+            return;
+        }
         if (!this._isSlice) {
             const _size = this.size.clone();
             const _position = this.position.clone();
@@ -1055,8 +1124,8 @@ class Picture extends Display {
     transformWidth = 0;
     transformHeight = 0;
     updateTransformBounds() {
-        this.transformHeight = this.size.x;
-        this.transformWidth = this.size.y;
+        this.transformWidth = this.size.x;
+        this.transformHeight = this.size.y;
     }
 }
 
@@ -1183,20 +1252,21 @@ class Shape extends Display {
                 if (args[0]) {
                     const strokeInput = args[0];
                     if (typeof strokeInput === 'string'
-                        || strokeInput instanceof CanvasGradient
-                        || strokeInput instanceof CanvasPattern) {
+                        || (typeof CanvasGradient !== 'undefined' && strokeInput instanceof CanvasGradient)
+                        || (typeof CanvasPattern !== 'undefined' && strokeInput instanceof CanvasPattern)) {
                         _ctx.strokeStyle = strokeInput;
                         _ctx.lineWidth = this.strokeStyle.width ?? 1;
                     }
                     else {
-                        const color = strokeInput.color ?? this.strokeStyle.color;
+                        const _strokeInput = strokeInput;
+                        const color = _strokeInput.color ?? this.strokeStyle.color;
                         if (color)
                             _ctx.strokeStyle = color;
-                        const width = strokeInput.width ?? this.strokeStyle.width;
+                        const width = _strokeInput.width ?? this.strokeStyle.width;
                         if (width)
                             _ctx.lineWidth = width;
-                        if (strokeInput.dash) {
-                            _ctx.setLineDash(strokeInput.dash);
+                        if (_strokeInput.dash) {
+                            _ctx.setLineDash(_strokeInput.dash);
                         }
                         else {
                             _ctx.setLineDash([]);
@@ -1227,8 +1297,8 @@ class Shape extends Display {
         if (value === this._strokeStyle)
             return;
         if (typeof value === 'string'
-            || value instanceof CanvasGradient
-            || value instanceof CanvasPattern) {
+            || (typeof CanvasGradient !== 'undefined' && value instanceof CanvasGradient)
+            || (typeof CanvasPattern !== 'undefined' && value instanceof CanvasPattern)) {
             this._strokeStyle = createProxy({
                 ...this._strokeStyle,
                 color: value,
@@ -1267,8 +1337,10 @@ class Shape extends Display {
                     if (action === 'strokeRect') {
                         strokeWeight = this.strokeStyle.width ?? 1;
                     }
+                    allX.push(args[0]);
+                    allY.push(args[1]);
                     allX.push(args[0] + args[2] + strokeWeight);
-                    allY.push(args[1] + args[2] + strokeWeight);
+                    allY.push(args[1] + args[3] + strokeWeight);
                     break;
                 }
                 case 'arc':
@@ -1339,8 +1411,8 @@ class AbstractStyle extends EventEmitter {
         if (value === this._stroke)
             return;
         if (typeof value === 'string'
-            || value instanceof CanvasGradient
-            || value instanceof CanvasPattern) {
+            || (typeof CanvasGradient !== 'undefined' && value instanceof CanvasGradient)
+            || (typeof CanvasPattern !== 'undefined' && value instanceof CanvasPattern)) {
             this._stroke = createProxy({
                 ...this._stroke,
                 color: value,
@@ -1666,6 +1738,8 @@ class Text extends Display {
             }
         }
     }
+    transformWidth = 0;
+    transformHeight = 0;
     updateTransformBounds() {
         if (!this._app)
             return;
@@ -1705,8 +1779,6 @@ class Text extends Display {
             }
         });
     }
-    transformWidth = 0;
-    transformHeight = 0;
 }
 
 export { App, Picture, Shape, Text, TextStyle };

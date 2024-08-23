@@ -49,9 +49,9 @@ export declare class Shape extends Display implements IShape {
     private _strokeStyle;
     set strokeStyle(value: StrokeInput | InputColor);
     get strokeStyle(): StrokeInput;
-    transformWidth: number;
-    transformHeight: number;
-    updateTransformBounds(): void;
+    protected transformWidth: number;
+    protected transformHeight: number;
+    protected updateTransformBounds(): void;
     private _fillStyle;
     set fillStyle(value: string | CanvasGradient | CanvasPattern | null);
     get fillStyle(): string | CanvasGradient | CanvasPattern | null;

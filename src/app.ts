@@ -1,50 +1,67 @@
 import EventEmitter from 'eventemitter3'
 import { NOOP } from './const'
 import type { Display } from './object/display'
-import { formatWithPx } from './utils'
+import { ENV, formatWithPx, getEnv } from './utils'
 
 export interface AppOptions {
   width?: number
   height?: number
-  dpr?: boolean
+  dpr?: boolean | number
   onUpdate?: () => void
-  createImage?: () => HTMLImageElement
+  createCanvas?: () => HTMLCanvasElement
 }
 
 export class App extends EventEmitter<{
   render: []
 }> {
   canvas: HTMLCanvasElement
-  ctx: CanvasRenderingContext2D
+  private ctx: CanvasRenderingContext2D
   dpr = 1
   width: number
   height: number
   onUpdate: () => void
-  static createImage: () => HTMLImageElement
+  ticker: Ticker
+  protected get env() {
+    return getEnv()
+  }
+
   constructor({
     width = 600,
     height = 800,
     dpr = true,
-    createImage = () => document.createElement('img'),
+    createCanvas,
     onUpdate,
   }: AppOptions = {},
   ) {
     super()
-    if (dpr) {
+    if (typeof dpr === 'boolean') {
       this.dpr = window.devicePixelRatio ?? 1
     }
-    // this.dpr = 1
+    else if (typeof dpr === 'number') {
+      this.dpr = dpr
+    }
     this.onUpdate = onUpdate ?? NOOP
-    this.canvas = document.createElement('canvas')!
+    if (createCanvas) {
+      this.canvas = createCanvas()
+    }
+    else {
+      this.canvas = document.createElement('canvas')!
+    }
     this.ctx = this.canvas.getContext('2d')!
-    this.canvas.style.width = formatWithPx(width)
-    this.canvas.style.height = formatWithPx(height)
-    this.canvas.width = width * this.dpr
-    this.canvas.height = height * this.dpr
+    if (this.canvas.style) {
+      this.canvas.style.width = formatWithPx(width)
+      this.canvas.style.height = formatWithPx(height)
+      this.canvas.width = width * this.dpr
+      this.canvas.height = height * this.dpr
+    }
+    else {
+      this.canvas.width = width * this.dpr
+      this.canvas.height = height * this.dpr
+    }
+    this.ticker = new Ticker(this.canvas)
     this.width = width
     this.height = height
-    App.createImage = createImage
-    this.update()
+    this.ticker.add(this.update.bind(this))
   }
 
   private beforeRender() {
@@ -54,30 +71,6 @@ export class App extends EventEmitter<{
   private afterRender() {
     this.ctx.restore()
   }
-
-  // private debug() {
-  //   this.beforeRender()
-  //   const ctx = this.ctx
-  //   this.ctx.strokeStyle = '#cccccc'
-  //   this.ctx.fillStyle = '#cccccc'
-  //   ctx.textBaseline = 'top'
-  //   ctx.font = '10px 黑体'
-  //   ctx.setLineDash([4, 10])
-  //   for (let row = 0; row < Math.ceil((this.width + 1) / 100); row++) {
-  //     for (let col = 0; col < Math.ceil((this.height + 1) / 100); col++) {
-  //       ctx.beginPath()
-  //       ctx.fillText(`${row * 100},${col * 100}`, row * 100 * this.dpr, col * 100 * this.dpr)
-  //       if (row === 0 || col === 0) {
-  //         continue
-  //       }
-  //       ctx.moveTo((row * 100 - 100) * this.dpr, col * 100 * this.dpr)
-  //       ctx.lineTo(row * 100 * this.dpr, col * 100 * this.dpr)
-  //       ctx.lineTo(row * 100 * this.dpr, (col * 100 - 100) * this.dpr)
-  //       ctx.stroke()
-  //     }
-  //   }
-  //   this.afterRender()
-  // }
 
   children: Display[] = []
 
@@ -95,14 +88,9 @@ export class App extends EventEmitter<{
   }
 
   private update() {
-    window.requestAnimationFrame(() => {
-      this.update()
-    })
-
     if (!this.children.length) {
       return
     }
-
     const isDirty = !![...this.children.filter(e => e.dirty)].length
     const _renderIds = this.children.every(e => e._renderId > 0)
     if (_renderIds && this.children.length) {
@@ -147,5 +135,62 @@ export class App extends EventEmitter<{
     this.beforeRender()
     fn(this.ctx)
     this.afterRender()
+  }
+}
+
+class Ticker {
+  requestAnimationFrame: typeof requestAnimationFrame
+  cancelAnimationFrame: typeof cancelAnimationFrame
+  myReq: number = 0
+  private isRunning: boolean = false
+  handler: ((time: number) => void)[] = []
+  constructor(public canvas: HTMLCanvasElement, autoStart: boolean = true) {
+    const env = getEnv()
+    if (env === ENV.WX) {
+      const canvas = this.canvas as any
+      this.requestAnimationFrame = canvas.requestAnimationFrame.bind(this)
+      this.cancelAnimationFrame = canvas.requestAnimationFrame.bind(this)
+    }
+    else {
+      this.requestAnimationFrame = requestAnimationFrame.bind(this)
+      this.cancelAnimationFrame = cancelAnimationFrame.bind(this)
+    }
+    if (autoStart) {
+      this.start()
+    }
+  }
+
+  add(fn: (time: number) => void) {
+    this.handler.push(fn)
+  }
+
+  removeAll() {
+    this.handler = []
+  }
+
+  remove(fn: (time: number) => void) {
+    const index = this.handler.indexOf(fn)
+    if (index !== -1) {
+      this.handler.splice(index, 1)
+    }
+  }
+
+  start() {
+    this.isRunning = true
+    this.myReq = this.requestAnimationFrame(this.update.bind(this))
+  }
+
+  stop() {
+    if (this.isRunning && this.myReq) {
+      this.cancelAnimationFrame(this.myReq)
+      this.isRunning = false
+    }
+  }
+
+  update() {
+    if (!this.isRunning)
+      return
+    this.myReq = this.requestAnimationFrame(this.update.bind(this))
+    this.handler.forEach(fn => fn(performance.now()))
   }
 }

@@ -1,6 +1,7 @@
 import type { Properties } from 'csstype';
 import type { PointData } from '../coordinate/PointData';
 import { ObservablePoint } from '../coordinate/ObservablePoint';
+import type { App } from '../app';
 import type { DisplayOptions } from './display';
 import { Display } from './display';
 export interface PictureOptions extends DisplayOptions {
@@ -12,8 +13,12 @@ export interface PictureOptions extends DisplayOptions {
 }
 export declare class Picture extends Display {
     private options?;
+    private src;
+    private env;
     constructor(maybeImage: HTMLImageElement | string, options?: PictureOptions | undefined);
-    private image;
+    onAdd(_app: App): void;
+    initImageEvents(): void;
+    private image?;
     private _size;
     private _imageSize;
     set size(value: PointData);
@@ -36,7 +41,7 @@ export declare class Picture extends Display {
     get _shouldUpdate(): boolean;
     private get _isSlice();
     protected _render(ctx: CanvasRenderingContext2D): void;
-    transformWidth: number;
-    transformHeight: number;
-    updateTransformBounds(): void;
+    protected transformWidth: number;
+    protected transformHeight: number;
+    protected updateTransformBounds(): void;
 }

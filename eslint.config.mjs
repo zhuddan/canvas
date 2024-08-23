@@ -8,7 +8,6 @@ export default antfu({
     'antfu/no-import-node-modules-by-path': 'off',
     'eslint-comments/no-unlimited-disable': 'off',
   },
-  vue: true,
 }, {
   ignores: [
     './dist/*',

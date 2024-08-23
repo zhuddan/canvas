@@ -16,7 +16,7 @@ export default defineConfig([
     output: {
       format: 'es',
       dir: 'dist',
-      entryFileNames: '[name].esm.js',
+      entryFileNames: '[name].js',
     },
     treeshake: true,
     plugins: [
@@ -30,8 +30,10 @@ export default defineConfig([
       commonjs(),
       {
         name: 'copy-files-to-wx',
-        generateBundle: () => {
-          copyFiles('./dist', '../wx-example/miniprogram/utils/canvas', true)
+        generateBundle: async () => {
+          setTimeout(() => {
+            copyFiles('./dist', '../wx-example/miniprogram/utils/canvas', false)
+          }, 500)
         },
       },
       // !Date.now() ? livereload() : null,

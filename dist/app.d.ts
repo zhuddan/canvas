@@ -1,23 +1,25 @@
 import EventEmitter from 'eventemitter3';
 import type { Display } from './object/display';
+import { ENV } from './utils';
 export interface AppOptions {
     width?: number;
     height?: number;
-    dpr?: boolean;
+    dpr?: boolean | number;
     onUpdate?: () => void;
-    createImage?: () => HTMLImageElement;
+    createCanvas?: () => HTMLCanvasElement;
 }
 export declare class App extends EventEmitter<{
     render: [];
 }> {
     canvas: HTMLCanvasElement;
-    ctx: CanvasRenderingContext2D;
+    private ctx;
     dpr: number;
     width: number;
     height: number;
     onUpdate: () => void;
-    static createImage: () => HTMLImageElement;
-    constructor({ width, height, dpr, createImage, onUpdate, }?: AppOptions);
+    ticker: Ticker;
+    protected get env(): ENV;
+    constructor({ width, height, dpr, createCanvas, onUpdate, }?: AppOptions);
     private beforeRender;
     private afterRender;
     children: Display[];
@@ -28,3 +30,19 @@ export declare class App extends EventEmitter<{
     toDataURLAsync(type?: string, quality?: any): Promise<string>;
     onContext(fn: (ctx: CanvasRenderingContext2D) => any): void;
 }
+declare class Ticker {
+    canvas: HTMLCanvasElement;
+    requestAnimationFrame: typeof requestAnimationFrame;
+    cancelAnimationFrame: typeof cancelAnimationFrame;
+    myReq: number;
+    private isRunning;
+    handler: ((time: number) => void)[];
+    constructor(canvas: HTMLCanvasElement, autoStart?: boolean);
+    add(fn: (time: number) => void): void;
+    removeAll(): void;
+    remove(fn: (time: number) => void): void;
+    start(): void;
+    stop(): void;
+    update(): void;
+}
+export {};

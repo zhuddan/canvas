@@ -11,6 +11,7 @@ import { basename, join } from 'node:path'
  */
 export async function copyFiles(srcPaths, destDir, clearDest = false) {
   // 如果输入是字符串，则将其转换为数组
+
   const srcFiles = Array.isArray(srcPaths) ? srcPaths : [srcPaths]
   if (clearDest) {
     await clearDirectory(destDir)
@@ -24,10 +25,14 @@ export async function copyFiles(srcPaths, destDir, clearDest = false) {
       if (stats.isDirectory()) {
         // 如果是目录，则递归处理目录内所有文件
         const files = await fs.readdir(src)
-        await Promise.all(files.map(file =>
-          // copyFiles(join(src, file), join(destDir, basename(src)))
-          copyFiles(join(src, file), destDir),
-        ))
+        // await Promise.all(files.map(file =>
+        //   copyFiles(join(src, file), join(destDir, basename(src))),
+        // ))
+
+        for (let index = 0; index < files.length; index++) {
+          const file = files[index]
+          await copyFiles(join(src, file), join(destDir, basename(src)))
+        }
       }
       else {
         // 如果是文件，则复制到目标目录，使用basename获取文件名

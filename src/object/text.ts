@@ -104,7 +104,10 @@ export class Text extends Display {
     }
   }
 
-  updateTransformBounds() {
+  protected transformWidth = 0
+
+  protected transformHeight = 0
+  protected updateTransformBounds() {
     if (!this._app)
       return
     this._app.onContext((ctx) => {
@@ -143,8 +146,4 @@ export class Text extends Display {
       }
     })
   }
-
-  transformWidth = 0
-
-  transformHeight = 0
 };

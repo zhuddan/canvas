@@ -68,26 +68,13 @@ export abstract class Display extends EventEmitter<{
       this.x = options.x ?? 0
       this.y = options.y ?? 0
     }
-
-    if (options.scale) {
-      this.scale = options.scale
-    }
-
-    if (options.skew) {
-      this.skew = options.skew
-    }
-    if (options.pivot) {
-      this.pivot = options.pivot
-    }
-    if (options.shadow) {
-      this.shadow = options.shadow
-    }
-    if (options.anchor) {
-      this.anchor = options.anchor
-    }
-    if (options.rotation) {
-      this.rotation = options.rotation
-    }
+    this.scale = options.scale ?? 1
+    this.skew = options.skew ?? { x: 0, y: 0 }
+    this.pivot = options.pivot ?? 0
+    this.shadow = options.shadow ?? this._shadow
+    this.rotation = options.rotation ?? 0
+    this.anchor = options.anchor ?? 0
+    this.alpha = options.alpha ?? 1
   }
 
   /**
@@ -371,16 +358,24 @@ export abstract class Display extends EventEmitter<{
   /**
    * 同于形变转换的宽度
    */
-  abstract transformWidth: number
+  protected abstract transformWidth: number
   /**
    * 同于形变转换的高度
    */
-  abstract transformHeight: number
+  protected abstract transformHeight: number
 
   /**
    * 同于形变转换的边界
    */
-  abstract updateTransformBounds(): void
+  protected abstract updateTransformBounds(): void
+
+  get height() {
+    return this.transformHeight
+  }
+
+  get width() {
+    return this.transformWidth
+  }
 
   onAdd(_app: App) {
     this._app = _app

@@ -72,3 +72,18 @@ export function createProxy<T extends object>(value: T, cb?: (property: string, 
     },
   })
 }
+
+export enum ENV {
+  WX = 'WX',
+  WEB = 'WEB',
+  UNKNOWN = 'UNKNOWN',
+}
+
+export function getEnv() {
+  if (typeof wx !== 'undefined')
+    return ENV.WX
+  if (typeof window !== 'undefined' && typeof window.document !== 'undefined')
+    return ENV.WEB
+
+  return ENV.UNKNOWN
+}

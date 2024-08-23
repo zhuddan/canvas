@@ -97,15 +97,17 @@ export declare abstract class Display extends EventEmitter<{
     /**
      * 同于形变转换的宽度
      */
-    abstract transformWidth: number;
+    protected abstract transformWidth: number;
     /**
      * 同于形变转换的高度
      */
-    abstract transformHeight: number;
+    protected abstract transformHeight: number;
     /**
      * 同于形变转换的边界
      */
-    abstract updateTransformBounds(): void;
+    protected abstract updateTransformBounds(): void;
+    get height(): number;
+    get width(): number;
     onAdd(_app: App): void;
     onRemove(): void;
     destroy(): void;

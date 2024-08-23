@@ -48,8 +48,8 @@ export abstract class AbstractStyle extends EventEmitter<{
       return
     if (
       typeof value === 'string'
-      || value instanceof CanvasGradient
-      || value instanceof CanvasPattern
+      || (typeof CanvasGradient !== 'undefined' && value instanceof CanvasGradient)
+      || (typeof CanvasPattern !== 'undefined' && value instanceof CanvasPattern)
     ) {
       this._stroke = createProxy({
         ...this._stroke,
@@ -59,7 +59,7 @@ export abstract class AbstractStyle extends EventEmitter<{
       })
     }
     else {
-      this._stroke = createProxy(value, () => {
+      this._stroke = createProxy(value as StrokeInput, () => {
         this.update()
       })
       this.update()

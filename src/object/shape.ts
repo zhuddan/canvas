@@ -187,23 +187,25 @@ export class Shape extends Display implements IShape {
         if (args[0]) {
           const strokeInput = args[0] as StrokeInput | InputColor
           if (typeof strokeInput === 'string'
-            || strokeInput instanceof CanvasGradient
-            || strokeInput instanceof CanvasPattern) {
+            || (typeof CanvasGradient !== 'undefined' && strokeInput instanceof CanvasGradient)
+            || (typeof CanvasPattern !== 'undefined' && strokeInput instanceof CanvasPattern)
+          ) {
             _ctx.strokeStyle = strokeInput
             _ctx.lineWidth = this.strokeStyle.width ?? 1
           }
           else {
-            const color = strokeInput.color ?? this.strokeStyle.color
+            const _strokeInput = strokeInput as StrokeInput
+            const color = _strokeInput.color ?? this.strokeStyle.color
             if (color)
               _ctx.strokeStyle = color
 
-            const width = strokeInput.width ?? this.strokeStyle.width
+            const width = _strokeInput.width ?? this.strokeStyle.width
 
             if (width)
               _ctx.lineWidth = width
 
-            if (strokeInput.dash) {
-              _ctx.setLineDash(strokeInput.dash)
+            if (_strokeInput.dash) {
+              _ctx.setLineDash(_strokeInput.dash)
             }
             else {
               _ctx.setLineDash([])
@@ -237,8 +239,8 @@ export class Shape extends Display implements IShape {
       return
     if (
       typeof value === 'string'
-      || value instanceof CanvasGradient
-      || value instanceof CanvasPattern
+      || (typeof CanvasGradient !== 'undefined' && value instanceof CanvasGradient)
+      || (typeof CanvasPattern !== 'undefined' && value instanceof CanvasPattern)
     ) {
       this._strokeStyle = createProxy({
         ...this._strokeStyle,
@@ -248,7 +250,7 @@ export class Shape extends Display implements IShape {
       })
     }
     else {
-      this._strokeStyle = createProxy(value, () => {
+      this._strokeStyle = createProxy(value as StrokeInput, () => {
         this._onUpdate()
       })
       this._onUpdate()
@@ -259,13 +261,12 @@ export class Shape extends Display implements IShape {
     return this._strokeStyle
   }
 
-  transformWidth = 0
-  transformHeight = 0
-  updateTransformBounds(): void {
+  protected transformWidth = 0
+  protected transformHeight = 0
+  protected updateTransformBounds(): void {
     // 所有坐标的最大值放进来
     const allX: number[] = []
     const allY: number[] = []
-
     for (let index = 0; index < this.pathInstruction.length; index++) {
       const { action, args } = this.pathInstruction[index]
       switch (action) {
@@ -281,8 +282,11 @@ export class Shape extends Display implements IShape {
           if (action === 'strokeRect') {
             strokeWeight = this.strokeStyle.width ?? 1
           }
+          allX.push(args[0])
+          allY.push(args[1])
+
           allX.push(args[0] + args[2] + strokeWeight)
-          allY.push(args[1] + args[2] + strokeWeight)
+          allY.push(args[1] + args[3] + strokeWeight)
           break
         }
         case 'arc':

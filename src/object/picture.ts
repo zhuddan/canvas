@@ -1,8 +1,8 @@
 import type { Properties } from 'csstype'
 import type { PointData } from '../coordinate/PointData'
 import { ObservablePoint } from '../coordinate/ObservablePoint'
-import { calcDiff } from '../utils'
-import { App } from '../app'
+import { ENV, calcDiff, getEnv } from '../utils'
+import type { App } from '../app'
 import type { DisplayOptions } from './display'
 import { Display } from './display'
 
@@ -15,16 +15,39 @@ export interface PictureOptions extends DisplayOptions {
 }
 
 export class Picture extends Display {
+  private src = ''
+  private env = getEnv()
   constructor(maybeImage: HTMLImageElement | string, private options?: PictureOptions) {
     super(options)
     if (typeof maybeImage == 'string') {
-      this.image = App.createImage()
-      this.image.src = maybeImage
+      if (this.env === ENV.WX) {
+        this.src = maybeImage
+      }
+      else {
+        this.image = document.createElement('img')
+        this.image.src = maybeImage
+        this.initImageEvents()
+      }
     }
     else {
       this.image = maybeImage
+      this.initImageEvents()
     }
+  }
 
+  onAdd(_app: App) {
+    super.onAdd(_app)
+    const env = getEnv()
+    if (env === ENV.WX) {
+      this.image = (_app.canvas as any).createImage()
+      this.image!.src = this.src
+      this.initImageEvents()
+    }
+  }
+
+  initImageEvents() {
+    if (!this.image)
+      return
     if (this.image.complete) {
       this._onImageComplete()
     }
@@ -35,17 +58,7 @@ export class Picture extends Display {
     }
   }
 
-  private image: HTMLImageElement
-
-  // set image(value) {
-  //   if (this.image !== value) {
-  //     this._image = value
-  //   }
-  // }
-
-  // get image() {
-  //   return this._image
-  // }
+  private image?: HTMLImageElement
 
   private _size = new ObservablePoint(this, 0, 0)
 
@@ -125,6 +138,8 @@ export class Picture extends Display {
   private _ready = false
 
   private _onImageComplete() {
+    if (!this.image)
+      return
     this._imageSize = new ObservablePoint(this, this.image.width, this.image.height)
 
     this.size = this.options?.size ?? {
@@ -157,6 +172,9 @@ export class Picture extends Display {
   }
 
   protected _render(ctx: CanvasRenderingContext2D): void {
+    if (!this.image) {
+      return
+    }
     if (!this._isSlice) {
       const _size = this.size.clone()
       const _position = this.position.clone()
@@ -243,10 +261,10 @@ export class Picture extends Display {
     }
   }
 
-  transformWidth: number = 0
-  transformHeight: number = 0
-  updateTransformBounds(): void {
-    this.transformHeight = this.size.x
-    this.transformWidth = this.size.y
+  protected transformWidth: number = 0
+  protected transformHeight: number = 0
+  protected updateTransformBounds(): void {
+    this.transformWidth = this.size.x
+    this.transformHeight = this.size.y
   }
 }
