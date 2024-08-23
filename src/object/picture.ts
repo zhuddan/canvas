@@ -16,11 +16,10 @@ export interface PictureOptions extends DisplayOptions {
 
 export class Picture extends Display {
   private src = ''
-  private env = getEnv()
   constructor(maybeImage: HTMLImageElement | string, private options?: PictureOptions) {
     super(options)
     if (typeof maybeImage == 'string') {
-      if (this.env === ENV.WX) {
+      if (this._env === ENV.WX) {
         this.src = maybeImage
       }
       else {
@@ -28,6 +27,7 @@ export class Picture extends Display {
         this.image.src = maybeImage
         this.initImageEvents()
       }
+      this.rounded = this.options?.rounded ?? 0
     }
     else {
       this.image = maybeImage
@@ -127,7 +127,7 @@ export class Picture extends Display {
   }
 
   _onUpdate(_point?: ObservablePoint | undefined) {
-    if (this._ready)
+    if (this._complete)
       super._onUpdate(_point)
   }
 
@@ -135,12 +135,15 @@ export class Picture extends Display {
     return this._rounded
   }
 
-  private _ready = false
+  private _complete = false
 
   private _onImageComplete() {
     if (!this.image)
       return
-    this._imageSize = new ObservablePoint(this, this.image.width, this.image.height)
+    this._imageSize.set(
+      this.image.width,
+      this.image.height,
+    )
 
     this.size = this.options?.size ?? {
       x: this.image.width,
@@ -150,15 +153,15 @@ export class Picture extends Display {
     this.slice = this.options?.slice ?? this.slice
 
     this.sliceSize = this.options?.sliceSize ?? {
-      x: this.image.width,
-      y: this.image.height,
+      x: this.size.x,
+      y: this.size.y,
     }
 
     this.objectFit = this.options?.objectFit ?? this.objectFit
 
     this.rounded = this.options?.rounded ?? this.rounded
+    this._complete = true
     this.emit('ready')
-    this._ready = true
     this._onUpdate()
     this.shouldUpdateBounds()
   }
@@ -172,9 +175,10 @@ export class Picture extends Display {
   }
 
   protected _render(ctx: CanvasRenderingContext2D): void {
-    if (!this.image) {
+    if (!this.image || !this._complete) {
       return
     }
+
     if (!this._isSlice) {
       const _size = this.size.clone()
       const _position = this.position.clone()
@@ -183,6 +187,7 @@ export class Picture extends Display {
       const diff = diffSize * scaleDiff
       const slim = this._imageSize.x < this._imageSize.y
       const fat = this._imageSize.x > this._imageSize.y
+
       if ((slim || fat)) {
         switch (this.objectFit) {
           case 'contain':

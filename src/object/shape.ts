@@ -1,11 +1,11 @@
 import type { IAbstractStyle, InputColor, StrokeInput } from '../style/abstract-style'
-import type { FunctionKeys } from '../types'
-import { calcDiff, createProxy } from '../utils'
+// import type { FunctionKeys } from '../types'
+import { ENV, calcDiff, createProxy } from '../utils'
 import type { DisplayOptions } from './display'
 import { Display } from './display'
 
-type CanvasRenderingContext2DMethods = FunctionKeys<CanvasRenderingContext2D>
-interface PathData<T extends CanvasRenderingContext2DMethods> {
+// type CanvasRenderingContext2DMethods = FunctionKeys<CanvasRenderingContext2D>
+interface PathData<T extends keyof CanvasRenderingContext2D> {
   action: T
   args: any[]
 }
@@ -25,6 +25,9 @@ type Methods =
   | 'arcTo' //
   | 'bezierCurveTo' //
   | 'ellipse'
+  | 'lineCap'
+  | 'lineJoin'
+
 type PathInstruction = PathData<Methods>
 interface _ShapeOptions extends DisplayOptions {
 
@@ -45,6 +48,9 @@ interface IShape {
   ellipse: (...args: Parameters<CanvasRenderingContext2D['ellipse']>) => Shape
   fillRect: (...args: Parameters<CanvasRect['fillRect']>) => Shape
   strokeRect: (...args: Parameters<CanvasRect['strokeRect']>) => Shape
+  lineCap: (...args: [CanvasRenderingContext2D['lineCap']]) => void
+  lineJoin: (...args: [CanvasRenderingContext2D['lineJoin']]) => void
+
 }
 
 export type ShapeOptions = Partial<_ShapeOptions>
@@ -74,6 +80,22 @@ export class Shape extends Display implements IShape {
     this.addPath({
       action: 'closePath',
       args: [],
+    })
+    return this
+  }
+
+  lineCap(cap: 'butt' | 'round' | 'square') {
+    this.addPath({
+      action: 'lineCap',
+      args: [cap],
+    })
+    return this
+  }
+
+  lineJoin(join: 'bevel' | 'miter' | 'round') {
+    this.addPath({
+      action: 'lineJoin',
+      args: [join],
     })
     return this
   }
@@ -120,8 +142,8 @@ export class Shape extends Display implements IShape {
     x: number,
     y: number,
     radius: number,
-    startAngle: number,
-    endAngle: number,
+    startAngle: number = 0,
+    endAngle: number = 2 * Math.PI,
     counterclockwise?: boolean,
   ) {
     this.addPath({
@@ -197,20 +219,20 @@ export class Shape extends Display implements IShape {
     return false
   }
 
-  protected _render(_ctx: CanvasRenderingContext2D): void {
-    if (!_ctx) {
+  protected _render(ctx: CanvasRenderingContext2D): void {
+    if (!ctx) {
       throw new Error('CanvasRenderingContext2D is null or undefined')
     }
     for (let index = 0; index < this.pathInstruction.length; index++) {
       const { action, args } = this.pathInstruction[index]
       if (action === 'fill') {
         if (args[0]) {
-          _ctx.fillStyle = args[0]
+          ctx.fillStyle = args[0]
         }
         else if (this.fillStyle) {
-          _ctx.fillStyle = this.fillStyle
+          ctx.fillStyle = this.fillStyle
         }
-        _ctx.fill()
+        ctx.fill()
       }
       else if (action === 'stroke') {
         if (args[0]) {
@@ -219,44 +241,55 @@ export class Shape extends Display implements IShape {
             || (typeof CanvasGradient !== 'undefined' && strokeInput instanceof CanvasGradient)
             || (typeof CanvasPattern !== 'undefined' && strokeInput instanceof CanvasPattern)
           ) {
-            _ctx.strokeStyle = strokeInput
-            _ctx.lineWidth = this.strokeStyle.width ?? 1
+            ctx.strokeStyle = strokeInput
+            ctx.lineWidth = this.strokeStyle.width ?? 1
           }
           else {
             const _strokeInput = strokeInput as StrokeInput
             const color = _strokeInput.color ?? this.strokeStyle.color
             if (color)
-              _ctx.strokeStyle = color
+              ctx.strokeStyle = color
 
             const width = _strokeInput.width ?? this.strokeStyle.width
 
             if (width)
-              _ctx.lineWidth = width
+              ctx.lineWidth = width
 
             if (_strokeInput.dash) {
-              _ctx.setLineDash(_strokeInput.dash)
+              ctx.setLineDash(_strokeInput.dash)
             }
             else {
-              _ctx.setLineDash([])
+              ctx.setLineDash([])
             }
           }
         }
         else {
           if (this.strokeStyle.color)
-            _ctx.strokeStyle = this.strokeStyle.color
+            ctx.strokeStyle = this.strokeStyle.color
           if (this.strokeStyle.width)
-            _ctx.lineWidth = this.strokeStyle.width
+            ctx.lineWidth = this.strokeStyle.width
           if (this.strokeStyle.dash) {
-            _ctx.setLineDash(this.strokeStyle.dash)
+            ctx.setLineDash(this.strokeStyle.dash)
           }
           else {
-            _ctx.setLineDash([])
+            ctx.setLineDash([])
           }
         }
-        _ctx.stroke()
+        ctx.stroke()
+      }
+      else if (['lineCap', 'lineJoin'].includes(action)) {
+        ctx[action] = args[0]
+      }
+      else if (action === 'roundRect' && this._env === ENV.WX) {
+        throw new Error(`微信小程序为实现roundRect功能`)
       }
       else {
-        ;(_ctx[action] as (...args: any[]) => void)(...args)
+        if (!(action in ctx)) {
+          throw new Error(`CanvasRenderingContext2D has no method ${action}`)
+        }
+        else {
+          ;(ctx[action] as (...args: any[]) => void)(...args)
+        }
       }
     }
   }

@@ -18,7 +18,6 @@ export declare class App extends EventEmitter<{
     height: number;
     onUpdate: () => void;
     ticker: Ticker;
-    protected get env(): ENV;
     constructor({ width, height, dpr, createCanvas, onUpdate, }?: AppOptions);
     private beforeRender;
     private afterRender;
@@ -37,6 +36,7 @@ declare class Ticker {
     myReq: number;
     private isRunning;
     handler: ((time: number) => void)[];
+    protected _env: ENV;
     constructor(canvas: HTMLCanvasElement, autoStart?: boolean);
     add(fn: (time: number) => void): void;
     removeAll(): void;

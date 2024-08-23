@@ -14,7 +14,6 @@ export interface PictureOptions extends DisplayOptions {
 export declare class Picture extends Display {
     private options?;
     private src;
-    private env;
     constructor(maybeImage: HTMLImageElement | string, options?: PictureOptions | undefined);
     onAdd(_app: App): void;
     initImageEvents(): void;
@@ -36,7 +35,7 @@ export declare class Picture extends Display {
     set rounded(value: number);
     _onUpdate(_point?: ObservablePoint | undefined): void;
     get rounded(): number;
-    private _ready;
+    private _complete;
     private _onImageComplete;
     get _shouldUpdate(): boolean;
     private get _isSlice();

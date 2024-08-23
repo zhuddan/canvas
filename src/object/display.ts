@@ -3,7 +3,7 @@ import type { App } from '../app'
 import type { Observer } from '../coordinate/ObservablePoint'
 import { ObservablePoint } from '../coordinate/ObservablePoint'
 import type { PointData } from '../coordinate/PointData'
-import { createProxy, ensureBetween } from '../utils'
+import { createProxy, ensureBetween, getEnv } from '../utils'
 
 interface ShadowType {
   /**
@@ -58,6 +58,8 @@ const defaultScale = new ObservablePoint(null, 1, 1)
 export abstract class Display extends EventEmitter<{
   ready: []
 }> implements Observer<ObservablePoint> {
+  protected _env = getEnv()
+
   constructor(options: DisplayOptions = {}) {
     super()
     this.visible = options.visible ?? true
@@ -389,6 +391,7 @@ export abstract class Display extends EventEmitter<{
 
   addTo(app: App) {
     app.add(this)
+    return this
   }
 
   destroy() {

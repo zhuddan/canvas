@@ -435,9 +435,6 @@ class App extends EventEmitter {
     height;
     onUpdate;
     ticker;
-    get env() {
-        return getEnv();
-    }
     constructor({ width = 600, height = 800, dpr = true, createCanvas, onUpdate, } = {}) {
         super();
         if (typeof dpr === 'boolean') {
@@ -540,10 +537,10 @@ class Ticker {
     myReq = 0;
     isRunning = false;
     handler = [];
+    _env = getEnv();
     constructor(canvas, autoStart = true) {
         this.canvas = canvas;
-        const env = getEnv();
-        if (env === ENV.WX) {
+        if (this._env === ENV.WX) {
             const canvas = this.canvas;
             this.requestAnimationFrame = canvas.requestAnimationFrame.bind(this);
             this.cancelAnimationFrame = canvas.requestAnimationFrame.bind(this);
@@ -660,6 +657,7 @@ const defaultPivot = new ObservablePoint(null);
 const defaultAnchor = new ObservablePoint(null);
 const defaultScale = new ObservablePoint(null, 1, 1);
 class Display extends EventEmitter {
+    _env = getEnv();
     constructor(options = {}) {
         super();
         this.visible = options.visible ?? true;
@@ -916,6 +914,7 @@ class Display extends EventEmitter {
     }
     addTo(app) {
         app.add(this);
+        return this;
     }
     destroy() {
         this.removeAllListeners();
@@ -925,12 +924,11 @@ class Display extends EventEmitter {
 class Picture extends Display {
     options;
     src = '';
-    env = getEnv();
     constructor(maybeImage, options) {
         super(options);
         this.options = options;
         if (typeof maybeImage == 'string') {
-            if (this.env === ENV.WX) {
+            if (this._env === ENV.WX) {
                 this.src = maybeImage;
             }
             else {
@@ -938,6 +936,7 @@ class Picture extends Display {
                 this.image.src = maybeImage;
                 this.initImageEvents();
             }
+            this.rounded = this.options?.rounded ?? 0;
         }
         else {
             this.image = maybeImage;
@@ -1018,30 +1017,30 @@ class Picture extends Display {
         }
     }
     _onUpdate(_point) {
-        if (this._ready)
+        if (this._complete)
             super._onUpdate(_point);
     }
     get rounded() {
         return this._rounded;
     }
-    _ready = false;
+    _complete = false;
     _onImageComplete() {
         if (!this.image)
             return;
-        this._imageSize = new ObservablePoint(this, this.image.width, this.image.height);
+        this._imageSize.set(this.image.width, this.image.height);
         this.size = this.options?.size ?? {
             x: this.image.width,
             y: this.image.height,
         };
         this.slice = this.options?.slice ?? this.slice;
         this.sliceSize = this.options?.sliceSize ?? {
-            x: this.image.width,
-            y: this.image.height,
+            x: this.size.x,
+            y: this.size.y,
         };
         this.objectFit = this.options?.objectFit ?? this.objectFit;
         this.rounded = this.options?.rounded ?? this.rounded;
+        this._complete = true;
         this.emit('ready');
-        this._ready = true;
         this._onUpdate();
         this.shouldUpdateBounds();
     }
@@ -1052,7 +1051,7 @@ class Picture extends Display {
         return (!!this.slice.x || !!this.slice.y) || !this.sliceSize.equals(this.size);
     }
     _render(ctx) {
-        if (!this.image) {
+        if (!this.image || !this._complete) {
             return;
         }
         if (!this._isSlice) {
@@ -1138,6 +1137,7 @@ class Picture extends Display {
     }
 }
 
+// import type { FunctionKeys } from '../types'
 class Shape extends Display {
     constructor(options = {}) {
         super(options);
@@ -1160,6 +1160,20 @@ class Shape extends Display {
         this.addPath({
             action: 'closePath',
             args: [],
+        });
+        return this;
+    }
+    lineCap(cap) {
+        this.addPath({
+            action: 'lineCap',
+            args: [cap],
+        });
+        return this;
+    }
+    lineJoin(join) {
+        this.addPath({
+            action: 'lineJoin',
+            args: [join],
         });
         return this;
     }
@@ -1191,7 +1205,7 @@ class Shape extends Display {
         });
         return this;
     }
-    arc(x, y, radius, startAngle, endAngle, counterclockwise) {
+    arc(x, y, radius, startAngle = 0, endAngle = 2 * Math.PI, counterclockwise) {
         this.addPath({
             action: 'arc',
             args: [x, y, radius, startAngle, endAngle, counterclockwise],
@@ -1242,20 +1256,20 @@ class Shape extends Display {
         }
         return false;
     }
-    _render(_ctx) {
-        if (!_ctx) {
+    _render(ctx) {
+        if (!ctx) {
             throw new Error('CanvasRenderingContext2D is null or undefined');
         }
         for (let index = 0; index < this.pathInstruction.length; index++) {
             const { action, args } = this.pathInstruction[index];
             if (action === 'fill') {
                 if (args[0]) {
-                    _ctx.fillStyle = args[0];
+                    ctx.fillStyle = args[0];
                 }
                 else if (this.fillStyle) {
-                    _ctx.fillStyle = this.fillStyle;
+                    ctx.fillStyle = this.fillStyle;
                 }
-                _ctx.fill();
+                ctx.fill();
             }
             else if (action === 'stroke') {
                 if (args[0]) {
@@ -1263,41 +1277,52 @@ class Shape extends Display {
                     if (typeof strokeInput === 'string'
                         || (typeof CanvasGradient !== 'undefined' && strokeInput instanceof CanvasGradient)
                         || (typeof CanvasPattern !== 'undefined' && strokeInput instanceof CanvasPattern)) {
-                        _ctx.strokeStyle = strokeInput;
-                        _ctx.lineWidth = this.strokeStyle.width ?? 1;
+                        ctx.strokeStyle = strokeInput;
+                        ctx.lineWidth = this.strokeStyle.width ?? 1;
                     }
                     else {
                         const _strokeInput = strokeInput;
                         const color = _strokeInput.color ?? this.strokeStyle.color;
                         if (color)
-                            _ctx.strokeStyle = color;
+                            ctx.strokeStyle = color;
                         const width = _strokeInput.width ?? this.strokeStyle.width;
                         if (width)
-                            _ctx.lineWidth = width;
+                            ctx.lineWidth = width;
                         if (_strokeInput.dash) {
-                            _ctx.setLineDash(_strokeInput.dash);
+                            ctx.setLineDash(_strokeInput.dash);
                         }
                         else {
-                            _ctx.setLineDash([]);
+                            ctx.setLineDash([]);
                         }
                     }
                 }
                 else {
                     if (this.strokeStyle.color)
-                        _ctx.strokeStyle = this.strokeStyle.color;
+                        ctx.strokeStyle = this.strokeStyle.color;
                     if (this.strokeStyle.width)
-                        _ctx.lineWidth = this.strokeStyle.width;
+                        ctx.lineWidth = this.strokeStyle.width;
                     if (this.strokeStyle.dash) {
-                        _ctx.setLineDash(this.strokeStyle.dash);
+                        ctx.setLineDash(this.strokeStyle.dash);
                     }
                     else {
-                        _ctx.setLineDash([]);
+                        ctx.setLineDash([]);
                     }
                 }
-                _ctx.stroke();
+                ctx.stroke();
+            }
+            else if (['lineCap', 'lineJoin'].includes(action)) {
+                ctx[action] = args[0];
+            }
+            else if (action === 'roundRect' && this._env === ENV.WX) {
+                throw new Error(`微信小程序为实现roundRect功能`);
             }
             else {
-                _ctx[action](...args);
+                if (!(action in ctx)) {
+                    throw new Error(`CanvasRenderingContext2D has no method ${action}`);
+                }
+                else {
+                    ctx[action](...args);
+                }
             }
         }
     }

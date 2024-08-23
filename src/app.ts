@@ -21,9 +21,6 @@ export class App extends EventEmitter<{
   height: number
   onUpdate: () => void
   ticker: Ticker
-  protected get env() {
-    return getEnv()
-  }
 
   constructor({
     width = 600,
@@ -150,9 +147,9 @@ class Ticker {
   myReq: number = 0
   private isRunning: boolean = false
   handler: ((time: number) => void)[] = []
+  protected _env = getEnv()
   constructor(public canvas: HTMLCanvasElement, autoStart: boolean = true) {
-    const env = getEnv()
-    if (env === ENV.WX) {
+    if (this._env === ENV.WX) {
       const canvas = this.canvas as any
       this.requestAnimationFrame = canvas.requestAnimationFrame.bind(this)
       this.cancelAnimationFrame = canvas.requestAnimationFrame.bind(this)

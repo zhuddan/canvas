@@ -40,6 +40,7 @@ export interface DisplayOptions {
 export declare abstract class Display extends EventEmitter<{
     ready: [];
 }> implements Observer<ObservablePoint> {
+    protected _env: import("../utils").ENV;
     constructor(options?: DisplayOptions);
     /**
      * 更新优化
@@ -110,7 +111,7 @@ export declare abstract class Display extends EventEmitter<{
     get width(): number;
     onAdd(_app: App): void;
     onRemove(): void;
-    addTo(app: App): void;
+    addTo(app: App): this;
     destroy(): void;
 }
 export {};
