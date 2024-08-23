@@ -23,8 +23,8 @@ export declare class App extends EventEmitter<{
     private beforeRender;
     private afterRender;
     children: Display[];
-    add(object: Display): void;
-    remove(object: Display): void;
+    add(...objects: Display[]): void;
+    remove(...objects: Display[]): void;
     private update;
     toDataURL(type?: string, quality?: any): string;
     toDataURLAsync(type?: string, quality?: any): Promise<string>;

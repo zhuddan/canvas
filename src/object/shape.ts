@@ -56,7 +56,7 @@ export class Shape extends Display implements IShape {
     this._onUpdate()
   }
 
-  addPath(...items: PathInstruction[]) {
+  private addPath(...items: PathInstruction[]) {
     this.pathInstruction.push(...items)
     this.shouldUpdateBounds()
   }
@@ -78,82 +78,111 @@ export class Shape extends Display implements IShape {
     return this
   }
 
-  moveTo(...args: Parameters<CanvasRenderingContext2D['lineTo']>) {
+  moveTo(x: number, y: number) {
     this.addPath({
       action: 'moveTo',
-      args: [...args],
+      args: [x, y],
     })
     return this
   }
 
-  lineTo(...args: Parameters<CanvasRenderingContext2D['lineTo']>) {
+  lineTo(x: number, y: number) {
     this.addPath({
       action: 'lineTo',
-      args: [...args],
+      args: [x, y],
     })
     return this
   }
 
-  rect(...args: Parameters<CanvasRenderingContext2D['rect']>) {
+  rect(x: number, y: number, w: number, h: number) {
     this.addPath({
       action: 'rect',
-      args: [...args],
+      args: [x, y, w, h],
     })
     return this
   }
 
-  roundRect(...args: Parameters<CanvasRenderingContext2D['roundRect']>) {
+  roundRect(
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    radii?: number | DOMPointInit | Iterable<number | DOMPointInit>,
+  ) {
     this.addPath({
       action: 'roundRect',
-      args: [...args],
+      args: [x, y, w, h, radii],
     })
     return this
   }
 
-  arc(...args: Parameters<CanvasRenderingContext2D['arc']>) {
+  arc(
+    x: number,
+    y: number,
+    radius: number,
+    startAngle: number,
+    endAngle: number,
+    counterclockwise?: boolean,
+  ) {
     this.addPath({
       action: 'arc',
-      args: [...args],
+      args: [x, y, radius, startAngle, endAngle, counterclockwise],
     })
     return this
   }
 
-  arcTo(...args: Parameters<CanvasRenderingContext2D['arcTo']>) {
+  arcTo(x1: number, y1: number, x2: number, y2: number, radius: number) {
     this.addPath({
       action: 'arcTo',
-      args: [...args],
+      args: [x1, y1, x2, y2, radius],
     })
     return this
   }
 
-  bezierCurveTo(...args: Parameters<CanvasRenderingContext2D['bezierCurveTo']>) {
+  bezierCurveTo(
+    cp1x: number,
+    cp1y: number,
+    cp2x: number,
+    cp2y: number,
+    x: number,
+    y: number,
+  ) {
     this.addPath({
       action: 'bezierCurveTo',
-      args: [...args],
+      args: [cp1x, cp1y, cp2x, cp2y, x, y],
     })
     return this
   }
 
-  ellipse(...args: Parameters<CanvasRenderingContext2D['ellipse']>) {
+  ellipse(
+    x: number,
+    y: number,
+    radiusX: number,
+    radiusY: number,
+    rotation: number,
+    startAngle: number,
+    endAngle: number,
+    counterclockwise?: boolean,
+  ) {
     this.addPath({
       action: 'ellipse',
-      args: [...args],
+      args: [x, y, radiusX, radiusY, rotation, startAngle, endAngle, counterclockwise],
     })
     return this
   }
 
-  fillRect(...args: Parameters<CanvasRect['fillRect']>) {
+  fillRect(x: number, y: number, w: number, h: number) {
     this.addPath({
       action: 'fillRect',
-      args: [...args],
+      args: [x, y, w, h],
     })
     return this
   }
 
-  strokeRect(...args: Parameters<CanvasRect['strokeRect']>) {
+  strokeRect(x: number, y: number, w: number, h: number) {
     this.addPath({
       action: 'strokeRect',
-      args: [...args],
+      args: [x, y, w, h],
     })
     return this
   }

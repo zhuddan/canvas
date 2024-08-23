@@ -387,6 +387,10 @@ export abstract class Display extends EventEmitter<{
     this._onUpdate()
   }
 
+  addTo(app: App) {
+    app.add(this)
+  }
+
   destroy() {
     this.removeAllListeners()
   }

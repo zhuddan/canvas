@@ -8,4 +8,4 @@ export * from './object/text'
 
 export * from './style/text-style'
 
-export type{ Display } from './object/display'
+export type { Display } from './object/display'

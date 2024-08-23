@@ -110,6 +110,7 @@ export declare abstract class Display extends EventEmitter<{
     get width(): number;
     onAdd(_app: App): void;
     onRemove(): void;
+    addTo(app: App): void;
     destroy(): void;
 }
 export {};

@@ -476,15 +476,21 @@ class App extends EventEmitter {
         this.ctx.restore();
     }
     children = [];
-    add(object) {
-        this.children.push(object);
-        object.onAdd(this);
+    add(...objects) {
+        for (let index = 0; index < objects.length; index++) {
+            const object = objects[index];
+            this.children.push(object);
+            object.onAdd(this);
+        }
     }
-    remove(object) {
-        const index = this.children.indexOf(object);
-        if (index !== -1) {
-            object.onRemove();
-            this.children.splice(index, 1);
+    remove(...objects) {
+        for (let index = 0; index < objects.length; index++) {
+            const object = objects[index];
+            const delIndex = this.children.indexOf(object);
+            if (delIndex !== -1) {
+                object.onRemove();
+                this.children.splice(delIndex, 1);
+            }
         }
     }
     update() {
@@ -908,6 +914,9 @@ class Display extends EventEmitter {
         this._app = null;
         this._onUpdate();
     }
+    addTo(app) {
+        app.add(this);
+    }
     destroy() {
         this.removeAllListeners();
     }
@@ -1154,73 +1163,73 @@ class Shape extends Display {
         });
         return this;
     }
-    moveTo(...args) {
+    moveTo(x, y) {
         this.addPath({
             action: 'moveTo',
-            args: [...args],
+            args: [x, y],
         });
         return this;
     }
-    lineTo(...args) {
+    lineTo(x, y) {
         this.addPath({
             action: 'lineTo',
-            args: [...args],
+            args: [x, y],
         });
         return this;
     }
-    rect(...args) {
+    rect(x, y, w, h) {
         this.addPath({
             action: 'rect',
-            args: [...args],
+            args: [x, y, w, h],
         });
         return this;
     }
-    roundRect(...args) {
+    roundRect(x, y, w, h, radii) {
         this.addPath({
             action: 'roundRect',
-            args: [...args],
+            args: [x, y, w, h, radii],
         });
         return this;
     }
-    arc(...args) {
+    arc(x, y, radius, startAngle, endAngle, counterclockwise) {
         this.addPath({
             action: 'arc',
-            args: [...args],
+            args: [x, y, radius, startAngle, endAngle, counterclockwise],
         });
         return this;
     }
-    arcTo(...args) {
+    arcTo(x1, y1, x2, y2, radius) {
         this.addPath({
             action: 'arcTo',
-            args: [...args],
+            args: [x1, y1, x2, y2, radius],
         });
         return this;
     }
-    bezierCurveTo(...args) {
+    bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y) {
         this.addPath({
             action: 'bezierCurveTo',
-            args: [...args],
+            args: [cp1x, cp1y, cp2x, cp2y, x, y],
         });
         return this;
     }
-    ellipse(...args) {
+    ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, counterclockwise) {
         this.addPath({
             action: 'ellipse',
-            args: [...args],
+            args: [x, y, radiusX, radiusY, rotation, startAngle, endAngle, counterclockwise],
         });
         return this;
     }
-    fillRect(...args) {
+    fillRect(x, y, w, h) {
         this.addPath({
             action: 'fillRect',
-            args: [...args],
+            args: [x, y, w, h],
         });
         return this;
     }
-    strokeRect(...args) {
+    strokeRect(x, y, w, h) {
         this.addPath({
             action: 'strokeRect',
-            args: [...args],
+            args: [x, y, w, h],
         });
         return this;
     }

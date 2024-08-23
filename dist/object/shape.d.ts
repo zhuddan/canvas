@@ -1,14 +1,6 @@
 import type { IAbstractStyle, InputColor, StrokeInput } from '../style/abstract-style';
-import type { FunctionKeys } from '../types';
 import type { DisplayOptions } from './display';
 import { Display } from './display';
-type CanvasRenderingContext2DMethods = FunctionKeys<CanvasRenderingContext2D>;
-interface PathData<T extends CanvasRenderingContext2DMethods> {
-    action: T;
-    args: any[];
-}
-type Methods = 'beginPath' | 'closePath' | 'moveTo' | 'fill' | 'stroke' | 'lineTo' | 'rect' | 'roundRect' | 'fillRect' | 'strokeRect' | 'arc' | 'arcTo' | 'bezierCurveTo' | 'ellipse';
-type PathInstruction = PathData<Methods>;
 interface _ShapeOptions extends DisplayOptions {
 }
 interface IShape {
@@ -30,19 +22,19 @@ interface IShape {
 export type ShapeOptions = Partial<_ShapeOptions>;
 export declare class Shape extends Display implements IShape {
     constructor(options?: ShapeOptions);
-    addPath(...items: PathInstruction[]): void;
+    private addPath;
     beginPath(): Shape;
     closePath(): this;
-    moveTo(...args: Parameters<CanvasRenderingContext2D['lineTo']>): this;
-    lineTo(...args: Parameters<CanvasRenderingContext2D['lineTo']>): this;
-    rect(...args: Parameters<CanvasRenderingContext2D['rect']>): this;
-    roundRect(...args: Parameters<CanvasRenderingContext2D['roundRect']>): this;
-    arc(...args: Parameters<CanvasRenderingContext2D['arc']>): this;
-    arcTo(...args: Parameters<CanvasRenderingContext2D['arcTo']>): this;
-    bezierCurveTo(...args: Parameters<CanvasRenderingContext2D['bezierCurveTo']>): this;
-    ellipse(...args: Parameters<CanvasRenderingContext2D['ellipse']>): this;
-    fillRect(...args: Parameters<CanvasRect['fillRect']>): this;
-    strokeRect(...args: Parameters<CanvasRect['strokeRect']>): this;
+    moveTo(x: number, y: number): this;
+    lineTo(x: number, y: number): this;
+    rect(x: number, y: number, w: number, h: number): this;
+    roundRect(x: number, y: number, w: number, h: number, radii?: number | DOMPointInit | Iterable<number | DOMPointInit>): this;
+    arc(x: number, y: number, radius: number, startAngle: number, endAngle: number, counterclockwise?: boolean): this;
+    arcTo(x1: number, y1: number, x2: number, y2: number, radius: number): this;
+    bezierCurveTo(cp1x: number, cp1y: number, cp2x: number, cp2y: number, x: number, y: number): this;
+    ellipse(x: number, y: number, radiusX: number, radiusY: number, rotation: number, startAngle: number, endAngle: number, counterclockwise?: boolean): this;
+    fillRect(x: number, y: number, w: number, h: number): this;
+    strokeRect(x: number, y: number, w: number, h: number): this;
     private pathInstruction;
     get _shouldUpdate(): boolean;
     protected _render(_ctx: CanvasRenderingContext2D): void;

@@ -74,16 +74,22 @@ export class App extends EventEmitter<{
 
   children: Display[] = []
 
-  add(object: Display) {
-    this.children.push(object)
-    object.onAdd(this)
+  add(...objects: Display[]) {
+    for (let index = 0; index < objects.length; index++) {
+      const object = objects[index]
+      this.children.push(object)
+      object.onAdd(this)
+    }
   }
 
-  remove(object: Display) {
-    const index = this.children.indexOf(object)
-    if (index !== -1) {
-      object.onRemove()
-      this.children.splice(index, 1)
+  remove(...objects: Display[]) {
+    for (let index = 0; index < objects.length; index++) {
+      const object = objects[index]
+      const delIndex = this.children.indexOf(object)
+      if (delIndex !== -1) {
+        object.onRemove()
+        this.children.splice(delIndex, 1)
+      }
     }
   }
 
