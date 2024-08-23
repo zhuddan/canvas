@@ -1,11 +1,23 @@
 import type { TextStyle } from './style/text-style';
-export declare function formatValue(val: string | number): string;
+/**
+ *  输出 px
+ * @param val
+ */
+export declare function formatWithPx(val: string | number): string;
 /**
  * 创造 [CSS-font](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font) 字符串
  * 由于 canvas 绘制的差异性部分属性不生效故舍弃
  */
 export declare function createCanvasFontString({ fontFamily, fontSize, fontStyle, fontWeight, }: TextStyle): string;
+/**
+ * 计算最小值
+ * @param numbers
+ */
 export declare function calcMin(numbers: number[]): number;
+/**
+ * 计算最大值
+ * @param numbers
+ */
 export declare function calcMax(numbers: number[]): number;
 /**
  * 计算差异
@@ -19,5 +31,9 @@ export declare function calcDiff(numbers: number[]): number;
  * @param max
  */
 export declare function ensureBetween(input: number, min?: number, max?: number): number;
-export declare function calcCenter(num1: number, num2: number): number;
+/**
+ * 创建代理
+ * @param value
+ * @param cb
+ */
 export declare function createProxy<T extends object>(value: T, cb?: (property: string, newValue: any) => void): T;

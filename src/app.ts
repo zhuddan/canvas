@@ -1,9 +1,9 @@
 import EventEmitter from 'eventemitter3'
 import { NOOP } from './const'
 import type { Display } from './object/display'
-import { formatValue } from './utils'
+import { formatWithPx } from './utils'
 
-interface AppConstructorOptions {
+export interface AppOptions {
   width?: number
   height?: number
   dpr?: boolean
@@ -27,7 +27,7 @@ export class App extends EventEmitter<{
     dpr = true,
     createImage = () => document.createElement('img'),
     onUpdate,
-  }: AppConstructorOptions = {},
+  }: AppOptions = {},
   ) {
     super()
     if (dpr) {
@@ -37,8 +37,8 @@ export class App extends EventEmitter<{
     this.onUpdate = onUpdate ?? NOOP
     this.canvas = document.createElement('canvas')!
     this.ctx = this.canvas.getContext('2d')!
-    this.canvas.style.width = formatValue(width)
-    this.canvas.style.height = formatValue(height)
+    this.canvas.style.width = formatWithPx(width)
+    this.canvas.style.height = formatWithPx(height)
     this.canvas.width = width * this.dpr
     this.canvas.height = height * this.dpr
     this.width = width
@@ -149,5 +149,3 @@ export class App extends EventEmitter<{
     this.afterRender()
   }
 }
-
-const v = isNaN(1)

@@ -1,4 +1,4 @@
-import type { Properties, Property } from 'csstype';
+import type { Properties } from 'csstype';
 import type { IAbstractStyle } from './abstract-style';
 import { AbstractStyle } from './abstract-style';
 export interface TextStyleOptions extends IAbstractStyle {
@@ -58,17 +58,17 @@ export declare class TextStyle extends AbstractStyle implements TextStyleOptions
     reset(): void;
     protected readonly textBaseline = "top";
     private _fontSize;
-    set fontSize(value: Property.FontSize<0 | (string & {})> | (number & {}) | undefined);
-    get fontSize(): Property.FontSize<0 | (string & {})> | (number & {}) | undefined;
+    set fontSize(value: import("csstype").Property.FontSize<0 | (string & {})> | (number & {}) | undefined);
+    get fontSize(): import("csstype").Property.FontSize<0 | (string & {})> | (number & {}) | undefined;
     private _fontFamily;
-    set fontFamily(value: Property.FontFamily | undefined);
-    get fontFamily(): Property.FontFamily | undefined;
+    set fontFamily(value: import("csstype").Property.FontFamily | undefined);
+    get fontFamily(): import("csstype").Property.FontFamily | undefined;
     private _fontStyle;
-    set fontStyle(value: Property.FontStyle | undefined);
-    get fontStyle(): Property.FontStyle | undefined;
+    set fontStyle(value: import("csstype").Property.FontStyle | undefined);
+    get fontStyle(): import("csstype").Property.FontStyle | undefined;
     private _fontWeight;
-    set fontWeight(value: Property.FontWeight | undefined);
-    get fontWeight(): Property.FontWeight | undefined;
+    set fontWeight(value: import("csstype").Property.FontWeight | undefined);
+    get fontWeight(): import("csstype").Property.FontWeight | undefined;
     private _fontStretch;
     set fontStretch(value: CanvasFontStretch);
     get fontStretch(): CanvasFontStretch;

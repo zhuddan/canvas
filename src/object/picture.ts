@@ -6,7 +6,7 @@ import { App } from '../app'
 import type { DisplayOptions } from './display'
 import { Display } from './display'
 
-interface PictureOptions extends DisplayOptions {
+export interface PictureOptions extends DisplayOptions {
   size?: PointData
   slice?: PointData
   sliceSize?: PointData

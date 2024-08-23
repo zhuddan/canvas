@@ -30,17 +30,6 @@ export abstract class AbstractStyle extends EventEmitter<{
   update: []
   updateBounds: []
 }> implements IAbstractStyle {
-  // private _strokeWeight = 0
-
-  // set strokeWeight(value) {
-  //   this._strokeWeight = value
-  //   this.update()
-  // }
-
-  // get strokeWeight() {
-  //   return this._strokeWeight
-  // }
-
   private _fill = '#000'
 
   set fill(value) {

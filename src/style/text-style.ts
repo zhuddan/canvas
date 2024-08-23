@@ -1,7 +1,5 @@
-import type { Properties, Property } from 'csstype'
-// import { interceptDirty } from '../common/intercept'
-import type { Display } from '../object/display'
-import { createCanvasFontString, formatValue } from '../utils'
+import type { Properties } from 'csstype'
+import { createCanvasFontString, formatWithPx } from '../utils'
 import type { IAbstractStyle } from './abstract-style'
 import { AbstractStyle } from './abstract-style'
 
@@ -279,8 +277,8 @@ export class TextStyle extends AbstractStyle implements TextStyleOptions {
     ctx.font = createCanvasFontString(this)
     ctx.fontStretch = this.fontStretch
     ctx.fontVariantCaps = this.fontVariantCaps
-    ctx.letterSpacing = formatValue(this.letterSpacing)
-    ctx.wordSpacing = formatValue(this.wordSpacing)
+    ctx.letterSpacing = formatWithPx(this.letterSpacing)
+    ctx.wordSpacing = formatWithPx(this.wordSpacing)
     ctx.textAlign = this.textAlign
     return this
   }

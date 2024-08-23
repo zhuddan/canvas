@@ -1,3 +1,0 @@
-function NOOP() { }
-
-export { NOOP };

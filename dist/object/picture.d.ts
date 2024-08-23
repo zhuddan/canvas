@@ -3,7 +3,7 @@ import type { PointData } from '../coordinate/PointData';
 import { ObservablePoint } from '../coordinate/ObservablePoint';
 import type { DisplayOptions } from './display';
 import { Display } from './display';
-interface PictureOptions extends DisplayOptions {
+export interface PictureOptions extends DisplayOptions {
     size?: PointData;
     slice?: PointData;
     sliceSize?: PointData;
@@ -40,4 +40,3 @@ export declare class Picture extends Display {
     transformHeight: number;
     updateTransformBounds(): void;
 }
-export {};

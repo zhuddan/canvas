@@ -9,7 +9,7 @@ interface PathData<T extends CanvasRenderingContext2DMethods> {
 }
 type Methods = 'beginPath' | 'closePath' | 'moveTo' | 'fill' | 'stroke' | 'lineTo' | 'rect' | 'roundRect' | 'fillRect' | 'strokeRect' | 'arc' | 'arcTo' | 'bezierCurveTo' | 'ellipse';
 type PathInstruction = PathData<Methods>;
-export interface ShapeOptions extends DisplayOptions {
+interface _ShapeOptions extends DisplayOptions {
 }
 interface IShape {
     beginPath: () => Shape;
@@ -27,8 +27,9 @@ interface IShape {
     fillRect: (...args: Parameters<CanvasRect['fillRect']>) => Shape;
     strokeRect: (...args: Parameters<CanvasRect['strokeRect']>) => Shape;
 }
+export type ShapeOptions = Partial<_ShapeOptions>;
 export declare class Shape extends Display implements IShape {
-    constructor(options?: Partial<ShapeOptions>);
+    constructor(options?: ShapeOptions);
     addPath(...items: PathInstruction[]): void;
     beginPath(): Shape;
     closePath(): this;

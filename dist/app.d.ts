@@ -1,6 +1,6 @@
 import EventEmitter from 'eventemitter3';
 import type { Display } from './object/display';
-interface AppConstructorOptions {
+export interface AppOptions {
     width?: number;
     height?: number;
     dpr?: boolean;
@@ -17,7 +17,7 @@ export declare class App extends EventEmitter<{
     height: number;
     onUpdate: () => void;
     static createImage: () => HTMLImageElement;
-    constructor({ width, height, dpr, createImage, onUpdate, }?: AppConstructorOptions);
+    constructor({ width, height, dpr, createImage, onUpdate, }?: AppOptions);
     private beforeRender;
     private afterRender;
     children: Display[];
@@ -28,4 +28,3 @@ export declare class App extends EventEmitter<{
     toDataURLAsync(type?: string, quality?: any): Promise<string>;
     onContext(fn: (ctx: CanvasRenderingContext2D) => any): void;
 }
-export {};

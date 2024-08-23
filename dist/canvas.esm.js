@@ -1,110 +1,3 @@
-function formatValue(val) {
-    return typeof val === 'string' ? val : `${val}px`;
-}
-/**
- * 创造 [CSS-font](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font) 字符串
- * 由于 canvas 绘制的差异性部分属性不生效故舍弃
- */
-function createCanvasFontString({ fontFamily, fontSize, fontStyle = 'normal', fontWeight = 'normal', }) {
-    const _fontSize = typeof fontSize === 'string' ? fontSize : `${fontSize}px`;
-    return `${fontStyle} ${fontWeight} ${_fontSize} ${fontFamily}`;
-}
-function calcMin(numbers) {
-    return numbers.reduce((a, b) => {
-        return a < b ? a : b;
-    });
-}
-function calcMax(numbers) {
-    return numbers.reduce((a, b) => {
-        return a > b ? a : b;
-    });
-}
-/**
- * 计算差异
- * @param numbers
- */
-function calcDiff(numbers) {
-    return calcMax(numbers) - calcMin(numbers);
-}
-/**
- * 确保输入值在 min 和 max 之间，若超出边界则返回边界
- * @param input
- * @param min
- * @param max
- */
-function ensureBetween(input, min = 0, max = 1) {
-    return input <= min ? min : input >= max ? max : input;
-}
-// export function toPoint(point: PointObject | number): PointObject {
-//   let x = 0
-//   let y = 0
-//   if (typeof point !== 'undefined') {
-//     if (typeof point === 'object') {
-//       x = point.x
-//       y = point.y
-//     }
-//     else {
-//       x = y = point
-//     }
-//   }
-//   return { x, y }
-// }
-// // 计算变换后的矩形实际大小
-// export function getTransformedRectSize(
-//   transform: [number, number, number, number, number, number],
-//   bounds: Bounds,
-// ) {
-//   const [scaleX, skewX, skewY, scaleY, translateX, translateY] = transform
-//   // const [1, 0.5, 0.5, 1, 0, 0] = transform
-//   const x = bounds.start.x
-//   const y = bounds.start.y
-//   const width = bounds.width
-//   const height = bounds.height
-//   // 矩形四个角的坐标
-//   const corners: IPoint[] = [
-//     { x, y },
-//     { x: x + width, y },
-//     { x: x + width, y: y + height },
-//     { x, y: y + height },
-//   ]
-//   // 变换后的角点坐标
-//   const transformedCorners = corners.map(({ x: cx, y: cy }) => {
-//     return {
-//       x: scaleX * cx + skewY * cy + translateX,
-//       y: skewX * cx + scaleY * cy + translateY,
-//     }
-//   })
-//   // 计算变换后的矩形宽度和高度
-//   const xValues = transformedCorners.map(corner => corner.x)
-//   const yValues = transformedCorners.map(corner => corner.y)
-//   const minX = Math.min(...xValues)
-//   const maxX = Math.max(...xValues)
-//   const minY = Math.min(...yValues)
-//   const maxY = Math.max(...yValues)
-//   return {
-//     width: maxX - minX,
-//     height: maxY - minY,
-//   }
-// }
-// export function calculateEllipseRadii(rx: number, ry: number, a: number, b: number, c: number, d: number): { newRx: number, newRy: number } {
-//   const newRx = Math.sqrt((a * rx) ** 2 + (b * ry) ** 2)
-//   const newRy = Math.sqrt((c * rx) ** 2 + (d * ry) ** 2)
-//   return { newRx, newRy }
-// }
-// const originalRadius = 50
-// const transformMatrix = [1, 0.8, 0.2, 1] as const
-// const { newRx, newRy } = calculateEllipseRadii(originalRadius, originalRadius, ...transformMatrix)
-// console.log(`Transformed ellipse radii: Rx = ${newRx}, Ry = ${newRy}`)
-function createProxy(value, cb) {
-    return new Proxy(value, {
-        set: (target, property, newValue) => {
-            target[property] = newValue;
-            cb?.(property, newValue);
-            return true;
-        },
-    });
-}
-
 function getDefaultExportFromCjs (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
 }
@@ -452,6 +345,186 @@ var eventemitter3 = {exports: {}};
 var eventemitter3Exports = eventemitter3.exports;
 var EventEmitter = /*@__PURE__*/getDefaultExportFromCjs(eventemitter3Exports);
 
+/**
+ * 无操作
+ */
+function NOOP() { }
+
+/**
+ *  输出 px
+ * @param val
+ */
+function formatWithPx(val) {
+    return typeof val === 'string' ? val : `${val}px`;
+}
+/**
+ * 创造 [CSS-font](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font) 字符串
+ * 由于 canvas 绘制的差异性部分属性不生效故舍弃
+ */
+function createCanvasFontString({ fontFamily, fontSize, fontStyle = 'normal', fontWeight = 'normal', }) {
+    const _fontSize = typeof fontSize === 'string' ? fontSize : `${fontSize}px`;
+    return `${fontStyle} ${fontWeight} ${_fontSize} ${fontFamily}`;
+}
+/**
+ * 计算最小值
+ * @param numbers
+ */
+function calcMin(numbers) {
+    return numbers.reduce((a, b) => {
+        return a < b ? a : b;
+    });
+}
+/**
+ * 计算最大值
+ * @param numbers
+ */
+function calcMax(numbers) {
+    return numbers.reduce((a, b) => {
+        return a > b ? a : b;
+    });
+}
+/**
+ * 计算差异
+ * @param numbers
+ */
+function calcDiff(numbers) {
+    return calcMax(numbers) - calcMin(numbers);
+}
+/**
+ * 确保输入值在 min 和 max 之间，若超出边界则返回边界
+ * @param input
+ * @param min
+ * @param max
+ */
+function ensureBetween(input, min = 0, max = 1) {
+    return input <= min ? min : input >= max ? max : input;
+}
+/**
+ * 创建代理
+ * @param value
+ * @param cb
+ */
+function createProxy(value, cb) {
+    return new Proxy(value, {
+        set: (target, property, newValue) => {
+            target[property] = newValue;
+            cb?.(property, newValue);
+            return true;
+        },
+    });
+}
+
+class App extends EventEmitter {
+    canvas;
+    ctx;
+    dpr = 1;
+    width;
+    height;
+    onUpdate;
+    static createImage;
+    constructor({ width = 600, height = 800, dpr = true, createImage = () => document.createElement('img'), onUpdate, } = {}) {
+        super();
+        if (dpr) {
+            this.dpr = window.devicePixelRatio ?? 1;
+        }
+        // this.dpr = 1
+        this.onUpdate = onUpdate ?? NOOP;
+        this.canvas = document.createElement('canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.canvas.style.width = formatWithPx(width);
+        this.canvas.style.height = formatWithPx(height);
+        this.canvas.width = width * this.dpr;
+        this.canvas.height = height * this.dpr;
+        this.width = width;
+        this.height = height;
+        App.createImage = createImage;
+        this.update();
+    }
+    beforeRender() {
+        this.ctx.save();
+    }
+    afterRender() {
+        this.ctx.restore();
+    }
+    // private debug() {
+    //   this.beforeRender()
+    //   const ctx = this.ctx
+    //   this.ctx.strokeStyle = '#cccccc'
+    //   this.ctx.fillStyle = '#cccccc'
+    //   ctx.textBaseline = 'top'
+    //   ctx.font = '10px 黑体'
+    //   ctx.setLineDash([4, 10])
+    //   for (let row = 0; row < Math.ceil((this.width + 1) / 100); row++) {
+    //     for (let col = 0; col < Math.ceil((this.height + 1) / 100); col++) {
+    //       ctx.beginPath()
+    //       ctx.fillText(`${row * 100},${col * 100}`, row * 100 * this.dpr, col * 100 * this.dpr)
+    //       if (row === 0 || col === 0) {
+    //         continue
+    //       }
+    //       ctx.moveTo((row * 100 - 100) * this.dpr, col * 100 * this.dpr)
+    //       ctx.lineTo(row * 100 * this.dpr, col * 100 * this.dpr)
+    //       ctx.lineTo(row * 100 * this.dpr, (col * 100 - 100) * this.dpr)
+    //       ctx.stroke()
+    //     }
+    //   }
+    //   this.afterRender()
+    // }
+    children = [];
+    add(object) {
+        this.children.push(object);
+        object.onAdd(this);
+    }
+    remove(object) {
+        const index = this.children.indexOf(object);
+        if (index !== -1) {
+            object.onRemove();
+            this.children.splice(index, 1);
+        }
+    }
+    update() {
+        window.requestAnimationFrame(() => {
+            this.update();
+        });
+        if (!this.children.length) {
+            return;
+        }
+        const isDirty = !![...this.children.filter(e => e.dirty)].length;
+        const _renderIds = this.children.every(e => e._renderId > 0);
+        if (_renderIds && this.children.length) {
+            this.emit('render');
+        }
+        if (!isDirty)
+            return;
+        this.ctx.clearRect(-this.canvas.width, -this.canvas.height, this.canvas.width * 2, this.canvas.height * 2);
+        // this.debug()
+        const shouldRender = [...this.children].filter(e => e.shouldUpdate);
+        while (shouldRender.length) {
+            this.beforeRender();
+            const child = shouldRender.shift();
+            child.render(this.ctx);
+            child.dirty = false;
+            child._renderId++;
+            this.afterRender();
+        }
+        this.onUpdate();
+    }
+    toDataURL(type, quality) {
+        return this.canvas.toDataURL(type, quality);
+    }
+    toDataURLAsync(type, quality) {
+        return new Promise((resolve) => {
+            this.once('render', () => {
+                resolve(this.toDataURL(type, quality));
+            });
+        });
+    }
+    onContext(fn) {
+        this.beforeRender();
+        fn(this.ctx);
+        this.afterRender();
+    }
+}
+
 class ObservablePoint {
     _x;
     _y;
@@ -790,6 +863,203 @@ class Display extends EventEmitter {
     }
 }
 
+class Picture extends Display {
+    options;
+    constructor(maybeImage, options) {
+        super(options);
+        this.options = options;
+        if (typeof maybeImage == 'string') {
+            this.image = App.createImage();
+            this.image.src = maybeImage;
+        }
+        else {
+            this.image = maybeImage;
+        }
+        if (this.image.complete) {
+            this._onImageComplete();
+        }
+        else {
+            this.image.addEventListener('load', () => {
+                this._onImageComplete();
+            });
+        }
+    }
+    image;
+    // set image(value) {
+    //   if (this.image !== value) {
+    //     this._image = value
+    //   }
+    // }
+    // get image() {
+    //   return this._image
+    // }
+    _size = new ObservablePoint(this, 0, 0);
+    _imageSize = new ObservablePoint(this, 0, 0);
+    set size(value) {
+        if (this.size !== value) {
+            this._size.copyFrom(value);
+            this.shouldUpdateBounds();
+        }
+    }
+    get size() {
+        return this._size;
+    }
+    _slice = new ObservablePoint(this);
+    set slice(value) {
+        if (this.slice !== value) {
+            this._slice.copyFrom(value);
+            this.shouldUpdateBounds();
+        }
+    }
+    get slice() {
+        return this._slice;
+    }
+    _sliceSize = new ObservablePoint(this);
+    set sliceSize(value) {
+        if (this.sliceSize !== value) {
+            this._sliceSize.copyFrom(value);
+            this._onUpdate();
+            this.shouldUpdateBounds();
+        }
+    }
+    get sliceSize() {
+        return this._sliceSize;
+    }
+    _objectFit = 'none';
+    set objectFit(value) {
+        if (this.objectFit !== value) {
+            this._objectFit = value;
+            this.shouldUpdateBounds();
+            this._onUpdate();
+        }
+    }
+    get objectFit() {
+        return this._objectFit;
+    }
+    _rounded = 0;
+    set rounded(value) {
+        value = value <= 0 ? 0 : value;
+        if (this.rounded !== value) {
+            this._rounded = value;
+            this._onUpdate();
+        }
+    }
+    _onUpdate(_point) {
+        if (this._ready)
+            super._onUpdate(_point);
+    }
+    get rounded() {
+        return this._rounded;
+    }
+    _ready = false;
+    _onImageComplete() {
+        this._imageSize = new ObservablePoint(this, this.image.width, this.image.height);
+        this.size = this.options?.size ?? {
+            x: this.image.width,
+            y: this.image.height,
+        };
+        this.slice = this.options?.slice ?? this.slice;
+        this.sliceSize = this.options?.sliceSize ?? {
+            x: this.image.width,
+            y: this.image.height,
+        };
+        this.objectFit = this.options?.objectFit ?? this.objectFit;
+        this.rounded = this.options?.rounded ?? this.rounded;
+        this.emit('ready');
+        this._ready = true;
+        this._onUpdate();
+        this.shouldUpdateBounds();
+    }
+    get _shouldUpdate() {
+        return true;
+    }
+    get _isSlice() {
+        return (!!this.slice.x || !!this.slice.y) || !this.sliceSize.equals(this.size);
+    }
+    _render(ctx) {
+        if (!this._isSlice) {
+            const _size = this.size.clone();
+            const _position = this.position.clone();
+            const scaleDiff = _size.x / this._imageSize.x;
+            const diffSize = calcDiff([this._imageSize.x, this._imageSize.y]);
+            const diff = diffSize * scaleDiff;
+            const slim = this._imageSize.x < this._imageSize.y;
+            const fat = this._imageSize.x > this._imageSize.y;
+            if ((slim || fat)) {
+                switch (this.objectFit) {
+                    case 'contain':
+                        if (slim) {
+                            this.position.set(this.position.x - diff / 2, this.position.y);
+                            this.size.set(this.size.x - diff, this.size.y);
+                        }
+                        else {
+                            this.position.set(this.position.x, this.position.y + diff / 2);
+                            this.size.set(this.size.x, this.size.y - diff);
+                        }
+                        ctx.beginPath();
+                        if (this.rounded) {
+                            ctx.roundRect(this.x, this.y, this.size.x, this.size.y, this.rounded);
+                        }
+                        else {
+                            ctx.rect(this.x, this.y, this.size.x, this.size.y);
+                        }
+                        ctx.clip();
+                        break;
+                    case 'cover':
+                        if (slim) {
+                            this.position.set(this.position.x + diff / 2, this.position.y);
+                            this.size.set(this.size.x + diff, this.size.y);
+                        }
+                        else {
+                            this.position.set(this.position.x - diff / 2, this.position.y);
+                            this.size.set(this.size.x + diff, this.size.y);
+                        }
+                        ctx.beginPath();
+                        if (this.rounded) {
+                            ctx.roundRect(_position.x, _position.y, _size.x, _size.y, this.rounded);
+                        }
+                        else {
+                            ctx.rect(_position.x, _position.y, _size.x, _size.y);
+                        }
+                        ctx.clip();
+                        break;
+                }
+            }
+            ctx.drawImage(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
+            this.position = _position;
+            this.size = _size;
+        }
+        else {
+            const args = [
+                this.image,
+                this.slice.x,
+                this.slice.y,
+                this.sliceSize.x,
+                this.sliceSize.y,
+                this.x,
+                this.y,
+                this.size.x,
+                this.size.y,
+            ];
+            ctx.beginPath();
+            if (this.rounded) {
+                ctx.roundRect(this.x, this.y, this.size.x, this.size.y, this.rounded);
+            }
+            else {
+                ctx.rect(this.x, this.y, this.size.x, this.size.y);
+            }
+            ctx.clip();
+            ctx.drawImage(...args);
+        }
+    }
+    transformWidth = 0;
+    transformHeight = 0;
+    updateTransformBounds() {
+        this.transformHeight = this.size.x;
+        this.transformWidth = this.size.y;
+    }
+}
+
 class Shape extends Display {
     constructor(options = {}) {
         super(options);
@@ -1056,14 +1326,6 @@ class Shape extends Display {
 }
 
 class AbstractStyle extends EventEmitter {
-    // private _strokeWeight = 0
-    // set strokeWeight(value) {
-    //   this._strokeWeight = value
-    //   this.update()
-    // }
-    // get strokeWeight() {
-    //   return this._strokeWeight
-    // }
     _fill = '#000';
     set fill(value) {
         this._fill = value;
@@ -1311,8 +1573,8 @@ class TextStyle extends AbstractStyle {
         ctx.font = createCanvasFontString(this);
         ctx.fontStretch = this.fontStretch;
         ctx.fontVariantCaps = this.fontVariantCaps;
-        ctx.letterSpacing = formatValue(this.letterSpacing);
-        ctx.wordSpacing = formatValue(this.wordSpacing);
+        ctx.letterSpacing = formatWithPx(this.letterSpacing);
+        ctx.wordSpacing = formatWithPx(this.wordSpacing);
         ctx.textAlign = this.textAlign;
         return this;
     }
@@ -1447,314 +1709,4 @@ class Text extends Display {
     transformHeight = 0;
 }
 
-function NOOP() { }
-
-class App extends EventEmitter {
-    canvas;
-    ctx;
-    dpr = 1;
-    width;
-    height;
-    onUpdate;
-    static createImage;
-    constructor({ width = 600, height = 800, dpr = true, createImage = () => document.createElement('img'), onUpdate, } = {}) {
-        super();
-        if (dpr) {
-            this.dpr = window.devicePixelRatio ?? 1;
-        }
-        // this.dpr = 1
-        this.onUpdate = onUpdate ?? NOOP;
-        this.canvas = document.createElement('canvas');
-        this.ctx = this.canvas.getContext('2d');
-        this.canvas.style.width = formatValue(width);
-        this.canvas.style.height = formatValue(height);
-        this.canvas.width = width * this.dpr;
-        this.canvas.height = height * this.dpr;
-        this.width = width;
-        this.height = height;
-        App.createImage = createImage;
-        this.update();
-    }
-    beforeRender() {
-        this.ctx.save();
-    }
-    afterRender() {
-        this.ctx.restore();
-    }
-    // private debug() {
-    //   this.beforeRender()
-    //   const ctx = this.ctx
-    //   this.ctx.strokeStyle = '#cccccc'
-    //   this.ctx.fillStyle = '#cccccc'
-    //   ctx.textBaseline = 'top'
-    //   ctx.font = '10px 黑体'
-    //   ctx.setLineDash([4, 10])
-    //   for (let row = 0; row < Math.ceil((this.width + 1) / 100); row++) {
-    //     for (let col = 0; col < Math.ceil((this.height + 1) / 100); col++) {
-    //       ctx.beginPath()
-    //       ctx.fillText(`${row * 100},${col * 100}`, row * 100 * this.dpr, col * 100 * this.dpr)
-    //       if (row === 0 || col === 0) {
-    //         continue
-    //       }
-    //       ctx.moveTo((row * 100 - 100) * this.dpr, col * 100 * this.dpr)
-    //       ctx.lineTo(row * 100 * this.dpr, col * 100 * this.dpr)
-    //       ctx.lineTo(row * 100 * this.dpr, (col * 100 - 100) * this.dpr)
-    //       ctx.stroke()
-    //     }
-    //   }
-    //   this.afterRender()
-    // }
-    children = [];
-    add(object) {
-        this.children.push(object);
-        object.onAdd(this);
-    }
-    remove(object) {
-        const index = this.children.indexOf(object);
-        if (index !== -1) {
-            object.onRemove();
-            this.children.splice(index, 1);
-        }
-    }
-    update() {
-        window.requestAnimationFrame(() => {
-            this.update();
-        });
-        if (!this.children.length) {
-            return;
-        }
-        const isDirty = !![...this.children.filter(e => e.dirty)].length;
-        const _renderIds = this.children.every(e => e._renderId > 0);
-        if (_renderIds && this.children.length) {
-            this.emit('render');
-        }
-        if (!isDirty)
-            return;
-        this.ctx.clearRect(-this.canvas.width, -this.canvas.height, this.canvas.width * 2, this.canvas.height * 2);
-        // this.debug()
-        const shouldRender = [...this.children].filter(e => e.shouldUpdate);
-        while (shouldRender.length) {
-            this.beforeRender();
-            const child = shouldRender.shift();
-            child.render(this.ctx);
-            child.dirty = false;
-            child._renderId++;
-            this.afterRender();
-        }
-        this.onUpdate();
-    }
-    toDataURL(type, quality) {
-        return this.canvas.toDataURL(type, quality);
-    }
-    toDataURLAsync(type, quality) {
-        return new Promise((resolve) => {
-            this.once('render', () => {
-                resolve(this.toDataURL(type, quality));
-            });
-        });
-    }
-    onContext(fn) {
-        this.beforeRender();
-        fn(this.ctx);
-        this.afterRender();
-    }
-}
-
-class Picture extends Display {
-    options;
-    constructor(maybeImage, options) {
-        super(options);
-        this.options = options;
-        if (typeof maybeImage == 'string') {
-            this.image = App.createImage();
-            this.image.src = maybeImage;
-        }
-        else {
-            this.image = maybeImage;
-        }
-        if (this.image.complete) {
-            this._onImageComplete();
-        }
-        else {
-            this.image.addEventListener('load', () => {
-                this._onImageComplete();
-            });
-        }
-    }
-    image;
-    // set image(value) {
-    //   if (this.image !== value) {
-    //     this._image = value
-    //   }
-    // }
-    // get image() {
-    //   return this._image
-    // }
-    _size = new ObservablePoint(this, 0, 0);
-    _imageSize = new ObservablePoint(this, 0, 0);
-    set size(value) {
-        if (this.size !== value) {
-            this._size.copyFrom(value);
-            this.shouldUpdateBounds();
-        }
-    }
-    get size() {
-        return this._size;
-    }
-    _slice = new ObservablePoint(this);
-    set slice(value) {
-        if (this.slice !== value) {
-            this._slice.copyFrom(value);
-            this.shouldUpdateBounds();
-        }
-    }
-    get slice() {
-        return this._slice;
-    }
-    _sliceSize = new ObservablePoint(this);
-    set sliceSize(value) {
-        if (this.sliceSize !== value) {
-            this._sliceSize.copyFrom(value);
-            this._onUpdate();
-            this.shouldUpdateBounds();
-        }
-    }
-    get sliceSize() {
-        return this._sliceSize;
-    }
-    _objectFit = 'none';
-    set objectFit(value) {
-        if (this.objectFit !== value) {
-            this._objectFit = value;
-            this.shouldUpdateBounds();
-            this._onUpdate();
-        }
-    }
-    get objectFit() {
-        return this._objectFit;
-    }
-    _rounded = 0;
-    set rounded(value) {
-        value = value <= 0 ? 0 : value;
-        if (this.rounded !== value) {
-            this._rounded = value;
-            this._onUpdate();
-        }
-    }
-    _onUpdate(_point) {
-        if (this._ready)
-            super._onUpdate(_point);
-    }
-    get rounded() {
-        return this._rounded;
-    }
-    _ready = false;
-    _onImageComplete() {
-        this._imageSize = new ObservablePoint(this, this.image.width, this.image.height);
-        this.size = this.options?.size ?? {
-            x: this.image.width,
-            y: this.image.height,
-        };
-        this.slice = this.options?.slice ?? this.slice;
-        this.sliceSize = this.options?.sliceSize ?? {
-            x: this.image.width,
-            y: this.image.height,
-        };
-        this.objectFit = this.options?.objectFit ?? this.objectFit;
-        this.rounded = this.options?.rounded ?? this.rounded;
-        this.emit('ready');
-        this._ready = true;
-        this._onUpdate();
-        this.shouldUpdateBounds();
-    }
-    get _shouldUpdate() {
-        return true;
-    }
-    get _isSlice() {
-        return (!!this.slice.x || !!this.slice.y) || !this.sliceSize.equals(this.size);
-    }
-    _render(ctx) {
-        if (!this._isSlice) {
-            const _size = this.size.clone();
-            const _position = this.position.clone();
-            const scaleDiff = _size.x / this._imageSize.x;
-            const diffSize = calcDiff([this._imageSize.x, this._imageSize.y]);
-            const diff = diffSize * scaleDiff;
-            const slim = this._imageSize.x < this._imageSize.y;
-            const fat = this._imageSize.x > this._imageSize.y;
-            if ((slim || fat)) {
-                switch (this.objectFit) {
-                    case 'contain':
-                        if (slim) {
-                            this.position.set(this.position.x - diff / 2, this.position.y);
-                            this.size.set(this.size.x - diff, this.size.y);
-                        }
-                        else {
-                            this.position.set(this.position.x, this.position.y + diff / 2);
-                            this.size.set(this.size.x, this.size.y - diff);
-                        }
-                        ctx.beginPath();
-                        if (this.rounded) {
-                            ctx.roundRect(this.x, this.y, this.size.x, this.size.y, this.rounded);
-                        }
-                        else {
-                            ctx.rect(this.x, this.y, this.size.x, this.size.y);
-                        }
-                        ctx.clip();
-                        break;
-                    case 'cover':
-                        if (slim) {
-                            this.position.set(this.position.x + diff / 2, this.position.y);
-                            this.size.set(this.size.x + diff, this.size.y);
-                        }
-                        else {
-                            this.position.set(this.position.x - diff / 2, this.position.y);
-                            this.size.set(this.size.x + diff, this.size.y);
-                        }
-                        ctx.beginPath();
-                        if (this.rounded) {
-                            ctx.roundRect(_position.x, _position.y, _size.x, _size.y, this.rounded);
-                        }
-                        else {
-                            ctx.rect(_position.x, _position.y, _size.x, _size.y);
-                        }
-                        ctx.clip();
-                        break;
-                }
-            }
-            ctx.drawImage(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
-            this.position = _position;
-            this.size = _size;
-        }
-        else {
-            const args = [
-                this.image,
-                this.slice.x,
-                this.slice.y,
-                this.sliceSize.x,
-                this.sliceSize.y,
-                this.x,
-                this.y,
-                this.size.x,
-                this.size.y,
-            ];
-            ctx.beginPath();
-            if (this.rounded) {
-                ctx.roundRect(this.x, this.y, this.size.x, this.size.y, this.rounded);
-            }
-            else {
-                ctx.rect(this.x, this.y, this.size.x, this.size.y);
-            }
-            ctx.clip();
-            ctx.drawImage(...args);
-        }
-    }
-    transformWidth = 0;
-    transformHeight = 0;
-    updateTransformBounds() {
-        this.transformHeight = this.size.x;
-        this.transformWidth = this.size.y;
-    }
-}
-
-export { App, Display, ObservablePoint, Picture, Shape, Text };
+export { App, Picture, Shape, Text, TextStyle };

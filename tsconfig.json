@@ -6,6 +6,8 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "declaration": true,
     "declarationMap": false,
     "outDir": "dist",

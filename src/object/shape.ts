@@ -1,6 +1,6 @@
-import type { AbstractStyle, IAbstractStyle, InputColor, StrokeInput } from '../style/abstract-style'
-import type { FunctionKeys, ModifyReturnType } from '../types'
-import { calcDiff, calcMax, createProxy } from '../utils'
+import type { IAbstractStyle, InputColor, StrokeInput } from '../style/abstract-style'
+import type { FunctionKeys } from '../types'
+import { calcDiff, createProxy } from '../utils'
 import type { DisplayOptions } from './display'
 import { Display } from './display'
 
@@ -26,7 +26,7 @@ type Methods =
   | 'bezierCurveTo' //
   | 'ellipse'
 type PathInstruction = PathData<Methods>
-export interface ShapeOptions extends DisplayOptions {
+interface _ShapeOptions extends DisplayOptions {
 
 }
 
@@ -47,8 +47,10 @@ interface IShape {
   strokeRect: (...args: Parameters<CanvasRect['strokeRect']>) => Shape
 }
 
+export type ShapeOptions = Partial<_ShapeOptions>
+
 export class Shape extends Display implements IShape {
-  constructor(options: Partial<ShapeOptions> = {}) {
+  constructor(options: ShapeOptions = {}) {
     super(options)
     this.emit('ready')
     this._onUpdate()

@@ -1,7 +1,5 @@
-// import { interceptDirty } from '../common/intercept'
 import type { TextStyleOptions } from '../style/text-style'
 import { TextStyle } from '../style/text-style'
-import { createCanvasFontString, formatValue } from '../utils'
 import type { DisplayOptions } from './display'
 import { Display } from './display'
 
@@ -9,6 +7,7 @@ export interface TextOptions extends DisplayOptions {
   text: string
   style?: Partial<TextStyleOptions> | TextStyle
 }
+
 export class Text extends Display {
   constructor(options: TextOptions) {
     super(options)
