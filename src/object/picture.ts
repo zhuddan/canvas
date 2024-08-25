@@ -1,7 +1,7 @@
 import type { Properties } from 'csstype'
 import type { PointData } from '../coordinate/PointData'
 import { ObservablePoint } from '../coordinate/ObservablePoint'
-import { ENV, calcDiff, getEnv } from '../utils'
+import { ENV, calcDiff, drawRectCompatible, getEnv } from '../utils'
 import type { App } from '../app'
 import type { DisplayOptions } from './display'
 import { Display } from './display'
@@ -174,11 +174,15 @@ export class Picture extends Display {
     return (!!this.slice.x || !!this.slice.y) || !this.sliceSize.equals(this.size)
   }
 
+  private renderRoundedClip(ctx: CanvasRenderingContext2D, position: PointData, size: PointData) {
+    drawRectCompatible(ctx, position, size, this.rounded)
+    ctx.clip()
+  }
+
   protected _render(ctx: CanvasRenderingContext2D): void {
     if (!this.image || !this._complete) {
       return
     }
-
     if (!this._isSlice) {
       const _size = this.size.clone()
       const _position = this.position.clone()
@@ -187,8 +191,7 @@ export class Picture extends Display {
       const diff = diffSize * scaleDiff
       const slim = this._imageSize.x < this._imageSize.y
       const fat = this._imageSize.x > this._imageSize.y
-
-      if ((slim || fat)) {
+      if (slim || fat) {
         switch (this.objectFit) {
           case 'contain':
             if (slim) {
@@ -199,14 +202,15 @@ export class Picture extends Display {
               this.position.set(this.position.x, this.position.y + diff / 2)
               this.size.set(this.size.x, this.size.y - diff)
             }
-            ctx.beginPath()
-            if (this.rounded) {
-              ctx.roundRect(this.x, this.y, this.size.x, this.size.y, this.rounded)
-            }
-            else {
-              ctx.rect(this.x, this.y, this.size.x, this.size.y)
-            }
-            ctx.clip()
+            // ctx.beginPath()
+            // if (this.rounded) {
+            //   ctx.roundRect(this.x, this.y, this.size.x, this.size.y, this.rounded)
+            // }
+            // else {
+            //   ctx.rect(this.x, this.y, this.size.x, this.size.y)
+            // }
+            // ctx.clip()
+            this.renderRoundedClip(ctx, this.position, this.size)
             break
           case 'cover':
             if (slim) {
@@ -217,17 +221,18 @@ export class Picture extends Display {
               this.position.set(this.position.x - diff / 2, this.position.y)
               this.size.set(this.size.x + diff, this.size.y)
             }
-
-            ctx.beginPath()
-            if (this.rounded) {
-              ctx.roundRect(_position.x, _position.y, _size.x, _size.y, this.rounded)
-            }
-            else {
-              ctx.rect(_position.x, _position.y, _size.x, _size.y)
-            }
-            ctx.clip()
+            // ctx.beginPath()
+            // if (this.rounded) {
+            //   ctx.roundRect(_position.x, _position.y, _size.x, _size.y, this.rounded)
+            // }
+            // else {
+            //   ctx.rect(_position.x, _position.y, _size.x, _size.y)
+            // }
+            // ctx.clip()
+            this.renderRoundedClip(ctx, _position, _size)
             break
           default:
+            this.renderRoundedClip(ctx, this.position, this.size)
         }
       }
       ctx.drawImage(
@@ -237,7 +242,6 @@ export class Picture extends Display {
         this.size.x,
         this.size.y,
       )
-
       this.position = _position
       this.size = _size
     }
@@ -254,14 +258,16 @@ export class Picture extends Display {
         this.size.y,
       ] as const
 
-      ctx.beginPath()
-      if (this.rounded) {
-        ctx.roundRect(this.x, this.y, this.size.x, this.size.y, this.rounded)
-      }
-      else {
-        ctx.rect(this.x, this.y, this.size.x, this.size.y)
-      }
-      ctx.clip()
+      // ctx.beginPath()
+      // console.log(this.rounded)
+      // if (this.rounded) {
+      //   ctx.roundRect(this.x, this.y, this.size.x, this.size.y, this.rounded)
+      // }
+      // else {
+      //   ctx.rect(this.x, this.y, this.size.x, this.size.y)
+      // }
+      // ctx.clip()
+      this.renderRoundedClip(ctx, this.position, this.size)
       ctx.drawImage(...args)
     }
   }

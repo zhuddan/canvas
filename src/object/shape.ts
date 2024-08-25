@@ -1,6 +1,6 @@
 import type { IAbstractStyle, InputColor, StrokeInput } from '../style/abstract-style'
 // import type { FunctionKeys } from '../types'
-import { ENV, calcDiff, createProxy } from '../utils'
+import { ENV, calcDiff, createProxy, drawRectCompatible } from '../utils'
 import type { DisplayOptions } from './display'
 import { Display } from './display'
 
@@ -67,7 +67,6 @@ export class Shape extends Display implements IShape {
     this.shouldUpdateBounds()
   }
 
-  // CanvasRenderingContext2DMethods
   beginPath(): Shape {
     this.addPath({
       action: 'beginPath',
@@ -281,7 +280,7 @@ export class Shape extends Display implements IShape {
         ctx[action] = args[0]
       }
       else if (action === 'roundRect' && this._env === ENV.WX) {
-        throw new Error(`微信小程序为实现roundRect功能`)
+        drawRectCompatible(ctx, { x: args[0], y: args[1] }, { x: args[2], y: args[3] }, args[4])
       }
       else {
         if (!(action in ctx)) {

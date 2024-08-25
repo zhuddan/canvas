@@ -1,3 +1,4 @@
+import type { PointData } from './coordinate/PointData'
 import type { TextStyle } from './style/text-style'
 
 /**
@@ -86,4 +87,46 @@ export function getEnv() {
     return ENV.WEB
 
   return ENV.UNKNOWN
+}
+
+/**
+ * Draws a rectangle with rounded corners compatible with different environments.
+ *
+ * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+ * @param {PointData} position - The position of the rectangle.
+ * @param {PointData} size - The size of the rectangle.
+ * @param {number} [rounded] - The radius of the rounded corners.
+ *
+ * @return {void}
+ */
+export function drawRectCompatible(
+  ctx: CanvasRenderingContext2D,
+  position: PointData,
+  size: PointData,
+  rounded?: number,
+) {
+  rounded = rounded ?? 0
+  rounded = Math.min(rounded, size.x / 2, size.y / 2)
+  ctx.beginPath()
+  if (rounded) {
+    if (getEnv() === ENV.WX) {
+      // 左上角到右上角
+      ctx.moveTo(position.x + rounded, position.y)
+      ctx.arcTo(position.x + size.x, position.y, position.x + size.x, position.y + rounded, rounded)
+      // 右上角到右下角
+      ctx.arcTo(position.x + size.x, position.y + size.y, position.x + size.x - rounded, position.y + size.y, rounded)
+      // 右下角到左下角
+      ctx.arcTo(position.x, position.y + size.y, position.x, position.y + size.y - rounded, rounded)
+      // 左下角到左上角
+      ctx.arcTo(position.x, position.y, position.x + rounded, position.y, rounded)
+      // 闭合路径
+      ctx.closePath()
+    }
+    else {
+      ctx.roundRect(position.x, position.y, size.x, size.y, rounded)
+    }
+  }
+  else {
+    ctx.rect(position.x, position.y, size.x, size.y)
+  }
 }

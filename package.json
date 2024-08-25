@@ -48,7 +48,8 @@
     "scripts/*"
   ],
   "scripts": {
-    "dev": "rollup -c rollup.config.dev.mjs -w",
+    "dev:web": "cross-env NODE_ENV=development:web rollup -c rollup.config.dev.mjs -w",
+    "dev:wx": "cross-env NODE_ENV=development:wx rollup -c rollup.config.dev.mjs -w",
     "build": "cross-env NODE_ENV=production rollup -c",
     "publish": "node ./scripts/publish.mjs",
     "release": "bumpp"
