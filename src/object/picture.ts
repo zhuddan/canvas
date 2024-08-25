@@ -7,10 +7,25 @@ import type { DisplayOptions } from './display'
 import { Display } from './display'
 
 export interface PictureOptions extends DisplayOptions {
+  /**
+   * 图片的宽高
+   */
   size?: PointData
+  /**
+   * 图片切片的开始坐标
+   */
   slice?: PointData
+  /**
+   * 图片切片的宽高
+   */
   sliceSize?: PointData
+  /**
+   * 图片的缩放模式
+   */
   objectFit?: Properties['objectFit']
+  /**
+   * 圆角
+   */
   rounded?: number
 }
 

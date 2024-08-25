@@ -4,12 +4,22 @@ import { createProxy } from '../utils'
 export type InputColor = CanvasRenderingContext2D['strokeStyle']
 export type LineDash = Iterable<number>
 export interface StrokeInput {
+  /**
+   * 颜色
+   */
   color?: InputColor
+  /**
+   * 宽度 同 [lineWidth](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/lineWidth)
+   */
   width?: number
+  /**
+   * [CanvasRenderingContext2D.lineDashOffset](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/lineDashOffset)
+   */
   dash?: LineDash
 }
-
-// | CanvasRenderingContext2D['strokeStyle']
+/**
+ * 抽象样式
+ */
 export interface IAbstractStyle {
   /**
    * 填充颜色

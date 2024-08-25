@@ -50,7 +50,6 @@ interface IShape {
   strokeRect: (...args: Parameters<CanvasRect['strokeRect']>) => Shape
   lineCap: (...args: [CanvasRenderingContext2D['lineCap']]) => void
   lineJoin: (...args: [CanvasRenderingContext2D['lineJoin']]) => void
-
 }
 
 export type ShapeOptions = Partial<_ShapeOptions>

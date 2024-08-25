@@ -4,7 +4,13 @@ import type { DisplayOptions } from './display'
 import { Display } from './display'
 
 export interface TextOptions extends DisplayOptions {
+  /**
+   * 文本
+   */
   text: string
+  /**
+   * 文本样式
+   */
   style?: Partial<TextStyleOptions> | TextStyle
 }
 

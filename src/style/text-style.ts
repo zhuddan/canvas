@@ -50,8 +50,17 @@ export interface TextStyleOptions extends IAbstractStyle {
    */
   textAlign: CanvasTextAlign
 
+  /**
+   * 用于指定文本的行高
+   */
   lineHeight: number
+  /**
+   * 是否开启换行
+   */
   wordWrap: boolean
+  /**
+   * 换行宽度
+   */
   wordWrapWidth: number
 }
 

@@ -27,29 +27,70 @@ interface ShadowType {
  * [单位矩阵变化](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)
  */
 export interface DisplayOptions {
+  /**
+   * 元素是否可见
+   */
   visible?: boolean
-
+  /**
+   * 元素位置x
+   */
   x?: number
-
+  /**
+   * 元素位置y
+   */
   y?: number
-
+  /**
+   * 元素位置
+   */
   position?: PointData
-
+  /**
+   * 旋转角度(弧度)
+   */
   rotation?: number
-
+  /**
+   * 缩放比例
+   */
   scale?: PointData | number
-
+  /**
+   * 单位矩阵变化中心，默认是[0,0]表示左上角，[1,1]表示右下角，[0.5,0.5]表示中心
+   *
+   * 此属性可以很好的控制元素的锚点，不用计算相对位置
+   *
+   * 例如：一个500x500的画布上需要绘制一个上下居中的图片
+   *
+   * ``` ts
+   * const text = new Picture('demo.png',{
+   *  anchor: 0.5
+   * })
+   * ```
+   *
+   * ```
+   * > [!IMPORTANT]
+   * > Crucial information necessary for users to succeed.
+   * ```
+   */
   anchor?: PointData | number
-
+  /**
+   * 同 anchor，但是具体坐标，建议使用 anchor
+   */
   pivot?: PointData | number
-
+  /**
+   * 元素倾斜
+   */
   skew?: PointData
-
+  /**
+   * 透明度
+   */
   alpha?: number
-  // 特殊样式
+  /**
+   * 阴影
+   */
   shadow?: ShadowType
 }
 
+/**
+ * 默认值
+ */
 const defaultSkew = new ObservablePoint(null)
 const defaultPivot = new ObservablePoint(null)
 const defaultAnchor = new ObservablePoint(null)
@@ -59,7 +100,6 @@ export abstract class Display extends EventEmitter<{
   ready: []
 }> implements Observer<ObservablePoint> {
   protected _env = getEnv()
-
   constructor(options: DisplayOptions = {}) {
     super()
     this.visible = options.visible ?? true

@@ -11,7 +11,13 @@ export interface AppOptions {
    *  画布高度
    */
   height?: number
+  /**
+   *  是否开启dpr
+   */
   dpr?: boolean | number
+  /**
+   *  `画布元素`或`画布id(微信小程序或者uni-app)`或者`document.querySelector可以接受的字符串`
+   */
   canvas?: HTMLCanvasElement | string
 }
 
