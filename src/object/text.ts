@@ -110,7 +110,7 @@ export class Text extends Display {
   protected updateTransformBounds() {
     if (!this._app)
       return
-    this._app.onContext((ctx) => {
+    this._app.wrapperRender((ctx) => {
       this.style.render(ctx)
       if (!this.style.wordWrap || !this.style.wordWrapWidth) {
         const measure = ctx.measureText(this.text)

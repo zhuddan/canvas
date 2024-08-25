@@ -1,7 +1,7 @@
 import type { Properties } from 'csstype'
 import type { PointData } from '../coordinate/PointData'
 import { ObservablePoint } from '../coordinate/ObservablePoint'
-import { ENV, calcDiff, drawRectCompatible, getEnv } from '../utils'
+import { ENV, calcDiff, drawRectCompatible } from '../utils'
 import type { App } from '../app'
 import type { DisplayOptions } from './display'
 import { Display } from './display'
@@ -37,12 +37,17 @@ export class Picture extends Display {
 
   onAdd(_app: App) {
     super.onAdd(_app)
-    const env = getEnv()
-    if (env === ENV.WX) {
-      this.image = (_app.canvas as any).createImage()
-      this.image!.src = this.src
-      this.initImageEvents()
+    if (this._env !== ENV.WEB) {
+      _app.onReady(this.createImage.bind(this))
     }
+  }
+
+  createImage() {
+    if (!this._app)
+      return
+    this.image = (this._app?.canvas as any).createImage()
+    this.image!.src = this.src
+    this.initImageEvents()
   }
 
   initImageEvents() {

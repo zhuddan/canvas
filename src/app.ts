@@ -1,50 +1,106 @@
 import EventEmitter from 'eventemitter3'
-import { NOOP } from './const'
 import type { Display } from './object/display'
 import { ENV, formatWithPx, getEnv } from './utils'
 
 export interface AppOptions {
+  /**
+   *  画布宽度
+   */
   width?: number
+  /**
+   *  画布高度
+   */
   height?: number
   dpr?: boolean | number
-  onUpdate?: () => void
-  createCanvas?: () => HTMLCanvasElement
+  canvas?: HTMLCanvasElement | string
 }
 
 export class App extends EventEmitter<{
   render: []
+  ready: []
 }> {
-  canvas: HTMLCanvasElement
-  private ctx: CanvasRenderingContext2D
+  private ctx!: CanvasRenderingContext2D
+  private _ready = false
+  protected _env = getEnv()
+  canvas!: HTMLCanvasElement
+  ticker!: Ticker
   dpr = 1
-  width: number
-  height: number
-  onUpdate: () => void
-  ticker: Ticker
-
-  constructor({
-    width = 600,
-    height = 800,
-    dpr = true,
-    createCanvas,
-    onUpdate,
-  }: AppOptions = {},
-  ) {
+  width = 0
+  height = 0
+  constructor(private options: AppOptions = {}) {
     super()
+    this.validateAppOptions(options)
+    this.initDpr()
+    this.initTicker()
+    this.initCanvas()
+  }
+
+  onReady(fn: AnyFunction) {
+    if (this._ready) {
+      fn()
+    }
+    else {
+      this.once('ready', () => {
+        fn()
+      })
+    }
+  }
+
+  private validateAppOptions(appOptions: AppOptions) {
+    if (this._env === ENV.WX && !appOptions.canvas) {
+      console.error('当前为非document环境, 无法使用 document.createElement(\'canvas\'),\n 请传入canvas元素或者canvasId')
+    }
+  }
+
+  private initDpr() {
+    const { dpr = true } = this.options
     if (typeof dpr === 'boolean') {
       this.dpr = window.devicePixelRatio ?? 1
     }
-    else if (typeof dpr === 'number') {
+    else {
       this.dpr = dpr
     }
-    this.onUpdate = onUpdate ?? NOOP
-    if (createCanvas) {
-      this.canvas = createCanvas()
+  }
+
+  private initCanvas() {
+    const canvas = this.options.canvas
+    if (canvas) {
+      if (typeof canvas === 'string') {
+        if (this._env === ENV.WEB) {
+          this.canvas = document.querySelector(canvas) as HTMLCanvasElement
+        }
+        else {
+          let query: WechatMiniprogram.SelectorQuery | UniNamespace.SelectorQuery
+          if (this._env === ENV.WX) {
+            query = wx.createSelectorQuery()
+          }
+          else {
+            query = uni.createSelectorQuery()
+          }
+          query.select('#myCanvas')
+            .fields({ node: true, size: true }, undefined as any)
+            .exec((res) => {
+              const canvas = res[0].node as HTMLCanvasElement
+              this.canvas = canvas
+              this.initCanvasSize()
+            })
+        }
+      }
+      else {
+        this.canvas = canvas
+        this.initCanvasSize()
+      }
     }
     else {
       this.canvas = document.createElement('canvas')!
+      this.initCanvasSize()
     }
-    this.ctx = this.canvas.getContext('2d')!
+  }
+
+  private initCanvasSize() {
+    const { width = 300, height = 150 } = this.options
+    if (!this.canvas)
+      return
     if (this.canvas.style) {
       this.canvas.style.width = formatWithPx(width)
       this.canvas.style.height = formatWithPx(height)
@@ -55,9 +111,16 @@ export class App extends EventEmitter<{
       this.canvas.width = width * this.dpr
       this.canvas.height = height * this.dpr
     }
-    this.ticker = new Ticker(this.canvas)
     this.width = width
-    this.height = height
+    this.height = width
+    this.ctx = this.canvas.getContext('2d')!
+    this._ready = true
+    this.emit('ready')
+    this.ticker.init(this.canvas, true)
+  }
+
+  private initTicker() {
+    this.ticker = new Ticker()
     this.ticker.add(this.update.bind(this))
   }
 
@@ -118,8 +181,6 @@ export class App extends EventEmitter<{
       child._renderId++
       this.afterRender()
     }
-
-    this.onUpdate()
   }
 
   toDataURL(type?: string, quality?: any) {
@@ -134,7 +195,7 @@ export class App extends EventEmitter<{
     })
   }
 
-  onContext(fn: (ctx: CanvasRenderingContext2D) => any) {
+  wrapperRender(fn: (ctx: CanvasRenderingContext2D) => any) {
     this.beforeRender()
     fn(this.ctx)
     this.afterRender()
@@ -142,17 +203,20 @@ export class App extends EventEmitter<{
 }
 
 class Ticker {
-  requestAnimationFrame: typeof requestAnimationFrame
-  cancelAnimationFrame: typeof cancelAnimationFrame
+  requestAnimationFrame?: typeof requestAnimationFrame
+  cancelAnimationFrame?: typeof cancelAnimationFrame
   myReq: number = 0
   private isRunning: boolean = false
   handler: ((time: number) => void)[] = []
   protected _env = getEnv()
-  constructor(public canvas: HTMLCanvasElement, autoStart: boolean = true) {
+  constructor(protected autoStart: boolean = true) {
+
+  }
+
+  init(canvas: HTMLCanvasElement, autoStart: boolean) {
     if (this._env === ENV.WX) {
-      const canvas = this.canvas as any
-      this.requestAnimationFrame = canvas.requestAnimationFrame.bind(this)
-      this.cancelAnimationFrame = canvas.requestAnimationFrame.bind(this)
+      this.requestAnimationFrame = (canvas as any).requestAnimationFrame.bind(this)
+      this.cancelAnimationFrame = (canvas as any).requestAnimationFrame.bind(this)
     }
     else {
       this.requestAnimationFrame = requestAnimationFrame.bind(this)
@@ -180,12 +244,12 @@ class Ticker {
 
   start() {
     this.isRunning = true
-    this.myReq = this.requestAnimationFrame(this.update.bind(this))
+    this.myReq = this.requestAnimationFrame!(this.update.bind(this))
   }
 
   stop() {
     if (this.isRunning && this.myReq) {
-      this.cancelAnimationFrame(this.myReq)
+      this.cancelAnimationFrame?.(this.myReq)
       this.isRunning = false
     }
   }
@@ -193,7 +257,7 @@ class Ticker {
   update() {
     if (!this.isRunning)
       return
-    this.myReq = this.requestAnimationFrame(this.update.bind(this))
+    this.myReq = this.requestAnimationFrame!(this.update.bind(this))
     this.handler.forEach(fn => fn(performance.now()))
   }
 }

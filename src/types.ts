@@ -13,3 +13,5 @@ export type ModifyReturnType<T, R> = {
     ? (...args: A) => R
     : T[K];
 }
+
+export type AnyFunction = (...args: any[]) => any

@@ -78,14 +78,16 @@ export enum ENV {
   WX = 'WX',
   WEB = 'WEB',
   UNKNOWN = 'UNKNOWN',
+  UNI_APP = 'UNI_APP',
 }
 
 export function getEnv() {
+  if (typeof uni !== 'undefined')
+    return ENV.UNI_APP
   if (typeof wx !== 'undefined')
     return ENV.WX
   if (typeof window !== 'undefined' && typeof window.document !== 'undefined')
     return ENV.WEB
-
   return ENV.UNKNOWN
 }
 
