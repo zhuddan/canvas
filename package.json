@@ -32,16 +32,8 @@
     "./*": "./*"
   },
   "main": "index.js",
-  "module": "./dist/index.mjs",
+  "module": "./dist/index.esm.js",
   "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./dist/*",
-        "./*"
-      ]
-    }
-  },
   "files": [
     "dist/*",
     "index.js",
@@ -50,7 +42,7 @@
   "scripts": {
     "dev:web": "cross-env NODE_ENV=development:web rollup -c rollup.config.dev.mjs -w",
     "dev:wx": "cross-env NODE_ENV=development:wx rollup -c rollup.config.dev.mjs -w",
-    "build": "cross-env NODE_ENV=production rollup -c",
+    "build": "cross-env NODE_ENV=production rollup -c rollup.config.build.mjs",
     "publish": "node ./scripts/publish.mjs",
     "release": "bumpp"
   },
