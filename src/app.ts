@@ -41,7 +41,7 @@ export class App extends EventEmitter<{
     this.initCanvas()
   }
 
-  onReady(fn: AnyFunction) {
+  onReady(fn: () => void) {
     if (this._ready) {
       fn()
     }
