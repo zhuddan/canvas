@@ -5,15 +5,20 @@ import { AbstractStyle } from './abstract-style'
 
 export interface TextStyleOptions extends IAbstractStyle {
   /**
-   * @description 字体
-   * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family)
-   */
-  fontFamily: Properties['fontFamily']
-  /**
    * @description 字体大小 当值为 number 时单位为px
    * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-size)
    */
   fontSize: Properties['fontSize'] | (number & {})
+  /**
+   * 文本时文本的对齐方式
+   * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/textAlign)
+   */
+  textAlign: CanvasTextAlign
+  /**
+   * @description 字体
+   * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family)
+   */
+  fontFamily: Properties['fontFamily']
   /**
    * @description 字体样式
    * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-style)
@@ -45,16 +50,6 @@ export interface TextStyleOptions extends IAbstractStyle {
    */
   wordSpacing: string | number
   /**
-   * 文本时文本的对齐方式
-   * [MDN Reference](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/textAlign)
-   */
-  textAlign: CanvasTextAlign
-
-  /**
-   * 用于指定文本的行高
-   */
-  lineHeight: number
-  /**
    * 是否开启换行
    */
   wordWrap: boolean
@@ -62,6 +57,10 @@ export interface TextStyleOptions extends IAbstractStyle {
    * 换行宽度
    */
   wordWrapWidth: number
+  /**
+   * 用于指定文本的行高 仅当 `wordWrap` 为 `true` 时有效
+   */
+  lineHeight: number
 }
 
 export class TextStyle extends AbstractStyle implements TextStyleOptions {
@@ -70,25 +69,24 @@ export class TextStyle extends AbstractStyle implements TextStyleOptions {
     stroke: {
       width: 1,
     },
-    fontFamily: 'Arial',
+    filter: 'none',
+    // 文本
     fontSize: 12,
+    textAlign: 'left',
+    fontFamily: 'Arial',
     fontStyle: 'normal',
     fontWeight: 'normal',
     fontStretch: 'condensed',
     fontVariantCaps: 'normal',
     letterSpacing: 0,
     wordSpacing: 0,
-    textAlign: 'left',
-    filter: 'none',
-    lineHeight: 0,
     wordWrap: false,
+    lineHeight: 12, // 默认为字体大小
     wordWrapWidth: 0,
   }
 
-  _isStroke: boolean
   constructor(style: Partial<TextStyleOptions> = {}) {
     super()
-    this._isStroke = !!style.stroke
     const fullStyle = Object.assign({}, TextStyle.defaultTextStyle, style)
     for (const key in fullStyle) {
       const thisKey = key as keyof typeof this

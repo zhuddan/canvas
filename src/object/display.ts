@@ -7,6 +7,10 @@ import { createProxy, ensureBetween, getEnv } from '../utils'
 
 export interface ShadowType {
   /**
+   * [CanvasRenderingContext2D.shadowColor](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowColor)
+   */
+  color?: string
+  /**
    * [CanvasRenderingContext2D.shadowOffsetX](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowOffsetX)
    */
   x?: number
@@ -18,10 +22,7 @@ export interface ShadowType {
    * [CanvasRenderingContext2D.shadowBlur](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowBlur)
    */
   blur?: number
-  /**
-   * [CanvasRenderingContext2D.shadowColor](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowColor)
-   */
-  color?: string
+
 }
 /**
  * [单位矩阵变化](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)

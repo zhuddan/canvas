@@ -29,9 +29,7 @@ type Methods =
   | 'lineJoin'
 
 type PathInstruction = PathData<Methods>
-interface _ShapeOptions extends DisplayOptions {
-
-}
+interface _ShapeOptions extends DisplayOptions { }
 
 interface IShape {
   beginPath: () => Shape
