@@ -7,12 +7,15 @@ const pane = new Pane({
 })
 
 const app = new App({
-  backgroundColor: '#60a5fa',
-  height: 600,
-  width: 600,
+  backgroundColor: '#60a5fab0',
+  resizeTo: document.getElementById('canvas-container')!,
 })
 
-document.getElementById('container')!.appendChild(app.canvas)
+document.getElementById('canvas-container')?.addEventListener('resize', () => {
+  console.log('resize')
+})
+
+document.getElementById('canvas-container')!.appendChild(app.canvas)
 
 const displayOptions: DisplayOptions = {
   rotation: 0,

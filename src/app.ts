@@ -23,6 +23,10 @@ export interface AppOptions {
    * backgroundColor
    */
   backgroundColor?: string
+  /**
+   * 画布resize到的元素 仅 web 支持
+   */
+  resizeTo?: HTMLElement | Window | string
 }
 
 export class App extends EventEmitter<{
@@ -37,6 +41,9 @@ export class App extends EventEmitter<{
   dpr = 1
   width = 0
   height = 0
+  _width = 0
+  _height = 0
+  removeResizeEvent?: () => void
   constructor(private options: AppOptions = {}) {
     super()
     this.validateAppOptions(options)
@@ -92,46 +99,99 @@ export class App extends EventEmitter<{
             .exec((res) => {
               const canvas = res[0].node as HTMLCanvasElement
               this.canvas = canvas
-              this.initCanvasSize()
+              this.initCanvasRenderingContext2D()
             })
         }
       }
       else {
         this.canvas = canvas
-        this.initCanvasSize()
+        this.initCanvasRenderingContext2D()
       }
     }
     else {
       this.canvas = document.createElement('canvas')!
-      this.initCanvasSize()
+      this.initCanvasRenderingContext2D()
     }
   }
 
-  private initCanvasSize() {
+  private initCanvasRenderingContext2D() {
     const {
       width = this._env === ENV.WX ? 300 : 600,
       height = this._env === ENV.WX ? 150 : 300,
+      resizeTo,
     } = this.options
     if (!this.canvas)
       return
     if (this.canvas.style) {
-      this.canvas.style.width = formatWithPx(width)
-      this.canvas.style.height = formatWithPx(height)
-      this.canvas.width = width * this.dpr
-      this.canvas.height = height * this.dpr
-      const backgroundColor = this.options.backgroundColor ?? 'transparent'
-      this.canvas.style.backgroundColor = backgroundColor
+      this.canvas.style.backgroundColor = this.options.backgroundColor ?? 'transparent'
+      if (resizeTo) {
+        this.initResizeEvent()
+      }
+      else {
+        this.width = width
+        this.height = height
+      }
     }
     else {
       this.canvas.width = width * this.dpr
       this.canvas.height = height * this.dpr
+      this.width = width
+      this.height = width
     }
-    this.width = width
-    this.height = width
+
     this.ctx = this.canvas.getContext('2d')!
     this._ready = true
-    this.emit('ready')
     this.ticker.init(this.canvas, true)
+    this.emit('ready')
+  }
+
+  initResizeEvent(): void {
+    if (!this.options.resizeTo) {
+      return
+    }
+    const resizeTo = this.options.resizeTo
+    const target = typeof resizeTo === 'string'
+      ? document.querySelector(resizeTo) as HTMLElement
+      : resizeTo
+    if (target instanceof Window) {
+      const resizeHandler = () => {
+        this.width = window.innerWidth
+        this.height = window.innerHeight
+      }
+      const _resizeHandler = resizeHandler.bind(this)
+      window.addEventListener('resize', _resizeHandler)
+      this.removeResizeEvent = () => {
+        window.removeEventListener('resize', _resizeHandler)
+      }
+    }
+    else {
+      const resizeObserver = new ResizeObserver(() => {
+        const width = target.clientWidth
+        const height = target.clientHeight
+        this.width = width
+        this.height = height
+        console.log('resize', width, height)
+      })
+      resizeObserver.observe(target)
+      this.removeResizeEvent = () => {
+        resizeObserver.disconnect()
+      }
+    }
+  }
+
+  private get shouldResize() {
+    return this.width !== this._width || this.height !== this._height
+  }
+
+  resize() {
+    if (this.shouldResize) {
+      this.canvas.style.width = formatWithPx(this.width)
+      this.canvas.style.height = formatWithPx(this.height)
+      this.canvas.width = this.width * this.dpr
+      this.canvas.height = this.height * this.dpr
+      this._width = this.width
+      this._height = this.height
+    }
   }
 
   private initTicker() {
@@ -172,13 +232,13 @@ export class App extends EventEmitter<{
     if (!this.children.length) {
       return
     }
-    const isDirty = !![...this.children.filter(e => e.dirty)].length
-    const _renderIds = this.children.every(e => e._renderId > 0)
-    if (_renderIds && this.children.length) {
-      this.emit('render')
-    }
+    const isDirty = !![...this.children.filter(e => e.dirty)].length || this.shouldResize
+
     if (!isDirty)
       return
+    if (this.shouldResize) {
+      this.resize()
+    }
     this.ctx.clearRect(
       -this.canvas.width,
       -this.canvas.height,
@@ -186,7 +246,6 @@ export class App extends EventEmitter<{
       this.canvas.height * 2,
     )
 
-    // this.debug()
     const shouldRender = [...this.children].filter(e => e.shouldUpdate)
     while (shouldRender.length) {
       this.beforeRender()

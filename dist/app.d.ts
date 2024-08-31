@@ -22,6 +22,10 @@ export interface AppOptions {
      * backgroundColor
      */
     backgroundColor?: string;
+    /**
+     * 画布resize到的元素 仅 web 支持
+     */
+    resizeTo?: HTMLElement | Window | string;
 }
 export declare class App extends EventEmitter<{
     render: [];
@@ -36,12 +40,18 @@ export declare class App extends EventEmitter<{
     dpr: number;
     width: number;
     height: number;
+    _width: number;
+    _height: number;
+    removeResizeEvent?: () => void;
     constructor(options?: AppOptions);
     onReady(fn: () => void): void;
     private validateAppOptions;
     private initDpr;
     private initCanvas;
-    private initCanvasSize;
+    private initCanvasRenderingContext2D;
+    initResizeEvent(): void;
+    private get shouldResize();
+    resize(): void;
     private initTicker;
     private beforeRender;
     private afterRender;
