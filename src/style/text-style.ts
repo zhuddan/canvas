@@ -111,6 +111,15 @@ export class TextStyle extends AbstractStyle implements TextStyleOptions {
     this.update()
   }
 
+  // set fill(value: CanvasRenderingContext2D['fillStyle'] | null) {
+  //   this._fill = value ? String(value) : 'black'
+  //   this.update()
+  // }
+
+  // get fill(): string {
+  //   return this._fill
+  // }
+
   protected readonly textBaseline = 'top'
 
   private _fontSize: TextStyleOptions['fontSize']

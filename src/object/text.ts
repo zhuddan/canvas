@@ -88,11 +88,11 @@ export class Text extends Display {
       this.style.render(ctx)
       // 绘制单行文本
       if (!this.style.wordWrap || !this.style.wordWrapWidth) {
-        if (this.style.fill) {
-          ctx.fillText(this.text, this.position.x, this.position.y)
-        }
         if (this.style.stroke?.color && this.style.stroke?.width) {
           ctx.strokeText(this.text, this.position.x, this.position.y)
+        }
+        if (this.style.fill) {
+          ctx.fillText(this.text, this.position.x, this.position.y)
         }
       }
       else {
@@ -100,7 +100,7 @@ export class Text extends Display {
         for (let i = 0; i < splitText.length; i++) {
           const text = splitText[i]
           if (this.style.fill) {
-            ctx.strokeText(text, this.position.x, this.position.y + i * this.style.lineHeight)
+            ctx.fillText(text, this.position.x, this.position.y + i * this.style.lineHeight)
           }
           if (this.style.stroke?.color && this.style.stroke?.width) {
             ctx.strokeText(text, this.position.x, this.position.y + i * this.style.lineHeight)

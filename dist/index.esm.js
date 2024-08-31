@@ -583,19 +583,21 @@ class App extends EventEmitter {
             this.removeResizeEvent = () => {
                 window.removeEventListener('resize', _resizeHandler);
             };
+            resizeHandler();
         }
         else {
-            const resizeObserver = new ResizeObserver(() => {
+            const resizeHandler = () => {
                 const width = target.clientWidth;
                 const height = target.clientHeight;
                 this.width = width;
                 this.height = height;
-                console.log('resize', width, height);
-            });
+            };
+            const resizeObserver = new ResizeObserver(resizeHandler);
             resizeObserver.observe(target);
             this.removeResizeEvent = () => {
                 resizeObserver.disconnect();
             };
+            resizeHandler();
         }
     }
     get shouldResize() {
@@ -1603,6 +1605,8 @@ class AbstractStyle extends EventEmitter {
     _fill = '#000';
     set fill(value) {
         this._fill = value;
+        console.log('fill', value);
+        console.log(this);
         this.update();
     }
     get fill() {
@@ -1708,6 +1712,13 @@ class TextStyle extends AbstractStyle {
         this.updateBounds();
         this.update();
     }
+    // set fill(value: CanvasRenderingContext2D['fillStyle'] | null) {
+    //   this._fill = value ? String(value) : 'black'
+    //   this.update()
+    // }
+    // get fill(): string {
+    //   return this._fill
+    // }
     textBaseline = 'top';
     _fontSize;
     set fontSize(value) {
@@ -1919,11 +1930,11 @@ class Text extends Display {
             this.style.render(ctx);
             // 绘制单行文本
             if (!this.style.wordWrap || !this.style.wordWrapWidth) {
-                if (this.style.fill) {
-                    ctx.fillText(this.text, this.position.x, this.position.y);
-                }
                 if (this.style.stroke?.color && this.style.stroke?.width) {
                     ctx.strokeText(this.text, this.position.x, this.position.y);
+                }
+                if (this.style.fill) {
+                    ctx.fillText(this.text, this.position.x, this.position.y);
                 }
             }
             else {
@@ -1931,7 +1942,7 @@ class Text extends Display {
                 for (let i = 0; i < splitText.length; i++) {
                     const text = splitText[i];
                     if (this.style.fill) {
-                        ctx.strokeText(text, this.position.x, this.position.y + i * this.style.lineHeight);
+                        ctx.fillText(text, this.position.x, this.position.y + i * this.style.lineHeight);
                     }
                     if (this.style.stroke?.color && this.style.stroke?.width) {
                         ctx.strokeText(text, this.position.x, this.position.y + i * this.style.lineHeight);

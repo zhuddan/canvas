@@ -8,14 +8,9 @@ const pane = new Pane({
 
 const app = new App({
   backgroundColor: '#60a5fab0',
-  resizeTo: document.getElementById('canvas-container')!,
+  resizeTo: window,
 })
-
-document.getElementById('canvas-container')?.addEventListener('resize', () => {
-  console.log('resize')
-})
-
-document.getElementById('canvas-container')!.appendChild(app.canvas)
+document.body.appendChild(app.canvas)
 
 const displayOptions: DisplayOptions = {
   rotation: 0,

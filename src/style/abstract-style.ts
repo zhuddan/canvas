@@ -44,6 +44,8 @@ export abstract class AbstractStyle extends EventEmitter<{
 
   set fill(value) {
     this._fill = value
+    console.log('fill', value)
+    console.log(this)
     this.update()
   }
 
