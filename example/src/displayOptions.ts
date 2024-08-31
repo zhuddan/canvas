@@ -1,11 +1,11 @@
-import type { DisplayOptions } from '@zd~/canvas'
+import type { RenderableOptions } from '@zd~/canvas'
 import type { Pane } from 'tweakpane'
 
 /**
  * Create default display options
  */
-export function createDefaultDisplayOptions() {
-  const displayOptions: DisplayOptions = {
+export function createDefaultRenderableOptions() {
+  const options: RenderableOptions = {
     rotation: 0,
     scale: {
       x: 1,
@@ -31,47 +31,47 @@ export function createDefaultDisplayOptions() {
       blur: 0,
     },
   }
-  return displayOptions
+  return options
 }
 
-export function addDisplayOptionsBinding(pane: Pane, displayOptions: DisplayOptions) {
+export function addRenderableOptionsBinding(pane: Pane, options: RenderableOptions) {
   const displayFolder = pane.addFolder({
     title: 'displayOptions',
   })
-  displayFolder.addBinding(displayOptions, 'rotation', {
+  displayFolder.addBinding(options, 'rotation', {
     min: -Math.PI * 2,
     max: Math.PI * 2,
   })
-  displayFolder.addBinding(displayOptions, 'scale', {
+  displayFolder.addBinding(options, 'scale', {
     x: { min: -2, max: 2 },
     y: { min: -2, max: 2 },
   })
-  displayFolder.addBinding(displayOptions, 'anchor', {
+  displayFolder.addBinding(options, 'anchor', {
     x: { min: 0, max: 1 },
     y: { min: 0, max: 1 },
   })
-  displayFolder.addBinding(displayOptions, 'pivot', {
+  displayFolder.addBinding(options, 'pivot', {
     x: { min: -100, max: 100 },
     y: { min: -100, max: 100 },
   })
-  displayFolder.addBinding(displayOptions, 'skew', {
+  displayFolder.addBinding(options, 'skew', {
     x: { min: -1, max: 1 },
     y: { min: -1, max: 1 },
   })
-  displayFolder.addBinding(displayOptions, 'alpha', {
+  displayFolder.addBinding(options, 'alpha', {
     min: 0,
     max: 1,
   })
-  if (displayOptions.shadow?.color) {
-    displayFolder.addBinding(displayOptions, 'shadow', {
+  if (options.shadow?.color) {
+    displayFolder.addBinding(options, 'shadow', {
       x: { min: -100, max: 100 },
       y: { min: -100, max: 100 },
       label: 'shadow',
     })
-    displayFolder.addBinding(displayOptions.shadow, 'color', {
+    displayFolder.addBinding(options.shadow, 'color', {
       label: 'shadow.color',
     })
-    displayFolder.addBinding(displayOptions.shadow, 'blur', {
+    displayFolder.addBinding(options.shadow, 'blur', {
       min: 0,
       max: 100,
     })

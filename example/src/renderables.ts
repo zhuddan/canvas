@@ -1,12 +1,12 @@
 import { App, Picture, Shape, Text } from '@zd~/canvas'
 import { Pane } from 'tweakpane'
-import { createDefaultDisplayOptions } from './displayOptions'
+import { createDefaultRenderableOptions } from './displayOptions'
 
 const pane = new Pane({
   container: document.getElementById('pane-container')!,
 })
 
-const displayOptions = createDefaultDisplayOptions()
+const displayOptions = createDefaultRenderableOptions()
 
 const app = new App({
   backgroundColor: '#60a5fab0',

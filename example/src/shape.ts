@@ -1,6 +1,6 @@
 import { App, Shape } from '@zd~/canvas'
 import { Pane } from 'tweakpane'
-import { addDisplayOptionsBinding } from './displayOptions'
+import { addRenderableOptionsBinding } from './displayOptions'
 
 const pane = new Pane({
   container: document.getElementById('pane-container')!,
@@ -22,4 +22,4 @@ shape.beginPath()
 shape.rect(0, 0, 100, 100)
 shape.fill('red')
 app.add(shape)
-addDisplayOptionsBinding(pane, shape)
+addRenderableOptionsBinding(pane, shape)

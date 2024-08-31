@@ -1,6 +1,6 @@
 import { App, Picture } from '@zd~/canvas'
 import { Pane } from 'tweakpane'
-import { addDisplayOptionsBinding } from './displayOptions'
+import { addRenderableOptionsBinding } from './displayOptions'
 
 const pane = new Pane({
   container: document.getElementById('pane-container')!,
@@ -24,7 +24,7 @@ const picture = new Picture({
 })
 
 app.add(picture)
-addDisplayOptionsBinding(pane, picture)
+addRenderableOptionsBinding(pane, picture)
 
 const pictureFolder = pane.addFolder({
   title: 'picture',
