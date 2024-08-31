@@ -23,7 +23,5 @@ export declare class Text extends Display {
     get _shouldUpdate(): boolean;
     getSplitText(ctx: CanvasRenderingContext2D): string[];
     _render(ctx: CanvasRenderingContext2D): void;
-    protected transformWidth: number;
-    protected transformHeight: number;
     protected updateTransformBounds(): void;
 }

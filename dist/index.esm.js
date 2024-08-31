@@ -998,7 +998,7 @@ class Display extends EventEmitter {
         this._visible = value;
         this._onUpdate();
     }
-    _shouldUpdateBounds = true;
+    _shouldUpdateBounds = false;
     shouldUpdateBounds() {
         this._shouldUpdateBounds = true;
     }
@@ -1060,6 +1060,34 @@ class Display extends EventEmitter {
         ctx.resetTransform();
     }
     _renderId = 0;
+    /**
+     * 同于形变转换的宽度
+     */
+    _transformWidth = 0;
+    get transformWidth() {
+        return this._transformWidth;
+    }
+    set transformWidth(value) {
+        if (this._transformWidth === value) {
+            return;
+        }
+        this._transformWidth = value;
+        this.emit('updateBounds', value, this.transformHeight);
+    }
+    /**
+     * 同于形变转换的高度
+     */
+    _transformHeight = 0;
+    get transformHeight() {
+        return this._transformHeight;
+    }
+    set transformHeight(value) {
+        if (this._transformHeight === value) {
+            return;
+        }
+        this._transformHeight = value;
+        this.emit('updateBounds', this.transformWidth, value);
+    }
     get height() {
         return this.transformHeight;
     }
@@ -1138,6 +1166,7 @@ class Picture extends Display {
         if (this.size !== value) {
             this._size.copyFrom(value);
             this.shouldUpdateBounds();
+            console.log('xxx');
         }
     }
     get size() {
@@ -1148,6 +1177,7 @@ class Picture extends Display {
         if (this.slice !== value) {
             this._slice.copyFrom(value);
             this.shouldUpdateBounds();
+            console.log('xxx');
         }
     }
     get slice() {
@@ -1159,6 +1189,7 @@ class Picture extends Display {
             this._sliceSize.copyFrom(value);
             this._onUpdate();
             this.shouldUpdateBounds();
+            console.log('xxx');
         }
     }
     get sliceSize() {
@@ -1169,6 +1200,7 @@ class Picture extends Display {
         if (this.objectFit !== value) {
             this._objectFit = value;
             this.shouldUpdateBounds();
+            console.log('xxx');
             this._onUpdate();
         }
     }
@@ -1210,6 +1242,7 @@ class Picture extends Display {
         this.emit('ready');
         this._onUpdate();
         this.shouldUpdateBounds();
+        console.log('xxx');
     }
     get _shouldUpdate() {
         return true;
@@ -1306,8 +1339,6 @@ class Picture extends Display {
             ctx.drawImage(...args);
         }
     }
-    transformWidth = 0;
-    transformHeight = 0;
     updateTransformBounds() {
         this.transformWidth = this.size.x;
         this.transformHeight = this.size.y;
@@ -1526,8 +1557,6 @@ class Shape extends Display {
     get strokeStyle() {
         return this._strokeStyle;
     }
-    transformWidth = 0;
-    transformHeight = 0;
     updateTransformBounds() {
         // 所有坐标的最大值放进来
         const allX = [];
@@ -1956,8 +1985,6 @@ class Text extends Display {
             }
         }
     }
-    transformWidth = 0;
-    transformHeight = 0;
     updateTransformBounds() {
         if (!this._app)
             return;

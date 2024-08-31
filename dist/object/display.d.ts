@@ -61,11 +61,6 @@ export interface DisplayOptions {
      *  anchor: 0.5
      * })
      * ```
-     *
-     * ```
-     * > [!IMPORTANT]
-     * > Crucial information necessary for users to succeed.
-     * ```
      */
     anchor?: PointData | number;
     /**
@@ -87,6 +82,7 @@ export interface DisplayOptions {
 }
 export declare abstract class Display extends EventEmitter<{
     ready: [];
+    updateBounds: [width: number, height: number];
 }> implements Observer<ObservablePoint> {
     protected _env: import("../utils").ENV;
     constructor(options?: DisplayOptions);
@@ -146,11 +142,15 @@ export declare abstract class Display extends EventEmitter<{
     /**
      * 同于形变转换的宽度
      */
-    protected abstract transformWidth: number;
+    protected _transformWidth: number;
+    protected get transformWidth(): number;
+    protected set transformWidth(value: number);
     /**
      * 同于形变转换的高度
      */
-    protected abstract transformHeight: number;
+    protected _transformHeight: number;
+    protected get transformHeight(): number;
+    protected set transformHeight(value: number);
     /**
      * 同于形变转换的边界
      */

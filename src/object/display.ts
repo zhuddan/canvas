@@ -63,11 +63,6 @@ export interface DisplayOptions {
    *  anchor: 0.5
    * })
    * ```
-   *
-   * ```
-   * > [!IMPORTANT]
-   * > Crucial information necessary for users to succeed.
-   * ```
    */
   anchor?: PointData | number
   /**
@@ -98,6 +93,7 @@ const defaultScale = new ObservablePoint(null, 1, 1)
 
 export abstract class Display extends EventEmitter<{
   ready: []
+  updateBounds: [width: number, height: number]
 }> implements Observer<ObservablePoint> {
   protected _env = getEnv()
   constructor(options: DisplayOptions = {}) {
@@ -330,7 +326,7 @@ export abstract class Display extends EventEmitter<{
     this._onUpdate()
   }
 
-  protected _shouldUpdateBounds = true
+  protected _shouldUpdateBounds = false
 
   protected shouldUpdateBounds() {
     this._shouldUpdateBounds = true
@@ -407,11 +403,36 @@ export abstract class Display extends EventEmitter<{
   /**
    * 同于形变转换的宽度
    */
-  protected abstract transformWidth: number
+  protected _transformWidth: number = 0
+
+  protected get transformWidth() {
+    return this._transformWidth
+  }
+
+  protected set transformWidth(value: number) {
+    if (this._transformWidth === value) {
+      return
+    }
+    this._transformWidth = value
+    this.emit('updateBounds', value, this.transformHeight)
+  }
+
   /**
    * 同于形变转换的高度
    */
-  protected abstract transformHeight: number
+  protected _transformHeight: number = 0
+
+  protected get transformHeight() {
+    return this._transformHeight
+  }
+
+  protected set transformHeight(value: number) {
+    if (this._transformHeight === value) {
+      return
+    }
+    this._transformHeight = value
+    this.emit('updateBounds', this.transformWidth, value)
+  }
 
   /**
    * 同于形变转换的边界

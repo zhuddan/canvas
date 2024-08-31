@@ -65,7 +65,5 @@ export declare class Picture extends Display {
     private get _isSlice();
     private renderRoundedClip;
     protected _render(ctx: CanvasRenderingContext2D): void;
-    protected transformWidth: number;
-    protected transformHeight: number;
     protected updateTransformBounds(): void;
 }

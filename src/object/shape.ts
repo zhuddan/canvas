@@ -319,8 +319,6 @@ export class Shape extends Display implements IShape {
     return this._strokeStyle
   }
 
-  protected transformWidth = 0
-  protected transformHeight = 0
   protected updateTransformBounds(): void {
     // 所有坐标的最大值放进来
     const allX: number[] = []

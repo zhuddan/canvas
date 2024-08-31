@@ -45,8 +45,6 @@ export declare class Shape extends Display implements IShape {
     private _strokeStyle;
     set strokeStyle(value: StrokeInput | InputColor);
     get strokeStyle(): StrokeInput;
-    protected transformWidth: number;
-    protected transformHeight: number;
     protected updateTransformBounds(): void;
     private _fillStyle;
     set fillStyle(value: string | CanvasGradient | CanvasPattern | null);

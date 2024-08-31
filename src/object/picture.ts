@@ -97,6 +97,7 @@ export class Picture extends Display {
     if (this.size !== value) {
       this._size.copyFrom(value)
       this.shouldUpdateBounds()
+      console.log('xxx')
     }
   }
 
@@ -110,6 +111,7 @@ export class Picture extends Display {
     if (this.slice !== value) {
       this._slice.copyFrom(value)
       this.shouldUpdateBounds()
+      console.log('xxx')
     }
   }
 
@@ -124,6 +126,7 @@ export class Picture extends Display {
       this._sliceSize.copyFrom(value)
       this._onUpdate()
       this.shouldUpdateBounds()
+      console.log('xxx')
     }
   }
 
@@ -137,6 +140,7 @@ export class Picture extends Display {
     if (this.objectFit !== value) {
       this._objectFit = value
       this.shouldUpdateBounds()
+      console.log('xxx')
       this._onUpdate()
     }
   }
@@ -193,6 +197,7 @@ export class Picture extends Display {
     this.emit('ready')
     this._onUpdate()
     this.shouldUpdateBounds()
+    console.log('xxx')
   }
 
   get _shouldUpdate(): boolean {
@@ -301,8 +306,6 @@ export class Picture extends Display {
     }
   }
 
-  protected transformWidth: number = 0
-  protected transformHeight: number = 0
   protected updateTransformBounds(): void {
     this.transformWidth = this.size.x
     this.transformHeight = this.size.y

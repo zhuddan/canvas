@@ -110,9 +110,6 @@ export class Text extends Display {
     }
   }
 
-  protected transformWidth = 0
-
-  protected transformHeight = 0
   protected updateTransformBounds() {
     if (!this._app)
       return

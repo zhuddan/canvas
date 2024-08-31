@@ -1,27 +1,19 @@
 // @ts-check
 import { Pane } from 'tweakpane'
-import throttle from 'lodash-es/throttle.js'
 import { App, Picture } from '../../dist/index'
 import { createBaseFolder, options, range } from './common.js'
 import { debug } from './_debug.js'
 
 const pane = new Pane()
 
-const refresh = throttle(() => {
-  pane.refresh()
-})
 const app = new App({
   width: document.documentElement.clientWidth,
   height: document.documentElement.clientHeight,
-  // dpr: false,
-  onUpdate() {
-    refresh()
-  },
 })
 const img = document.createElement('img')
 img.src = './scene.jpg'
-const p = new Picture('http://localhost:13000/example/scene.jpg', {
-  // objectFit: 'cover',
+const p = new Picture({
+  image: '/cat.jpg',
   size: {
     x: 300,
     y: 300,
