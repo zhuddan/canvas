@@ -319,7 +319,7 @@ export class Shape extends Renderable implements IShape {
     return this._strokeStyle
   }
 
-  protected updateTransformBounds(): void {
+  protected updateRawSize(): void {
     const allX: number[] = []
     const allY: number[] = []
     for (let index = 0; index < this.pathInstruction.length; index++) {
@@ -361,8 +361,7 @@ export class Shape extends Renderable implements IShape {
           allY.push(args[1] + args[3])
       }
     }
-    this.transformWidth = calcDiff(allX)
-    this.transformHeight = calcDiff(allY)
+    this.changeRawSize(calcDiff(allX), calcDiff(allY))
   }
 
   private _fillStyle: InputColor | null = null

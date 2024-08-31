@@ -65,5 +65,5 @@ export declare class Picture extends Renderable {
     private get _isSlice();
     private renderRoundedClip;
     protected _render(ctx: CanvasRenderingContext2D): void;
-    protected updateTransformBounds(): void;
+    protected updateRawSize(): void;
 }

@@ -45,7 +45,7 @@ export declare class Shape extends Renderable implements IShape {
     private _strokeStyle;
     set strokeStyle(value: StrokeInput | InputColor);
     get strokeStyle(): StrokeInput;
-    protected updateTransformBounds(): void;
+    protected updateRawSize(): void;
     private _fillStyle;
     set fillStyle(value: string | CanvasGradient | CanvasPattern | null);
     get fillStyle(): string | CanvasGradient | CanvasPattern | null;

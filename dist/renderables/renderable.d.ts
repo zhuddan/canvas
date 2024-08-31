@@ -30,6 +30,14 @@ export interface RenderableOptions {
      */
     visible?: boolean;
     /**
+     * 透明度
+     */
+    alpha?: number;
+    /**
+     * 阴影
+     */
+    shadow?: ShadowType;
+    /**
      * 元素位置x
      */
     x?: number;
@@ -41,14 +49,6 @@ export interface RenderableOptions {
      * 元素位置
      */
     position?: PointData;
-    /**
-     * 旋转角度(弧度)
-     */
-    rotation?: number;
-    /**
-     * 缩放比例
-     */
-    scale?: PointData | number;
     /**
      * 单位矩阵变化中心，默认是[0,0]表示左上角，[1,1]表示右下角，[0.5,0.5]表示中心
      *
@@ -68,17 +68,17 @@ export interface RenderableOptions {
      */
     pivot?: PointData | number;
     /**
+     * 旋转角度(弧度)
+     */
+    rotation?: number;
+    /**
+     * 缩放比例
+     */
+    scale?: PointData | number;
+    /**
      * 元素倾斜
      */
     skew?: PointData;
-    /**
-     * 透明度
-     */
-    alpha?: number;
-    /**
-     * 阴影
-     */
-    shadow?: ShadowType;
 }
 export declare abstract class Renderable extends EventEmitter<{
     ready: [];
@@ -89,7 +89,7 @@ export declare abstract class Renderable extends EventEmitter<{
     /**
      * 更新优化
      */
-    private get __shouldUpdate();
+    private get _renderableShouldUpdate();
     /**
      * 更新优化
      * 如果_shouldRender为true 则渲染
@@ -100,6 +100,12 @@ export declare abstract class Renderable extends EventEmitter<{
     protected _dirty: boolean;
     set dirty(value: boolean);
     get dirty(): boolean;
+    private _alpha;
+    set alpha(value: number);
+    get alpha(): number;
+    private _shadow;
+    set shadow(value: ShadowType);
+    get shadow(): ShadowType;
     set x(value: number);
     get x(): number;
     set y(value: number);
@@ -107,27 +113,21 @@ export declare abstract class Renderable extends EventEmitter<{
     private _position;
     set position(value: PointData);
     get position(): ObservablePoint;
-    private _scale;
-    set scale(value: PointData | number);
-    get scale(): ObservablePoint;
-    private _skew;
-    set skew(value: PointData);
-    get skew(): ObservablePoint;
-    private _alpha;
-    set alpha(value: number);
-    get alpha(): number;
-    private _rotation;
-    set rotation(value: number);
-    get rotation(): number;
     private _anchor;
     set anchor(value: PointData | number);
     get anchor(): ObservablePoint;
     private _pivot;
     set pivot(value: PointData | number);
     get pivot(): ObservablePoint;
-    private _shadow;
-    set shadow(value: ShadowType);
-    get shadow(): ShadowType;
+    private _rotation;
+    set rotation(value: number);
+    get rotation(): number;
+    private _scale;
+    set scale(value: PointData | number);
+    get scale(): ObservablePoint;
+    private _skew;
+    set skew(value: PointData);
+    get skew(): ObservablePoint;
     _onUpdate(_point?: ObservablePoint | undefined): void;
     _app: App | null;
     private _visible;
@@ -135,28 +135,31 @@ export declare abstract class Renderable extends EventEmitter<{
     set visible(value: boolean);
     protected _shouldUpdateBounds: boolean;
     protected shouldUpdateBounds(): void;
-    private _baseRender;
+    /**
+     * 读取阴影
+     * @param ctx
+     */
+    private _readerShadow;
     render(ctx: CanvasRenderingContext2D): void;
     _renderId: number;
     protected abstract _render(ctx: CanvasRenderingContext2D): void;
     /**
-     * 同于形变转换的宽度
+     * 原始尺寸
      */
-    protected _transformWidth: number;
-    protected get transformWidth(): number;
-    protected set transformWidth(value: number);
-    /**
-     * 同于形变转换的高度
-     */
-    protected _transformHeight: number;
-    protected get transformHeight(): number;
-    protected set transformHeight(value: number);
-    /**
-     * 同于形变转换的边界
-     */
-    protected abstract updateTransformBounds(): void;
+    protected _rawSize: {
+        width: number;
+        height: number;
+    };
     get height(): number;
     get width(): number;
+    /**
+     * 更新原始尺寸
+     */
+    protected abstract updateRawSize(): void;
+    /**
+     * 更新原始尺寸
+     */
+    protected changeRawSize(width: number, height: number): void;
     onAdd(_app: App): void;
     onRemove(): void;
     addTo(app: App): this;

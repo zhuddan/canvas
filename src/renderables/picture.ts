@@ -306,8 +306,7 @@ export class Picture extends Renderable {
     }
   }
 
-  protected updateTransformBounds(): void {
-    this.transformWidth = this.size.x
-    this.transformHeight = this.size.y
+  protected updateRawSize(): void {
+    this.changeRawSize(this.size.x, this.size.y)
   }
 }

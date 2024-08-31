@@ -110,14 +110,16 @@ export class Text extends Renderable {
     }
   }
 
-  protected updateTransformBounds() {
+  protected updateRawSize() {
     if (!this._app)
       return
     this._app.wrapperRender((ctx) => {
       this.style.render(ctx)
+      let rawWidth = this._rawSize.width
+      let rawHeight = this._rawSize.height
       if (!this.style.wordWrap || !this.style.wordWrapWidth) {
         const measure = ctx.measureText(this.text)
-        this.transformWidth = measure.width
+        rawWidth = measure.width
         let height = Math.max(...[
           measure.actualBoundingBoxDescent - measure.actualBoundingBoxAscent,
           typeof this.style.fontSize == 'number' ? this.style.fontSize : Number.parseInt(`${this.style.fontSize}`),
@@ -125,13 +127,13 @@ export class Text extends Renderable {
         if (this.style.stroke && this.style.stroke.width) {
           height += this.style.stroke.width
         }
-        this.transformHeight = height
+        rawHeight = height
       }
       else {
         const splitText = this.getSplitText(ctx)
-        this.transformWidth = this.style.wordWrapWidth
+        rawWidth = this.style.wordWrapWidth
         if (!splitText.length) {
-          this.transformHeight = 0
+          rawHeight = 0
           return
         }
         const measure = ctx.measureText(this.getSplitText(ctx)[0])
@@ -144,9 +146,10 @@ export class Text extends Renderable {
           height += this.style.stroke.width
         }
         if (splitText.length > 1) {
-          this.transformHeight = (splitText.length - 1) * lineHeight + height
+          rawHeight = (splitText.length - 1) * lineHeight + height
         }
       }
+      this.changeRawSize(rawWidth, rawHeight)
     })
   }
 };

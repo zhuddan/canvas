@@ -808,17 +808,30 @@ class ObservablePoint {
 }
 
 /**
- * 默认值
+ * 默认的倾斜
  */
 const defaultSkew = new ObservablePoint(null);
+/**
+ * 默认的旋转中心
+ */
 const defaultPivot = new ObservablePoint(null);
+/**
+ * 默认的锚点
+ */
 const defaultAnchor = new ObservablePoint(null);
+/**
+ * 默认的缩放
+ */
 const defaultScale = new ObservablePoint(null, 1, 1);
 class Renderable extends EventEmitter {
     _env = getEnv();
     constructor(options = {}) {
         super();
         this.visible = options.visible ?? true;
+        this.alpha = options.alpha ?? 1;
+        if (options.shadow) {
+            this.shadow = options.shadow;
+        }
         if (options.position) {
             this.position = options.position;
         }
@@ -826,25 +839,33 @@ class Renderable extends EventEmitter {
             this.x = options.x ?? 0;
             this.y = options.y ?? 0;
         }
-        this.scale = options.scale ?? 1;
-        this.skew = options.skew ?? { x: 0, y: 0 };
-        this.pivot = options.pivot ?? 0;
-        this.shadow = options.shadow ?? this._shadow;
-        this.rotation = options.rotation ?? 0;
-        this.anchor = options.anchor ?? 0;
-        this.alpha = options.alpha ?? 1;
+        if (options.anchor !== undefined) {
+            this.anchor = options.anchor;
+        }
+        if (options.pivot !== undefined) {
+            this.pivot = options.pivot;
+        }
+        if (options.rotation !== undefined) {
+            this.rotation = options.rotation;
+        }
+        if (options.scale !== undefined) {
+            this.scale = options.scale;
+        }
+        if (options.skew !== undefined) {
+            this.skew = options.skew;
+        }
     }
     /**
      * 更新优化
      */
-    get __shouldUpdate() {
+    get _renderableShouldUpdate() {
         return !(!this.visible
             || this.scale.x === 0
             || this.scale.y === 0
             || this.alpha === 0);
     }
     get shouldUpdate() {
-        return this.__shouldUpdate && this._shouldUpdate;
+        return this._renderableShouldUpdate && this._shouldUpdate;
     }
     _dirty = false;
     set dirty(value) {
@@ -854,6 +875,36 @@ class Renderable extends EventEmitter {
     }
     get dirty() {
         return this._dirty;
+    }
+    _alpha = 1;
+    set alpha(value) {
+        if (this.alpha !== value) {
+            this._alpha = value;
+            this._onUpdate();
+        }
+    }
+    get alpha() {
+        return this._alpha;
+    }
+    _shadow = { x: 0, y: 0 };
+    set shadow(value) {
+        if (value === this._shadow)
+            return;
+        if (value) {
+            if (value.x === undefined)
+                value.x = 5;
+            if (value.y === undefined)
+                value.y = 5;
+            if (value.blur === undefined)
+                value.blur = 0;
+            this._shadow = createProxy(value, () => {
+                this._onUpdate();
+            });
+            this._onUpdate();
+        }
+    }
+    get shadow() {
+        return this._shadow;
     }
     set x(value) {
         if (this.x !== value) {
@@ -880,15 +931,79 @@ class Renderable extends EventEmitter {
     get position() {
         return this._position;
     }
+    _anchor = defaultAnchor;
+    set anchor(value) {
+        if (this._anchor === defaultAnchor) {
+            this._anchor = new ObservablePoint(this, 0, 0);
+        }
+        if (typeof value === 'number') {
+            if (value === this._anchor.x && value === this._anchor.y) {
+                return;
+            }
+            this._anchor.set(value);
+        }
+        else {
+            if (value.x === this._anchor.x && value.y === this._anchor.y) {
+                return;
+            }
+            this._anchor.copyFrom(value);
+        }
+    }
+    get anchor() {
+        if (this._anchor === defaultAnchor) {
+            this._anchor = new ObservablePoint(this, 0, 0);
+        }
+        return this._anchor;
+    }
+    _pivot = defaultPivot;
+    set pivot(value) {
+        if (this._pivot === defaultPivot) {
+            this._pivot = new ObservablePoint(this, 0, 0);
+        }
+        if (typeof value === 'number') {
+            if (value === this._pivot.x && value === this._pivot.y) {
+                return;
+            }
+            this._pivot.set(value);
+        }
+        else {
+            if (value.x === this._pivot.x && value.y === this._pivot.y) {
+                return;
+            }
+            this._pivot.copyFrom(value);
+        }
+    }
+    get pivot() {
+        if (this._pivot === defaultPivot) {
+            this._pivot = new ObservablePoint(this);
+        }
+        return this._pivot;
+    }
+    _rotation = 0;
+    set rotation(value) {
+        if (this.rotation !== value) {
+            this._rotation = value;
+            this._onUpdate();
+        }
+    }
+    get rotation() {
+        return this._rotation;
+    }
     _scale = defaultScale;
     set scale(value) {
         if (this._scale === defaultScale) {
             this._scale = new ObservablePoint(this, 1, 1);
         }
         if (typeof value === 'number') {
+            if (value === this._scale.x && value === this._scale.y) {
+                return;
+            }
             this._scale.set(value);
         }
         else {
+            if (value.x === this._scale.x && value.y === this._scale.y) {
+                return;
+            }
             this._scale.copyFrom(value);
         }
     }
@@ -903,6 +1018,9 @@ class Renderable extends EventEmitter {
         if (this._skew === defaultSkew) {
             this._skew = new ObservablePoint(this);
         }
+        if (value.x === this._skew.x && value.y === this._skew.y) {
+            return;
+        }
         this._skew.copyFrom(value);
     }
     get skew() {
@@ -911,87 +1029,10 @@ class Renderable extends EventEmitter {
         }
         return this._skew;
     }
-    _alpha = 1;
-    set alpha(value) {
-        if (this.alpha !== value) {
-            this._alpha = value;
-            this._onUpdate();
-        }
-    }
-    get alpha() {
-        return this._alpha;
-    }
-    _rotation = 0;
-    set rotation(value) {
-        if (this.rotation !== value) {
-            this._rotation = value;
-            this._onUpdate();
-        }
-    }
-    get rotation() {
-        return this._rotation;
-    }
-    _anchor = defaultAnchor;
-    set anchor(value) {
-        if (this._anchor === defaultAnchor) {
-            this._anchor = new ObservablePoint(this, 0, 0);
-        }
-        if (typeof value === 'number') {
-            this._anchor.set(value);
-        }
-        else {
-            this._anchor.copyFrom(value);
-        }
-    }
-    get anchor() {
-        if (this._anchor === defaultAnchor) {
-            this._anchor = new ObservablePoint(this);
-        }
-        return this._anchor;
-    }
-    _pivot = defaultPivot;
-    set pivot(value) {
-        if (this._pivot === defaultPivot) {
-            this._pivot = new ObservablePoint(this, 0, 0);
-        }
-        if (typeof value === 'number') {
-            this._pivot.set(value);
-        }
-        else {
-            this._pivot.copyFrom(value);
-        }
-    }
-    get pivot() {
-        if (this._pivot === defaultPivot) {
-            this._pivot = new ObservablePoint(this);
-        }
-        return this._pivot;
-    }
-    _shadow = { x: 0, y: 0 };
-    set shadow(value) {
-        if (value === this._shadow)
-            return;
-        if (value) {
-            if (value.x === undefined)
-                value.x = 0;
-            if (value.y === undefined)
-                value.y = 0;
-            if (value.blur === undefined)
-                value.blur = 0;
-            this._shadow = createProxy(value, () => {
-                this._onUpdate();
-            });
-            this._onUpdate();
-        }
-    }
-    get shadow() {
-        return this._shadow;
-    }
     _onUpdate(_point) {
         this.dirty = true;
     }
     _app = null;
-    // abstract style: BaseStyle
     _visible = true;
     get visible() {
         return this._visible;
@@ -1004,7 +1045,11 @@ class Renderable extends EventEmitter {
     shouldUpdateBounds() {
         this._shouldUpdateBounds = true;
     }
-    _baseRender(ctx) {
+    /**
+     * 读取阴影
+     * @param ctx
+     */
+    _readerShadow(ctx) {
         if ((this.shadow?.x || this.shadow?.y)
             && (this.shadow?.blur || this.shadow?.color)) {
             if (this.shadow.color) {
@@ -1023,7 +1068,7 @@ class Renderable extends EventEmitter {
     }
     render(ctx) {
         if (this._shouldUpdateBounds) {
-            this.updateTransformBounds();
+            this.updateRawSize();
             this._shouldUpdateBounds = false;
         }
         if (this.alpha !== 1) {
@@ -1039,13 +1084,12 @@ class Renderable extends EventEmitter {
         const pivotX = this.pivot.x;
         const pivotY = this.pivot.y;
         const rotation = this.rotation;
-        // Calculate rotation matrix components
         const cos = Math.cos(rotation);
         const sin = Math.sin(rotation);
         const anchorX = ensureBetween(this.anchor.x, 0, 1);
         const anchorY = ensureBetween(this.anchor.y, 0, 1);
-        const originX = this.transformWidth * anchorX;
-        const originY = this.transformHeight * anchorY;
+        const originX = this.width * anchorX;
+        const originY = this.height * anchorY;
         const dx = positionX - (pivotX + originX) * cos * scaleX + (pivotY + originY) * sin * scaleY;
         const dy = positionY - (pivotX + originX) * sin * scaleX - (pivotY + originY) * cos * scaleY;
         ctx.setTransform(scaleX * cos + skewY * -sin, // a
@@ -1056,45 +1100,32 @@ class Renderable extends EventEmitter {
         dy);
         const _position = this.position.clone();
         this.position.set(0);
-        this._baseRender(ctx);
+        this._readerShadow(ctx);
         this._render(ctx);
         this.position = _position;
         ctx.resetTransform();
     }
     _renderId = 0;
     /**
-     * 同于形变转换的宽度
+     * 原始尺寸
      */
-    _transformWidth = 0;
-    get transformWidth() {
-        return this._transformWidth;
-    }
-    set transformWidth(value) {
-        if (this._transformWidth === value) {
-            return;
-        }
-        this._transformWidth = value;
-        this.emit('updateBounds', value, this.transformHeight);
-    }
-    /**
-     * 同于形变转换的高度
-     */
-    _transformHeight = 0;
-    get transformHeight() {
-        return this._transformHeight;
-    }
-    set transformHeight(value) {
-        if (this._transformHeight === value) {
-            return;
-        }
-        this._transformHeight = value;
-        this.emit('updateBounds', this.transformWidth, value);
-    }
+    _rawSize = { width: 0, height: 0 };
     get height() {
-        return this.transformHeight;
+        return this._rawSize.height;
     }
     get width() {
-        return this.transformWidth;
+        return this._rawSize.width;
+    }
+    /**
+     * 更新原始尺寸
+     */
+    changeRawSize(width, height) {
+        if (this._rawSize.width === width && this._rawSize.height === height) {
+            return;
+        }
+        this._rawSize.width = width;
+        this._rawSize.height = height;
+        this.shouldUpdateBounds();
     }
     onAdd(_app) {
         this._app = _app;
@@ -1341,9 +1372,8 @@ class Picture extends Renderable {
             ctx.drawImage(...args);
         }
     }
-    updateTransformBounds() {
-        this.transformWidth = this.size.x;
-        this.transformHeight = this.size.y;
+    updateRawSize() {
+        this.changeRawSize(this.size.x, this.size.y);
     }
 }
 
@@ -1559,7 +1589,7 @@ class Shape extends Renderable {
     get strokeStyle() {
         return this._strokeStyle;
     }
-    updateTransformBounds() {
+    updateRawSize() {
         const allX = [];
         const allY = [];
         for (let index = 0; index < this.pathInstruction.length; index++) {
@@ -1600,8 +1630,7 @@ class Shape extends Renderable {
                     allY.push(args[1] + args[3]);
             }
         }
-        this.transformWidth = calcDiff(allX);
-        this.transformHeight = calcDiff(allY);
+        this.changeRawSize(calcDiff(allX), calcDiff(allY));
     }
     _fillStyle = null;
     set fillStyle(value) {
@@ -1986,14 +2015,16 @@ class Text extends Renderable {
             }
         }
     }
-    updateTransformBounds() {
+    updateRawSize() {
         if (!this._app)
             return;
         this._app.wrapperRender((ctx) => {
             this.style.render(ctx);
+            let rawWidth = this._rawSize.width;
+            let rawHeight = this._rawSize.height;
             if (!this.style.wordWrap || !this.style.wordWrapWidth) {
                 const measure = ctx.measureText(this.text);
-                this.transformWidth = measure.width;
+                rawWidth = measure.width;
                 let height = Math.max(...[
                     measure.actualBoundingBoxDescent - measure.actualBoundingBoxAscent,
                     typeof this.style.fontSize == 'number' ? this.style.fontSize : Number.parseInt(`${this.style.fontSize}`),
@@ -2001,13 +2032,13 @@ class Text extends Renderable {
                 if (this.style.stroke && this.style.stroke.width) {
                     height += this.style.stroke.width;
                 }
-                this.transformHeight = height;
+                rawHeight = height;
             }
             else {
                 const splitText = this.getSplitText(ctx);
-                this.transformWidth = this.style.wordWrapWidth;
+                rawWidth = this.style.wordWrapWidth;
                 if (!splitText.length) {
-                    this.transformHeight = 0;
+                    rawHeight = 0;
                     return;
                 }
                 const measure = ctx.measureText(this.getSplitText(ctx)[0]);
@@ -2020,9 +2051,10 @@ class Text extends Renderable {
                     height += this.style.stroke.width;
                 }
                 if (splitText.length > 1) {
-                    this.transformHeight = (splitText.length - 1) * lineHeight + height;
+                    rawHeight = (splitText.length - 1) * lineHeight + height;
                 }
             }
+            this.changeRawSize(rawWidth, rawHeight);
         });
     }
 }
