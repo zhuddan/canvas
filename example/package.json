@@ -1,12 +1,27 @@
 {
+  "name": "example",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
   "dependencies": {
-    "@tweenjs/tween.js": "^25.0.0",
-    "lodash-es": "^4.17.21",
-    "pixi.js": "7.2.4",
-    "tweakpane": "^4.0.3"
+    "@zd~/canvas": "workspace:*",
+    "tweakpane": "^4.0.4"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^2.21.1",
     "@tweakpane/core": "^2.0.4",
-    "@types/lodash-es": "^4.17.12"
+    "autoprefixer": "^10.4.20",
+    "eslint": "9.4.0",
+    "eslint-plugin-format": "^0.1.1",
+    "postcss": "^8.4.41",
+    "tailwind": "^4.0.0",
+    "tailwindcss": "^3.4.10",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.1"
   }
 }

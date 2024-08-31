@@ -1,2 +1,1944 @@
-"use strict";function t(t){return t&&t.__esModule&&Object.prototype.hasOwnProperty.call(t,"default")?t.default:t}var e={exports:{}};!function(t){var e=Object.prototype.hasOwnProperty,i="~";function s(){}function n(t,e,i){this.fn=t,this.context=e,this.once=i||!1}function h(t,e,s,h,o){if("function"!=typeof s)throw new TypeError("The listener must be a function");var r=new n(s,h||t,o),a=i?i+e:e;return t._events[a]?t._events[a].fn?t._events[a]=[t._events[a],r]:t._events[a].push(r):(t._events[a]=r,t._eventsCount++),t}function o(t,e){0==--t._eventsCount?t._events=new s:delete t._events[e]}function r(){this._events=new s,this._eventsCount=0}Object.create&&(s.prototype=Object.create(null),(new s).__proto__||(i=!1)),r.prototype.eventNames=function(){var t,s,n=[];if(0===this._eventsCount)return n;for(s in t=this._events)e.call(t,s)&&n.push(i?s.slice(1):s);return Object.getOwnPropertySymbols?n.concat(Object.getOwnPropertySymbols(t)):n},r.prototype.listeners=function(t){var e=i?i+t:t,s=this._events[e];if(!s)return[];if(s.fn)return[s.fn];for(var n=0,h=s.length,o=new Array(h);n<h;n++)o[n]=s[n].fn;return o},r.prototype.listenerCount=function(t){var e=i?i+t:t,s=this._events[e];return s?s.fn?1:s.length:0},r.prototype.emit=function(t,e,s,n,h,o){var r=i?i+t:t;if(!this._events[r])return!1;var a,l,d=this._events[r],c=arguments.length;if(d.fn){switch(d.once&&this.removeListener(t,d.fn,void 0,!0),c){case 1:return d.fn.call(d.context),!0;case 2:return d.fn.call(d.context,e),!0;case 3:return d.fn.call(d.context,e,s),!0;case 4:return d.fn.call(d.context,e,s,n),!0;case 5:return d.fn.call(d.context,e,s,n,h),!0;case 6:return d.fn.call(d.context,e,s,n,h,o),!0}for(l=1,a=new Array(c-1);l<c;l++)a[l-1]=arguments[l];d.fn.apply(d.context,a)}else{var p,u=d.length;for(l=0;l<u;l++)switch(d[l].once&&this.removeListener(t,d[l].fn,void 0,!0),c){case 1:d[l].fn.call(d[l].context);break;case 2:d[l].fn.call(d[l].context,e);break;case 3:d[l].fn.call(d[l].context,e,s);break;case 4:d[l].fn.call(d[l].context,e,s,n);break;default:if(!a)for(p=1,a=new Array(c-1);p<c;p++)a[p-1]=arguments[p];d[l].fn.apply(d[l].context,a)}}return!0},r.prototype.on=function(t,e,i){return h(this,t,e,i,!1)},r.prototype.once=function(t,e,i){return h(this,t,e,i,!0)},r.prototype.removeListener=function(t,e,s,n){var h=i?i+t:t;if(!this._events[h])return this;if(!e)return o(this,h),this;var r=this._events[h];if(r.fn)r.fn!==e||n&&!r.once||s&&r.context!==s||o(this,h);else{for(var a=0,l=[],d=r.length;a<d;a++)(r[a].fn!==e||n&&!r[a].once||s&&r[a].context!==s)&&l.push(r[a]);l.length?this._events[h]=1===l.length?l[0]:l:o(this,h)}return this},r.prototype.removeAllListeners=function(t){var e;return t?(e=i?i+t:t,this._events[e]&&o(this,e)):(this._events=new s,this._eventsCount=0),this},r.prototype.off=r.prototype.removeListener,r.prototype.addListener=r.prototype.on,r.prefixed=i,r.EventEmitter=r,t.exports=r}(e);var i,s=t(e.exports);function n(t){return"string"==typeof t?t:`${t}px`}function h(t){return function(t){return t.reduce(((t,e)=>t>e?t:e))}(t)-function(t){return t.reduce(((t,e)=>t<e?t:e))}(t)}function o(t,e=0,i=1){return t<=e?e:t>=i?i:t}function r(t,e){return new Proxy(t,{set:(t,i,s)=>(t[i]=s,e?.(i,s),!0)})}function a(){return"undefined"!=typeof uni?i.UNI_APP:"undefined"!=typeof wx?i.WX:"undefined"!=typeof window&&void 0!==window.document?i.WEB:i.UNKNOWN}function l(t,e,s,n){n=n??0,n=Math.min(n,s.x/2,s.y/2),t.beginPath(),n?a()===i.WX?(t.moveTo(e.x+n,e.y),t.arcTo(e.x+s.x,e.y,e.x+s.x,e.y+n,n),t.arcTo(e.x+s.x,e.y+s.y,e.x+s.x-n,e.y+s.y,n),t.arcTo(e.x,e.y+s.y,e.x,e.y+s.y-n,n),t.arcTo(e.x,e.y,e.x+n,e.y,n),t.closePath()):t.roundRect(e.x,e.y,s.x,s.y,n):t.rect(e.x,e.y,s.x,s.y)}!function(t){t.WX="WX",t.WEB="WEB",t.UNKNOWN="UNKNOWN",t.UNI_APP="UNI_APP"}(i||(i={}));class d{autoStart;requestAnimationFrame;cancelAnimationFrame;myReq=0;isRunning=!1;handler=[];_env=a();constructor(t=!0){this.autoStart=t}init(t,e){this._env===i.WX?(this.requestAnimationFrame=t.requestAnimationFrame.bind(this),this.cancelAnimationFrame=t.requestAnimationFrame.bind(this)):(this.requestAnimationFrame=requestAnimationFrame.bind(this),this.cancelAnimationFrame=cancelAnimationFrame.bind(this)),e&&this.start()}add(t){this.handler.push(t)}removeAll(){this.handler=[]}remove(t){const e=this.handler.indexOf(t);-1!==e&&this.handler.splice(e,1)}start(){this.isRunning=!0,this.myReq=this.requestAnimationFrame(this.update.bind(this))}stop(){this.isRunning&&this.myReq&&(this.cancelAnimationFrame?.(this.myReq),this.isRunning=!1)}update(){this.isRunning&&(this.myReq=this.requestAnimationFrame(this.update.bind(this)),this.handler.forEach((t=>t(performance.now()))))}}class c{_x;_y;_observer;constructor(t,e,i){this._x=e||0,this._y=i||0,this._observer=t}clone(t){return new c(t??this._observer,this._x,this._y)}set(t=0,e=t){return this._x===t&&this._y===e||(this._x=t,this._y=e,this._observer?._onUpdate(this)),this}copyFrom(t){return this._x===t.x&&this._y===t.y||(this._x=t.x,this._y=t.y,this._observer?._onUpdate(this)),this}copyTo(t){return t.set(this._x,this._y),t}equals(t){return t.x===this._x&&t.y===this._y}get x(){return this._x}set x(t){this._x!==t&&(this._x=t,this._observer?._onUpdate(this))}get y(){return this._y}set y(t){this._y!==t&&(this._y=t,this._observer?._onUpdate(this))}[Symbol.iterator](){let t=0;const e=[this.x,this.y];return{next:()=>t<e.length?{value:e[t++],done:!1}:{done:!0,value:void 0}}}}const p=new c(null),u=new c(null),f=new c(null),_=new c(null,1,1);class y extends s{_env=a();constructor(t={}){super(),this.visible=t.visible??!0,t.position?this.position=t.position:(this.x=t.x??0,this.y=t.y??0),this.scale=t.scale??1,this.skew=t.skew??{x:0,y:0},this.pivot=t.pivot??0,this.shadow=t.shadow??this._shadow,this.rotation=t.rotation??0,this.anchor=t.anchor??0,this.alpha=t.alpha??1}get __shouldUpdate(){return!(!this.visible||0===this.scale.x||0===this.scale.y||0===this.alpha)}get shouldUpdate(){return this.__shouldUpdate&&this._shouldUpdate}_dirty=!1;set dirty(t){this._dirty!==t&&(this._dirty=t)}get dirty(){return this._dirty}set x(t){this.x!==t&&(this.position.x=t)}get x(){return this.position.x}set y(t){this.y!==t&&(this.position.y=t)}get y(){return this.position.y}_position=new c(this,0,0);set position(t){this.position!==t&&this._position.copyFrom(t)}get position(){return this._position}_scale=_;set scale(t){this._scale===_&&(this._scale=new c(this,1,1)),"number"==typeof t?this._scale.set(t):this._scale.copyFrom(t)}get scale(){return this._scale===_&&(this._scale=new c(this,1,1)),this._scale}_skew=p;set skew(t){this._skew===p&&(this._skew=new c(this)),this._skew.copyFrom(t)}get skew(){return this._skew===p&&(this._skew=new c(this,0,0)),this._skew}_alpha=1;set alpha(t){this.alpha!==t&&(this._alpha=t,this._onUpdate())}get alpha(){return this._alpha}_rotation=0;set rotation(t){this.rotation!==t&&(this._rotation=t,this._onUpdate())}get rotation(){return this._rotation}_anchor=f;set anchor(t){this._anchor===f&&(this._anchor=new c(this,0,0)),"number"==typeof t?this._anchor.set(t):this._anchor.copyFrom(t)}get anchor(){return this._anchor===f&&(this._anchor=new c(this)),this._anchor}_pivot=u;set pivot(t){this._pivot===u&&(this._pivot=new c(this,0,0)),"number"==typeof t?this._pivot.set(t):this._pivot.copyFrom(t)}get pivot(){return this._pivot===u&&(this._pivot=new c(this)),this._pivot}_shadow={x:0,y:0};set shadow(t){t!==this._shadow&&t&&(this._shadow=r(t,(()=>{this._onUpdate()})),this._onUpdate())}get shadow(){return this._shadow}_onUpdate(t){this.dirty=!0}_app=null;_visible=!0;get visible(){return this._visible}set visible(t){this._visible=t,this._onUpdate()}_shouldUpdateBounds=!0;shouldUpdateBounds(){this._shouldUpdateBounds=!0}_baseRender(t){(this.shadow?.x||this.shadow?.y)&&(this.shadow?.blur||this.shadow?.color)&&(this.shadow.color&&(t.shadowColor=this.shadow.color),this.shadow.blur&&(t.shadowBlur=this.shadow.blur),this.shadow.x&&(t.shadowOffsetX=this.shadow.x),this.shadow.y&&(t.shadowOffsetY=this.shadow.y))}render(t){this._shouldUpdateBounds&&(this.updateTransformBounds(),this._shouldUpdateBounds=!1),1!==this.alpha&&(t.globalAlpha=this.alpha);const e=this._app?.dpr??1,i=this.scale.x*e,s=this.scale.y*e,n=this.skew.x,h=this.skew.y,r=this.position.x*e,a=this.position.y*e,l=this.pivot.x,d=this.pivot.y,c=this.rotation,p=Math.cos(c),u=Math.sin(c),f=o(this.anchor.x,0,1),_=o(this.anchor.y,0,1),y=this.transformWidth*f,g=this.transformHeight*_,x=r-(l+y)*p*i+(d+g)*u*s,m=a-(l+y)*u*i-(d+g)*p*s;t.setTransform(i*p+h*-u,i*u+h*p,n*p+s*-u,n*u+s*p,x,m);const v=this.position.clone();this.position.set(0),this._baseRender(t),this._render(t),this.position=v,t.resetTransform()}_renderId=0;get height(){return this.transformHeight}get width(){return this.transformWidth}onAdd(t){this._app=t,this._onUpdate()}onRemove(){this._app=null,this._onUpdate()}addTo(t){return t.add(this),this}destroy(){this.removeAllListeners()}}class g extends s{_fill="#000";set fill(t){this._fill=t,this.update()}get fill(){return this._fill}_stroke={};set stroke(t){t!==this._stroke&&("string"==typeof t||"undefined"!=typeof CanvasGradient&&t instanceof CanvasGradient||"undefined"!=typeof CanvasPattern&&t instanceof CanvasPattern?this._stroke=r({...this._stroke,color:t},(()=>{this.update()})):(this._stroke=r(t,(()=>{this.update()})),this.update()))}get stroke(){return this._stroke}_filter="none";set filter(t){this._filter=t,this.update()}get filter(){return this._filter}update(){this.emit("update")}updateBounds(){this.emit("updateBounds")}render(t){return this.stroke.color&&this.stroke.width&&(t.lineWidth=this.stroke.width,t.strokeStyle=this.stroke.color),this.fill&&(t.fillStyle=this.fill),this.filter&&(t.filter=this.filter),this}destroy(){this.removeAllListeners()}}class x extends g{static defaultTextStyle={fill:"black",stroke:{width:1},fontFamily:"Arial",fontSize:12,fontStyle:"normal",fontWeight:"normal",fontStretch:"condensed",fontVariantCaps:"normal",letterSpacing:0,wordSpacing:0,textAlign:"left",filter:"none",lineHeight:0,wordWrap:!1,wordWrapWidth:0};_isStroke;constructor(t={}){super(),this._isStroke=!!t.stroke;const e=Object.assign({},x.defaultTextStyle,t);for(const t in e){const i=t,s=e[t];this[i]="stroke"===t?Object.assign({},x.defaultTextStyle[t],s):s}}reset(){const t=x.defaultTextStyle;for(const e in t)this[e]=t[e];this.updateBounds(),this.update()}textBaseline="top";_fontSize;set fontSize(t){this._fontSize=t,this.updateBounds(),this.update()}get fontSize(){return this._fontSize}_fontFamily;set fontFamily(t){this._fontFamily=t,this.updateBounds(),this.update()}get fontFamily(){return this._fontFamily}_fontStyle;set fontStyle(t){this._fontStyle=t,this.updateBounds(),this.update()}get fontStyle(){return this._fontStyle}_fontWeight;set fontWeight(t){this._fontWeight=t,this.updateBounds(),this.update()}get fontWeight(){return this._fontWeight}_fontStretch=x.defaultTextStyle.fontStretch;set fontStretch(t){this._fontStretch=t,this.updateBounds(),this.update()}get fontStretch(){return this._fontStretch}_fontVariantCaps=x.defaultTextStyle.fontVariantCaps;set fontVariantCaps(t){this._fontVariantCaps=t,this.updateBounds(),this.update()}get fontVariantCaps(){return this._fontVariantCaps}_letterSpacing=x.defaultTextStyle.letterSpacing;set letterSpacing(t){this._letterSpacing=t,this.update(),this.updateBounds()}get letterSpacing(){return this._letterSpacing}_wordSpacing=x.defaultTextStyle.wordSpacing;set wordSpacing(t){this._wordSpacing=t,this.update(),this.updateBounds()}get wordSpacing(){return this._wordSpacing}_textAlign=x.defaultTextStyle.textAlign;set textAlign(t){this._textAlign=t,this.update()}get textAlign(){return this._textAlign}_lineHeight=0;set lineHeight(t){this.lineHeight!==t&&(this._lineHeight=t,this.update(),this.updateBounds())}get lineHeight(){return this._lineHeight||(this._lineHeight="number"==typeof this.fontSize?this.fontSize:Number.parseInt(`${this.fontSize}`)),this._lineHeight}_wordWrap=!1;set wordWrap(t){this.wordWrap!==t&&(this._wordWrap=t,this.update(),this.updateBounds())}get wordWrap(){return this._wordWrap}_wordWrapWidth=0;set wordWrapWidth(t){this.wordWrapWidth!==t&&(this._wordWrapWidth=t,this.update(),this.updateBounds())}get wordWrapWidth(){return this._wordWrapWidth}clone(){return new x({fill:this.fill,stroke:this.stroke,fontFamily:this.fontFamily,fontSize:this.fontSize,fontStyle:this.fontStyle,fontWeight:this.fontWeight,fontStretch:this.fontStretch,fontVariantCaps:this.fontVariantCaps,letterSpacing:this.letterSpacing,wordSpacing:this.wordSpacing,textAlign:this.textAlign,filter:this.filter})}render(t){return super.render(t),t.textBaseline="top",t.font=function({fontFamily:t,fontSize:e,fontStyle:i="normal",fontWeight:s="normal"}){return`${i} ${s} ${"string"==typeof e?e:`${e}px`} ${t}`}(this),t.fontStretch=this.fontStretch,t.fontVariantCaps=this.fontVariantCaps,t.letterSpacing=n(this.letterSpacing),t.wordSpacing=n(this.wordSpacing),t.textAlign=this.textAlign,this}}exports.App=class extends s{options;ctx;_ready=!1;_env=a();canvas;ticker;dpr=1;width=0;height=0;constructor(t={}){super(),this.options=t,this.validateAppOptions(t),this.initDpr(),this.initTicker(),this.initCanvas()}onReady(t){this._ready?t():this.once("ready",(()=>{t()}))}validateAppOptions(t){this._env!==i.WX||t.canvas||console.error("当前为非document环境, 无法使用 document.createElement('canvas'),\n 请传入canvas元素或者canvasId")}initDpr(){const{dpr:t=!0}=this.options;this.dpr="boolean"==typeof t?window.devicePixelRatio??1:t}initCanvas(){const t=this.options.canvas;if(t)if("string"==typeof t)if(this._env===i.WEB)this.canvas=document.querySelector(t);else{let t;t=this._env===i.WX?wx.createSelectorQuery():uni.createSelectorQuery(),t.select("#myCanvas").fields({node:!0,size:!0},void 0).exec((t=>{const e=t[0].node;this.canvas=e,this.initCanvasSize()}))}else this.canvas=t,this.initCanvasSize();else this.canvas=document.createElement("canvas"),this.initCanvasSize()}initCanvasSize(){const{width:t=300,height:e=150}=this.options;this.canvas&&(this.canvas.style?(this.canvas.style.width=n(t),this.canvas.style.height=n(e),this.canvas.width=t*this.dpr,this.canvas.height=e*this.dpr):(this.canvas.width=t*this.dpr,this.canvas.height=e*this.dpr),this.width=t,this.height=t,this.ctx=this.canvas.getContext("2d"),this._ready=!0,this.emit("ready"),this.ticker.init(this.canvas,!0))}initTicker(){this.ticker=new d,this.ticker.add(this.update.bind(this))}beforeRender(){this.ctx.save()}afterRender(){this.ctx.restore()}children=[];add(...t){for(let e=0;e<t.length;e++){const i=t[e];this.children.push(i),i.onAdd(this)}}remove(...t){for(let e=0;e<t.length;e++){const i=t[e],s=this.children.indexOf(i);-1!==s&&(i.onRemove(),this.children.splice(s,1))}}update(){if(!this.children.length)return;const t=!![...this.children.filter((t=>t.dirty))].length;if(this.children.every((t=>t._renderId>0))&&this.children.length&&this.emit("render"),!t)return;this.ctx.clearRect(-this.canvas.width,-this.canvas.height,2*this.canvas.width,2*this.canvas.height);const e=[...this.children].filter((t=>t.shouldUpdate));for(;e.length;){this.beforeRender();const t=e.shift();t.render(this.ctx),t.dirty=!1,t._renderId++,this.afterRender()}}toDataURL(t,e){return this.canvas.toDataURL(t,e)}toDataURLAsync(t,e){return new Promise((i=>{this.once("render",(()=>{i(this.toDataURL(t,e))}))}))}wrapperRender(t){this.beforeRender(),t(this.ctx),this.afterRender()}},exports.Picture=class extends y{options;src="";constructor(t,e){super(e),this.options=e,"string"==typeof t?(this._env===i.WX?this.src=t:(this.image=document.createElement("img"),this.image.src=t,this.initImageEvents()),this.rounded=this.options?.rounded??0):(this.image=t,this.initImageEvents())}onAdd(t){super.onAdd(t),this._env!==i.WEB&&t.onReady(this.createImage.bind(this))}createImage(){this._app&&(this.image=(this._app?.canvas).createImage(),this.image.src=this.src,this.initImageEvents())}initImageEvents(){this.image&&(this.image.complete?this._onImageComplete():this.image.addEventListener("load",(()=>{this._onImageComplete()})))}image;_size=new c(this,0,0);_imageSize=new c(this,0,0);set size(t){this.size!==t&&(this._size.copyFrom(t),this.shouldUpdateBounds())}get size(){return this._size}_slice=new c(this);set slice(t){this.slice!==t&&(this._slice.copyFrom(t),this.shouldUpdateBounds())}get slice(){return this._slice}_sliceSize=new c(this);set sliceSize(t){this.sliceSize!==t&&(this._sliceSize.copyFrom(t),this._onUpdate(),this.shouldUpdateBounds())}get sliceSize(){return this._sliceSize}_objectFit="none";set objectFit(t){this.objectFit!==t&&(this._objectFit=t,this.shouldUpdateBounds(),this._onUpdate())}get objectFit(){return this._objectFit}_rounded=0;set rounded(t){t=t<=0?0:t,this.rounded!==t&&(this._rounded=t,this._onUpdate())}_onUpdate(t){this._complete&&super._onUpdate(t)}get rounded(){return this._rounded}_complete=!1;_onImageComplete(){this.image&&(this._imageSize.set(this.image.width,this.image.height),this.size=this.options?.size??{x:this.image.width,y:this.image.height},this.slice=this.options?.slice??this.slice,this.sliceSize=this.options?.sliceSize??{x:this.size.x,y:this.size.y},this.objectFit=this.options?.objectFit??this.objectFit,this.rounded=this.options?.rounded??this.rounded,this._complete=!0,this.emit("ready"),this._onUpdate(),this.shouldUpdateBounds())}get _shouldUpdate(){return!0}get _isSlice(){return!!this.slice.x||!!this.slice.y||!this.sliceSize.equals(this.size)}renderRoundedClip(t,e,i){l(t,e,i,this.rounded),t.clip()}_render(t){if(this.image&&this._complete)if(this._isSlice){const e=[this.image,this.slice.x,this.slice.y,this.sliceSize.x,this.sliceSize.y,this.x,this.y,this.size.x,this.size.y];this.renderRoundedClip(t,this.position,this.size),t.drawImage(...e)}else{const e=this.size.clone(),i=this.position.clone(),s=e.x/this._imageSize.x,n=h([this._imageSize.x,this._imageSize.y])*s,o=this._imageSize.x<this._imageSize.y,r=this._imageSize.x>this._imageSize.y;if(o||r)switch(this.objectFit){case"contain":o?(this.position.set(this.position.x-n/2,this.position.y),this.size.set(this.size.x-n,this.size.y)):(this.position.set(this.position.x,this.position.y+n/2),this.size.set(this.size.x,this.size.y-n)),this.renderRoundedClip(t,this.position,this.size);break;case"cover":o?(this.position.set(this.position.x+n/2,this.position.y),this.size.set(this.size.x+n,this.size.y)):(this.position.set(this.position.x-n/2,this.position.y),this.size.set(this.size.x+n,this.size.y)),this.renderRoundedClip(t,i,e);break;default:this.renderRoundedClip(t,this.position,this.size)}t.drawImage(this.image,this.position.x,this.position.y,this.size.x,this.size.y),this.position=i,this.size=e}}transformWidth=0;transformHeight=0;updateTransformBounds(){this.transformWidth=this.size.x,this.transformHeight=this.size.y}},exports.Shape=class extends y{constructor(t={}){super(t),this.emit("ready"),this._onUpdate()}addPath(...t){this.pathInstruction.push(...t),this.shouldUpdateBounds()}beginPath(){return this.addPath({action:"beginPath",args:[]}),this}closePath(){return this.addPath({action:"closePath",args:[]}),this}lineCap(t){return this.addPath({action:"lineCap",args:[t]}),this}lineJoin(t){return this.addPath({action:"lineJoin",args:[t]}),this}moveTo(t,e){return this.addPath({action:"moveTo",args:[t,e]}),this}lineTo(t,e){return this.addPath({action:"lineTo",args:[t,e]}),this}rect(t,e,i,s){return this.addPath({action:"rect",args:[t,e,i,s]}),this}roundRect(t,e,i,s,n){return this.addPath({action:"roundRect",args:[t,e,i,s,n]}),this}arc(t,e,i,s=0,n=2*Math.PI,h){return this.addPath({action:"arc",args:[t,e,i,s,n,h]}),this}arcTo(t,e,i,s,n){return this.addPath({action:"arcTo",args:[t,e,i,s,n]}),this}bezierCurveTo(t,e,i,s,n,h){return this.addPath({action:"bezierCurveTo",args:[t,e,i,s,n,h]}),this}ellipse(t,e,i,s,n,h,o,r){return this.addPath({action:"ellipse",args:[t,e,i,s,n,h,o,r]}),this}fillRect(t,e,i,s){return this.addPath({action:"fillRect",args:[t,e,i,s]}),this}strokeRect(t,e,i,s){return this.addPath({action:"strokeRect",args:[t,e,i,s]}),this}pathInstruction=[];get _shouldUpdate(){const t=this.pathInstruction.map((t=>t.action));return!(!t.includes("fill")&&!t.includes("stroke"))}_render(t){if(!t)throw new Error("CanvasRenderingContext2D is null or undefined");for(let e=0;e<this.pathInstruction.length;e++){const{action:s,args:n}=this.pathInstruction[e];if("fill"===s)n[0]?t.fillStyle=n[0]:this.fillStyle&&(t.fillStyle=this.fillStyle),t.fill();else if("stroke"===s){if(n[0]){const e=n[0];if("string"==typeof e||"undefined"!=typeof CanvasGradient&&e instanceof CanvasGradient||"undefined"!=typeof CanvasPattern&&e instanceof CanvasPattern)t.strokeStyle=e,t.lineWidth=this.strokeStyle.width??1;else{const i=e,s=i.color??this.strokeStyle.color;s&&(t.strokeStyle=s);const n=i.width??this.strokeStyle.width;n&&(t.lineWidth=n),i.dash?t.setLineDash(i.dash):t.setLineDash([])}}else this.strokeStyle.color&&(t.strokeStyle=this.strokeStyle.color),this.strokeStyle.width&&(t.lineWidth=this.strokeStyle.width),this.strokeStyle.dash?t.setLineDash(this.strokeStyle.dash):t.setLineDash([]);t.stroke()}else if(["lineCap","lineJoin"].includes(s))t[s]=n[0];else if("roundRect"===s&&this._env===i.WX)l(t,{x:n[0],y:n[1]},{x:n[2],y:n[3]},n[4]);else{if(!(s in t))throw new Error(`CanvasRenderingContext2D has no method ${s}`);t[s](...n)}}}_strokeStyle={};set strokeStyle(t){t!==this._strokeStyle&&("string"==typeof t||"undefined"!=typeof CanvasGradient&&t instanceof CanvasGradient||"undefined"!=typeof CanvasPattern&&t instanceof CanvasPattern?this._strokeStyle=r({...this._strokeStyle,color:t},(()=>{this._onUpdate()})):(this._strokeStyle=r(t,(()=>{this._onUpdate()})),this._onUpdate()))}get strokeStyle(){return this._strokeStyle}transformWidth=0;transformHeight=0;updateTransformBounds(){const t=[],e=[];for(let i=0;i<this.pathInstruction.length;i++){const{action:s,args:n}=this.pathInstruction[i];switch(s){case"lineTo":t.push(n[0]),e.push(n[1]);break;case"fillRect":case"strokeRect":case"roundRect":case"rect":{let i=0;"strokeRect"===s&&(i=this.strokeStyle.width??1),t.push(n[0]),e.push(n[1]),t.push(n[0]+n[2]+i),e.push(n[1]+n[3]+i);break}case"arc":case"arcTo":t.push(n[0]+n[2]),e.push(n[1]+n[2]);break;case"bezierCurveTo":t.push(n[2]+n[4]),e.push(n[3]+n[5]);break;case"ellipse":t.push(n[0]+n[2]),e.push(n[1]+n[3])}}this.transformWidth=h(t),this.transformHeight=h(e)}_fillStyle=null;set fillStyle(t){this._fillStyle=t,this._onUpdate()}get fillStyle(){return this._fillStyle}fill(t){return t&&this.addPath({action:"fill",args:[t]}),this}stroke(t){return this.addPath({action:"stroke",args:t?[t]:[]}),this}_filter="none";set filter(t){this._filter=t,this._onUpdate()}get filter(){return this._filter}},exports.Text=class extends y{constructor(t){super(t),t.style&&(this.style=t.style),this.text=t.text??"",this.emit("ready"),this._onUpdate()}_style=new x;set style(t){t=t||{},this._style?.off("update",this._onUpdate,this),this._style?.off("updateBounds",this.shouldUpdateBounds,this),this._style=t instanceof x?t:new x(t),this._style.on("update",this._onUpdate,this),this._style?.on("updateBounds",this.shouldUpdateBounds,this),this._onUpdate()}get style(){return this._style}_text="";set text(t){this._text!==t&&(this._text=t,this._onUpdate())}get text(){return this._text}get _shouldUpdate(){return!!this.style.fill||!(!this.style.stroke.color||!this.style.stroke.width)}getSplitText(t){const e=this.text.split(""),i=[];let s=[];for(let n=0;n<e.length;n++){const h=e[n];s.push(h);const o=s.join("");t.measureText(o).width>this.style.wordWrapWidth?(s.pop(),i.push(s.join("")),s=[h]):n===e.length-1&&i.push(o)}return i}_render(t){if(this.style.fill||this.style.stroke?.color&&this.style.stroke?.width)if(this.style.render(t),this.style.wordWrap&&this.style.wordWrapWidth){const e=this.getSplitText(t);for(let i=0;i<e.length;i++){const s=e[i];this.style.fill&&t.strokeText(s,this.position.x,this.position.y+i*this.style.lineHeight),this.style.stroke?.color&&this.style.stroke?.width&&t.strokeText(s,this.position.x,this.position.y+i*this.style.lineHeight)}}else this.style.fill&&t.fillText(this.text,this.position.x,this.position.y),this.style.stroke?.color&&this.style.stroke?.width&&t.strokeText(this.text,this.position.x,this.position.y)}transformWidth=0;transformHeight=0;updateTransformBounds(){this._app&&this._app.wrapperRender((t=>{if(this.style.render(t),this.style.wordWrap&&this.style.wordWrapWidth){const e=this.getSplitText(t);if(this.transformWidth=this.style.wordWrapWidth,!e.length)return void(this.transformHeight=0);const i=t.measureText(this.getSplitText(t)[0]),s=this.style.lineHeight;let n=Math.max(i.actualBoundingBoxDescent-i.actualBoundingBoxAscent,s);this.style.stroke&&this.style.stroke.width&&(n+=this.style.stroke.width),e.length>1&&(this.transformHeight=(e.length-1)*s+n)}else{const e=t.measureText(this.text);this.transformWidth=e.width;let i=Math.max(e.actualBoundingBoxDescent-e.actualBoundingBoxAscent,"number"==typeof this.style.fontSize?this.style.fontSize:Number.parseInt(`${this.style.fontSize}`));this.style.stroke&&this.style.stroke.width&&(i+=this.style.stroke.width),this.transformHeight=i}}))}},exports.TextStyle=x;
+'use strict';
+
+function getDefaultExportFromCjs (x) {
+	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+}
+
+var eventemitter3 = {exports: {}};
+
+(function (module) {
+
+	var has = Object.prototype.hasOwnProperty
+	  , prefix = '~';
+
+	/**
+	 * Constructor to create a storage for our `EE` objects.
+	 * An `Events` instance is a plain object whose properties are event names.
+	 *
+	 * @constructor
+	 * @private
+	 */
+	function Events() {}
+
+	//
+	// We try to not inherit from `Object.prototype`. In some engines creating an
+	// instance in this way is faster than calling `Object.create(null)` directly.
+	// If `Object.create(null)` is not supported we prefix the event names with a
+	// character to make sure that the built-in object properties are not
+	// overridden or used as an attack vector.
+	//
+	if (Object.create) {
+	  Events.prototype = Object.create(null);
+
+	  //
+	  // This hack is needed because the `__proto__` property is still inherited in
+	  // some old browsers like Android 4, iPhone 5.1, Opera 11 and Safari 5.
+	  //
+	  if (!new Events().__proto__) prefix = false;
+	}
+
+	/**
+	 * Representation of a single event listener.
+	 *
+	 * @param {Function} fn The listener function.
+	 * @param {*} context The context to invoke the listener with.
+	 * @param {Boolean} [once=false] Specify if the listener is a one-time listener.
+	 * @constructor
+	 * @private
+	 */
+	function EE(fn, context, once) {
+	  this.fn = fn;
+	  this.context = context;
+	  this.once = once || false;
+	}
+
+	/**
+	 * Add a listener for a given event.
+	 *
+	 * @param {EventEmitter} emitter Reference to the `EventEmitter` instance.
+	 * @param {(String|Symbol)} event The event name.
+	 * @param {Function} fn The listener function.
+	 * @param {*} context The context to invoke the listener with.
+	 * @param {Boolean} once Specify if the listener is a one-time listener.
+	 * @returns {EventEmitter}
+	 * @private
+	 */
+	function addListener(emitter, event, fn, context, once) {
+	  if (typeof fn !== 'function') {
+	    throw new TypeError('The listener must be a function');
+	  }
+
+	  var listener = new EE(fn, context || emitter, once)
+	    , evt = prefix ? prefix + event : event;
+
+	  if (!emitter._events[evt]) emitter._events[evt] = listener, emitter._eventsCount++;
+	  else if (!emitter._events[evt].fn) emitter._events[evt].push(listener);
+	  else emitter._events[evt] = [emitter._events[evt], listener];
+
+	  return emitter;
+	}
+
+	/**
+	 * Clear event by name.
+	 *
+	 * @param {EventEmitter} emitter Reference to the `EventEmitter` instance.
+	 * @param {(String|Symbol)} evt The Event name.
+	 * @private
+	 */
+	function clearEvent(emitter, evt) {
+	  if (--emitter._eventsCount === 0) emitter._events = new Events();
+	  else delete emitter._events[evt];
+	}
+
+	/**
+	 * Minimal `EventEmitter` interface that is molded against the Node.js
+	 * `EventEmitter` interface.
+	 *
+	 * @constructor
+	 * @public
+	 */
+	function EventEmitter() {
+	  this._events = new Events();
+	  this._eventsCount = 0;
+	}
+
+	/**
+	 * Return an array listing the events for which the emitter has registered
+	 * listeners.
+	 *
+	 * @returns {Array}
+	 * @public
+	 */
+	EventEmitter.prototype.eventNames = function eventNames() {
+	  var names = []
+	    , events
+	    , name;
+
+	  if (this._eventsCount === 0) return names;
+
+	  for (name in (events = this._events)) {
+	    if (has.call(events, name)) names.push(prefix ? name.slice(1) : name);
+	  }
+
+	  if (Object.getOwnPropertySymbols) {
+	    return names.concat(Object.getOwnPropertySymbols(events));
+	  }
+
+	  return names;
+	};
+
+	/**
+	 * Return the listeners registered for a given event.
+	 *
+	 * @param {(String|Symbol)} event The event name.
+	 * @returns {Array} The registered listeners.
+	 * @public
+	 */
+	EventEmitter.prototype.listeners = function listeners(event) {
+	  var evt = prefix ? prefix + event : event
+	    , handlers = this._events[evt];
+
+	  if (!handlers) return [];
+	  if (handlers.fn) return [handlers.fn];
+
+	  for (var i = 0, l = handlers.length, ee = new Array(l); i < l; i++) {
+	    ee[i] = handlers[i].fn;
+	  }
+
+	  return ee;
+	};
+
+	/**
+	 * Return the number of listeners listening to a given event.
+	 *
+	 * @param {(String|Symbol)} event The event name.
+	 * @returns {Number} The number of listeners.
+	 * @public
+	 */
+	EventEmitter.prototype.listenerCount = function listenerCount(event) {
+	  var evt = prefix ? prefix + event : event
+	    , listeners = this._events[evt];
+
+	  if (!listeners) return 0;
+	  if (listeners.fn) return 1;
+	  return listeners.length;
+	};
+
+	/**
+	 * Calls each of the listeners registered for a given event.
+	 *
+	 * @param {(String|Symbol)} event The event name.
+	 * @returns {Boolean} `true` if the event had listeners, else `false`.
+	 * @public
+	 */
+	EventEmitter.prototype.emit = function emit(event, a1, a2, a3, a4, a5) {
+	  var evt = prefix ? prefix + event : event;
+
+	  if (!this._events[evt]) return false;
+
+	  var listeners = this._events[evt]
+	    , len = arguments.length
+	    , args
+	    , i;
+
+	  if (listeners.fn) {
+	    if (listeners.once) this.removeListener(event, listeners.fn, undefined, true);
+
+	    switch (len) {
+	      case 1: return listeners.fn.call(listeners.context), true;
+	      case 2: return listeners.fn.call(listeners.context, a1), true;
+	      case 3: return listeners.fn.call(listeners.context, a1, a2), true;
+	      case 4: return listeners.fn.call(listeners.context, a1, a2, a3), true;
+	      case 5: return listeners.fn.call(listeners.context, a1, a2, a3, a4), true;
+	      case 6: return listeners.fn.call(listeners.context, a1, a2, a3, a4, a5), true;
+	    }
+
+	    for (i = 1, args = new Array(len -1); i < len; i++) {
+	      args[i - 1] = arguments[i];
+	    }
+
+	    listeners.fn.apply(listeners.context, args);
+	  } else {
+	    var length = listeners.length
+	      , j;
+
+	    for (i = 0; i < length; i++) {
+	      if (listeners[i].once) this.removeListener(event, listeners[i].fn, undefined, true);
+
+	      switch (len) {
+	        case 1: listeners[i].fn.call(listeners[i].context); break;
+	        case 2: listeners[i].fn.call(listeners[i].context, a1); break;
+	        case 3: listeners[i].fn.call(listeners[i].context, a1, a2); break;
+	        case 4: listeners[i].fn.call(listeners[i].context, a1, a2, a3); break;
+	        default:
+	          if (!args) for (j = 1, args = new Array(len -1); j < len; j++) {
+	            args[j - 1] = arguments[j];
+	          }
+
+	          listeners[i].fn.apply(listeners[i].context, args);
+	      }
+	    }
+	  }
+
+	  return true;
+	};
+
+	/**
+	 * Add a listener for a given event.
+	 *
+	 * @param {(String|Symbol)} event The event name.
+	 * @param {Function} fn The listener function.
+	 * @param {*} [context=this] The context to invoke the listener with.
+	 * @returns {EventEmitter} `this`.
+	 * @public
+	 */
+	EventEmitter.prototype.on = function on(event, fn, context) {
+	  return addListener(this, event, fn, context, false);
+	};
+
+	/**
+	 * Add a one-time listener for a given event.
+	 *
+	 * @param {(String|Symbol)} event The event name.
+	 * @param {Function} fn The listener function.
+	 * @param {*} [context=this] The context to invoke the listener with.
+	 * @returns {EventEmitter} `this`.
+	 * @public
+	 */
+	EventEmitter.prototype.once = function once(event, fn, context) {
+	  return addListener(this, event, fn, context, true);
+	};
+
+	/**
+	 * Remove the listeners of a given event.
+	 *
+	 * @param {(String|Symbol)} event The event name.
+	 * @param {Function} fn Only remove the listeners that match this function.
+	 * @param {*} context Only remove the listeners that have this context.
+	 * @param {Boolean} once Only remove one-time listeners.
+	 * @returns {EventEmitter} `this`.
+	 * @public
+	 */
+	EventEmitter.prototype.removeListener = function removeListener(event, fn, context, once) {
+	  var evt = prefix ? prefix + event : event;
+
+	  if (!this._events[evt]) return this;
+	  if (!fn) {
+	    clearEvent(this, evt);
+	    return this;
+	  }
+
+	  var listeners = this._events[evt];
+
+	  if (listeners.fn) {
+	    if (
+	      listeners.fn === fn &&
+	      (!once || listeners.once) &&
+	      (!context || listeners.context === context)
+	    ) {
+	      clearEvent(this, evt);
+	    }
+	  } else {
+	    for (var i = 0, events = [], length = listeners.length; i < length; i++) {
+	      if (
+	        listeners[i].fn !== fn ||
+	        (once && !listeners[i].once) ||
+	        (context && listeners[i].context !== context)
+	      ) {
+	        events.push(listeners[i]);
+	      }
+	    }
+
+	    //
+	    // Reset the array, or remove it completely if we have no more listeners.
+	    //
+	    if (events.length) this._events[evt] = events.length === 1 ? events[0] : events;
+	    else clearEvent(this, evt);
+	  }
+
+	  return this;
+	};
+
+	/**
+	 * Remove all listeners, or those of the specified event.
+	 *
+	 * @param {(String|Symbol)} [event] The event name.
+	 * @returns {EventEmitter} `this`.
+	 * @public
+	 */
+	EventEmitter.prototype.removeAllListeners = function removeAllListeners(event) {
+	  var evt;
+
+	  if (event) {
+	    evt = prefix ? prefix + event : event;
+	    if (this._events[evt]) clearEvent(this, evt);
+	  } else {
+	    this._events = new Events();
+	    this._eventsCount = 0;
+	  }
+
+	  return this;
+	};
+
+	//
+	// Alias methods names because people roll like that.
+	//
+	EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
+	EventEmitter.prototype.addListener = EventEmitter.prototype.on;
+
+	//
+	// Expose the prefix.
+	//
+	EventEmitter.prefixed = prefix;
+
+	//
+	// Allow `EventEmitter` to be imported as module namespace.
+	//
+	EventEmitter.EventEmitter = EventEmitter;
+
+	//
+	// Expose the module.
+	//
+	{
+	  module.exports = EventEmitter;
+	} 
+} (eventemitter3));
+
+var eventemitter3Exports = eventemitter3.exports;
+var EventEmitter = /*@__PURE__*/getDefaultExportFromCjs(eventemitter3Exports);
+
+/**
+ *  输出 px
+ * @param val
+ */
+function formatWithPx(val) {
+    return typeof val === 'string' ? val : `${val}px`;
+}
+/**
+ * 创造 [CSS-font](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font) 字符串
+ * 由于 canvas 绘制的差异性部分属性不生效故舍弃
+ */
+function createCanvasFontString({ fontFamily, fontSize, fontStyle = 'normal', fontWeight = 'normal', }) {
+    const _fontSize = typeof fontSize === 'string' ? fontSize : `${fontSize}px`;
+    return `${fontStyle} ${fontWeight} ${_fontSize} ${fontFamily}`;
+}
+/**
+ * 计算最小值
+ * @param numbers
+ */
+function calcMin(numbers) {
+    return numbers.reduce((a, b) => {
+        return a < b ? a : b;
+    });
+}
+/**
+ * 计算最大值
+ * @param numbers
+ */
+function calcMax(numbers) {
+    return numbers.reduce((a, b) => {
+        return a > b ? a : b;
+    });
+}
+/**
+ * 计算差异
+ * @param numbers
+ */
+function calcDiff(numbers) {
+    return calcMax(numbers) - calcMin(numbers);
+}
+/**
+ * 确保输入值在 min 和 max 之间，若超出边界则返回边界
+ * @param input
+ * @param min
+ * @param max
+ */
+function ensureBetween(input, min = 0, max = 1) {
+    return input <= min ? min : input >= max ? max : input;
+}
+/**
+ * 创建代理
+ * @param value
+ * @param cb
+ */
+function createProxy(value, cb) {
+    return new Proxy(value, {
+        set: (target, property, newValue) => {
+            target[property] = newValue;
+            cb?.(property, newValue);
+            return true;
+        },
+    });
+}
+var ENV;
+(function (ENV) {
+    ENV["WX"] = "WX";
+    ENV["WEB"] = "WEB";
+    ENV["UNKNOWN"] = "UNKNOWN";
+    ENV["UNI_APP"] = "UNI_APP";
+})(ENV || (ENV = {}));
+function getEnv() {
+    if (typeof uni !== 'undefined')
+        return ENV.UNI_APP;
+    if (typeof wx !== 'undefined')
+        return ENV.WX;
+    if (typeof window !== 'undefined' && typeof window.document !== 'undefined')
+        return ENV.WEB;
+    return ENV.UNKNOWN;
+}
+/**
+ * Draws a rectangle with rounded corners compatible with different environments.
+ *
+ * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+ * @param {PointData} position - The position of the rectangle.
+ * @param {PointData} size - The size of the rectangle.
+ * @param {number} [rounded] - The radius of the rounded corners.
+ *
+ * @return {void}
+ */
+function drawRectCompatible(ctx, position, size, rounded) {
+    rounded = rounded ?? 0;
+    rounded = Math.min(rounded, size.x / 2, size.y / 2);
+    ctx.beginPath();
+    if (rounded) {
+        if (getEnv() === ENV.WX) {
+            // 左上角到右上角
+            ctx.moveTo(position.x + rounded, position.y);
+            ctx.arcTo(position.x + size.x, position.y, position.x + size.x, position.y + rounded, rounded);
+            // 右上角到右下角
+            ctx.arcTo(position.x + size.x, position.y + size.y, position.x + size.x - rounded, position.y + size.y, rounded);
+            // 右下角到左下角
+            ctx.arcTo(position.x, position.y + size.y, position.x, position.y + size.y - rounded, rounded);
+            // 左下角到左上角
+            ctx.arcTo(position.x, position.y, position.x + rounded, position.y, rounded);
+            // 闭合路径
+            ctx.closePath();
+        }
+        else {
+            ctx.roundRect(position.x, position.y, size.x, size.y, rounded);
+        }
+    }
+    else {
+        ctx.rect(position.x, position.y, size.x, size.y);
+    }
+}
+
+class App extends EventEmitter {
+    options;
+    ctx;
+    _ready = false;
+    _env = getEnv();
+    canvas;
+    ticker;
+    dpr = 1;
+    width = 0;
+    height = 0;
+    constructor(options = {}) {
+        super();
+        this.options = options;
+        this.validateAppOptions(options);
+        this.initDpr();
+        this.initTicker();
+        this.initCanvas();
+    }
+    onReady(fn) {
+        if (this._ready) {
+            fn();
+        }
+        else {
+            this.once('ready', () => {
+                fn();
+            });
+        }
+    }
+    validateAppOptions(appOptions) {
+        if (this._env === ENV.WX && !appOptions.canvas) {
+            console.error('当前为非document环境, 无法使用 document.createElement(\'canvas\'),\n 请传入canvas元素或者canvasId');
+        }
+    }
+    initDpr() {
+        const { dpr = true } = this.options;
+        if (typeof dpr === 'boolean') {
+            this.dpr = window.devicePixelRatio ?? 1;
+        }
+        else {
+            this.dpr = dpr;
+        }
+    }
+    initCanvas() {
+        const canvas = this.options.canvas;
+        if (canvas) {
+            if (typeof canvas === 'string') {
+                if (this._env === ENV.WEB) {
+                    this.canvas = document.querySelector(canvas);
+                }
+                else {
+                    let query;
+                    if (this._env === ENV.WX) {
+                        query = wx.createSelectorQuery();
+                    }
+                    else {
+                        query = uni.createSelectorQuery();
+                    }
+                    query.select('#myCanvas')
+                        .fields({ node: true, size: true }, undefined)
+                        .exec((res) => {
+                        const canvas = res[0].node;
+                        this.canvas = canvas;
+                        this.initCanvasSize();
+                    });
+                }
+            }
+            else {
+                this.canvas = canvas;
+                this.initCanvasSize();
+            }
+        }
+        else {
+            this.canvas = document.createElement('canvas');
+            this.initCanvasSize();
+        }
+    }
+    initCanvasSize() {
+        const { width = this._env === ENV.WX ? 300 : 600, height = this._env === ENV.WX ? 150 : 300, } = this.options;
+        if (!this.canvas)
+            return;
+        if (this.canvas.style) {
+            this.canvas.style.width = formatWithPx(width);
+            this.canvas.style.height = formatWithPx(height);
+            this.canvas.width = width * this.dpr;
+            this.canvas.height = height * this.dpr;
+            const backgroundColor = this.options.backgroundColor ?? 'transparent';
+            this.canvas.style.backgroundColor = backgroundColor;
+        }
+        else {
+            this.canvas.width = width * this.dpr;
+            this.canvas.height = height * this.dpr;
+        }
+        this.width = width;
+        this.height = width;
+        this.ctx = this.canvas.getContext('2d');
+        this._ready = true;
+        this.emit('ready');
+        this.ticker.init(this.canvas, true);
+    }
+    initTicker() {
+        this.ticker = new Ticker();
+        this.ticker.add(this.update.bind(this));
+    }
+    beforeRender() {
+        this.ctx.save();
+    }
+    afterRender() {
+        this.ctx.restore();
+    }
+    children = [];
+    add(...objects) {
+        for (let index = 0; index < objects.length; index++) {
+            const object = objects[index];
+            this.children.push(object);
+            object.onAdd(this);
+        }
+    }
+    remove(...objects) {
+        for (let index = 0; index < objects.length; index++) {
+            const object = objects[index];
+            const delIndex = this.children.indexOf(object);
+            if (delIndex !== -1) {
+                object.onRemove();
+                this.children.splice(delIndex, 1);
+            }
+        }
+    }
+    update() {
+        if (!this.children.length) {
+            return;
+        }
+        const isDirty = !![...this.children.filter(e => e.dirty)].length;
+        const _renderIds = this.children.every(e => e._renderId > 0);
+        if (_renderIds && this.children.length) {
+            this.emit('render');
+        }
+        if (!isDirty)
+            return;
+        this.ctx.clearRect(-this.canvas.width, -this.canvas.height, this.canvas.width * 2, this.canvas.height * 2);
+        // this.debug()
+        const shouldRender = [...this.children].filter(e => e.shouldUpdate);
+        while (shouldRender.length) {
+            this.beforeRender();
+            const child = shouldRender.shift();
+            child.render(this.ctx);
+            child.dirty = false;
+            child._renderId++;
+            this.afterRender();
+        }
+    }
+    toDataURL(type, quality) {
+        return this.canvas.toDataURL(type, quality);
+    }
+    toDataURLAsync(type, quality) {
+        return new Promise((resolve) => {
+            this.once('render', () => {
+                resolve(this.toDataURL(type, quality));
+            });
+        });
+    }
+    wrapperRender(fn) {
+        this.beforeRender();
+        fn(this.ctx);
+        this.afterRender();
+    }
+}
+class Ticker {
+    autoStart;
+    requestAnimationFrame;
+    cancelAnimationFrame;
+    myReq = 0;
+    isRunning = false;
+    handler = [];
+    _env = getEnv();
+    constructor(autoStart = true) {
+        this.autoStart = autoStart;
+    }
+    init(canvas, autoStart) {
+        if (this._env === ENV.WX) {
+            this.requestAnimationFrame = canvas.requestAnimationFrame.bind(canvas);
+            this.cancelAnimationFrame = canvas.requestAnimationFrame.bind(canvas);
+        }
+        else if (window) {
+            this.requestAnimationFrame = window.requestAnimationFrame.bind(window);
+            this.cancelAnimationFrame = window.cancelAnimationFrame.bind(window);
+        }
+        if (autoStart) {
+            this.start();
+        }
+    }
+    add(fn) {
+        this.handler.push(fn);
+    }
+    removeAll() {
+        this.handler = [];
+    }
+    remove(fn) {
+        const index = this.handler.indexOf(fn);
+        if (index !== -1) {
+            this.handler.splice(index, 1);
+        }
+    }
+    start() {
+        this.isRunning = true;
+        if (this.requestAnimationFrame) {
+            this.myReq = this.requestAnimationFrame(this.update.bind(this));
+        }
+    }
+    stop() {
+        if (this.isRunning && this.myReq) {
+            this.cancelAnimationFrame?.(this.myReq);
+            this.isRunning = false;
+        }
+    }
+    update() {
+        if (!this.isRunning)
+            return;
+        if (this.requestAnimationFrame) {
+            this.myReq = this.requestAnimationFrame(this.update.bind(this));
+        }
+        this.handler.forEach(fn => fn(performance.now()));
+    }
+}
+
+class ObservablePoint {
+    _x;
+    _y;
+    _observer;
+    constructor(observer, x, y) {
+        this._x = x || 0;
+        this._y = y || 0;
+        this._observer = observer;
+    }
+    clone(observer) {
+        return new ObservablePoint(observer ?? this._observer, this._x, this._y);
+    }
+    set(x = 0, y = x) {
+        if (this._x !== x || this._y !== y) {
+            this._x = x;
+            this._y = y;
+            this._observer?._onUpdate(this);
+        }
+        return this;
+    }
+    copyFrom(p) {
+        if (this._x !== p.x || this._y !== p.y) {
+            this._x = p.x;
+            this._y = p.y;
+            this._observer?._onUpdate(this);
+        }
+        return this;
+    }
+    copyTo(p) {
+        p.set(this._x, this._y);
+        return p;
+    }
+    equals(p) {
+        return (p.x === this._x) && (p.y === this._y);
+    }
+    get x() {
+        return this._x;
+    }
+    set x(value) {
+        if (this._x !== value) {
+            this._x = value;
+            this._observer?._onUpdate(this);
+        }
+    }
+    get y() {
+        return this._y;
+    }
+    set y(value) {
+        if (this._y !== value) {
+            this._y = value;
+            this._observer?._onUpdate(this);
+        }
+    }
+    [Symbol.iterator]() {
+        let step = 0;
+        const properties = [this.x, this.y];
+        return {
+            next: () => {
+                if (step < properties.length) {
+                    return { value: properties[step++], done: false };
+                }
+                else {
+                    return { done: true, value: undefined };
+                }
+            },
+        };
+    }
+}
+
+/**
+ * 默认值
+ */
+const defaultSkew = new ObservablePoint(null);
+const defaultPivot = new ObservablePoint(null);
+const defaultAnchor = new ObservablePoint(null);
+const defaultScale = new ObservablePoint(null, 1, 1);
+class Display extends EventEmitter {
+    _env = getEnv();
+    constructor(options = {}) {
+        super();
+        this.visible = options.visible ?? true;
+        if (options.position) {
+            this.position = options.position;
+        }
+        else {
+            this.x = options.x ?? 0;
+            this.y = options.y ?? 0;
+        }
+        this.scale = options.scale ?? 1;
+        this.skew = options.skew ?? { x: 0, y: 0 };
+        this.pivot = options.pivot ?? 0;
+        this.shadow = options.shadow ?? this._shadow;
+        this.rotation = options.rotation ?? 0;
+        this.anchor = options.anchor ?? 0;
+        this.alpha = options.alpha ?? 1;
+    }
+    /**
+     * 更新优化
+     */
+    get __shouldUpdate() {
+        return !(!this.visible
+            || this.scale.x === 0
+            || this.scale.y === 0
+            || this.alpha === 0);
+    }
+    get shouldUpdate() {
+        return this.__shouldUpdate && this._shouldUpdate;
+    }
+    _dirty = false;
+    set dirty(value) {
+        if (this._dirty === value)
+            return;
+        this._dirty = value;
+    }
+    get dirty() {
+        return this._dirty;
+    }
+    set x(value) {
+        if (this.x !== value) {
+            this.position.x = value;
+        }
+    }
+    get x() {
+        return this.position.x;
+    }
+    set y(value) {
+        if (this.y !== value) {
+            this.position.y = value;
+        }
+    }
+    get y() {
+        return this.position.y;
+    }
+    _position = new ObservablePoint(this, 0, 0);
+    set position(value) {
+        if (this.position !== value) {
+            this._position.copyFrom(value);
+        }
+    }
+    get position() {
+        return this._position;
+    }
+    _scale = defaultScale;
+    set scale(value) {
+        if (this._scale === defaultScale) {
+            this._scale = new ObservablePoint(this, 1, 1);
+        }
+        if (typeof value === 'number') {
+            this._scale.set(value);
+        }
+        else {
+            this._scale.copyFrom(value);
+        }
+    }
+    get scale() {
+        if (this._scale === defaultScale) {
+            this._scale = new ObservablePoint(this, 1, 1);
+        }
+        return this._scale;
+    }
+    _skew = defaultSkew;
+    set skew(value) {
+        if (this._skew === defaultSkew) {
+            this._skew = new ObservablePoint(this);
+        }
+        this._skew.copyFrom(value);
+    }
+    get skew() {
+        if (this._skew === defaultSkew) {
+            this._skew = new ObservablePoint(this, 0, 0);
+        }
+        return this._skew;
+    }
+    _alpha = 1;
+    set alpha(value) {
+        if (this.alpha !== value) {
+            this._alpha = value;
+            this._onUpdate();
+        }
+    }
+    get alpha() {
+        return this._alpha;
+    }
+    _rotation = 0;
+    set rotation(value) {
+        if (this.rotation !== value) {
+            this._rotation = value;
+            this._onUpdate();
+        }
+    }
+    get rotation() {
+        return this._rotation;
+    }
+    _anchor = defaultAnchor;
+    set anchor(value) {
+        if (this._anchor === defaultAnchor) {
+            this._anchor = new ObservablePoint(this, 0, 0);
+        }
+        if (typeof value === 'number') {
+            this._anchor.set(value);
+        }
+        else {
+            this._anchor.copyFrom(value);
+        }
+    }
+    get anchor() {
+        if (this._anchor === defaultAnchor) {
+            this._anchor = new ObservablePoint(this);
+        }
+        return this._anchor;
+    }
+    _pivot = defaultPivot;
+    set pivot(value) {
+        if (this._pivot === defaultPivot) {
+            this._pivot = new ObservablePoint(this, 0, 0);
+        }
+        if (typeof value === 'number') {
+            this._pivot.set(value);
+        }
+        else {
+            this._pivot.copyFrom(value);
+        }
+    }
+    get pivot() {
+        if (this._pivot === defaultPivot) {
+            this._pivot = new ObservablePoint(this);
+        }
+        return this._pivot;
+    }
+    _shadow = { x: 0, y: 0 };
+    set shadow(value) {
+        if (value === this._shadow)
+            return;
+        if (value) {
+            this._shadow = createProxy(value, () => {
+                this._onUpdate();
+            });
+            this._onUpdate();
+        }
+    }
+    get shadow() {
+        return this._shadow;
+    }
+    _onUpdate(_point) {
+        this.dirty = true;
+    }
+    _app = null;
+    // abstract style: BaseStyle
+    _visible = true;
+    get visible() {
+        return this._visible;
+    }
+    set visible(value) {
+        this._visible = value;
+        this._onUpdate();
+    }
+    _shouldUpdateBounds = true;
+    shouldUpdateBounds() {
+        this._shouldUpdateBounds = true;
+    }
+    _baseRender(ctx) {
+        if ((this.shadow?.x || this.shadow?.y)
+            && (this.shadow?.blur || this.shadow?.color)) {
+            if (this.shadow.color) {
+                ctx.shadowColor = this.shadow.color;
+            }
+            if (this.shadow.blur) {
+                ctx.shadowBlur = this.shadow.blur;
+            }
+            if (this.shadow.x) {
+                ctx.shadowOffsetX = this.shadow.x;
+            }
+            if (this.shadow.y) {
+                ctx.shadowOffsetY = this.shadow.y;
+            }
+        }
+    }
+    render(ctx) {
+        if (this._shouldUpdateBounds) {
+            this.updateTransformBounds();
+            this._shouldUpdateBounds = false;
+        }
+        if (this.alpha !== 1) {
+            ctx.globalAlpha = this.alpha;
+        }
+        const dpr = this._app?.dpr ?? 1;
+        const scaleX = this.scale.x * dpr;
+        const scaleY = this.scale.y * dpr;
+        const skewX = this.skew.x;
+        const skewY = this.skew.y;
+        const positionX = this.position.x * dpr;
+        const positionY = this.position.y * dpr;
+        const pivotX = this.pivot.x;
+        const pivotY = this.pivot.y;
+        const rotation = this.rotation;
+        // Calculate rotation matrix components
+        const cos = Math.cos(rotation);
+        const sin = Math.sin(rotation);
+        const anchorX = ensureBetween(this.anchor.x, 0, 1);
+        const anchorY = ensureBetween(this.anchor.y, 0, 1);
+        const originX = this.transformWidth * anchorX;
+        const originY = this.transformHeight * anchorY;
+        const dx = positionX - (pivotX + originX) * cos * scaleX + (pivotY + originY) * sin * scaleY;
+        const dy = positionY - (pivotX + originX) * sin * scaleX - (pivotY + originY) * cos * scaleY;
+        ctx.setTransform(scaleX * cos + skewY * -sin, // a
+        scaleX * sin + skewY * cos, // b
+        skewX * cos + scaleY * -sin, // c
+        skewX * sin + scaleY * cos, // d
+        dx, // e
+        dy);
+        const _position = this.position.clone();
+        this.position.set(0);
+        this._baseRender(ctx);
+        this._render(ctx);
+        this.position = _position;
+        ctx.resetTransform();
+    }
+    _renderId = 0;
+    get height() {
+        return this.transformHeight;
+    }
+    get width() {
+        return this.transformWidth;
+    }
+    onAdd(_app) {
+        this._app = _app;
+        this._onUpdate();
+    }
+    onRemove() {
+        this._app = null;
+        this._onUpdate();
+    }
+    addTo(app) {
+        app.add(this);
+        return this;
+    }
+    destroy() {
+        this.removeAllListeners();
+    }
+}
+
+class Picture extends Display {
+    options;
+    src = '';
+    constructor(options) {
+        super(options);
+        this.options = options;
+        const maybeImage = options?.image;
+        if (typeof maybeImage == 'string') {
+            if (this._env === ENV.WX) {
+                this.src = maybeImage;
+            }
+            else {
+                this.image = document.createElement('img');
+                this.image.src = maybeImage;
+                this.initImageEvents();
+            }
+            this.rounded = this.options?.rounded ?? 0;
+        }
+        else {
+            this.image = maybeImage;
+            this.initImageEvents();
+        }
+    }
+    onAdd(_app) {
+        super.onAdd(_app);
+        if (this._env !== ENV.WEB) {
+            _app.onReady(this.createImage.bind(this));
+        }
+    }
+    createImage() {
+        if (!this._app)
+            return;
+        this.image = (this._app?.canvas).createImage();
+        this.image.src = this.src;
+        this.initImageEvents();
+    }
+    initImageEvents() {
+        if (!this.image)
+            return;
+        if (this.image.complete) {
+            this._onImageComplete();
+        }
+        else {
+            this.image.addEventListener('load', () => {
+                this._onImageComplete();
+            });
+        }
+    }
+    image;
+    _size = new ObservablePoint(this, 0, 0);
+    _imageSize = new ObservablePoint(this, 0, 0);
+    set size(value) {
+        if (this.size !== value) {
+            this._size.copyFrom(value);
+            this.shouldUpdateBounds();
+        }
+    }
+    get size() {
+        return this._size;
+    }
+    _slice = new ObservablePoint(this);
+    set slice(value) {
+        if (this.slice !== value) {
+            this._slice.copyFrom(value);
+            this.shouldUpdateBounds();
+        }
+    }
+    get slice() {
+        return this._slice;
+    }
+    _sliceSize = new ObservablePoint(this);
+    set sliceSize(value) {
+        if (this.sliceSize !== value) {
+            this._sliceSize.copyFrom(value);
+            this._onUpdate();
+            this.shouldUpdateBounds();
+        }
+    }
+    get sliceSize() {
+        return this._sliceSize;
+    }
+    _objectFit = 'none';
+    set objectFit(value) {
+        if (this.objectFit !== value) {
+            this._objectFit = value;
+            this.shouldUpdateBounds();
+            this._onUpdate();
+        }
+    }
+    get objectFit() {
+        return this._objectFit;
+    }
+    _rounded = 0;
+    set rounded(value) {
+        value = value <= 0 ? 0 : value;
+        if (this.rounded !== value) {
+            this._rounded = value;
+            this._onUpdate();
+        }
+    }
+    _onUpdate(_point) {
+        if (this._complete)
+            super._onUpdate(_point);
+    }
+    get rounded() {
+        return this._rounded;
+    }
+    _complete = false;
+    _onImageComplete() {
+        if (!this.image)
+            return;
+        this._imageSize.set(this.image.width, this.image.height);
+        this.size = this.options?.size ?? {
+            x: this.image.width,
+            y: this.image.height,
+        };
+        this.slice = this.options?.slice ?? this.slice;
+        this.sliceSize = this.options?.sliceSize ?? {
+            x: this.size.x,
+            y: this.size.y,
+        };
+        this.objectFit = this.options?.objectFit ?? this.objectFit;
+        this.rounded = this.options?.rounded ?? this.rounded;
+        this._complete = true;
+        this.emit('ready');
+        this._onUpdate();
+        this.shouldUpdateBounds();
+    }
+    get _shouldUpdate() {
+        return true;
+    }
+    get _isSlice() {
+        return (!!this.slice.x || !!this.slice.y) || !this.sliceSize.equals(this.size);
+    }
+    renderRoundedClip(ctx, position, size) {
+        drawRectCompatible(ctx, position, size, this.rounded);
+        ctx.clip();
+    }
+    _render(ctx) {
+        if (!this.image || !this._complete) {
+            return;
+        }
+        if (!this._isSlice) {
+            const _size = this.size.clone();
+            const _position = this.position.clone();
+            const scaleDiff = _size.x / this._imageSize.x;
+            const diffSize = calcDiff([this._imageSize.x, this._imageSize.y]);
+            const diff = diffSize * scaleDiff;
+            const slim = this._imageSize.x < this._imageSize.y;
+            const fat = this._imageSize.x > this._imageSize.y;
+            if (slim || fat) {
+                switch (this.objectFit) {
+                    case 'contain':
+                        if (slim) {
+                            this.position.set(this.position.x - diff / 2, this.position.y);
+                            this.size.set(this.size.x - diff, this.size.y);
+                        }
+                        else {
+                            this.position.set(this.position.x, this.position.y + diff / 2);
+                            this.size.set(this.size.x, this.size.y - diff);
+                        }
+                        // ctx.beginPath()
+                        // if (this.rounded) {
+                        //   ctx.roundRect(this.x, this.y, this.size.x, this.size.y, this.rounded)
+                        // }
+                        // else {
+                        //   ctx.rect(this.x, this.y, this.size.x, this.size.y)
+                        // }
+                        // ctx.clip()
+                        this.renderRoundedClip(ctx, this.position, this.size);
+                        break;
+                    case 'cover':
+                        if (slim) {
+                            this.position.set(this.position.x + diff / 2, this.position.y);
+                            this.size.set(this.size.x + diff, this.size.y);
+                        }
+                        else {
+                            this.position.set(this.position.x - diff / 2, this.position.y);
+                            this.size.set(this.size.x + diff, this.size.y);
+                        }
+                        // ctx.beginPath()
+                        // if (this.rounded) {
+                        //   ctx.roundRect(_position.x, _position.y, _size.x, _size.y, this.rounded)
+                        // }
+                        // else {
+                        //   ctx.rect(_position.x, _position.y, _size.x, _size.y)
+                        // }
+                        // ctx.clip()
+                        this.renderRoundedClip(ctx, _position, _size);
+                        break;
+                    default:
+                        this.renderRoundedClip(ctx, this.position, this.size);
+                }
+            }
+            ctx.drawImage(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
+            this.position = _position;
+            this.size = _size;
+        }
+        else {
+            const args = [
+                this.image,
+                this.slice.x,
+                this.slice.y,
+                this.sliceSize.x,
+                this.sliceSize.y,
+                this.x,
+                this.y,
+                this.size.x,
+                this.size.y,
+            ];
+            // ctx.beginPath()
+            // console.log(this.rounded)
+            // if (this.rounded) {
+            //   ctx.roundRect(this.x, this.y, this.size.x, this.size.y, this.rounded)
+            // }
+            // else {
+            //   ctx.rect(this.x, this.y, this.size.x, this.size.y)
+            // }
+            // ctx.clip()
+            this.renderRoundedClip(ctx, this.position, this.size);
+            ctx.drawImage(...args);
+        }
+    }
+    transformWidth = 0;
+    transformHeight = 0;
+    updateTransformBounds() {
+        this.transformWidth = this.size.x;
+        this.transformHeight = this.size.y;
+    }
+}
+
+// import type { FunctionKeys } from '../types'
+class Shape extends Display {
+    constructor(options = {}) {
+        super(options);
+        this.emit('ready');
+        this._onUpdate();
+    }
+    addPath(...items) {
+        this.pathInstruction.push(...items);
+        this.shouldUpdateBounds();
+    }
+    beginPath() {
+        this.addPath({
+            action: 'beginPath',
+            args: [],
+        });
+        return this;
+    }
+    closePath() {
+        this.addPath({
+            action: 'closePath',
+            args: [],
+        });
+        return this;
+    }
+    lineCap(cap) {
+        this.addPath({
+            action: 'lineCap',
+            args: [cap],
+        });
+        return this;
+    }
+    lineJoin(join) {
+        this.addPath({
+            action: 'lineJoin',
+            args: [join],
+        });
+        return this;
+    }
+    moveTo(x, y) {
+        this.addPath({
+            action: 'moveTo',
+            args: [x, y],
+        });
+        return this;
+    }
+    lineTo(x, y) {
+        this.addPath({
+            action: 'lineTo',
+            args: [x, y],
+        });
+        return this;
+    }
+    rect(x, y, w, h) {
+        this.addPath({
+            action: 'rect',
+            args: [x, y, w, h],
+        });
+        return this;
+    }
+    roundRect(x, y, w, h, radii) {
+        this.addPath({
+            action: 'roundRect',
+            args: [x, y, w, h, radii],
+        });
+        return this;
+    }
+    arc(x, y, radius, startAngle = 0, endAngle = 2 * Math.PI, counterclockwise) {
+        this.addPath({
+            action: 'arc',
+            args: [x, y, radius, startAngle, endAngle, counterclockwise],
+        });
+        return this;
+    }
+    arcTo(x1, y1, x2, y2, radius) {
+        this.addPath({
+            action: 'arcTo',
+            args: [x1, y1, x2, y2, radius],
+        });
+        return this;
+    }
+    bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y) {
+        this.addPath({
+            action: 'bezierCurveTo',
+            args: [cp1x, cp1y, cp2x, cp2y, x, y],
+        });
+        return this;
+    }
+    ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, counterclockwise) {
+        this.addPath({
+            action: 'ellipse',
+            args: [x, y, radiusX, radiusY, rotation, startAngle, endAngle, counterclockwise],
+        });
+        return this;
+    }
+    fillRect(x, y, w, h) {
+        this.addPath({
+            action: 'fillRect',
+            args: [x, y, w, h],
+        });
+        return this;
+    }
+    strokeRect(x, y, w, h) {
+        this.addPath({
+            action: 'strokeRect',
+            args: [x, y, w, h],
+        });
+        return this;
+    }
+    pathInstruction = [];
+    get _shouldUpdate() {
+        const actions = this.pathInstruction.map(item => item.action);
+        if (actions.includes('fill')
+            || actions.includes('stroke')) {
+            return true;
+        }
+        return false;
+    }
+    _render(ctx) {
+        if (!ctx) {
+            throw new Error('CanvasRenderingContext2D is null or undefined');
+        }
+        for (let index = 0; index < this.pathInstruction.length; index++) {
+            const { action, args } = this.pathInstruction[index];
+            if (action === 'fill') {
+                if (args[0]) {
+                    ctx.fillStyle = args[0];
+                }
+                else if (this.fillStyle) {
+                    ctx.fillStyle = this.fillStyle;
+                }
+                ctx.fill();
+            }
+            else if (action === 'stroke') {
+                if (args[0]) {
+                    const strokeInput = args[0];
+                    if (typeof strokeInput === 'string'
+                        || (typeof CanvasGradient !== 'undefined' && strokeInput instanceof CanvasGradient)
+                        || (typeof CanvasPattern !== 'undefined' && strokeInput instanceof CanvasPattern)) {
+                        ctx.strokeStyle = strokeInput;
+                        ctx.lineWidth = this.strokeStyle.width ?? 1;
+                    }
+                    else {
+                        const _strokeInput = strokeInput;
+                        const color = _strokeInput.color ?? this.strokeStyle.color;
+                        if (color)
+                            ctx.strokeStyle = color;
+                        const width = _strokeInput.width ?? this.strokeStyle.width;
+                        if (width)
+                            ctx.lineWidth = width;
+                        if (_strokeInput.dash) {
+                            ctx.setLineDash(_strokeInput.dash);
+                        }
+                        else {
+                            ctx.setLineDash([]);
+                        }
+                    }
+                }
+                else {
+                    if (this.strokeStyle.color)
+                        ctx.strokeStyle = this.strokeStyle.color;
+                    if (this.strokeStyle.width)
+                        ctx.lineWidth = this.strokeStyle.width;
+                    if (this.strokeStyle.dash) {
+                        ctx.setLineDash(this.strokeStyle.dash);
+                    }
+                    else {
+                        ctx.setLineDash([]);
+                    }
+                }
+                ctx.stroke();
+            }
+            else if (['lineCap', 'lineJoin'].includes(action)) {
+                ctx[action] = args[0];
+            }
+            else if (action === 'roundRect' && this._env === ENV.WX) {
+                drawRectCompatible(ctx, { x: args[0], y: args[1] }, { x: args[2], y: args[3] }, args[4]);
+            }
+            else {
+                if (!(action in ctx)) {
+                    throw new Error(`CanvasRenderingContext2D has no method ${action}`);
+                }
+                else {
+                    ctx[action](...args);
+                }
+            }
+        }
+    }
+    _strokeStyle = {};
+    set strokeStyle(value) {
+        if (value === this._strokeStyle)
+            return;
+        if (typeof value === 'string'
+            || (typeof CanvasGradient !== 'undefined' && value instanceof CanvasGradient)
+            || (typeof CanvasPattern !== 'undefined' && value instanceof CanvasPattern)) {
+            this._strokeStyle = createProxy({
+                ...this._strokeStyle,
+                color: value,
+            }, () => {
+                this._onUpdate();
+            });
+        }
+        else {
+            this._strokeStyle = createProxy(value, () => {
+                this._onUpdate();
+            });
+            this._onUpdate();
+        }
+    }
+    get strokeStyle() {
+        return this._strokeStyle;
+    }
+    transformWidth = 0;
+    transformHeight = 0;
+    updateTransformBounds() {
+        // 所有坐标的最大值放进来
+        const allX = [];
+        const allY = [];
+        for (let index = 0; index < this.pathInstruction.length; index++) {
+            const { action, args } = this.pathInstruction[index];
+            switch (action) {
+                case 'lineTo':
+                    allX.push(args[0]);
+                    allY.push(args[1]);
+                    break;
+                case 'fillRect':
+                case 'strokeRect':
+                case 'roundRect':
+                case 'rect': {
+                    let strokeWeight = 0;
+                    if (action === 'strokeRect') {
+                        strokeWeight = this.strokeStyle.width ?? 1;
+                    }
+                    allX.push(args[0]);
+                    allY.push(args[1]);
+                    allX.push(args[0] + args[2] + strokeWeight);
+                    allY.push(args[1] + args[3] + strokeWeight);
+                    break;
+                }
+                case 'arc':
+                    allX.push(args[0] + args[2]);
+                    allY.push(args[1] + args[2]);
+                    break;
+                case 'arcTo':
+                    allX.push(args[0] + args[2]);
+                    allY.push(args[1] + args[2]);
+                    break;
+                case 'bezierCurveTo':
+                    allX.push(args[2] + args[4]);
+                    allY.push(args[3] + args[5]);
+                    break;
+                case 'ellipse':
+                    allX.push(args[0] + args[2]);
+                    allY.push(args[1] + args[3]);
+            }
+        }
+        this.transformWidth = calcDiff(allX);
+        this.transformHeight = calcDiff(allY);
+    }
+    _fillStyle = null;
+    set fillStyle(value) {
+        this._fillStyle = value;
+        this._onUpdate();
+    }
+    get fillStyle() {
+        return this._fillStyle;
+    }
+    fill(color) {
+        if (color) {
+            this.addPath({
+                action: 'fill',
+                args: [color],
+            });
+        }
+        return this;
+    }
+    stroke(value) {
+        this.addPath({
+            action: 'stroke',
+            args: value ? [value] : [],
+        });
+        return this;
+    }
+    _filter = 'none';
+    set filter(value) {
+        this._filter = value;
+        this._onUpdate();
+    }
+    get filter() {
+        return this._filter;
+    }
+}
+
+class AbstractStyle extends EventEmitter {
+    _fill = '#000';
+    set fill(value) {
+        this._fill = value;
+        this.update();
+    }
+    get fill() {
+        return this._fill;
+    }
+    _stroke = {};
+    set stroke(value) {
+        if (value === this._stroke)
+            return;
+        if (typeof value === 'string'
+            || (typeof CanvasGradient !== 'undefined' && value instanceof CanvasGradient)
+            || (typeof CanvasPattern !== 'undefined' && value instanceof CanvasPattern)) {
+            this._stroke = createProxy({
+                ...this._stroke,
+                color: value,
+            }, () => {
+                this.update();
+            });
+        }
+        else {
+            this._stroke = createProxy(value, () => {
+                this.update();
+            });
+            this.update();
+        }
+    }
+    get stroke() {
+        return this._stroke;
+    }
+    _filter = 'none';
+    set filter(value) {
+        this._filter = value;
+        this.update();
+    }
+    get filter() {
+        return this._filter;
+    }
+    update() {
+        this.emit('update');
+    }
+    updateBounds() {
+        this.emit('updateBounds');
+    }
+    render(ctx) {
+        if (this.stroke.color && this.stroke.width) {
+            ctx.lineWidth = this.stroke.width;
+            ctx.strokeStyle = this.stroke.color;
+        }
+        if (this.fill) {
+            ctx.fillStyle = this.fill;
+        }
+        if (this.filter) {
+            ctx.filter = this.filter;
+        }
+        return this;
+    }
+    destroy() {
+        this.removeAllListeners();
+    }
+}
+
+class TextStyle extends AbstractStyle {
+    static defaultTextStyle = {
+        fill: 'black',
+        stroke: {
+            width: 1,
+        },
+        fontFamily: 'Arial',
+        fontSize: 12,
+        fontStyle: 'normal',
+        fontWeight: 'normal',
+        fontStretch: 'condensed',
+        fontVariantCaps: 'normal',
+        letterSpacing: 0,
+        wordSpacing: 0,
+        textAlign: 'left',
+        filter: 'none',
+        lineHeight: 0,
+        wordWrap: false,
+        wordWrapWidth: 0,
+    };
+    _isStroke;
+    constructor(style = {}) {
+        super();
+        this._isStroke = !!style.stroke;
+        const fullStyle = Object.assign({}, TextStyle.defaultTextStyle, style);
+        for (const key in fullStyle) {
+            const thisKey = key;
+            const data = fullStyle[key];
+            if (key === 'stroke') {
+                this[thisKey] = Object.assign({}, TextStyle.defaultTextStyle[key], data);
+            }
+            else {
+                this[thisKey] = data;
+            }
+        }
+    }
+    reset() {
+        const defaultStyle = TextStyle.defaultTextStyle;
+        for (const key in defaultStyle) {
+            this[key] = defaultStyle[key];
+        }
+        this.updateBounds();
+        this.update();
+    }
+    textBaseline = 'top';
+    _fontSize;
+    set fontSize(value) {
+        this._fontSize = value;
+        this.updateBounds();
+        this.update();
+    }
+    get fontSize() {
+        return this._fontSize;
+    }
+    _fontFamily;
+    set fontFamily(value) {
+        this._fontFamily = value;
+        this.updateBounds();
+        this.update();
+    }
+    get fontFamily() {
+        return this._fontFamily;
+    }
+    _fontStyle;
+    set fontStyle(value) {
+        this._fontStyle = value;
+        this.updateBounds();
+        this.update();
+    }
+    get fontStyle() {
+        return this._fontStyle;
+    }
+    _fontWeight;
+    set fontWeight(value) {
+        this._fontWeight = value;
+        this.updateBounds();
+        this.update();
+    }
+    get fontWeight() {
+        return this._fontWeight;
+    }
+    _fontStretch = TextStyle.defaultTextStyle.fontStretch;
+    set fontStretch(value) {
+        this._fontStretch = value;
+        this.updateBounds();
+        this.update();
+    }
+    get fontStretch() {
+        return this._fontStretch;
+    }
+    _fontVariantCaps = TextStyle.defaultTextStyle.fontVariantCaps;
+    set fontVariantCaps(value) {
+        this._fontVariantCaps = value;
+        this.updateBounds();
+        this.update();
+    }
+    get fontVariantCaps() {
+        return this._fontVariantCaps;
+    }
+    _letterSpacing = TextStyle.defaultTextStyle.letterSpacing;
+    set letterSpacing(value) {
+        this._letterSpacing = value;
+        this.update();
+        this.updateBounds();
+    }
+    get letterSpacing() {
+        return this._letterSpacing;
+    }
+    _wordSpacing = TextStyle.defaultTextStyle.wordSpacing;
+    set wordSpacing(value) {
+        this._wordSpacing = value;
+        this.update();
+        this.updateBounds();
+    }
+    get wordSpacing() {
+        return this._wordSpacing;
+    }
+    _textAlign = TextStyle.defaultTextStyle.textAlign;
+    set textAlign(value) {
+        this._textAlign = value;
+        this.update();
+    }
+    get textAlign() {
+        return this._textAlign;
+    }
+    _lineHeight = 0;
+    set lineHeight(value) {
+        if (this.lineHeight !== value) {
+            this._lineHeight = value;
+            this.update();
+            this.updateBounds();
+        }
+    }
+    get lineHeight() {
+        if (!this._lineHeight) {
+            this._lineHeight = typeof this.fontSize == 'number' ? this.fontSize : Number.parseInt(`${this.fontSize}`);
+        }
+        return this._lineHeight;
+    }
+    _wordWrap = false;
+    set wordWrap(value) {
+        if (this.wordWrap !== value) {
+            this._wordWrap = value;
+            this.update();
+            this.updateBounds();
+        }
+    }
+    get wordWrap() {
+        return this._wordWrap;
+    }
+    _wordWrapWidth = 0;
+    set wordWrapWidth(value) {
+        if (this.wordWrapWidth !== value) {
+            this._wordWrapWidth = value;
+            this.update();
+            this.updateBounds();
+        }
+    }
+    get wordWrapWidth() {
+        return this._wordWrapWidth;
+    }
+    clone() {
+        return new TextStyle({
+            fill: this.fill,
+            stroke: this.stroke,
+            fontFamily: this.fontFamily,
+            fontSize: this.fontSize,
+            fontStyle: this.fontStyle,
+            fontWeight: this.fontWeight,
+            fontStretch: this.fontStretch,
+            fontVariantCaps: this.fontVariantCaps,
+            letterSpacing: this.letterSpacing,
+            wordSpacing: this.wordSpacing,
+            textAlign: this.textAlign,
+            filter: this.filter,
+        });
+    }
+    render(ctx) {
+        super.render(ctx);
+        ctx.textBaseline = 'top';
+        ctx.font = createCanvasFontString(this);
+        ctx.fontStretch = this.fontStretch;
+        ctx.fontVariantCaps = this.fontVariantCaps;
+        ctx.letterSpacing = formatWithPx(this.letterSpacing);
+        ctx.wordSpacing = formatWithPx(this.wordSpacing);
+        ctx.textAlign = this.textAlign;
+        return this;
+    }
+}
+
+class Text extends Display {
+    constructor(options) {
+        super(options);
+        if (options.style)
+            this.style = options.style;
+        this.text = options.text ?? '';
+        this.emit('ready');
+        this._onUpdate();
+    }
+    _style = new TextStyle();
+    set style(style) {
+        style = style || {};
+        this._style?.off('update', this._onUpdate, this);
+        this._style?.off('updateBounds', this.shouldUpdateBounds, this);
+        if (style instanceof TextStyle) {
+            this._style = style;
+        }
+        else {
+            this._style = new TextStyle(style);
+        }
+        this._style.on('update', this._onUpdate, this);
+        this._style?.on('updateBounds', this.shouldUpdateBounds, this);
+        this._onUpdate();
+    }
+    get style() {
+        return this._style;
+    }
+    _text = '';
+    set text(text) {
+        if (this._text === text)
+            return;
+        this._text = text;
+        this._onUpdate();
+    }
+    get text() {
+        return this._text;
+    }
+    get _shouldUpdate() {
+        return !!(this.style.fill) || !!(this.style.stroke.color && this.style.stroke.width);
+    }
+    getSplitText(ctx) {
+        const texts = this.text.split('');
+        const splitText = [];
+        let multilineText = [];
+        for (let i = 0; i < texts.length; i++) {
+            const currentStr = texts[i];
+            multilineText.push(currentStr);
+            const rowStr = multilineText.join('');
+            if (ctx.measureText(rowStr).width > this.style.wordWrapWidth) {
+                multilineText.pop();
+                splitText.push(multilineText.join(''));
+                multilineText = [currentStr];
+                continue;
+            }
+            if (i === texts.length - 1) {
+                splitText.push(rowStr);
+            }
+        }
+        return splitText;
+    }
+    _render(ctx) {
+        if (this.style.fill || (this.style.stroke?.color && this.style.stroke?.width)) {
+            this.style.render(ctx);
+            // 绘制单行文本
+            if (!this.style.wordWrap || !this.style.wordWrapWidth) {
+                if (this.style.fill) {
+                    ctx.fillText(this.text, this.position.x, this.position.y);
+                }
+                if (this.style.stroke?.color && this.style.stroke?.width) {
+                    ctx.strokeText(this.text, this.position.x, this.position.y);
+                }
+            }
+            else {
+                const splitText = this.getSplitText(ctx);
+                for (let i = 0; i < splitText.length; i++) {
+                    const text = splitText[i];
+                    if (this.style.fill) {
+                        ctx.strokeText(text, this.position.x, this.position.y + i * this.style.lineHeight);
+                    }
+                    if (this.style.stroke?.color && this.style.stroke?.width) {
+                        ctx.strokeText(text, this.position.x, this.position.y + i * this.style.lineHeight);
+                    }
+                }
+            }
+        }
+    }
+    transformWidth = 0;
+    transformHeight = 0;
+    updateTransformBounds() {
+        if (!this._app)
+            return;
+        this._app.wrapperRender((ctx) => {
+            this.style.render(ctx);
+            if (!this.style.wordWrap || !this.style.wordWrapWidth) {
+                const measure = ctx.measureText(this.text);
+                this.transformWidth = measure.width;
+                let height = Math.max(...[
+                    measure.actualBoundingBoxDescent - measure.actualBoundingBoxAscent,
+                    typeof this.style.fontSize == 'number' ? this.style.fontSize : Number.parseInt(`${this.style.fontSize}`),
+                ]);
+                if (this.style.stroke && this.style.stroke.width) {
+                    height += this.style.stroke.width;
+                }
+                this.transformHeight = height;
+            }
+            else {
+                const splitText = this.getSplitText(ctx);
+                this.transformWidth = this.style.wordWrapWidth;
+                if (!splitText.length) {
+                    this.transformHeight = 0;
+                    return;
+                }
+                const measure = ctx.measureText(this.getSplitText(ctx)[0]);
+                const lineHeight = this.style.lineHeight;
+                let height = Math.max(...[
+                    measure.actualBoundingBoxDescent - measure.actualBoundingBoxAscent,
+                    lineHeight,
+                ]);
+                if (this.style.stroke && this.style.stroke.width) {
+                    height += this.style.stroke.width;
+                }
+                if (splitText.length > 1) {
+                    this.transformHeight = (splitText.length - 1) * lineHeight + height;
+                }
+            }
+        });
+    }
+}
+
+exports.App = App;
+exports.Picture = Picture;
+exports.Shape = Shape;
+exports.Text = Text;
+exports.TextStyle = TextStyle;
 //# sourceMappingURL=index.cjs.js.map

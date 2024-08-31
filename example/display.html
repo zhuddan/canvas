@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@zd~/cavans example</title>
+    <title>@zd~/cavans example-display</title>
   </head>
   <body>
     <div class="nav">
@@ -12,16 +12,10 @@
         <a class="text-white font-bold text-xl" href="./index.html">@zd~/cavans example</a>
       </h1>
     </div>
-    <div class="container">
-      <ul>
-        <li>
-          <a href="./base.html" class="hover:text-blue-400 hover:underline">基础示例</a>
-        </li>
-        <li>
-          <a href="./display.html" class="hover:text-blue-400 hover:underline">display示例</a>
-        </li>
-      </ul>
+    <div class="container relative" id="container">
+      <div class="absolute top-20 right-0" id="pane-container"></div>
     </div>
     <script type="module" src="/src/tailwind/tailwind.ts"></script>
+    <script type="module" src="/src/display.ts"></script>
   </body>
 </html>

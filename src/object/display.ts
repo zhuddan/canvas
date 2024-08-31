@@ -5,7 +5,7 @@ import { ObservablePoint } from '../coordinate/ObservablePoint'
 import type { PointData } from '../coordinate/PointData'
 import { createProxy, ensureBetween, getEnv } from '../utils'
 
-interface ShadowType {
+export interface ShadowType {
   /**
    * [CanvasRenderingContext2D.shadowOffsetX](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowOffsetX)
    */

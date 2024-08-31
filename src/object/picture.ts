@@ -3,7 +3,7 @@ import type { PointData } from '../coordinate/PointData'
 import { ObservablePoint } from '../coordinate/ObservablePoint'
 import { ENV, calcDiff, drawRectCompatible } from '../utils'
 import type { App } from '../app'
-import type { DisplayOptions } from './display'
+import type { DisplayOptions, ShadowType } from './display'
 import { Display } from './display'
 
 export interface PictureOptions extends DisplayOptions {
@@ -27,12 +27,21 @@ export interface PictureOptions extends DisplayOptions {
    * 圆角
    */
   rounded?: number
+  /**
+   *  image
+   */
+  image?: HTMLImageElement | string
+  /**
+   * @deprecated 图片不支持阴影
+   */
+  shadow?: ShadowType
 }
 
 export class Picture extends Display {
   private src = ''
-  constructor(maybeImage: HTMLImageElement | string, private options?: PictureOptions) {
+  constructor(private options?: PictureOptions) {
     super(options)
+    const maybeImage = options?.image
     if (typeof maybeImage == 'string') {
       if (this._env === ENV.WX) {
         this.src = maybeImage

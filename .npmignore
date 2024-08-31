@@ -1,0 +1,13 @@
+example/
+docs/
+.vscode/
+scripts/
+temp/
+
+eslint.config.mjs
+
+rollup.config.*
+
+typedoc.json
+
+

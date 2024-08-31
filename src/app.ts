@@ -19,6 +19,10 @@ export interface AppOptions {
    *  `画布元素`或`画布id(微信小程序或者uni-app)`或者`document.querySelector可以接受的字符串`
    */
   canvas?: HTMLCanvasElement | string
+  /**
+   * backgroundColor
+   */
+  backgroundColor?: string
 }
 
 export class App extends EventEmitter<{
@@ -104,7 +108,10 @@ export class App extends EventEmitter<{
   }
 
   private initCanvasSize() {
-    const { width = 300, height = 150 } = this.options
+    const {
+      width = this._env === ENV.WX ? 300 : 600,
+      height = this._env === ENV.WX ? 150 : 300,
+    } = this.options
     if (!this.canvas)
       return
     if (this.canvas.style) {
@@ -112,6 +119,8 @@ export class App extends EventEmitter<{
       this.canvas.style.height = formatWithPx(height)
       this.canvas.width = width * this.dpr
       this.canvas.height = height * this.dpr
+      const backgroundColor = this.options.backgroundColor ?? 'transparent'
+      this.canvas.style.backgroundColor = backgroundColor
     }
     else {
       this.canvas.width = width * this.dpr
@@ -221,12 +230,12 @@ class Ticker {
 
   init(canvas: HTMLCanvasElement, autoStart: boolean) {
     if (this._env === ENV.WX) {
-      this.requestAnimationFrame = (canvas as any).requestAnimationFrame.bind(this)
-      this.cancelAnimationFrame = (canvas as any).requestAnimationFrame.bind(this)
+      this.requestAnimationFrame = (canvas as any).requestAnimationFrame.bind(canvas)
+      this.cancelAnimationFrame = (canvas as any).requestAnimationFrame.bind(canvas)
     }
-    else {
-      this.requestAnimationFrame = requestAnimationFrame.bind(this)
-      this.cancelAnimationFrame = cancelAnimationFrame.bind(this)
+    else if (window) {
+      this.requestAnimationFrame = window.requestAnimationFrame.bind(window)
+      this.cancelAnimationFrame = window.cancelAnimationFrame.bind(window)
     }
     if (autoStart) {
       this.start()
@@ -250,7 +259,9 @@ class Ticker {
 
   start() {
     this.isRunning = true
-    this.myReq = this.requestAnimationFrame!(this.update.bind(this))
+    if (this.requestAnimationFrame) {
+      this.myReq = this.requestAnimationFrame(this.update.bind(this))
+    }
   }
 
   stop() {
@@ -263,7 +274,9 @@ class Ticker {
   update() {
     if (!this.isRunning)
       return
-    this.myReq = this.requestAnimationFrame!(this.update.bind(this))
+    if (this.requestAnimationFrame) {
+      this.myReq = this.requestAnimationFrame(this.update.bind(this))
+    }
     this.handler.forEach(fn => fn(performance.now()))
   }
 }

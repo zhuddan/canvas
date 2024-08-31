@@ -5,8 +5,6 @@ import typescript from '@rollup/plugin-typescript'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import del from 'rollup-plugin-delete'
-import livereload from 'rollup-plugin-livereload'
-import serve from 'rollup-plugin-serve'
 import { copyFiles } from './scripts/copyFiles.mjs'
 
 const type = process.env.NODE_ENV?.split(':')?.[1]
@@ -30,13 +28,6 @@ const devPlugins = [
  */
 const webPlugins = [
   ...devPlugins,
-  livereload(),
-  serve({
-    port: 13000,
-    contentBase: '.',
-    openPage: '/example/index.html',
-    open: true,
-  }),
 ]
 
 /**
@@ -54,12 +45,20 @@ const wxPlugins = [
 ]
 
 export default defineConfig({
-  input: ['./src/index.ts', './src/canvas.ts'],
-  output: {
-    format: 'es',
-    dir: 'dist',
-    entryFileNames: '[name].js',
-    sourcemap: true,
-  },
+  input: './src/index.ts',
+  output: [
+    {
+      format: 'commonjs',
+      dir: 'dist',
+      entryFileNames: '[name].cjs.js',
+      sourcemap: true,
+    },
+    {
+      format: 'es',
+      dir: 'dist',
+      entryFileNames: '[name].esm.js',
+      sourcemap: true,
+    },
+  ],
   plugins: isWx ? wxPlugins : webPlugins,
 })
