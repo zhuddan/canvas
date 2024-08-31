@@ -94,10 +94,9 @@ export class Picture extends Renderable {
   private _imageSize = new ObservablePoint(this, 0, 0)
 
   set size(value: PointData) {
-    if (this.size !== value) {
+    if (this.size !== value && !this.size.equals(value)) {
       this._size.copyFrom(value)
-      this.shouldUpdateBounds()
-      console.log('xxx')
+      this.shouldUpdateBounds('size')
     }
   }
 
@@ -110,8 +109,7 @@ export class Picture extends Renderable {
   set slice(value: PointData) {
     if (this.slice !== value) {
       this._slice.copyFrom(value)
-      this.shouldUpdateBounds()
-      console.log('xxx')
+      this.shouldUpdateBounds('slice')
     }
   }
 
@@ -125,8 +123,7 @@ export class Picture extends Renderable {
     if (this.sliceSize !== value) {
       this._sliceSize.copyFrom(value)
       this._onUpdate()
-      this.shouldUpdateBounds()
-      console.log('xxx')
+      this.shouldUpdateBounds('sliceSize')
     }
   }
 
@@ -139,8 +136,7 @@ export class Picture extends Renderable {
   set objectFit(value) {
     if (this.objectFit !== value) {
       this._objectFit = value
-      this.shouldUpdateBounds()
-      console.log('xxx')
+      this.shouldUpdateBounds('objectFit')
       this._onUpdate()
     }
   }
@@ -196,8 +192,6 @@ export class Picture extends Renderable {
     this._complete = true
     this.emit('ready')
     this._onUpdate()
-    this.shouldUpdateBounds()
-    console.log('xxx')
   }
 
   get _shouldUpdate(): boolean {
@@ -236,14 +230,6 @@ export class Picture extends Renderable {
               this.position.set(this.position.x, this.position.y + diff / 2)
               this.size.set(this.size.x, this.size.y - diff)
             }
-            // ctx.beginPath()
-            // if (this.rounded) {
-            //   ctx.roundRect(this.x, this.y, this.size.x, this.size.y, this.rounded)
-            // }
-            // else {
-            //   ctx.rect(this.x, this.y, this.size.x, this.size.y)
-            // }
-            // ctx.clip()
             this.renderRoundedClip(ctx, this.position, this.size)
             break
           case 'cover':
@@ -255,14 +241,6 @@ export class Picture extends Renderable {
               this.position.set(this.position.x - diff / 2, this.position.y)
               this.size.set(this.size.x + diff, this.size.y)
             }
-            // ctx.beginPath()
-            // if (this.rounded) {
-            //   ctx.roundRect(_position.x, _position.y, _size.x, _size.y, this.rounded)
-            // }
-            // else {
-            //   ctx.rect(_position.x, _position.y, _size.x, _size.y)
-            // }
-            // ctx.clip()
             this.renderRoundedClip(ctx, _position, _size)
             break
           default:
@@ -291,16 +269,6 @@ export class Picture extends Renderable {
         this.size.x,
         this.size.y,
       ] as const
-
-      // ctx.beginPath()
-      // console.log(this.rounded)
-      // if (this.rounded) {
-      //   ctx.roundRect(this.x, this.y, this.size.x, this.size.y, this.rounded)
-      // }
-      // else {
-      //   ctx.rect(this.x, this.y, this.size.x, this.size.y)
-      // }
-      // ctx.clip()
       this.renderRoundedClip(ctx, this.position, this.size)
       ctx.drawImage(...args)
     }

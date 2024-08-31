@@ -228,7 +228,7 @@ export abstract class Renderable extends EventEmitter<{
   private _position = new ObservablePoint(this, 0, 0)
 
   set position(value: PointData) {
-    if (this.position !== value) {
+    if (this.position !== value && !this.position.equals(value)) {
       this._position.copyFrom(value)
     }
   }
@@ -244,13 +244,13 @@ export abstract class Renderable extends EventEmitter<{
       this._anchor = new ObservablePoint(this, 0, 0)
     }
     if (typeof value === 'number') {
-      if (value === this._anchor.x && value === this._anchor.y) {
+      if (this._anchor.equals({ x: value, y: value })) {
         return
       }
       this._anchor.set(value)
     }
     else {
-      if (value.x === this._anchor.x && value.y === this._anchor.y) {
+      if (this._anchor.equals(value)) {
         return
       }
       this._anchor.copyFrom(value)
@@ -271,13 +271,13 @@ export abstract class Renderable extends EventEmitter<{
       this._pivot = new ObservablePoint(this, 0, 0)
     }
     if (typeof value === 'number') {
-      if (value === this._pivot.x && value === this._pivot.y) {
+      if (this._pivot.equals({ x: value, y: value })) {
         return
       }
       this._pivot.set(value)
     }
     else {
-      if (value.x === this._pivot.x && value.y === this._pivot.y) {
+      if (this._pivot.equals(value)) {
         return
       }
       this._pivot.copyFrom(value)
@@ -311,13 +311,13 @@ export abstract class Renderable extends EventEmitter<{
       this._scale = new ObservablePoint(this, 1, 1)
     }
     if (typeof value === 'number') {
-      if (value === this._scale.x && value === this._scale.y) {
+      if (this._scale.equals({ x: value, y: value })) {
         return
       }
       this._scale.set(value)
     }
     else {
-      if (value.x === this._scale.x && value.y === this._scale.y) {
+      if (this._scale.equals(value)) {
         return
       }
       this._scale.copyFrom(value)
@@ -337,7 +337,7 @@ export abstract class Renderable extends EventEmitter<{
     if (this._skew === defaultSkew) {
       this._skew = new ObservablePoint(this)
     }
-    if (value.x === this._skew.x && value.y === this._skew.y) {
+    if (this._skew.equals(value)) {
       return
     }
     this._skew.copyFrom(value)
@@ -369,7 +369,11 @@ export abstract class Renderable extends EventEmitter<{
 
   protected _shouldUpdateBounds = false
 
-  protected shouldUpdateBounds() {
+  protected shouldUpdateBounds(type: string) {
+    if (this._shouldUpdateBounds) {
+      return
+    }
+    console.log('shouldUpdateBounds', type)
     this._shouldUpdateBounds = true
   }
 
@@ -472,7 +476,7 @@ export abstract class Renderable extends EventEmitter<{
     }
     this._rawSize.width = width
     this._rawSize.height = height
-    this.shouldUpdateBounds()
+    this.emit('updateBounds', width, height)
   }
 
   onAdd(_app: App) {

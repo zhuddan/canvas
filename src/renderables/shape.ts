@@ -61,7 +61,7 @@ export class Shape extends Renderable implements IShape {
 
   private addPath(...items: PathInstruction[]) {
     this.pathInstruction.push(...items)
-    this.shouldUpdateBounds()
+    this.shouldUpdateBounds('path')
   }
 
   beginPath(): Shape {

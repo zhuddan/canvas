@@ -924,7 +924,7 @@ class Renderable extends EventEmitter {
     }
     _position = new ObservablePoint(this, 0, 0);
     set position(value) {
-        if (this.position !== value) {
+        if (this.position !== value && !this.position.equals(value)) {
             this._position.copyFrom(value);
         }
     }
@@ -937,13 +937,13 @@ class Renderable extends EventEmitter {
             this._anchor = new ObservablePoint(this, 0, 0);
         }
         if (typeof value === 'number') {
-            if (value === this._anchor.x && value === this._anchor.y) {
+            if (this._anchor.equals({ x: value, y: value })) {
                 return;
             }
             this._anchor.set(value);
         }
         else {
-            if (value.x === this._anchor.x && value.y === this._anchor.y) {
+            if (this._anchor.equals(value)) {
                 return;
             }
             this._anchor.copyFrom(value);
@@ -961,13 +961,13 @@ class Renderable extends EventEmitter {
             this._pivot = new ObservablePoint(this, 0, 0);
         }
         if (typeof value === 'number') {
-            if (value === this._pivot.x && value === this._pivot.y) {
+            if (this._pivot.equals({ x: value, y: value })) {
                 return;
             }
             this._pivot.set(value);
         }
         else {
-            if (value.x === this._pivot.x && value.y === this._pivot.y) {
+            if (this._pivot.equals(value)) {
                 return;
             }
             this._pivot.copyFrom(value);
@@ -995,13 +995,13 @@ class Renderable extends EventEmitter {
             this._scale = new ObservablePoint(this, 1, 1);
         }
         if (typeof value === 'number') {
-            if (value === this._scale.x && value === this._scale.y) {
+            if (this._scale.equals({ x: value, y: value })) {
                 return;
             }
             this._scale.set(value);
         }
         else {
-            if (value.x === this._scale.x && value.y === this._scale.y) {
+            if (this._scale.equals(value)) {
                 return;
             }
             this._scale.copyFrom(value);
@@ -1018,7 +1018,7 @@ class Renderable extends EventEmitter {
         if (this._skew === defaultSkew) {
             this._skew = new ObservablePoint(this);
         }
-        if (value.x === this._skew.x && value.y === this._skew.y) {
+        if (this._skew.equals(value)) {
             return;
         }
         this._skew.copyFrom(value);
@@ -1042,7 +1042,11 @@ class Renderable extends EventEmitter {
         this._onUpdate();
     }
     _shouldUpdateBounds = false;
-    shouldUpdateBounds() {
+    shouldUpdateBounds(type) {
+        if (this._shouldUpdateBounds) {
+            return;
+        }
+        console.log('shouldUpdateBounds', type);
         this._shouldUpdateBounds = true;
     }
     /**
@@ -1125,7 +1129,7 @@ class Renderable extends EventEmitter {
         }
         this._rawSize.width = width;
         this._rawSize.height = height;
-        this.shouldUpdateBounds();
+        this.emit('updateBounds', width, height);
     }
     onAdd(_app) {
         this._app = _app;
@@ -1196,10 +1200,9 @@ class Picture extends Renderable {
     _size = new ObservablePoint(this, 0, 0);
     _imageSize = new ObservablePoint(this, 0, 0);
     set size(value) {
-        if (this.size !== value) {
+        if (this.size !== value && !this.size.equals(value)) {
             this._size.copyFrom(value);
-            this.shouldUpdateBounds();
-            console.log('xxx');
+            this.shouldUpdateBounds('size');
         }
     }
     get size() {
@@ -1209,8 +1212,7 @@ class Picture extends Renderable {
     set slice(value) {
         if (this.slice !== value) {
             this._slice.copyFrom(value);
-            this.shouldUpdateBounds();
-            console.log('xxx');
+            this.shouldUpdateBounds('slice');
         }
     }
     get slice() {
@@ -1221,8 +1223,7 @@ class Picture extends Renderable {
         if (this.sliceSize !== value) {
             this._sliceSize.copyFrom(value);
             this._onUpdate();
-            this.shouldUpdateBounds();
-            console.log('xxx');
+            this.shouldUpdateBounds('sliceSize');
         }
     }
     get sliceSize() {
@@ -1232,8 +1233,7 @@ class Picture extends Renderable {
     set objectFit(value) {
         if (this.objectFit !== value) {
             this._objectFit = value;
-            this.shouldUpdateBounds();
-            console.log('xxx');
+            this.shouldUpdateBounds('objectFit');
             this._onUpdate();
         }
     }
@@ -1274,8 +1274,6 @@ class Picture extends Renderable {
         this._complete = true;
         this.emit('ready');
         this._onUpdate();
-        this.shouldUpdateBounds();
-        console.log('xxx');
     }
     get _shouldUpdate() {
         return true;
@@ -1310,14 +1308,6 @@ class Picture extends Renderable {
                             this.position.set(this.position.x, this.position.y + diff / 2);
                             this.size.set(this.size.x, this.size.y - diff);
                         }
-                        // ctx.beginPath()
-                        // if (this.rounded) {
-                        //   ctx.roundRect(this.x, this.y, this.size.x, this.size.y, this.rounded)
-                        // }
-                        // else {
-                        //   ctx.rect(this.x, this.y, this.size.x, this.size.y)
-                        // }
-                        // ctx.clip()
                         this.renderRoundedClip(ctx, this.position, this.size);
                         break;
                     case 'cover':
@@ -1329,14 +1319,6 @@ class Picture extends Renderable {
                             this.position.set(this.position.x - diff / 2, this.position.y);
                             this.size.set(this.size.x + diff, this.size.y);
                         }
-                        // ctx.beginPath()
-                        // if (this.rounded) {
-                        //   ctx.roundRect(_position.x, _position.y, _size.x, _size.y, this.rounded)
-                        // }
-                        // else {
-                        //   ctx.rect(_position.x, _position.y, _size.x, _size.y)
-                        // }
-                        // ctx.clip()
                         this.renderRoundedClip(ctx, _position, _size);
                         break;
                     default:
@@ -1359,15 +1341,6 @@ class Picture extends Renderable {
                 this.size.x,
                 this.size.y,
             ];
-            // ctx.beginPath()
-            // console.log(this.rounded)
-            // if (this.rounded) {
-            //   ctx.roundRect(this.x, this.y, this.size.x, this.size.y, this.rounded)
-            // }
-            // else {
-            //   ctx.rect(this.x, this.y, this.size.x, this.size.y)
-            // }
-            // ctx.clip()
             this.renderRoundedClip(ctx, this.position, this.size);
             ctx.drawImage(...args);
         }
@@ -1386,7 +1359,7 @@ class Shape extends Renderable {
     }
     addPath(...items) {
         this.pathInstruction.push(...items);
-        this.shouldUpdateBounds();
+        this.shouldUpdateBounds('path');
     }
     beginPath() {
         this.addPath({
@@ -1942,7 +1915,7 @@ class Text extends Renderable {
     set style(style) {
         style = style || {};
         this._style?.off('update', this._onUpdate, this);
-        this._style?.off('updateBounds', this.shouldUpdateBounds, this);
+        this._style?.off('updateBounds', this.shouldUpdateBounds.bind(this, 'style'), this);
         if (style instanceof TextStyle) {
             this._style = style;
         }
@@ -1950,7 +1923,7 @@ class Text extends Renderable {
             this._style = new TextStyle(style);
         }
         this._style.on('update', this._onUpdate, this);
-        this._style?.on('updateBounds', this.shouldUpdateBounds, this);
+        this._style?.on('updateBounds', this.shouldUpdateBounds.bind(this, 'style'), this);
         this._onUpdate();
     }
     get style() {

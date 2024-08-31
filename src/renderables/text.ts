@@ -29,7 +29,7 @@ export class Text extends Renderable {
   set style(style: Partial<TextStyleOptions> | TextStyle) {
     style = style || {}
     this._style?.off('update', this._onUpdate, this)
-    this._style?.off('updateBounds', this.shouldUpdateBounds, this)
+    this._style?.off('updateBounds', this.shouldUpdateBounds.bind(this, 'style'), this)
     if (style instanceof TextStyle) {
       this._style = style
     }
@@ -37,7 +37,7 @@ export class Text extends Renderable {
       this._style = new TextStyle(style)
     }
     this._style.on('update', this._onUpdate, this)
-    this._style?.on('updateBounds', this.shouldUpdateBounds, this)
+    this._style?.on('updateBounds', this.shouldUpdateBounds.bind(this, 'style'), this)
     this._onUpdate()
   }
 

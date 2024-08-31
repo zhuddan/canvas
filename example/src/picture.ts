@@ -42,6 +42,6 @@ pictureFolder.addBinding(picture, 'size', {
   },
 })
 
-picture.once('updateBounds', (width, height) => {
-  console.log(width, height)
+picture.on('updateBounds', () => {
+  pane.refresh()
 })

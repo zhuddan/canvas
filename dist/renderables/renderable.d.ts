@@ -134,7 +134,7 @@ export declare abstract class Renderable extends EventEmitter<{
     get visible(): boolean;
     set visible(value: boolean);
     protected _shouldUpdateBounds: boolean;
-    protected shouldUpdateBounds(): void;
+    protected shouldUpdateBounds(type: string): void;
     /**
      * 读取阴影
      * @param ctx
