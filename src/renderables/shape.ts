@@ -1,8 +1,8 @@
 import type { IAbstractStyle, InputColor, StrokeInput } from '../style/abstract-style'
 // import type { FunctionKeys } from '../types'
 import { ENV, calcDiff, createProxy, drawRectCompatible } from '../utils'
-import type { DisplayOptions } from './display'
-import { Display } from './display'
+import type { RenderableOptions } from './display'
+import { Renderable } from './display'
 
 // type CanvasRenderingContext2DMethods = FunctionKeys<CanvasRenderingContext2D>
 interface PathData<T extends keyof CanvasRenderingContext2D> {
@@ -29,7 +29,7 @@ type Methods =
   | 'lineJoin'
 
 type PathInstruction = PathData<Methods>
-interface _ShapeOptions extends DisplayOptions { }
+interface _ShapeOptions extends RenderableOptions { }
 
 interface IShape {
   beginPath: () => Shape
@@ -52,7 +52,7 @@ interface IShape {
 
 export type ShapeOptions = Partial<_ShapeOptions>
 
-export class Shape extends Display implements IShape {
+export class Shape extends Renderable implements IShape {
   constructor(options: ShapeOptions = {}) {
     super(options)
     this.emit('ready')
@@ -320,7 +320,6 @@ export class Shape extends Display implements IShape {
   }
 
   protected updateTransformBounds(): void {
-    // 所有坐标的最大值放进来
     const allX: number[] = []
     const allY: number[] = []
     for (let index = 0; index < this.pathInstruction.length; index++) {

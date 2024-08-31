@@ -1,9 +1,9 @@
 import type { TextStyleOptions } from '../style/text-style'
 import { TextStyle } from '../style/text-style'
-import type { DisplayOptions } from './display'
-import { Display } from './display'
+import type { RenderableOptions } from './display'
+import { Renderable } from './display'
 
-export interface TextOptions extends DisplayOptions {
+export interface TextOptions extends RenderableOptions {
   /**
    * 文本
    */
@@ -14,7 +14,7 @@ export interface TextOptions extends DisplayOptions {
   style?: Partial<TextStyleOptions> | TextStyle
 }
 
-export class Text extends Display {
+export class Text extends Renderable {
   constructor(options: TextOptions) {
     super(options)
     if (options.style)

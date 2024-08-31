@@ -1,5 +1,5 @@
 import EventEmitter from 'eventemitter3'
-import type { Display } from './object/display'
+import type { Renderable } from './renderables/display'
 import { ENV, formatWithPx, getEnv } from './utils'
 
 export interface AppOptions {
@@ -209,9 +209,9 @@ export class App extends EventEmitter<{
     this.ctx.restore()
   }
 
-  children: Display[] = []
+  children: Renderable[] = []
 
-  add(...objects: Display[]) {
+  add(...objects: Renderable[]) {
     for (let index = 0; index < objects.length; index++) {
       const object = objects[index]
       this.children.push(object)
@@ -219,7 +219,7 @@ export class App extends EventEmitter<{
     }
   }
 
-  remove(...objects: Display[]) {
+  remove(...objects: Renderable[]) {
     for (let index = 0; index < objects.length; index++) {
       const object = objects[index]
       const delIndex = this.children.indexOf(object)

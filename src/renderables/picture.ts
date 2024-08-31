@@ -3,10 +3,10 @@ import type { PointData } from '../coordinate/PointData'
 import { ObservablePoint } from '../coordinate/ObservablePoint'
 import { ENV, calcDiff, drawRectCompatible } from '../utils'
 import type { App } from '../app'
-import type { DisplayOptions, ShadowType } from './display'
-import { Display } from './display'
+import type { RenderableOptions, ShadowType } from './display'
+import { Renderable } from './display'
 
-export interface PictureOptions extends DisplayOptions {
+export interface PictureOptions extends RenderableOptions {
   /**
    *  image
    */
@@ -37,7 +37,7 @@ export interface PictureOptions extends DisplayOptions {
   shadow?: ShadowType
 }
 
-export class Picture extends Display {
+export class Picture extends Renderable {
   private src = ''
   constructor(private options?: PictureOptions) {
     super(options)

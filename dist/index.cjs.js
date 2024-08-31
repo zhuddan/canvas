@@ -814,7 +814,7 @@ const defaultSkew = new ObservablePoint(null);
 const defaultPivot = new ObservablePoint(null);
 const defaultAnchor = new ObservablePoint(null);
 const defaultScale = new ObservablePoint(null, 1, 1);
-class Display extends EventEmitter {
+class Renderable extends EventEmitter {
     _env = getEnv();
     constructor(options = {}) {
         super();
@@ -1113,7 +1113,7 @@ class Display extends EventEmitter {
     }
 }
 
-class Picture extends Display {
+class Picture extends Renderable {
     options;
     src = '';
     constructor(options) {
@@ -1348,7 +1348,7 @@ class Picture extends Display {
 }
 
 // import type { FunctionKeys } from '../types'
-class Shape extends Display {
+class Shape extends Renderable {
     constructor(options = {}) {
         super(options);
         this.emit('ready');
@@ -1560,7 +1560,6 @@ class Shape extends Display {
         return this._strokeStyle;
     }
     updateTransformBounds() {
-        // 所有坐标的最大值放进来
         const allX = [];
         const allY = [];
         for (let index = 0; index < this.pathInstruction.length; index++) {
@@ -1901,7 +1900,7 @@ class TextStyle extends AbstractStyle {
     }
 }
 
-class Text extends Display {
+class Text extends Renderable {
     constructor(options) {
         super(options);
         if (options.style)

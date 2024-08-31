@@ -1,5 +1,5 @@
 import EventEmitter from 'eventemitter3';
-import type { Display } from './object/display';
+import type { Renderable } from './renderables/display';
 import { ENV } from './utils';
 export interface AppOptions {
     /**
@@ -55,9 +55,9 @@ export declare class App extends EventEmitter<{
     private initTicker;
     private beforeRender;
     private afterRender;
-    children: Display[];
-    add(...objects: Display[]): void;
-    remove(...objects: Display[]): void;
+    children: Renderable[];
+    add(...objects: Renderable[]): void;
+    remove(...objects: Renderable[]): void;
     private update;
     toDataURL(type?: string, quality?: any): string;
     toDataURLAsync(type?: string, quality?: any): Promise<string>;

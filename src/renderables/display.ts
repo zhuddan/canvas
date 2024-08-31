@@ -26,7 +26,7 @@ export interface ShadowType {
 /**
  * [单位矩阵变化](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)
  */
-export interface DisplayOptions {
+export interface RenderableOptions {
   /**
    * 元素是否可见
    */
@@ -82,7 +82,6 @@ export interface DisplayOptions {
    */
   shadow?: ShadowType
 }
-
 /**
  * 默认值
  */
@@ -91,12 +90,12 @@ const defaultPivot = new ObservablePoint(null)
 const defaultAnchor = new ObservablePoint(null)
 const defaultScale = new ObservablePoint(null, 1, 1)
 
-export abstract class Display extends EventEmitter<{
+export abstract class Renderable extends EventEmitter<{
   ready: []
   updateBounds: [width: number, height: number]
 }> implements Observer<ObservablePoint> {
   protected _env = getEnv()
-  constructor(options: DisplayOptions = {}) {
+  constructor(options: RenderableOptions = {}) {
     super()
     this.visible = options.visible ?? true
     if (options.position) {
