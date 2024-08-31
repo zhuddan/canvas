@@ -2,8 +2,8 @@ import type { Properties } from 'csstype';
 import type { PointData } from '../coordinate/PointData';
 import { ObservablePoint } from '../coordinate/ObservablePoint';
 import type { App } from '../app';
-import type { RenderableOptions, ShadowType } from './display';
-import { Renderable } from './display';
+import type { RenderableOptions, ShadowType } from './renderable';
+import { Renderable } from './renderable';
 export interface PictureOptions extends RenderableOptions {
     /**
      *  image

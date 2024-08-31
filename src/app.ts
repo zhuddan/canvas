@@ -1,5 +1,5 @@
 import EventEmitter from 'eventemitter3'
-import type { Renderable } from './renderables/display'
+import type { Renderable } from './renderables/renderable'
 import { ENV, formatWithPx, getEnv } from './utils'
 
 export interface AppOptions {

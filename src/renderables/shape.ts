@@ -1,8 +1,8 @@
 import type { IAbstractStyle, InputColor, StrokeInput } from '../style/abstract-style'
 // import type { FunctionKeys } from '../types'
 import { ENV, calcDiff, createProxy, drawRectCompatible } from '../utils'
-import type { RenderableOptions } from './display'
-import { Renderable } from './display'
+import type { RenderableOptions } from './renderable'
+import { Renderable } from './renderable'
 
 // type CanvasRenderingContext2DMethods = FunctionKeys<CanvasRenderingContext2D>
 interface PathData<T extends keyof CanvasRenderingContext2D> {

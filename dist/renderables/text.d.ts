@@ -1,7 +1,7 @@
 import type { TextStyleOptions } from '../style/text-style';
 import { TextStyle } from '../style/text-style';
-import type { RenderableOptions } from './display';
-import { Renderable } from './display';
+import type { RenderableOptions } from './renderable';
+import { Renderable } from './renderable';
 export interface TextOptions extends RenderableOptions {
     /**
      * 文本

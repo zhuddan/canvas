@@ -1,6 +1,6 @@
 import type { IAbstractStyle, InputColor, StrokeInput } from '../style/abstract-style';
-import type { RenderableOptions } from './display';
-import { Renderable } from './display';
+import type { RenderableOptions } from './renderable';
+import { Renderable } from './renderable';
 interface _ShapeOptions extends RenderableOptions {
 }
 interface IShape {
