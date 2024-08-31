@@ -6,6 +6,10 @@ import type { DisplayOptions, ShadowType } from './display';
 import { Display } from './display';
 export interface PictureOptions extends DisplayOptions {
     /**
+     *  image
+     */
+    image: HTMLImageElement | string;
+    /**
      * 图片的宽高
      */
     size?: PointData;
@@ -25,10 +29,6 @@ export interface PictureOptions extends DisplayOptions {
      * 圆角
      */
     rounded?: number;
-    /**
-     *  image
-     */
-    image?: HTMLImageElement | string;
     /**
      * @deprecated 图片不支持阴影
      */

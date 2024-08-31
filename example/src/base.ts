@@ -4,6 +4,7 @@ const app = new App({
   backgroundColor: '#60a5fab0',
   resizeTo: window,
 })
+
 document.body.appendChild(app.canvas)
 
 const text = new Text({

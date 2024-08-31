@@ -1,5 +1,6 @@
 import { App, Text } from '@zd~/canvas'
 import { Pane } from 'tweakpane'
+import { addDisplayOptionsBinding } from './displayOptions'
 
 const pane = new Pane({
   container: document.getElementById('pane-container')!,
@@ -13,7 +14,13 @@ const app = new App({
 document.body.appendChild(app.canvas)
 
 const text = new Text({
-  text: 'Hello World @zd~/canvas',
+  shadow: {
+    color: '#000000',
+    blur: 10,
+    x: 10,
+    y: 10,
+  },
+  text: '一切有为法，如梦幻泡影，如露亦如电，应作如是观',
   anchor: {
     x: 0.5,
     y: 0.5,
@@ -22,20 +29,23 @@ const text = new Text({
   y: window.innerHeight / 2,
   style: {
     fill: '#fcfcfc',
-
     stroke: {
       color: '#000000',
       width: 1,
     },
-
+    // 文本
+    fontSize: 50,
+    textAlign: 'left',
     fontFamily: 'Arial',
-    fontSize: 32,
-
     fontStyle: 'normal',
-    fontWeight: 900,
-
-    wordWrap: true,
-    wordWrapWidth: 200,
+    fontWeight: 'normal',
+    fontStretch: 'condensed',
+    fontVariantCaps: 'normal',
+    letterSpacing: 0,
+    wordSpacing: 0,
+    wordWrap: false,
+    lineHeight: 50, // 默认为字体大小
+    wordWrapWidth: 120,
   },
 })
 
@@ -46,26 +56,37 @@ app.ticker.add(() => {
     window.innerHeight / 2,
   )
 })
+addDisplayOptionsBinding(pane, text)
+const textFolder = pane.addFolder({
+  title: 'text',
+})
+textFolder.addBinding(text, 'text')
 
-pane.addBinding(text, 'text')
+textFolder.addBinding(text.style, 'fill')
 
-pane.addBinding(text.style, 'fill')
-
-pane.addBinding(text.style.stroke, 'color', {
+textFolder.addBinding(text.style.stroke, 'color', {
   label: 'stroke color',
 })
-pane.addBinding(text.style.stroke, 'width', {
+textFolder.addBinding(text.style.stroke, 'width', {
   label: 'stroke width',
   min: 0,
   max: 100,
 })
 
-pane.addBinding(text.style, 'fontSize', {
+textFolder.addBinding(text.style, 'fontSize', {
   min: 12,
   max: 80,
 })
 
-pane.addBinding(text.style, 'fontFamily', {
+textFolder.addBinding(text.style, 'textAlign', {
+  options: {
+    left: 'left',
+    right: 'right',
+    center: 'center',
+  },
+})
+
+textFolder.addBinding(text.style, 'fontFamily', {
   options: {
     'Arial': 'Arial',
     'Times New Roman': 'Times New Roman',
@@ -78,36 +99,30 @@ pane.addBinding(text.style, 'fontFamily', {
   },
 })
 
-pane.addBinding(text.style, 'fontStyle', {
+textFolder.addBinding(text.style, 'fontStyle', {
   options: {
     normal: 'normal',
     italic: 'italic',
     oblique: 'oblique',
   },
 })
-pane.addBinding(text.style, 'fontWeight')
-pane.addBinding(text.style, 'fontStretch')
-pane.addBinding(text.style, 'fontVariantCaps')
-pane.addBinding(text.style, 'letterSpacing', {
+textFolder.addBinding(text.style, 'fontWeight')
+textFolder.addBinding(text.style, 'fontStretch')
+textFolder.addBinding(text.style, 'fontVariantCaps')
+textFolder.addBinding(text.style, 'letterSpacing', {
   min: 0,
 })
-pane.addBinding(text.style, 'wordSpacing', {
+textFolder.addBinding(text.style, 'wordSpacing', {
   min: 0,
   max: 20,
 })
-pane.addBinding(text.style, 'textAlign', {
-  options: {
-    left: 'left',
-    right: 'right',
-    center: 'center',
-  },
-})
-pane.addBinding(text.style, 'lineHeight', {
-  min: 12,
-  max: 80,
-})
-pane.addBinding(text.style, 'wordWrap')
-pane.addBinding(text.style, 'wordWrapWidth', {
+
+textFolder.addBinding(text.style, 'wordWrap')
+textFolder.addBinding(text.style, 'wordWrapWidth', {
   min: 0,
   max: 500,
+})
+textFolder.addBinding(text.style, 'lineHeight', {
+  min: 12,
+  max: 80,
 })

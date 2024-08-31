@@ -9,7 +9,7 @@ export interface ShadowType {
   /**
    * [CanvasRenderingContext2D.shadowColor](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowColor)
    */
-  color?: string
+  color: string
   /**
    * [CanvasRenderingContext2D.shadowOffsetX](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowOffsetX)
    */
@@ -22,7 +22,6 @@ export interface ShadowType {
    * [CanvasRenderingContext2D.shadowBlur](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowBlur)
    */
   blur?: number
-
 }
 /**
  * [单位矩阵变化](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)
@@ -289,12 +288,19 @@ export abstract class Display extends EventEmitter<{
     return this._pivot
   }
 
-  private _shadow: ShadowType = { x: 0, y: 0 }
+  private _shadow: ShadowType = { x: 0, y: 0 } as ShadowType
 
   set shadow(value) {
     if (value === this._shadow)
       return
     if (value) {
+      if (value.x === undefined)
+        value.x = 0
+      if (value.y === undefined)
+        value.y = 0
+      if (value.blur === undefined)
+        value.blur = 0
+
       this._shadow = createProxy(value, () => {
         this._onUpdate()
       })

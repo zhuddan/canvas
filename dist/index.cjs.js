@@ -972,6 +972,12 @@ class Display extends EventEmitter {
         if (value === this._shadow)
             return;
         if (value) {
+            if (value.x === undefined)
+                value.x = 0;
+            if (value.y === undefined)
+                value.y = 0;
+            if (value.blur === undefined)
+                value.blur = 0;
             this._shadow = createProxy(value, () => {
                 this._onUpdate();
             });
@@ -1676,24 +1682,23 @@ class TextStyle extends AbstractStyle {
         stroke: {
             width: 1,
         },
-        fontFamily: 'Arial',
+        filter: 'none',
+        // 文本
         fontSize: 12,
+        textAlign: 'left',
+        fontFamily: 'Arial',
         fontStyle: 'normal',
         fontWeight: 'normal',
         fontStretch: 'condensed',
         fontVariantCaps: 'normal',
         letterSpacing: 0,
         wordSpacing: 0,
-        textAlign: 'left',
-        filter: 'none',
-        lineHeight: 0,
         wordWrap: false,
+        lineHeight: 12, // 默认为字体大小
         wordWrapWidth: 0,
     };
-    _isStroke;
     constructor(style = {}) {
         super();
-        this._isStroke = !!style.stroke;
         const fullStyle = Object.assign({}, TextStyle.defaultTextStyle, style);
         for (const key in fullStyle) {
             const thisKey = key;

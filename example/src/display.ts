@@ -1,43 +1,19 @@
-import type { DisplayOptions } from '@zd~/canvas'
 import { App, Picture, Shape, Text } from '@zd~/canvas'
 import { Pane } from 'tweakpane'
+import { createDefaultDisplayOptions } from './displayOptions'
 
 const pane = new Pane({
   container: document.getElementById('pane-container')!,
 })
 
+const displayOptions = createDefaultDisplayOptions()
+
 const app = new App({
   backgroundColor: '#60a5fab0',
   resizeTo: window,
 })
-document.body.appendChild(app.canvas)
 
-const displayOptions: DisplayOptions = {
-  rotation: 0,
-  scale: {
-    x: 1,
-    y: 1,
-  },
-  anchor: {
-    x: 0,
-    y: 0,
-  },
-  pivot: {
-    x: 0,
-    y: 0,
-  },
-  skew: {
-    x: 0,
-    y: 0,
-  },
-  alpha: 1,
-  shadow: {
-    color: 'rgba(0, 0, 0, 0.5)',
-    x: 5,
-    y: 5,
-    blur: 0,
-  },
-}
+document.body.appendChild(app.canvas)
 
 const shape = new Shape({
   x: 20,
@@ -71,6 +47,7 @@ app.add(shape, text, picture)
 const displayFolder = pane.addFolder({
   title: 'displayOptions',
 })
+
 displayFolder.addBinding(displayOptions, 'rotation', {
   min: -Math.PI * 2,
   max: Math.PI * 2,
@@ -136,18 +113,14 @@ displayFolder.addBinding(displayOptions, 'shadow', {
   y: { min: -100, max: 100 },
   label: 'shadow',
 }).on('change', ({ value }) => {
-  value = value ?? {
-    x: 0,
-    y: 0,
+  if (value) {
+    text.shadow.x = value.x
+    picture.shadow.x = value.x
+    shape.shadow.x = value.x
+    text.shadow.y = value.y
+    picture.shadow.y = value.y
+    shape.shadow.y = value.y
   }
-  text.shadow.x = value.x
-  picture.shadow.x = value.x
-
-  shape.shadow.x = value.x
-  text.shadow.y = value.y
-
-  picture.shadow.y = value.y
-  shape.shadow.y = value.y
 })
 
 displayFolder.addBinding(displayOptions.shadow!, 'color', {

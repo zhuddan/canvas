@@ -10,7 +10,7 @@ export interface PictureOptions extends DisplayOptions {
   /**
    *  image
    */
-  image?: HTMLImageElement | string
+  image: HTMLImageElement | string
   /**
    * 图片的宽高
    */
