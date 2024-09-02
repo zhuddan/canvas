@@ -256,6 +256,7 @@ export class App extends EventEmitter<{
       child.render(this.ctx)
       child.dirty = false
       child._renderId++
+      child.emit('render')
       this.afterRender()
     }
   }

@@ -40,7 +40,16 @@ export function addRenderableOptionsBinding(pane: Pane, options: RenderableOptio
     title: 'renderableOptions',
   })
   if (options.position) {
-    folder.addBinding(options, 'position')
+    folder.addBinding(options, 'position', {
+      x: {
+        min: 0,
+        max: window.screen.width,
+      },
+      y: {
+        min: 0,
+        max: window.screen.height,
+      },
+    })
   }
   folder.addBinding(options, 'rotation', {
     min: -Math.PI * 2,

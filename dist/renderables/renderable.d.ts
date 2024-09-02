@@ -82,6 +82,7 @@ export interface RenderableOptions {
 }
 export declare abstract class Renderable extends EventEmitter<{
     updateBounds: [width: number, height: number];
+    render: [];
 }> implements Observer<ObservablePoint> {
     protected _env: import("../utils").ENV;
     constructor(options?: RenderableOptions);

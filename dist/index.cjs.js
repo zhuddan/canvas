@@ -661,6 +661,7 @@ class App extends EventEmitter {
             child.render(this.ctx);
             child.dirty = false;
             child._renderId++;
+            child.emit('render');
             this.afterRender();
         }
     }
@@ -1574,34 +1575,36 @@ class Shape extends Renderable {
                 case 'strokeRect':
                 case 'roundRect':
                 case 'rect': {
-                    let strokeWeight = 0;
-                    if (action === 'strokeRect') {
-                        strokeWeight = this.strokeStyle.width ?? 1;
-                    }
+                    // const strokeWeight = this.getNextStrokeWidth(index)
                     allX.push(args[0]);
                     allY.push(args[1]);
-                    allX.push(args[0] + args[2] + strokeWeight);
-                    allY.push(args[1] + args[3] + strokeWeight);
+                    allX.push(args[0] + args[2]);
+                    allY.push(args[1] + args[3]);
                     break;
                 }
-                case 'arc':
+                case 'arc': {
                     allX.push(args[0] + args[2]);
                     allY.push(args[1] + args[2]);
                     break;
-                case 'arcTo':
+                }
+                case 'arcTo': {
                     allX.push(args[0] + args[2]);
                     allY.push(args[1] + args[2]);
                     break;
-                case 'bezierCurveTo':
+                }
+                case 'bezierCurveTo': {
                     allX.push(args[2] + args[4]);
                     allY.push(args[3] + args[5]);
                     break;
+                }
                 case 'ellipse':
                     allX.push(args[0] + args[2]);
                     allY.push(args[1] + args[3]);
             }
         }
-        this.changeRawSize(calcDiff(allX), calcDiff(allY));
+        const w = calcDiff(allX);
+        const h = calcDiff(allY);
+        this.changeRawSize(w, h);
     }
     _fillStyle = null;
     set fillStyle(value) {

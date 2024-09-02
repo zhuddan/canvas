@@ -321,10 +321,12 @@ export class Shape extends Renderable implements IShape {
   protected updateRawSize(): void {
     const allX: number[] = []
     const allY: number[] = []
+
     for (let index = 0; index < this.pathInstruction.length; index++) {
       const { action, args } = this.pathInstruction[index]
       switch (action) {
         case 'lineTo':
+
           allX.push(args[0])
           allY.push(args[1])
           break
@@ -332,35 +334,36 @@ export class Shape extends Renderable implements IShape {
         case 'strokeRect':
         case 'roundRect':
         case 'rect':{
-          let strokeWeight = 0
-          if (action === 'strokeRect') {
-            strokeWeight = this.strokeStyle.width ?? 1
-          }
+          // const strokeWeight = this.getNextStrokeWidth(index)
           allX.push(args[0])
           allY.push(args[1])
-
-          allX.push(args[0] + args[2] + strokeWeight)
-          allY.push(args[1] + args[3] + strokeWeight)
+          allX.push(args[0] + args[2])
+          allY.push(args[1] + args[3])
           break
         }
-        case 'arc':
+        case 'arc':{
           allX.push(args[0] + args[2])
           allY.push(args[1] + args[2])
           break
-        case 'arcTo':
+        }
+        case 'arcTo':{
           allX.push(args[0] + args[2])
           allY.push(args[1] + args[2])
           break
-        case 'bezierCurveTo':
+        }
+        case 'bezierCurveTo': {
           allX.push(args[2] + args[4])
           allY.push(args[3] + args[5])
           break
+        }
         case 'ellipse':
           allX.push(args[0] + args[2])
           allY.push(args[1] + args[3])
       }
     }
-    this.changeRawSize(calcDiff(allX), calcDiff(allY))
+    const w = calcDiff(allX)
+    const h = calcDiff(allY)
+    this.changeRawSize(w, h)
   }
 
   private _fillStyle: InputColor | null = null

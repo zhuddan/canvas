@@ -102,6 +102,7 @@ const defaultScale = new ObservablePoint(null, 1, 1)
 
 export abstract class Renderable extends EventEmitter<{
   updateBounds: [width: number, height: number]
+  render: []
 }> implements Observer<ObservablePoint> {
   protected _env = getEnv()
   constructor(options: RenderableOptions = {}) {
