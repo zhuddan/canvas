@@ -55,7 +55,6 @@ export type ShapeOptions = Partial<_ShapeOptions>
 export class Shape extends Renderable implements IShape {
   constructor(options: ShapeOptions = {}) {
     super(options)
-    this.emit('ready')
     this._onUpdate()
   }
 

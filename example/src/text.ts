@@ -1,6 +1,6 @@
 import { App, Text } from '@zd~/canvas'
 import { Pane } from 'tweakpane'
-import { addRenderableOptionsBinding } from './displayOptions'
+import { addRenderableOptionsBinding } from './renderable-options'
 
 const pane = new Pane({
   container: document.getElementById('pane-container')!,
@@ -51,10 +51,11 @@ const text = new Text({
 
 app.add(text)
 app.ticker.add(() => {
-  text.position.set(
-    window.innerWidth / 2,
-    window.innerHeight / 2,
-  )
+
+  // text.position.set(
+  //   window.innerWidth / 2,
+  //   window.innerHeight / 2,
+  // )
 })
 addRenderableOptionsBinding(pane, text)
 const textFolder = pane.addFolder({

@@ -20,7 +20,6 @@ export class Text extends Renderable {
     if (options.style)
       this.style = options.style
     this.text = options.text ?? ''
-    this.emit('ready')
     this._onUpdate()
   }
 
@@ -38,6 +37,7 @@ export class Text extends Renderable {
     }
     this._style.on('update', this._onUpdate, this)
     this._style?.on('updateBounds', this.shouldUpdateBounds.bind(this, 'style'), this)
+    this.shouldUpdateBounds('any')
     this._onUpdate()
   }
 
@@ -111,8 +111,9 @@ export class Text extends Renderable {
   }
 
   protected updateRawSize() {
-    if (!this._app)
+    if (!this._app) {
       return
+    }
     this._app.wrapperRender((ctx) => {
       this.style.render(ctx)
       let rawWidth = this._rawSize.width

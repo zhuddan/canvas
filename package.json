@@ -35,6 +35,7 @@
   ],
   "scripts": {
     "example": "pnpm --filter=example dev",
+    "dev": "pnpm dev:web",
     "dev:web": "cross-env NODE_ENV=development:web rollup -c rollup.config.dev.mjs -w",
     "dev:wx": "cross-env NODE_ENV=development:wx rollup -c rollup.config.dev.mjs -w",
     "build": "cross-env NODE_ENV=production rollup -c rollup.config.build.mjs",

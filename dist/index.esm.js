@@ -1270,7 +1270,6 @@ class Picture extends Renderable {
         this.objectFit = this.options?.objectFit ?? this.objectFit;
         this.rounded = this.options?.rounded ?? this.rounded;
         this._complete = true;
-        this.emit('ready');
         this._onUpdate();
     }
     get _shouldUpdate() {
@@ -1352,7 +1351,6 @@ class Picture extends Renderable {
 class Shape extends Renderable {
     constructor(options = {}) {
         super(options);
-        this.emit('ready');
         this._onUpdate();
     }
     addPath(...items) {
@@ -1641,8 +1639,6 @@ class AbstractStyle extends EventEmitter {
     _fill = '#000';
     set fill(value) {
         this._fill = value;
-        console.log('fill', value);
-        console.log(this);
         this.update();
     }
     get fill() {
@@ -1906,7 +1902,6 @@ class Text extends Renderable {
         if (options.style)
             this.style = options.style;
         this.text = options.text ?? '';
-        this.emit('ready');
         this._onUpdate();
     }
     _style = new TextStyle();
@@ -1922,6 +1917,7 @@ class Text extends Renderable {
         }
         this._style.on('update', this._onUpdate, this);
         this._style?.on('updateBounds', this.shouldUpdateBounds.bind(this, 'style'), this);
+        this.shouldUpdateBounds('any');
         this._onUpdate();
     }
     get style() {
@@ -1987,8 +1983,9 @@ class Text extends Renderable {
         }
     }
     updateRawSize() {
-        if (!this._app)
+        if (!this._app) {
             return;
+        }
         this._app.wrapperRender((ctx) => {
             this.style.render(ctx);
             let rawWidth = this._rawSize.width;

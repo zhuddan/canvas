@@ -81,7 +81,6 @@ export interface RenderableOptions {
     skew?: PointData;
 }
 export declare abstract class Renderable extends EventEmitter<{
-    ready: [];
     updateBounds: [width: number, height: number];
 }> implements Observer<ObservablePoint> {
     protected _env: import("../utils").ENV;

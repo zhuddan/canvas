@@ -190,7 +190,6 @@ export class Picture extends Renderable {
 
     this.rounded = this.options?.rounded ?? this.rounded
     this._complete = true
-    this.emit('ready')
     this._onUpdate()
   }
 

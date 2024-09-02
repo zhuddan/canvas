@@ -1,6 +1,6 @@
 import { App, Picture, Shape, Text } from '@zd~/canvas'
 import { Pane } from 'tweakpane'
-import { createDefaultRenderableOptions } from './displayOptions'
+import { createDefaultRenderableOptions } from './renderable-options'
 
 const pane = new Pane({
   container: document.getElementById('pane-container')!,

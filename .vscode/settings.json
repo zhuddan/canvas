@@ -45,6 +45,8 @@
     "scss",
     "pcss",
     "postcss"
-  ]
-  // "typescript.tsdk": "example\\uni-example\\node_modules\\typescript\\lib"
+  ],
+  "explorer.fileNesting.patterns": {
+    "index.html": "*.html"
+  }
 }
