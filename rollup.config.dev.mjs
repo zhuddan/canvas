@@ -15,11 +15,13 @@ const isWx = type === 'wx'
  */
 const devPlugins = [
   del({
-    targets: ['dist/*', 'temp/*'],
+    targets: ['packages/core/dist/*', 'packages/core/temp/*'],
     force: true,
     hook: 'buildStart',
   }),
-  typescript(),
+  typescript({
+    tsconfig: 'packages/core/tsconfig.json',
+  }),
   nodeResolve(),
   commonjs(),
 ]
@@ -38,14 +40,14 @@ const wxPlugins = [
   {
     name: 'copy-files-to-wx',
     writeBundle: async () => {
-      await copyFiles('./dist', '../wx-example/miniprogram/utils/canvas', false)
+      await copyFiles('./packages/core/dist', '../wx-example/miniprogram/utils/canvas', false)
       console.log('copy success')
     },
   },
 ]
 
 export default defineConfig({
-  input: './src/index.ts',
+  input: 'packages/core/src/index.ts',
   output: [
     {
       format: 'commonjs',

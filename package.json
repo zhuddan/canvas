@@ -1,38 +1,4 @@
 {
-  "name": "@zd~/canvas",
-  "version": "0.0.3",
-  "private": false,
-  "description": "A canvas library.",
-  "author": "zd",
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/zhuddan/canvas.git"
-  },
-  "keywords": [
-    "canvas"
-  ],
-  "exports": {
-    ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.esm.js"
-      },
-      "require": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.cjs.js"
-      }
-    },
-    "./*": "./*"
-  },
-  "main": "index.js",
-  "module": "./dist/index.esm.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist/*",
-    "index.js",
-    "scripts/*"
-  ],
   "scripts": {
     "example": "pnpm --filter=example dev",
     "dev": "pnpm dev:web",
@@ -40,10 +6,8 @@
     "dev:wx": "cross-env NODE_ENV=development:wx rollup -c rollup.config.dev.mjs -w",
     "build": "cross-env NODE_ENV=production rollup -c rollup.config.build.mjs",
     "publish": "node ./scripts/publish.mjs",
-    "release": "bumpp"
-  },
-  "dependencies": {
-    "eventemitter3": "^5.0.1"
+    "release": "bumpp",
+    "clean": "rm -rf node_modules pnpm-lock.yaml packages/*/node_modules packages/*/pnpm-lock.yaml packages/*/dist"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.24.1",
@@ -66,8 +30,6 @@
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.36.0",
     "tslib": "^2.6.3",
-    "typedoc": "^0.26.6",
-    "typedoc-plugin-markdown": "^4.2.5",
     "typescript": "^5.5.4"
   }
 }

@@ -12,37 +12,40 @@ import { exec } from './scripts/exec.mjs'
 function main() {
   return defineConfig([
     {
-      input: './src/index.ts',
+      input: 'packages/core/src/index.ts',
       output: [
         {
           format: 'es',
-          dir: 'dist',
+          dir: 'packages/core/dist',
           entryFileNames: '[name].esm.js',
           sourcemap: true,
         },
         {
           format: 'commonjs',
-          dir: 'dist',
+          dir: 'packages/core/dist',
           entryFileNames: '[name].cjs.js',
           sourcemap: true,
         },
       ],
       plugins: [
         del({
-          targets: ['dist/*', 'temp/*'],
+          targets: ['packages/core/dist'],
           force: true,
           hook: 'buildStart',
         }),
-        typescript({ declaration: false }),
+        typescript({
+          tsconfig: 'packages/core/tsconfig.json',
+          declaration: false,
+        }),
         nodeResolve(),
         commonjs(),
         terser(),
       ],
     },
     {
-      input: './temp/index.d.ts',
+      input: 'packages/core/temp/index.d.ts',
       output: {
-        file: 'dist/index.d.ts',
+        file: 'packages/core/dist/index.d.ts',
         format: 'es',
       },
       plugins: [
@@ -54,7 +57,7 @@ function main() {
         {
           name: 'before',
           buildStart: async () => {
-            const { ok, stderr } = await exec('tsc', ['-p', 'tsconfig.build.json'])
+            const { ok, stderr } = await exec('tsc', ['-p', 'packages/core/tsconfig.build.json'])
             if (!ok) {
               console.error('TypeScript compilation failed:', stderr)
               process.exit(1)
