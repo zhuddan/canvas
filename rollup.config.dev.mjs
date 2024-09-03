@@ -51,13 +51,13 @@ export default defineConfig({
   output: [
     {
       format: 'commonjs',
-      dir: 'dist',
+      dir: 'packages/core/dist',
       entryFileNames: '[name].cjs.js',
       sourcemap: true,
     },
     {
       format: 'es',
-      dir: 'dist',
+      dir: 'packages/core/dist',
       entryFileNames: '[name].esm.js',
       sourcemap: true,
     },
