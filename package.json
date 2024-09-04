@@ -6,7 +6,7 @@
     "dev:wx": "cross-env NODE_ENV=development:wx rollup -c rollup.config.dev.mjs -w",
     "build": "cross-env NODE_ENV=production rollup -c rollup.config.build.mjs",
     "publish": "node ./scripts/publish.mjs",
-    "release": "bumpp",
+    "bumpp": "pnpm -F @zd~/canvas bumpp",
     "clean": "rm -rf node_modules pnpm-lock.yaml packages/*/node_modules packages/*/pnpm-lock.yaml packages/*/dist"
   },
   "devDependencies": {
