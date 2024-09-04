@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   outDir: '../../docs',
-  base: '/docs',
+  base: '/canvas/docs/',
   title: '@zd~/canvas',
   description: '基于 Canvas API 的轻量级绘图库',
   themeConfig: {
