@@ -1,7 +1,7 @@
 import type { Properties } from 'csstype'
 import type { PointData } from '../coordinate/PointData'
 import { ObservablePoint } from '../coordinate/ObservablePoint'
-import { ENV, calcDiff, drawRectCompatible } from '../utils'
+import { ENV, drawRectCompatible } from '../utils'
 import type { App } from '../app'
 import type { RenderableOptions, ShadowType } from './renderable'
 import { Renderable } from './renderable'
@@ -214,18 +214,25 @@ export class Picture extends Renderable {
       const _size = this.size.clone()
       const _position = this.position.clone()
       const scaleDiff = _size.x / this._imageSize.x
-      const diffSize = calcDiff([this._imageSize.x, this._imageSize.y])
-      const diff = diffSize * scaleDiff
+      // const diffSize = calcDiff([this._imageSize.x, this._imageSize.y])
+      // const diff = diffSize * scaleDiff
       const slim = this._imageSize.x < this._imageSize.y
       const fat = this._imageSize.x > this._imageSize.y
+      console.log({
+        slim,
+        fat,
+      })
       if (slim || fat) {
         switch (this.objectFit) {
           case 'contain':
             if (slim) {
+              const diff = _size.x - this._imageSize.x * scaleDiff
               this.position.set(this.position.x - diff / 2, this.position.y)
               this.size.set(this.size.x - diff, this.size.y)
             }
-            else {
+            else if (fat) {
+              const diff = _size.y - this._imageSize.y * scaleDiff
+              console.log(diff)
               this.position.set(this.position.x, this.position.y + diff / 2)
               this.size.set(this.size.x, this.size.y - diff)
             }
@@ -233,10 +240,12 @@ export class Picture extends Renderable {
             break
           case 'cover':
             if (slim) {
+              const diff = _size.x - this._imageSize.x * scaleDiff
               this.position.set(this.position.x + diff / 2, this.position.y)
               this.size.set(this.size.x + diff, this.size.y)
             }
-            else {
+            else if (fat) {
+              const diff = _size.y - this._imageSize.y * scaleDiff
               this.position.set(this.position.x - diff / 2, this.position.y)
               this.size.set(this.size.x + diff, this.size.y)
             }
@@ -257,6 +266,9 @@ export class Picture extends Renderable {
       this.size = _size
     }
     else {
+      if (this.objectFit !== 'none') {
+        console.warn('裁剪图片不支持objectFit')
+      }
       const args = [
         this.image,
         this.slice.x,

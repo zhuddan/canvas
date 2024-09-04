@@ -138,7 +138,6 @@ export class App extends EventEmitter<{
       this.width = width
       this.height = width
     }
-
     this.ctx = this.canvas.getContext('2d')!
     this._ready = true
     this.ticker.init(this.canvas, true)

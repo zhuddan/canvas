@@ -18,7 +18,7 @@ const picture = new Picture({
   x: 20,
   y: 20,
   size: {
-    x: 300,
+    x: 100,
     y: 200,
   },
   slice: {
@@ -29,6 +29,7 @@ const picture = new Picture({
     x: 300,
     y: 200,
   },
+  objectFit: 'contain',
 })
 
 app.add(picture)
@@ -56,12 +57,12 @@ pictureFolder.addBinding(picture, 'sliceSize', {
 })
 
 pictureFolder.addBinding(picture, 'objectFit', {
-  options: [
-    'contain',
-    'cover',
-    'none',
-    'fill',
-  ],
+  options: {
+    none: 'none',
+    contain: 'contain',
+    cover: 'cover',
+    fill: 'fill',
+  },
 })
 
 pictureFolder.addBinding(picture, 'rounded', {
