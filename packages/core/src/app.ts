@@ -125,6 +125,7 @@ export class App extends EventEmitter<{
     if (this.canvas.style) {
       this.canvas.style.backgroundColor = this.options.backgroundColor ?? 'transparent'
       if (resizeTo) {
+        console.log('initResizeEvent')
         this.initResizeEvent()
       }
       else {
@@ -145,6 +146,7 @@ export class App extends EventEmitter<{
   }
 
   initResizeEvent(): void {
+    console.log('initResizeEvent')
     if (!this.options.resizeTo) {
       return
     }
@@ -163,6 +165,7 @@ export class App extends EventEmitter<{
         window.removeEventListener('resize', _resizeHandler)
       }
       resizeHandler()
+      console.log(this.width, this.height)
     }
     else {
       const resizeHandler = () => {
@@ -230,17 +233,16 @@ export class App extends EventEmitter<{
   }
 
   private update() {
+    if (this.shouldResize) {
+      this.resize()
+    }
     if (!this.children.length) {
       return
     }
     const isDirty = !![...this.children.filter(e => e.dirty)].length || this.shouldResize
-
     if (!isDirty)
       return
 
-    if (this.shouldResize) {
-      this.resize()
-    }
     this.ctx.clearRect(
       -this.canvas.width,
       -this.canvas.height,
