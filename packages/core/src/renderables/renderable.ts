@@ -5,6 +5,9 @@ import { ObservablePoint } from '../coordinate/ObservablePoint'
 import type { PointData } from '../coordinate/PointData'
 import { createProxy, ensureBetween, getEnv } from '../utils'
 
+/**
+ * 阴影
+ */
 export interface ShadowType {
   /**
    * [CanvasRenderingContext2D.shadowColor](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowColor)
@@ -23,8 +26,9 @@ export interface ShadowType {
    */
   blur?: number
 }
+
 /**
- * [单位矩阵变化](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/setTransform)
+ * 渲染元素的配置
  */
 export interface RenderableOptions {
   /**
@@ -100,6 +104,9 @@ const defaultAnchor = new ObservablePoint(null)
  */
 const defaultScale = new ObservablePoint(null, 1, 1)
 
+/**
+ * 渲染元素抽象类
+ */
 export abstract class Renderable extends EventEmitter<{
   updateBounds: [width: number, height: number]
   render: []

@@ -822,6 +822,9 @@ const defaultAnchor = new ObservablePoint(null);
  * 默认的缩放
  */
 const defaultScale = new ObservablePoint(null, 1, 1);
+/**
+ * 渲染元素抽象类
+ */
 class Renderable extends EventEmitter {
     _env = getEnv();
     constructor(options = {}) {

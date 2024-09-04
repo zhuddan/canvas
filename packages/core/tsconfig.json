@@ -1,8 +1,6 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "rootDir": ".",
     "types": ["miniprogram-api-typings", "@dcloudio/types"],
     "outDir": "dist"
   },

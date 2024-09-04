@@ -21,6 +21,14 @@ const picture = new Picture({
     x: 300,
     y: 200,
   },
+  slice: {
+    x: 0,
+    y: 0,
+  },
+  sliceSize: {
+    x: 300,
+    y: 200,
+  },
 })
 
 app.add(picture)
@@ -32,14 +40,34 @@ const pictureFolder = pane.addFolder({
 
 pictureFolder.addBinding(picture, 'size', {
   label: 'size',
-  x: {
-    min: 0,
-    max: 300 * 2,
-  },
-  y: {
-    min: 0,
-    max: 200 * 2,
-  },
+  x: { min: 0, max: 300 * 2 },
+  y: { min: 0, max: 200 * 2 },
+})
+
+pictureFolder.addBinding(picture, 'slice', {
+  label: 'slice',
+  x: { min: 0, max: 300 },
+  y: { min: 0, max: 200 },
+})
+pictureFolder.addBinding(picture, 'sliceSize', {
+  label: 'sliceSize',
+  x: { min: 0, max: 300 },
+  y: { min: 0, max: 200 },
+})
+
+pictureFolder.addBinding(picture, 'objectFit', {
+  options: [
+    'contain',
+    'cover',
+    'none',
+    'fill',
+  ],
+})
+
+pictureFolder.addBinding(picture, 'rounded', {
+  label: 'rounded',
+  min: 0,
+  max: 300,
 })
 
 picture.on('updateBounds', () => {
