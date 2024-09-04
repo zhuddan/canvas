@@ -7,7 +7,10 @@
     "build": "cross-env NODE_ENV=production rollup -c rollup.config.build.mjs",
     "publish": "node ./scripts/publish.mjs",
     "bumpp": "pnpm -F @zd~/canvas bumpp",
-    "clean": "rm -rf node_modules pnpm-lock.yaml packages/*/node_modules packages/*/pnpm-lock.yaml packages/*/dist"
+    "clean": "rm -rf node_modules pnpm-lock.yaml packages/*/node_modules packages/*/pnpm-lock.yaml packages/*/dist",
+    "docs:dev": "pnpm -F docs docs:dev",
+    "docs:build": "pnpm -F docs docs:build",
+    "docs:preview": "pnpm -F docs docs:preview"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.24.1",
