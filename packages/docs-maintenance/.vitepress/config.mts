@@ -1,7 +1,8 @@
 import { defineConfig } from 'vitepress'
-
+import config from '@sakitam-gis/vitepress-playground/config'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  extends: config,
   outDir: '../../docs',
   base: '/canvas/',
   title: '@zd~/canvas',

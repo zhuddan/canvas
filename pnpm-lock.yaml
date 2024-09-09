@@ -78,7 +78,7 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1
 
-  packages/docs:
+  packages/docs-maintenance:
     dependencies:
       vue:
         specifier: ^3.5.0
@@ -3903,7 +3903,7 @@ packages:
       graceful-fs: 4.2.11
       iferr: 0.1.5
       imurmurhash: 0.1.4
-      readable-stream: 1.1.14
+      readable-stream: 2.3.8
     dev: true
 
   /fs.realpath@1.0.0:

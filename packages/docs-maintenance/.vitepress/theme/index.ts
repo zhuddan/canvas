@@ -2,19 +2,20 @@
 import { h } from 'vue'
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
+import { SfcPlayground } from '@sakitam-gis/vitepress-playground'
 import './style.css'
-
-import { defineClientComponent } from 'vitepress'
+import '@sakitam-gis/vitepress-playground/dist/style.css'
+// import { defineClientComponent } from 'vitepress'
 
 export default {
-  extends: DefaultTheme,
+  ...DefaultTheme,
   Layout: () => {
     return h(DefaultTheme.Layout, null, {
       // https://vitepress.dev/guide/extending-default-theme#layout-slots
     })
   },
-  enhanceApp() {
-    // ...
+  enhanceApp({ app }) {
+    app.component('SfcPlayground', SfcPlayground)
   },
 } satisfies Theme
 // import DefaultTheme from 'vitepress/theme'
