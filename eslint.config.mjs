@@ -7,6 +7,7 @@ export default antfu({
     'antfu/no-import-dist': 'off',
     'antfu/no-import-node-modules-by-path': 'off',
     'eslint-comments/no-unlimited-disable': 'off',
+    'ts/no-require-imports': 'off',
   },
 }, {
   ignores: [
