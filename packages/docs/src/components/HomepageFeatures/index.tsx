@@ -4,52 +4,75 @@ import styles from './styles.module.css'
 
 interface FeatureItem {
   title: string
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>
+  icon: string // React.ComponentType<React.ComponentProps<'svg'>>
   description: JSX.Element
 }
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
-    description: (
-      <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
-      </>
-    ),
+    title: '多平台支持',
+    icon: '🌐',
+    description: (<>
+      兼容原生 Web、uni-app 和微信小程序，代码无需修改即可跨平台使用。
+    </>),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
-    description: (
-      <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the
-        {' '}
-        <code>docs</code>
-        {' '}
-        directory.
-      </>
-    ),
+    title: '性能优化',
+    icon: '⚡️',
+    description: (<>
+      自动排除无效绘制，显著提升渲染效率。
+    </>),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
-    description: (
-      <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
-      </>
-    ),
+    title: '动画支持',
+    icon: '🎞️',
+    description: (<>
+      轻松实现流畅的动画效果。
+    </>),
+  },
+  {
+    title: '形变与变换',
+    icon: '🔄',
+    description: (<>
+      支持旋转、缩放和平移等形变操作，更加自由地控制对象的形态。
+    </>),
+  },
+  {
+    title: '滤镜与阴影',
+    icon: '✨',
+    description: (<>
+      全面支持滤镜和阴影效果，为绘制内容增添丰富的视觉效果。
+    </>),
+  },
+  {
+    title: '文本',
+    icon: '📝',
+    description: (<>
+      支持多行文本绘制、行高设置，适用于复杂的文本布局需求。
+    </>),
+  },
+  {
+    title: '图形',
+    icon: '🖼️',
+    description: (<>
+      简化了图像的加载与绘制过程，提供圆角、对象适配（ObjectFit）等高级属性，使图形绘制更加灵活多样。
+    </>),
+  },
+  {
+    title: '几何图形',
+    icon: '🔷',
+    description: (<>
+      封装了常用绘制方法，支持链式调用与路径组合，轻松绘制复杂图形。
+    </>),
   },
 ]
 
-function Feature({ title, Svg, description }: FeatureItem) {
+function Feature({ title, icon, description }: FeatureItem) {
   return (
-    <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+    <div className={clsx('col col--3 border')}>
+      <div className="text--center ">
+        {icon}
+        {/* <Svg className={styles.featureSvg} role="img" /> */}
       </div>
       <div className="text--center padding-horiz--md">
         <Heading as="h3">{title}</Heading>
