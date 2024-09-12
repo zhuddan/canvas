@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 import Heading from '@theme/Heading'
-import styles from './styles.module.css'
 
 interface FeatureItem {
   title: string
@@ -69,14 +68,18 @@ const FeatureList: FeatureItem[] = [
 
 function Feature({ title, icon, description }: FeatureItem) {
   return (
-    <div className={clsx('col col--3 border')}>
-      <div className="text--center ">
-        {icon}
-        {/* <Svg className={styles.featureSvg} role="img" /> */}
-      </div>
-      <div className="text--center padding-horiz--md">
-        <Heading as="h3">{title}</Heading>
-        <p>{description}</p>
+    <div className={clsx('col col--3 ', {
+      'mt-4': true,
+    })}
+    >
+      <div className="shadow" style={{ height: '100%' }}>
+        <div className="text--center ">
+          {icon}
+        </div>
+        <div className="text--center padding-horiz--md ">
+          <Heading as="h3">{title}</Heading>
+          <p>{description}</p>
+        </div>
       </div>
     </div>
   )
@@ -84,10 +87,11 @@ function Feature({ title, icon, description }: FeatureItem) {
 
 export default function HomepageFeatures(): JSX.Element {
   return (
-    <section className={styles.features}>
+    <section className="flex items-center p-8 w-full">
       <div className="container">
         <div className="row">
           {FeatureList.map((props, idx) => (
+            // eslint-disable-next-line react/no-array-index-key
             <Feature key={idx} {...props} />
           ))}
         </div>
