@@ -6,11 +6,30 @@ import Editor, { loader } from '@monaco-editor/react'
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import dts from '!!raw-loader!./zd-canvas.d.ts'
 
-interface CustomPlaygroundProps {
-  children: string
-}
+const customHtml = `
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Playground</title>
+    <style>
+      html,body {
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+      }
+    </style>
+  </head>
+  <body style="background:red">
+    <script src="./index.ts" type="module"></script>
+  </body>
+</html>
+  `
 
-const CustomPlayground: React.FC<CustomPlaygroundProps> = ({ children }) => {
+function CustomPlayground({ children }: React.PropsWithChildren) {
   const handleEditorWillMount = (monaco: Monaco) => {
     monaco.languages.typescript.typescriptDefaults.addExtraLib(
       `
@@ -62,6 +81,8 @@ const CustomPlayground: React.FC<CustomPlaygroundProps> = ({ children }) => {
           options={{
             minimap: { enabled: false },
             fontSize: 14,
+            wordWrapColumn: 80,
+            wordWrap: 'bounded',
           }}
         />
       </div>
@@ -71,38 +92,23 @@ const CustomPlayground: React.FC<CustomPlaygroundProps> = ({ children }) => {
           template="vanilla-ts"
           files={{
             '/index.ts': code,
-            '/index.html': `
-            <!DOCTYPE html>
-            <html>
-              <head>
-                <title>@zd~/canvas Example</title>
-              </head>
-              <style>
-                html, body {
-                  margin: 0 !important;
-                  padding: 0 !important;
-                  width: 100%;
-                  height: 100%;
-                  overflow: hidden;
-                }
-              </style>
-              <body style="margin: 0 !important; padding: 0 !important;">
-                 <script src="index.ts" type="module"></script>
-              </body>
-            </html>
-            `,
+            '/index.html': customHtml,
           }}
           customSetup={{
             entry: '/index.html',
             dependencies: {
               '@zd~/canvas': 'latest',
-              'tweakpane': 'latest',
             },
           }}
         >
           <SandpackPreview
-            showNavigator={false}
-            style={{ height: '100%' }}
+            style={{
+              height: '100%',
+              width: '100%',
+              overflow: 'hidden',
+              padding: 0,
+              margin: 0,
+            }}
           />
         </SandpackProvider>
       </div>
