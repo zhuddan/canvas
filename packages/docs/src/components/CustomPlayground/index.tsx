@@ -1,27 +1,15 @@
 import React from 'react'
 import { SandpackPreview, SandpackProvider } from '@codesandbox/sandpack-react'
+import type { Monaco } from '@monaco-editor/react'
 import Editor, { loader } from '@monaco-editor/react'
+
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import dts from '!!raw-loader!./zd-canvas.d.ts'
 
 // 添加类型定义
 const zdcanvasTypes = `
 declare module '@zd~/canvas' {
-  export class App {
-    constructor(options: { backgroundColor: string; resizeTo: Window });
-    canvas: HTMLCanvasElement;
-    add(obj: any): void;
-    ticker: { add(fn: () => void): void };
-  }
-
-  export class Text {
-    constructor(options: {
-      text: string;
-      x: number;
-      y: number;
-      anchor: { x: number; y: number };
-      style: { fontSize: number; fontWeight: string; fill: string };
-    });
-    rotation: number;
-  }
+  ${dts}
 }
 `
 
@@ -30,10 +18,10 @@ interface CustomPlaygroundProps {
 }
 
 const CustomPlayground: React.FC<CustomPlaygroundProps> = ({ children }) => {
-  const handleEditorWillMount = (monaco: any) => {
+  const handleEditorWillMount = (monaco: Monaco) => {
     monaco.languages.typescript.typescriptDefaults.addExtraLib(
       zdcanvasTypes,
-      '../../../../core/dist/index.d.ts',
+      // '../../../../core/dist/index.d.ts',
     )
   }
 
@@ -71,13 +59,17 @@ const CustomPlayground: React.FC<CustomPlaygroundProps> = ({ children }) => {
                 <title>@zd~/canvas Example</title>
               </head>
               <style>
-                #app {
-                  height: 100px;
-                  background-color: #60a5fa;
+                html, body {
+                  margin: 0 !important;
+                  padding: 0 !important;
+                  width: 100%;
+                  height: 100%;
+                  overflow: hidden;
                 }
               </style>
-              <body>
-                <div id="app"></div>
+   
+              <body style="margin: 0 !important; padding: 0 !important;">
+                 <script src="index.js" type="module"></script>
               </body>
             </html>
             `,
@@ -85,7 +77,8 @@ const CustomPlayground: React.FC<CustomPlaygroundProps> = ({ children }) => {
           customSetup={{
             entry: '/index.html',
             dependencies: {
-              // '@zd~/canvas': 'https://unpkg.com/@zd~/canvas@0.0.4/dist/index.esm.js',
+              '@zd~/canvas': 'latest',
+              'tweakpane': 'latest',
             },
           }}
         >
