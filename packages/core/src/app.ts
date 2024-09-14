@@ -1,6 +1,7 @@
 import EventEmitter from 'eventemitter3'
 import type { Renderable } from './renderables/renderable'
-import { ENV, formatWithPx, getEnv } from './utils'
+import { formatWithPx } from './utils'
+import { IS_STANDARD_DOM_ENVIRONMENT, IS_UNI_APP, IS_WEB, IS_WX, IS_WX_UNIAPP } from './const'
 
 export interface AppOptions {
   /**
@@ -35,14 +36,35 @@ export class App extends EventEmitter<{
 }> {
   private ctx!: CanvasRenderingContext2D
   private _ready = false
-  protected _env = getEnv()
   canvas!: HTMLCanvasElement
   ticker!: Ticker
   dpr = 1
-  width = 0
-  height = 0
-  _width = 0
-  _height = 0
+  private _nextWidth = 0
+  private _nextHeight = 0
+  private _width = 0
+
+  private set width(value) {
+    if (this.width !== value) {
+      this._width = value
+    }
+  }
+
+  get width() {
+    return this._width
+  }
+
+  private _height = 0
+
+  private set height(value) {
+    if (this.height !== value) {
+      this._height = value
+    }
+  }
+
+  get height() {
+    return this._height
+  }
+
   removeResizeEvent?: () => void
   constructor(private options: AppOptions = {}) {
     super()
@@ -64,7 +86,7 @@ export class App extends EventEmitter<{
   }
 
   private validateAppOptions(appOptions: AppOptions) {
-    if (this._env === ENV.WX && !appOptions.canvas) {
+    if (!IS_STANDARD_DOM_ENVIRONMENT && !appOptions.canvas) {
       console.error('当前为非document环境, 无法使用 document.createElement(\'canvas\'),\n 请传入canvas元素或者canvasId')
     }
   }
@@ -72,11 +94,17 @@ export class App extends EventEmitter<{
   private initDpr() {
     const { dpr = true } = this.options
     if (typeof dpr === 'boolean') {
-      if (this._env === ENV.WEB) {
+      if (IS_WEB) {
         this.dpr = window.devicePixelRatio ?? 1
       }
-      else {
+      else if (IS_WX) {
         this.dpr = wx.getWindowInfo().pixelRatio
+      }
+      else if (IS_UNI_APP) {
+        this.dpr = uni.getWindowInfo().pixelRatio
+      }
+      else {
+        throw new Error('当前运行环境不支持 canvas')
       }
     }
     else {
@@ -88,64 +116,71 @@ export class App extends EventEmitter<{
     const canvas = this.options.canvas
     if (canvas) {
       if (typeof canvas === 'string') {
-        if (this._env === ENV.WEB) {
+        if (IS_WEB) {
           this.canvas = document.querySelector(canvas) as HTMLCanvasElement
         }
         else {
           let query: WechatMiniprogram.SelectorQuery | UniNamespace.SelectorQuery
-          if (this._env === ENV.WX) {
+          if (IS_WX) {
             query = wx.createSelectorQuery()
           }
-          else {
+          else if (IS_UNI_APP) {
             query = uni.createSelectorQuery()
           }
-          console.log(`#${canvas}`)
+          else {
+            throw new Error('当前运行环境不支持 canvas')
+          }
           query.select(`#${canvas}`)
             .fields({ node: true, size: true }, undefined as any)
             .exec((res) => {
+              if (this.options.width || this.options.height) {
+                console.warn('微信小程序或 者 uni 不支持 AppOptions.width 和 AppOptions.height。请手动调整 canvas 的样式宽高')
+              }
               const canvas = res[0].node as HTMLCanvasElement
+              const { width, height } = res[0]
               this.canvas = canvas
-              this.initCanvasRenderingContext2D()
+              this.initCanvasSize(width, height)
             })
         }
       }
       else {
         this.canvas = canvas
-        this.initCanvasRenderingContext2D()
+        this.initCanvasSize()
       }
     }
     else {
       this.canvas = document.createElement('canvas')!
-      this.initCanvasRenderingContext2D()
+      this.initCanvasSize()
     }
   }
 
-  private initCanvasRenderingContext2D() {
-    console.log('initCanvasRenderingContext2D')
+  private initCanvasSize(width = this.options.width, height = this.options.height) {
+    const { resizeTo } = this.options
 
-    const {
-      width = this._env === ENV.WX ? 300 : 600,
-      height = this._env === ENV.WX ? 150 : 300,
-      resizeTo,
-    } = this.options
     if (!this.canvas)
       return
-    if (this.canvas.style) {
+    if (IS_WEB) {
       this.canvas.style.backgroundColor = this.options.backgroundColor ?? 'transparent'
       if (resizeTo) {
         this.initResizeEvent()
       }
       else {
-        this.width = width
-        this.height = height
+        this._nextWidth = width || 800
+        this._nextHeight = height || 600
       }
     }
     else {
-      this.canvas.width = width * this.dpr
-      this.canvas.height = height * this.dpr
-      this.width = width
-      this.height = width
+      this._nextWidth = width || 800
+      this._nextHeight = height || 600
     }
+    /**
+     * 尝试运行一次
+     */
+    this.resize()
+    this.initCtx()
+  }
+
+  private initCtx() {
     this.ctx = this.canvas.getContext('2d')!
     this._ready = true
     this.ticker.init(this.canvas, true)
@@ -153,7 +188,6 @@ export class App extends EventEmitter<{
   }
 
   initResizeEvent(): void {
-    console.log('initResizeEvent')
     if (!this.options.resizeTo) {
       return
     }
@@ -163,23 +197,23 @@ export class App extends EventEmitter<{
       : resizeTo
     if (target instanceof Window) {
       const resizeHandler = () => {
-        this.width = window.innerWidth
-        this.height = window.innerHeight
+        this._nextWidth = window.innerWidth
+        this._nextHeight = window.innerHeight
       }
       const _resizeHandler = resizeHandler.bind(this)
+
       window.addEventListener('resize', _resizeHandler)
       this.removeResizeEvent = () => {
         window.removeEventListener('resize', _resizeHandler)
       }
       resizeHandler()
-      console.log(this.width, this.height)
     }
     else {
       const resizeHandler = () => {
         const width = target.clientWidth
         const height = target.clientHeight
-        this.width = width
-        this.height = height
+        this._nextWidth = width
+        this._nextHeight = height
       }
       const resizeObserver = new ResizeObserver(resizeHandler)
       resizeObserver.observe(target)
@@ -191,17 +225,19 @@ export class App extends EventEmitter<{
   }
 
   private get shouldResize() {
-    return this.width !== this._width || this.height !== this._height
+    return this.width !== this._nextWidth || this.height !== this._nextHeight
   }
 
   resize() {
-    if (this.shouldResize && this._env === ENV.WEB) {
-      this.canvas.style.width = formatWithPx(this.width)
-      this.canvas.style.height = formatWithPx(this.height)
+    if (this.shouldResize) {
+      if (IS_WEB) {
+        this.canvas.style.width = formatWithPx(this.width)
+        this.canvas.style.height = formatWithPx(this.height)
+      }
+      this.height = this._nextHeight
+      this.width = this._nextWidth
       this.canvas.width = this.width * this.dpr
       this.canvas.height = this.height * this.dpr
-      this._width = this.width
-      this._height = this.height
     }
   }
 
@@ -240,7 +276,6 @@ export class App extends EventEmitter<{
   }
 
   private update() {
-    console.log('this.update')
     if (this.shouldResize) {
       this.resize()
     }
@@ -295,13 +330,12 @@ class Ticker {
   myReq: number = 0
   private isRunning: boolean = false
   handler: ((time: number) => void)[] = []
-  protected _env = getEnv()
   constructor(protected autoStart: boolean = true) {
 
   }
 
   init(canvas: HTMLCanvasElement, autoStart: boolean) {
-    if (this._env === ENV.WX) {
+    if (IS_WX_UNIAPP) {
       this.requestAnimationFrame = (canvas as any).requestAnimationFrame.bind(canvas)
       this.cancelAnimationFrame = (canvas as any).requestAnimationFrame.bind(canvas)
     }

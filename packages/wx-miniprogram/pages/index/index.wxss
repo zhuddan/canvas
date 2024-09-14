@@ -1,15 +1,10 @@
 page {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+  height: 100%;
+  width: 100%;  
 }
 
-.scroll-area {
-  flex: 1;
-  overflow-y: hidden;
-}
-
-.intro {
-  padding: 30px;
-  text-align: center;
+canvas{
+  background-color: rgb(228, 231, 231);
+  height: 100%;
+  width: 100%;
 }

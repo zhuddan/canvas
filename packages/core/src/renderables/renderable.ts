@@ -3,7 +3,7 @@ import type { App } from '../app'
 import type { Observer } from '../coordinate/ObservablePoint'
 import { ObservablePoint } from '../coordinate/ObservablePoint'
 import type { PointData } from '../coordinate/PointData'
-import { createProxy, ensureBetween, getEnv } from '../utils'
+import { createProxy, ensureBetween } from '../utils'
 
 /**
  * 阴影
@@ -111,7 +111,6 @@ export abstract class Renderable extends EventEmitter<{
   updateBounds: [width: number, height: number]
   render: []
 }> implements Observer<ObservablePoint> {
-  protected _env = getEnv()
   constructor(options: RenderableOptions = {}) {
     super()
     this.visible = options.visible ?? true

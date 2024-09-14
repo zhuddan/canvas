@@ -1,3 +1,4 @@
+import { IS_WX_UNIAPP } from './const'
 import type { PointData } from './coordinate/PointData'
 import type { TextStyle } from './style/text-style'
 
@@ -74,23 +75,6 @@ export function createProxy<T extends object>(value: T, cb?: (property: string, 
   })
 }
 
-export enum ENV {
-  WX = 'WX',
-  WEB = 'WEB',
-  UNKNOWN = 'UNKNOWN',
-  UNI_APP = 'UNI_APP',
-}
-
-export function getEnv() {
-  if (typeof uni !== 'undefined')
-    return ENV.UNI_APP
-  if (typeof wx !== 'undefined')
-    return ENV.WX
-  if (typeof window !== 'undefined' && typeof window.document !== 'undefined')
-    return ENV.WEB
-  return ENV.UNKNOWN
-}
-
 /**
  * Draws a rectangle with rounded corners compatible with different environments.
  *
@@ -111,7 +95,7 @@ export function drawRectCompatible(
   rounded = Math.min(rounded, size.x / 2, size.y / 2)
   ctx.beginPath()
   if (rounded) {
-    if (getEnv() === ENV.WX) {
+    if (IS_WX_UNIAPP) {
       // 左上角到右上角
       ctx.moveTo(position.x + rounded, position.y)
       ctx.arcTo(position.x + size.x, position.y, position.x + size.x, position.y + rounded, rounded)

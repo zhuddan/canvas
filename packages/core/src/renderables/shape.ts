@@ -1,10 +1,9 @@
+import { IS_WX_UNIAPP } from '../const'
 import type { IAbstractStyle, InputColor, StrokeInput } from '../style/abstract-style'
-// import type { FunctionKeys } from '../types'
-import { ENV, calcDiff, createProxy, drawRectCompatible } from '../utils'
+import { calcDiff, createProxy, drawRectCompatible } from '../utils'
 import type { RenderableOptions } from './renderable'
 import { Renderable } from './renderable'
 
-// type CanvasRenderingContext2DMethods = FunctionKeys<CanvasRenderingContext2D>
 interface PathData<T extends keyof CanvasRenderingContext2D> {
   action: T
   args: any[]
@@ -275,7 +274,7 @@ export class Shape extends Renderable implements IShape {
       else if (['lineCap', 'lineJoin'].includes(action)) {
         ctx[action] = args[0]
       }
-      else if (action === 'roundRect' && this._env === ENV.WX) {
+      else if (action === 'roundRect' && IS_WX_UNIAPP) {
         drawRectCompatible(ctx, { x: args[0], y: args[1] }, { x: args[2], y: args[3] }, args[4])
       }
       else {

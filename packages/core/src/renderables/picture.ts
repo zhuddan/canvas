@@ -1,8 +1,9 @@
 import type { Properties } from 'csstype'
 import type { PointData } from '../coordinate/PointData'
 import { ObservablePoint } from '../coordinate/ObservablePoint'
-import { ENV, drawRectCompatible } from '../utils'
+import { drawRectCompatible } from '../utils'
 import type { App } from '../app'
+import { IS_WX_UNIAPP } from '../const'
 import type { RenderableOptions, ShadowType } from './renderable'
 import { Renderable } from './renderable'
 
@@ -43,7 +44,7 @@ export class Picture extends Renderable {
     super(options)
     const maybeImage = options?.image
     if (typeof maybeImage == 'string') {
-      if (this._env === ENV.WX) {
+      if (IS_WX_UNIAPP) {
         this.src = maybeImage
       }
       else {
@@ -61,7 +62,7 @@ export class Picture extends Renderable {
 
   onAdd(_app: App) {
     super.onAdd(_app)
-    if (this._env !== ENV.WEB) {
+    if (IS_WX_UNIAPP) {
       _app.onReady(this.createImage.bind(this))
     }
   }
