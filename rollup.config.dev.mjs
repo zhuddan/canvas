@@ -40,7 +40,7 @@ const wxPlugins = [
   {
     name: 'copy-files-to-wx',
     writeBundle: async () => {
-      await copyFiles('./packages/core/dist', '../wx-example/miniprogram/utils/canvas', false)
+      await copyFiles('./packages/core/dist', './packages/wx-miniprogram/utils/canvas', false)
       console.log('copy success')
     },
   },

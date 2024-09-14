@@ -1,0 +1,39 @@
+---
+description: How to install Docusaurus locally, and start a Docusaurus site in no time.
+---
+# 安装
+
+## web 或者 uni-app
+```mdx-code-block
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+```
+
+<Tabs>
+  <TabItem value="npm" label="npm">
+```bash
+npm install @zd~/canvas
+```
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+```bash
+yarn add @zd~/canvas
+```
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+```bash
+pnpm add @zd~/canvas
+```
+  </TabItem>
+</Tabs>
+
+:::tip
+
+微信小程序使用 npm包 是个十分麻烦的过程, 建议您使用原生web或者uni-app构建应用。 如果您确实需要使用原生微信小程序构建npm, 请参考[微信小程序npm构建](https://developers.weixin.qq.com/miniprogram/dev/devtools/npm.html) 。不过更推荐这么做：
+
+:::
+
+## 微信小程序
+
+请访问 [@zd~/canvas](https://unpkg.com/browse/@zd~/canvas/), 下载复制 `dist/index.esm.js` 目录下的文件到您的小程序项目中进行使用，如果您的小程序需要ts支持，请复制`index.d.ts`
+

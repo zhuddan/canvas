@@ -1,1 +1,1 @@
-declare module '!!raw-loader!./zd-canvas.d.ts'
+declare module '!!raw-loader!*'

@@ -72,7 +72,12 @@ export class App extends EventEmitter<{
   private initDpr() {
     const { dpr = true } = this.options
     if (typeof dpr === 'boolean') {
-      this.dpr = window.devicePixelRatio ?? 1
+      if (this._env === ENV.WEB) {
+        this.dpr = window.devicePixelRatio ?? 1
+      }
+      else {
+        this.dpr = wx.getWindowInfo().pixelRatio
+      }
     }
     else {
       this.dpr = dpr
@@ -94,7 +99,8 @@ export class App extends EventEmitter<{
           else {
             query = uni.createSelectorQuery()
           }
-          query.select('#myCanvas')
+          console.log(`#${canvas}`)
+          query.select(`#${canvas}`)
             .fields({ node: true, size: true }, undefined as any)
             .exec((res) => {
               const canvas = res[0].node as HTMLCanvasElement
@@ -115,6 +121,8 @@ export class App extends EventEmitter<{
   }
 
   private initCanvasRenderingContext2D() {
+    console.log('initCanvasRenderingContext2D')
+
     const {
       width = this._env === ENV.WX ? 300 : 600,
       height = this._env === ENV.WX ? 150 : 300,
@@ -125,7 +133,6 @@ export class App extends EventEmitter<{
     if (this.canvas.style) {
       this.canvas.style.backgroundColor = this.options.backgroundColor ?? 'transparent'
       if (resizeTo) {
-        console.log('initResizeEvent')
         this.initResizeEvent()
       }
       else {
@@ -188,7 +195,7 @@ export class App extends EventEmitter<{
   }
 
   resize() {
-    if (this.shouldResize) {
+    if (this.shouldResize && this._env === ENV.WEB) {
       this.canvas.style.width = formatWithPx(this.width)
       this.canvas.style.height = formatWithPx(this.height)
       this.canvas.width = this.width * this.dpr
@@ -233,6 +240,7 @@ export class App extends EventEmitter<{
   }
 
   private update() {
+    console.log('this.update')
     if (this.shouldResize) {
       this.resize()
     }

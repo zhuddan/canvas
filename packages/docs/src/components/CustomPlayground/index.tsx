@@ -4,7 +4,7 @@ import type { Monaco } from '@monaco-editor/react'
 import Editor, { loader } from '@monaco-editor/react'
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import dts from '!!raw-loader!./zd-canvas.d.ts'
+import dts from '!!raw-loader!@zd~/canvas/dist/index.d.ts'
 
 const customHtml = `
 <!DOCTYPE html>
@@ -70,8 +70,8 @@ function CustomPlayground({ children }: React.PropsWithChildren) {
   }
 
   return (
-    <div style={{ display: 'flex', height: '600px', border: '1px solid #ccc' }}>
-      <div style={{ flex: 1, overflow: 'hidden' }}>
+    <div style={{ display: 'flex', height: '400px', border: '1px solid #ccc' }}>
+      <div style={{ flex: 1 }}>
         <Editor
           height="100%"
           defaultLanguage="typescript"
@@ -86,7 +86,7 @@ function CustomPlayground({ children }: React.PropsWithChildren) {
           }}
         />
       </div>
-      <div style={{ flex: 1, overflow: 'hidden', height: '100%' }}>
+      <div style={{ flex: 1, height: '100%' }}>
         <SandpackProvider
           style={{ height: '100%' }}
           template="vanilla-ts"
