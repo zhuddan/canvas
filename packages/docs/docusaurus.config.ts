@@ -36,6 +36,7 @@ const config: Config = {
     [
       'classic',
       {
+
         docs: {
           sidebarPath: './sidebars.ts',
           // Please change this to your repo.

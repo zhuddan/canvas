@@ -10,7 +10,8 @@
     "clean": "rm -rf node_modules pnpm-lock.yaml packages/*/node_modules packages/*/pnpm-lock.yaml packages/*/dist",
     "docs:dev": "pnpm -F docs dev",
     "docs:build": "pnpm -F docs build",
-    "docs:preview": "pnpm -F docs preview"
+    "docs:preview": "pnpm -F docs preview",
+    "typedoc": "pnpm -F @zd~/canvas typedoc"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.21.3",
