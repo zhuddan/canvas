@@ -1,16 +1,20 @@
 ---
-description: How to install Docusaurus locally, and start a Docusaurus site in no time.
+sidebar_position: 1
 ---
-# 安装
 
-## web 或者 uni-app
-```mdx-code-block
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-```
+import Playground from '@site/src/components/Playground';
+
+# 快速开始
+
+## 安装
+
+### web 或者 uni-app
+
 
 <Tabs>
-  <TabItem value="npm" label="npm">
+  <TabItem value="npm" label="npm" >
 ```bash
 npm install @zd~/canvas
 ```
@@ -33,7 +37,46 @@ pnpm add @zd~/canvas
 
 :::
 
-## 微信小程序
+### 微信小程序
 
 请访问 [@zd~/canvas](https://unpkg.com/browse/@zd~/canvas/), 下载复制 `dist/index.esm.js` 目录下的文件到您的小程序项目中进行使用，如果您的小程序需要ts支持，请复制`index.d.ts`
 
+## 创建你的应用
+
+1. 创建应用实例。
+2. 将应用画布添加到文档主体。
+3. 创建并添加渲染元素 (这里以`Text`为例)。
+
+<Playground>
+```ts
+import { App, Text } from '@zd~/canvas'
+
+const app = new App({
+  backgroundColor: '#60a5fab0',
+  resizeTo: window,
+})
+
+document.body.appendChild(app.canvas)
+
+const text = new Text({
+  text: 'Hello World',
+  x: 50,
+  y: 50,
+  style: {
+    fontSize: 32,
+    fontWeight: 'bold',
+  },
+})
+
+app.add(text)
+```
+</Playground>
+
+
+
+<Details>
+  <summary>微信小程序</summary>
+  
+  开发中...
+
+</Details>

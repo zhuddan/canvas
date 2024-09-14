@@ -1,0 +1,32 @@
+---
+sidebar_position: 1
+---
+
+import ExcitingMessage from '@site/src/components/ExcitingMessage';
+
+
+# 微信小程序
+
+:::danger
+微信小程序官方[新版 Canvas 2D 接口](https://developers.weixin.qq.com/miniprogram/dev/api/canvas/RenderingContext.html), 虽然官方表示"与Web标准保持一致",但是微信小程序运行在特定的环境中,而非标准的Web浏览器环境, 因此其 CanvasRenderingContext2D 对象与Web标准中的 CanvasRenderingContext2D 仍存在一些差异。
+:::
+
+- requestAnimationFrame/cancelAnimationFrame
+
+    微信小程序没有提供 [window.requestAnimationFrame](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestAnimationFrame) 和 [window.cancelAnimationFrame](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/cancelAnimationFrame) api, 而是挂载在`canvas`对象上，参考[Canvas.requestAnimationFrame](https://developers.weixin.qq.com/miniprogram/dev/api/canvas/Canvas.requestAnimationFrame.html) [Canvas.cancelAnimationFrame](https://developers.weixin.qq.com/miniprogram/dev/api/canvas/Canvas.cancelAnimationFrame.html)。
+
+- Image对象
+
+   微信小程序没有提供dom对象。所以绘制图片时候时候, 你无法使用`new Image()` 或者 `document.createElement("img")`, 
+   但是他们提供了[canvas.createImage](https://developers.weixin.qq.com/miniprogram/dev/api/canvas/Canvas.createImage.html)。
+
+- 绘制圆角矩形(CanvasRenderingContext2D.roundRect)
+
+   微信小程序提供的`CanvasRenderingContext2D.roundRect`无法正常运行，但是我们使用 `CanvasRenderingContext2D.moveTo` 和 `CanvasRenderingContext2D.arcTo` Api已经做了兼容处理。你无需为此担忧。
+
+
+
+<ExcitingMessage>
+  幸运的是,我们已为这些差异实现了兼容性处理。您只需专注于代码本身,无需额外考虑多端适配,即可实现一套代码跨平台运行。
+</ExcitingMessage>
+
