@@ -276,13 +276,13 @@ export class App extends EventEmitter<{
   }
 
   private update() {
-    if (this.shouldResize) {
+    const _shouldResize = this.shouldResize
+    const isDirty = !![...this.children.filter(e => e.dirty)].length || _shouldResize
+
+    if (_shouldResize) {
       this.resize()
     }
-    if (!this.children.length) {
-      return
-    }
-    const isDirty = !![...this.children.filter(e => e.dirty)].length || this.shouldResize
+
     if (!isDirty)
       return
 
@@ -294,6 +294,7 @@ export class App extends EventEmitter<{
     )
 
     const shouldRender = [...this.children].filter(e => e.shouldUpdate)
+
     while (shouldRender.length) {
       this.beforeRender()
       const child = shouldRender.shift()!
