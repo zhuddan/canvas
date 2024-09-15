@@ -156,7 +156,7 @@ export class App extends EventEmitter<{
 
   private initCanvasSize(width = this.options.width, height = this.options.height) {
     const { resizeTo } = this.options
-
+    console.log('initCanvasSize')
     if (!this.canvas)
       return
     if (IS_WEB) {
@@ -230,14 +230,14 @@ export class App extends EventEmitter<{
 
   resize() {
     if (this.shouldResize) {
-      if (IS_WEB) {
-        this.canvas.style.width = formatWithPx(this.width)
-        this.canvas.style.height = formatWithPx(this.height)
-      }
       this.height = this._nextHeight
       this.width = this._nextWidth
       this.canvas.width = this.width * this.dpr
       this.canvas.height = this.height * this.dpr
+      if (IS_WEB) {
+        this.canvas.style.width = formatWithPx(this.width)
+        this.canvas.style.height = formatWithPx(this.height)
+      }
     }
   }
 

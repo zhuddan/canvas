@@ -1,7 +1,39 @@
 ---
 sidebar_position: 1
 ---
+import Playground from '@site/src/components/Playground';
 
 # 渲染元素
 
-所有渲染元素都都是继承于 `Renderable类`。
+所有渲染元素都都是继承于 `Renderable`抽象类，`Renderable`抽象类包含了所有渲染元素的公共属性和方法。
+
+
+## 属性
+
+- postion 元素位置
+
+<Playground>
+```ts
+import { App, Shape } from '@zd~/canvas'
+
+const app = new App({
+  backgroundColor: '#60a5fab0',
+  resizeTo: window,
+})
+
+document.body.appendChild(app.canvas)
+
+const shape = new Shape({
+  x: 50,
+  y: 50,
+})
+
+shape.beginPath().rect(0, 0, 100, 100).fill('red')
+
+app.add(shape)
+```
+</Playground>
+
+
+- x
+- y

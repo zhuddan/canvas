@@ -375,11 +375,12 @@ export abstract class Renderable extends EventEmitter<{
 
   protected _shouldUpdateBounds = false
 
-  protected shouldUpdateBounds(type: string) {
+  protected shouldUpdateBounds(type?: string) {
     if (this._shouldUpdateBounds) {
       return
     }
-    console.log('shouldUpdateBounds', type)
+    if (type)
+      console.log('shouldUpdateBounds', type)
     this._shouldUpdateBounds = true
   }
 
