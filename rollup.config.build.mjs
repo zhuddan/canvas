@@ -2,11 +2,11 @@
 import process from 'node:process'
 import { defineConfig } from 'rollup'
 import typescript from '@rollup/plugin-typescript'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 import del from 'rollup-plugin-delete'
+import commonjs from '@rollup/plugin-commonjs'
 import terser from '@rollup/plugin-terser'
 import { dts } from 'rollup-plugin-dts'
-import { nodeResolve } from '@rollup/plugin-node-resolve'
-import commonjs from '@rollup/plugin-commonjs'
 import { exec } from './scripts/exec.mjs'
 
 function main() {

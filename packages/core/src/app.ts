@@ -3,6 +3,7 @@ import type { Renderable } from './renderables/renderable'
 import { formatWithPx } from './utils'
 import { IS_STANDARD_DOM_ENVIRONMENT, IS_UNI_APP, IS_WEB, IS_WX, IS_WX_UNIAPP } from './const'
 
+
 export interface AppOptions {
   /**
    *  画布宽度
@@ -29,7 +30,6 @@ export interface AppOptions {
    */
   resizeTo?: HTMLElement | Window | string
 }
-
 export class App extends EventEmitter<{
   render: []
   ready: []
