@@ -35,7 +35,7 @@
 
 #### Defined in
 
-[packages/core/src/app.ts:74](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/app.ts#L74)
+[packages/core/src/app.ts:42](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/app.ts#L42)
 
 ## Properties
 
@@ -43,9 +43,11 @@
 
 > **canvas**: `HTMLCanvasElement`
 
+canvas 元素
+
 #### Defined in
 
-[packages/core/src/app.ts:44](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/app.ts#L44)
+[packages/core/src/app.ts:59](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/app.ts#L59)
 
 ***
 
@@ -53,9 +55,11 @@
 
 > **children**: [`Renderable`](Renderable.md)[] = `[]`
 
+所有可渲染的子元素
+
 #### Defined in
 
-[packages/core/src/app.ts:262](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/app.ts#L262)
+[packages/core/src/app.ts:307](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/app.ts#L307)
 
 ***
 
@@ -63,33 +67,23 @@
 
 > **dpr**: `number` = `1`
 
-#### Defined in
-
-[packages/core/src/app.ts:46](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/app.ts#L46)
-
-***
-
-### removeResizeEvent()?
-
-> `optional` **removeResizeEvent**: () => `void`
-
-#### Returns
-
-`void`
+设备像素比 [devicePixelRatio](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/devicePixelRatio)
 
 #### Defined in
 
-[packages/core/src/app.ts:73](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/app.ts#L73)
+[packages/core/src/app.ts:67](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/app.ts#L67)
 
 ***
 
 ### ticker
 
-> **ticker**: `Ticker`
+> **ticker**: [`Ticker`](Ticker.md)
+
+计时器
 
 #### Defined in
 
-[packages/core/src/app.ts:45](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/app.ts#L45)
+[packages/core/src/app.ts:63](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/app.ts#L63)
 
 ***
 
@@ -111,6 +105,8 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 > **add**(...`objects`): `void`
 
+添加渲染元素
+
 #### Parameters
 
 • ...**objects**: [`Renderable`](Renderable.md)[]
@@ -121,7 +117,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/app.ts:264](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/app.ts#L264)
+[packages/core/src/app.ts:312](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/app.ts#L312)
 
 ***
 
@@ -152,6 +148,20 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 #### Defined in
 
 node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:45
+
+***
+
+### destroy()
+
+> **destroy**(): `void`
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/core/src/app.ts:392](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/app.ts#L392)
 
 ***
 
@@ -203,20 +213,6 @@ listeners.
 #### Defined in
 
 node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:15
-
-***
-
-### initResizeEvent()
-
-> **initResizeEvent**(): `void`
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/core/src/app.ts:195](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/app.ts#L195)
 
 ***
 
@@ -372,6 +368,8 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:5
 
 > **onReady**(`fn`): `void`
 
+程序准备好之后运行
+
 #### Parameters
 
 • **fn**
@@ -382,13 +380,15 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:5
 
 #### Defined in
 
-[packages/core/src/app.ts:82](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/app.ts#L82)
+[packages/core/src/app.ts:97](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/app.ts#L97)
 
 ***
 
 ### remove()
 
 > **remove**(...`objects`): `void`
+
+删除渲染元素
 
 #### Parameters
 
@@ -400,7 +400,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:5
 
 #### Defined in
 
-[packages/core/src/app.ts:272](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/app.ts#L272)
+[packages/core/src/app.ts:323](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/app.ts#L323)
 
 ***
 
@@ -462,23 +462,11 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:6
 
 ***
 
-### resize()
-
-> **resize**(): `void`
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/core/src/app.ts:236](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/app.ts#L236)
-
-***
-
 ### toDataURL()
 
 > **toDataURL**(`type`?, `quality`?): `string`
+
+返回base64
 
 #### Parameters
 
@@ -492,13 +480,15 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:6
 
 #### Defined in
 
-[packages/core/src/app.ts:314](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/app.ts#L314)
+[packages/core/src/app.ts:371](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/app.ts#L371)
 
 ***
 
 ### toDataURLAsync()
 
 > **toDataURLAsync**(`type`?, `quality`?): `Promise`\<`string`\>
+
+返回 base64 异步的
 
 #### Parameters
 
@@ -512,7 +502,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:6
 
 #### Defined in
 
-[packages/core/src/app.ts:318](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/app.ts#L318)
+[packages/core/src/app.ts:378](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/app.ts#L378)
 
 ***
 
@@ -530,4 +520,4 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:6
 
 #### Defined in
 
-[packages/core/src/app.ts:326](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/app.ts#L326)
+[packages/core/src/app.ts:386](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/app.ts#L386)

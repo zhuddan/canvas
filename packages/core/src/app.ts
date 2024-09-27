@@ -39,6 +39,14 @@ export class App extends EventEmitter<{
   render: []
   ready: []
 }> {
+  constructor(private options: AppOptions = {}) {
+    super()
+    this.validateAppOptions(options)
+    this.initDpr()
+    this.initTicker()
+    this.initCanvas()
+  }
+
   private ctx!: CanvasRenderingContext2D
   private _ready = false
   private _nextWidth = 0
@@ -49,8 +57,13 @@ export class App extends EventEmitter<{
    * canvas 元素
    */
   canvas!: HTMLCanvasElement
-
+  /**
+   * 计时器
+   */
   ticker!: Ticker
+  /**
+   * 设备像素比 [devicePixelRatio](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/devicePixelRatio)
+   */
   dpr = 1
 
   private set width(value) {
@@ -75,15 +88,12 @@ export class App extends EventEmitter<{
     return this._height
   }
 
-  removeResizeEvent?: () => void
-  constructor(private options: AppOptions = {}) {
-    super()
-    this.validateAppOptions(options)
-    this.initDpr()
-    this.initTicker()
-    this.initCanvas()
-  }
+  private removeResizeEvent?: () => void
 
+  /**
+   * 程序准备好之后运行
+   * @param fn
+   */
   onReady(fn: () => void) {
     if (this._ready) {
       fn()
@@ -95,12 +105,18 @@ export class App extends EventEmitter<{
     }
   }
 
+  /**
+   * 校验appOptions参数
+   */
   private validateAppOptions(appOptions: AppOptions) {
     if (!IS_STANDARD_DOM_ENVIRONMENT && !appOptions.canvas) {
       console.error('当前为非document环境, 无法使用 document.createElement(\'canvas\'),\n 请传入canvas元素或者canvasId')
     }
   }
 
+  /**
+   * 初始化dpr
+   */
   private initDpr() {
     const { dpr = true } = this.options
     if (typeof dpr === 'boolean') {
@@ -122,6 +138,9 @@ export class App extends EventEmitter<{
     }
   }
 
+  /**
+   * 初始化 canvas
+   */
   private initCanvas() {
     const canvas = this.options.canvas
     if (canvas) {
@@ -164,6 +183,9 @@ export class App extends EventEmitter<{
     }
   }
 
+  /**
+   * 初始化 canvas size
+   */
   private initCanvasSize(width = this.options.width, height = this.options.height) {
     const { resizeTo } = this.options
     console.log('initCanvasSize')
@@ -190,6 +212,9 @@ export class App extends EventEmitter<{
     this.initCtx()
   }
 
+  /**
+   * 初始化 canvas ctx 上下文
+   */
   private initCtx() {
     this.ctx = this.canvas.getContext('2d')!
     this._ready = true
@@ -197,7 +222,10 @@ export class App extends EventEmitter<{
     this.emit('ready')
   }
 
-  initResizeEvent(): void {
+  /**
+   * 初始化 resize 事件
+   */
+  private initResizeEvent(): void {
     if (!this.options.resizeTo) {
       return
     }
@@ -234,11 +262,25 @@ export class App extends EventEmitter<{
     }
   }
 
+  /**
+   * 初始化 ticker
+   */
+  private initTicker() {
+    this.ticker = new Ticker()
+    this.ticker.add(this.update.bind(this))
+  }
+
+  /**
+   * 是否应该指向resize
+   */
   private get shouldResize() {
     return this.width !== this._nextWidth || this.height !== this._nextHeight
   }
 
-  resize() {
+  /**
+   * resize
+   */
+  private resize() {
     if (this.shouldResize) {
       this.height = this._nextHeight
       this.width = this._nextWidth
@@ -251,11 +293,6 @@ export class App extends EventEmitter<{
     }
   }
 
-  private initTicker() {
-    this.ticker = new Ticker()
-    this.ticker.add(this.update.bind(this))
-  }
-
   private beforeRender() {
     this.ctx.save()
   }
@@ -264,8 +301,14 @@ export class App extends EventEmitter<{
     this.ctx.restore()
   }
 
+  /**
+   * 所有可渲染的子元素
+   */
   children: Renderable[] = []
 
+  /**
+   * 添加渲染元素
+   */
   add(...objects: Renderable[]) {
     for (let index = 0; index < objects.length; index++) {
       const object = objects[index]
@@ -274,6 +317,9 @@ export class App extends EventEmitter<{
     }
   }
 
+  /**
+   * 删除渲染元素
+   */
   remove(...objects: Renderable[]) {
     for (let index = 0; index < objects.length; index++) {
       const object = objects[index]
@@ -285,6 +331,9 @@ export class App extends EventEmitter<{
     }
   }
 
+  /**
+   * 更新事件 ticker 中执行
+   */
   private update() {
     const _shouldResize = this.shouldResize
     const isDirty = !![...this.children.filter(e => e.dirty)].length || _shouldResize
@@ -316,10 +365,16 @@ export class App extends EventEmitter<{
     }
   }
 
+  /**
+   * 返回base64
+   */
   toDataURL(type?: string, quality?: any) {
     return this.canvas.toDataURL(type, quality)
   }
 
+  /**
+   * 返回 base64 异步的
+   */
   toDataURLAsync(type?: string, quality?: any) {
     return new Promise<string>((resolve) => {
       this.once('render', () => {
@@ -333,8 +388,15 @@ export class App extends EventEmitter<{
     fn(this.ctx)
     this.afterRender()
   }
+
+  destroy() {
+    this.removeResizeEvent?.()
+  }
 }
 
+/**
+ * 一个基于 [requestAnimationFrame](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestAnimationFrame) 的循环计时器
+ */
 export class Ticker {
   requestAnimationFrame?: typeof requestAnimationFrame
   cancelAnimationFrame?: typeof cancelAnimationFrame

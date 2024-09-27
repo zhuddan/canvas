@@ -26,7 +26,7 @@ X coord
 
 #### Defined in
 
-[packages/core/src/coordinate/PointData.ts:7](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/coordinate/PointData.ts#L7)
+[packages/core/src/coordinate/PointData.ts:7](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/coordinate/PointData.ts#L7)
 
 ***
 
@@ -38,4 +38,4 @@ Y coord
 
 #### Defined in
 
-[packages/core/src/coordinate/PointData.ts:10](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/coordinate/PointData.ts#L10)
+[packages/core/src/coordinate/PointData.ts:10](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/coordinate/PointData.ts#L10)

@@ -38,7 +38,7 @@ Returns itself.
 
 #### Defined in
 
-[packages/core/src/coordinate/PointLike.ts:13](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/coordinate/PointLike.ts#L13)
+[packages/core/src/coordinate/PointLike.ts:13](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/coordinate/PointLike.ts#L13)
 
 ***
 
@@ -66,7 +66,7 @@ Given point with values updated
 
 #### Defined in
 
-[packages/core/src/coordinate/PointLike.ts:19](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/coordinate/PointLike.ts#L19)
+[packages/core/src/coordinate/PointLike.ts:19](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/coordinate/PointLike.ts#L19)
 
 ***
 
@@ -90,7 +90,7 @@ Whether the given point equal to this point
 
 #### Defined in
 
-[packages/core/src/coordinate/PointLike.ts:25](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/coordinate/PointLike.ts#L25)
+[packages/core/src/coordinate/PointLike.ts:25](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/coordinate/PointLike.ts#L25)
 
 ***
 
@@ -117,7 +117,7 @@ position of the point on the y axis
 
 #### Defined in
 
-[packages/core/src/coordinate/PointLike.ts:32](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/coordinate/PointLike.ts#L32)
+[packages/core/src/coordinate/PointLike.ts:32](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/coordinate/PointLike.ts#L32)
 
 ***
 
@@ -133,7 +133,7 @@ X coord
 
 #### Defined in
 
-[packages/core/src/coordinate/PointData.ts:7](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/coordinate/PointData.ts#L7)
+[packages/core/src/coordinate/PointData.ts:7](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/coordinate/PointData.ts#L7)
 
 ***
 
@@ -149,4 +149,4 @@ Y coord
 
 #### Defined in
 
-[packages/core/src/coordinate/PointData.ts:10](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/coordinate/PointData.ts#L10)
+[packages/core/src/coordinate/PointData.ts:10](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/coordinate/PointData.ts#L10)

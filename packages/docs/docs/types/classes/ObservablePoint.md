@@ -36,7 +36,7 @@ maths
 
 #### Defined in
 
-[packages/core/src/coordinate/ObservablePoint.ts:12](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/coordinate/ObservablePoint.ts#L12)
+[packages/core/src/coordinate/ObservablePoint.ts:12](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/coordinate/ObservablePoint.ts#L12)
 
 ## Properties
 
@@ -46,7 +46,7 @@ maths
 
 #### Defined in
 
-[packages/core/src/coordinate/ObservablePoint.ts:9](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/coordinate/ObservablePoint.ts#L9)
+[packages/core/src/coordinate/ObservablePoint.ts:9](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/coordinate/ObservablePoint.ts#L9)
 
 ***
 
@@ -56,7 +56,7 @@ maths
 
 #### Defined in
 
-[packages/core/src/coordinate/ObservablePoint.ts:10](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/coordinate/ObservablePoint.ts#L10)
+[packages/core/src/coordinate/ObservablePoint.ts:10](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/coordinate/ObservablePoint.ts#L10)
 
 ## Accessors
 
@@ -86,7 +86,7 @@ X coord
 
 #### Defined in
 
-[packages/core/src/coordinate/ObservablePoint.ts:49](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/coordinate/ObservablePoint.ts#L49)
+[packages/core/src/coordinate/ObservablePoint.ts:49](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/coordinate/ObservablePoint.ts#L49)
 
 ***
 
@@ -116,7 +116,7 @@ Y coord
 
 #### Defined in
 
-[packages/core/src/coordinate/ObservablePoint.ts:60](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/coordinate/ObservablePoint.ts#L60)
+[packages/core/src/coordinate/ObservablePoint.ts:60](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/coordinate/ObservablePoint.ts#L60)
 
 ## Methods
 
@@ -138,7 +138,7 @@ Y coord
 
 #### Defined in
 
-[packages/core/src/coordinate/ObservablePoint.ts:71](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/coordinate/ObservablePoint.ts#L71)
+[packages/core/src/coordinate/ObservablePoint.ts:71](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/coordinate/ObservablePoint.ts#L71)
 
 ***
 
@@ -156,7 +156,7 @@ Y coord
 
 #### Defined in
 
-[packages/core/src/coordinate/ObservablePoint.ts:18](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/coordinate/ObservablePoint.ts#L18)
+[packages/core/src/coordinate/ObservablePoint.ts:18](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/coordinate/ObservablePoint.ts#L18)
 
 ***
 
@@ -184,7 +184,7 @@ Returns itself.
 
 #### Defined in
 
-[packages/core/src/coordinate/ObservablePoint.ts:31](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/coordinate/ObservablePoint.ts#L31)
+[packages/core/src/coordinate/ObservablePoint.ts:31](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/coordinate/ObservablePoint.ts#L31)
 
 ***
 
@@ -216,7 +216,7 @@ Given point with values updated
 
 #### Defined in
 
-[packages/core/src/coordinate/ObservablePoint.ts:40](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/coordinate/ObservablePoint.ts#L40)
+[packages/core/src/coordinate/ObservablePoint.ts:40](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/coordinate/ObservablePoint.ts#L40)
 
 ***
 
@@ -244,7 +244,7 @@ Whether the given point equal to this point
 
 #### Defined in
 
-[packages/core/src/coordinate/ObservablePoint.ts:45](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/coordinate/ObservablePoint.ts#L45)
+[packages/core/src/coordinate/ObservablePoint.ts:45](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/coordinate/ObservablePoint.ts#L45)
 
 ***
 
@@ -275,4 +275,4 @@ position of the point on the y axis
 
 #### Defined in
 
-[packages/core/src/coordinate/ObservablePoint.ts:22](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/coordinate/ObservablePoint.ts#L22)
+[packages/core/src/coordinate/ObservablePoint.ts:22](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/coordinate/ObservablePoint.ts#L22)

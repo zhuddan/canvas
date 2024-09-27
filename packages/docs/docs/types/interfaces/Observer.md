@@ -26,4 +26,4 @@
 
 #### Defined in
 
-[packages/core/src/coordinate/ObservablePoint.ts:5](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/coordinate/ObservablePoint.ts#L5)
+[packages/core/src/coordinate/ObservablePoint.ts:5](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/coordinate/ObservablePoint.ts#L5)

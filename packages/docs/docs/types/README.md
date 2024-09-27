@@ -13,6 +13,7 @@
 - [Shape](classes/Shape.md)
 - [Text](classes/Text.md)
 - [TextStyle](classes/TextStyle.md)
+- [Ticker](classes/Ticker.md)
 
 ## Interfaces
 
