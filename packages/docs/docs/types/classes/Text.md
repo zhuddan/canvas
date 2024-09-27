@@ -32,7 +32,7 @@
 
 #### Defined in
 
-[packages/core/src/renderables/text.ts:18](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/text.ts#L18)
+[packages/core/src/renderables/text.ts:18](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/text.ts#L18)
 
 ## Properties
 
@@ -46,7 +46,7 @@
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:363](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L363)
+[packages/core/src/renderables/renderable.ts:363](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L363)
 
 ***
 
@@ -60,7 +60,7 @@
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:166](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L166)
+[packages/core/src/renderables/renderable.ts:166](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L166)
 
 ***
 
@@ -84,7 +84,7 @@
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:463](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L463)
+[packages/core/src/renderables/renderable.ts:463](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L463)
 
 ***
 
@@ -98,7 +98,7 @@
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:456](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L456)
+[packages/core/src/renderables/renderable.ts:456](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L456)
 
 ***
 
@@ -112,7 +112,7 @@
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:376](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L376)
+[packages/core/src/renderables/renderable.ts:376](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L376)
 
 ***
 
@@ -148,7 +148,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/renderables/text.ts:61](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/text.ts#L61)
+[packages/core/src/renderables/text.ts:61](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/text.ts#L61)
 
 ***
 
@@ -172,7 +172,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:186](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L186)
+[packages/core/src/renderables/renderable.ts:186](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L186)
 
 ***
 
@@ -196,7 +196,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:266](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L266)
+[packages/core/src/renderables/renderable.ts:266](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L266)
 
 ***
 
@@ -220,7 +220,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:173](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L173)
+[packages/core/src/renderables/renderable.ts:173](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L173)
 
 ***
 
@@ -238,7 +238,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:465](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L465)
+[packages/core/src/renderables/renderable.ts:465](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L465)
 
 ***
 
@@ -262,7 +262,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:293](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L293)
+[packages/core/src/renderables/renderable.ts:293](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L293)
 
 ***
 
@@ -286,7 +286,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:242](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L242)
+[packages/core/src/renderables/renderable.ts:242](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L242)
 
 ***
 
@@ -310,7 +310,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:309](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L309)
+[packages/core/src/renderables/renderable.ts:309](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L309)
 
 ***
 
@@ -334,7 +334,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:333](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L333)
+[packages/core/src/renderables/renderable.ts:333](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L333)
 
 ***
 
@@ -358,7 +358,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:210](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L210)
+[packages/core/src/renderables/renderable.ts:210](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L210)
 
 ***
 
@@ -376,7 +376,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:162](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L162)
+[packages/core/src/renderables/renderable.ts:162](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L162)
 
 ***
 
@@ -400,7 +400,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:352](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L352)
+[packages/core/src/renderables/renderable.ts:352](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L352)
 
 ***
 
@@ -420,7 +420,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/renderables/text.ts:44](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/text.ts#L44)
+[packages/core/src/renderables/text.ts:44](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/text.ts#L44)
 
 ***
 
@@ -440,7 +440,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/renderables/text.ts:57](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/text.ts#L57)
+[packages/core/src/renderables/text.ts:57](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/text.ts#L57)
 
 ***
 
@@ -464,7 +464,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:367](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L367)
+[packages/core/src/renderables/renderable.ts:367](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L367)
 
 ***
 
@@ -482,7 +482,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:469](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L469)
+[packages/core/src/renderables/renderable.ts:469](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L469)
 
 ***
 
@@ -506,7 +506,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:220](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L220)
+[packages/core/src/renderables/renderable.ts:220](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L220)
 
 ***
 
@@ -530,7 +530,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:230](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L230)
+[packages/core/src/renderables/renderable.ts:230](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L230)
 
 ## Methods
 
@@ -552,7 +552,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:359](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L359)
+[packages/core/src/renderables/renderable.ts:359](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L359)
 
 ***
 
@@ -574,7 +574,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/renderables/text.ts:86](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/text.ts#L86)
+[packages/core/src/renderables/text.ts:86](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/text.ts#L86)
 
 ***
 
@@ -626,7 +626,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:4
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:499](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L499)
+[packages/core/src/renderables/renderable.ts:499](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L499)
 
 ***
 
@@ -652,7 +652,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:4
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:480](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L480)
+[packages/core/src/renderables/renderable.ts:480](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L480)
 
 ***
 
@@ -670,7 +670,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:4
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:504](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L504)
+[packages/core/src/renderables/renderable.ts:504](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L504)
 
 ***
 
@@ -739,7 +739,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:1
 
 #### Defined in
 
-[packages/core/src/renderables/text.ts:65](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/text.ts#L65)
+[packages/core/src/renderables/text.ts:65](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/text.ts#L65)
 
 ***
 
@@ -877,7 +877,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:4
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:489](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L489)
+[packages/core/src/renderables/renderable.ts:489](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L489)
 
 ***
 
@@ -927,7 +927,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:5
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:494](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L494)
+[packages/core/src/renderables/renderable.ts:494](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L494)
 
 ***
 
@@ -1007,7 +1007,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:6
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:409](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L409)
+[packages/core/src/renderables/renderable.ts:409](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L409)
 
 ***
 
@@ -1029,7 +1029,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:6
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:378](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/renderable.ts#L378)
+[packages/core/src/renderables/renderable.ts:378](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/renderable.ts#L378)
 
 ***
 
@@ -1049,4 +1049,4 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:6
 
 #### Defined in
 
-[packages/core/src/renderables/text.ts:113](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/renderables/text.ts#L113)
+[packages/core/src/renderables/text.ts:113](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/renderables/text.ts#L113)

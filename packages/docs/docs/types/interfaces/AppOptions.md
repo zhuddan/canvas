@@ -18,7 +18,7 @@ backgroundColor
 
 #### Defined in
 
-[packages/core/src/app.ts:29](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/app.ts#L29)
+[packages/core/src/app.ts:29](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/app.ts#L29)
 
 ***
 
@@ -30,7 +30,7 @@ backgroundColor
 
 #### Defined in
 
-[packages/core/src/app.ts:25](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/app.ts#L25)
+[packages/core/src/app.ts:25](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/app.ts#L25)
 
 ***
 
@@ -42,7 +42,7 @@ backgroundColor
 
 #### Defined in
 
-[packages/core/src/app.ts:21](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/app.ts#L21)
+[packages/core/src/app.ts:21](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/app.ts#L21)
 
 ***
 
@@ -54,7 +54,7 @@ backgroundColor
 
 #### Defined in
 
-[packages/core/src/app.ts:17](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/app.ts#L17)
+[packages/core/src/app.ts:17](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/app.ts#L17)
 
 ***
 
@@ -66,7 +66,7 @@ backgroundColor
 
 #### Defined in
 
-[packages/core/src/app.ts:33](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/app.ts#L33)
+[packages/core/src/app.ts:33](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/app.ts#L33)
 
 ***
 
@@ -78,4 +78,4 @@ backgroundColor
 
 #### Defined in
 
-[packages/core/src/app.ts:13](https://github.com/zhuddan/canvas/blob/c11ee44ae428df81cce04f84fbeb069a37e4f15c/packages/core/src/app.ts#L13)
+[packages/core/src/app.ts:13](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/app.ts#L13)
