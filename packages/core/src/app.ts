@@ -3,7 +3,9 @@ import type { Renderable } from './renderables/renderable'
 import { formatWithPx } from './utils'
 import { IS_STANDARD_DOM_ENVIRONMENT, IS_UNI_APP, IS_WEB, IS_WX, IS_WX_UNIAPP } from './const'
 
-
+/**
+ * app 参数
+ */
 export interface AppOptions {
   /**
    *  画布宽度
@@ -30,18 +32,26 @@ export interface AppOptions {
    */
   resizeTo?: HTMLElement | Window | string
 }
+/**
+ * 应用实例
+ */
 export class App extends EventEmitter<{
   render: []
   ready: []
 }> {
   private ctx!: CanvasRenderingContext2D
   private _ready = false
-  canvas!: HTMLCanvasElement
-  ticker!: Ticker
-  dpr = 1
   private _nextWidth = 0
   private _nextHeight = 0
   private _width = 0
+
+  /**
+   * canvas 元素
+   */
+  canvas!: HTMLCanvasElement
+
+  ticker!: Ticker
+  dpr = 1
 
   private set width(value) {
     if (this.width !== value) {
@@ -325,7 +335,7 @@ export class App extends EventEmitter<{
   }
 }
 
-class Ticker {
+export class Ticker {
   requestAnimationFrame?: typeof requestAnimationFrame
   cancelAnimationFrame?: typeof cancelAnimationFrame
   myReq: number = 0

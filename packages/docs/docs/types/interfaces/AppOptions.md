@@ -6,6 +6,8 @@
 
 # Interface: AppOptions
 
+app 参数
+
 ## Properties
 
 ### backgroundColor?
@@ -16,7 +18,7 @@ backgroundColor
 
 #### Defined in
 
-[packages/core/src/app.ts:27](https://github.com/zhuddan/canvas/blob/a6fd8f143d286553bb693ef3ef0c7af4be86a292/packages/core/src/app.ts#L27)
+[packages/core/src/app.ts:29](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/app.ts#L29)
 
 ***
 
@@ -28,7 +30,7 @@ backgroundColor
 
 #### Defined in
 
-[packages/core/src/app.ts:23](https://github.com/zhuddan/canvas/blob/a6fd8f143d286553bb693ef3ef0c7af4be86a292/packages/core/src/app.ts#L23)
+[packages/core/src/app.ts:25](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/app.ts#L25)
 
 ***
 
@@ -40,7 +42,7 @@ backgroundColor
 
 #### Defined in
 
-[packages/core/src/app.ts:19](https://github.com/zhuddan/canvas/blob/a6fd8f143d286553bb693ef3ef0c7af4be86a292/packages/core/src/app.ts#L19)
+[packages/core/src/app.ts:21](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/app.ts#L21)
 
 ***
 
@@ -52,7 +54,7 @@ backgroundColor
 
 #### Defined in
 
-[packages/core/src/app.ts:15](https://github.com/zhuddan/canvas/blob/a6fd8f143d286553bb693ef3ef0c7af4be86a292/packages/core/src/app.ts#L15)
+[packages/core/src/app.ts:17](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/app.ts#L17)
 
 ***
 
@@ -64,7 +66,7 @@ backgroundColor
 
 #### Defined in
 
-[packages/core/src/app.ts:31](https://github.com/zhuddan/canvas/blob/a6fd8f143d286553bb693ef3ef0c7af4be86a292/packages/core/src/app.ts#L31)
+[packages/core/src/app.ts:33](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/app.ts#L33)
 
 ***
 
@@ -76,4 +78,4 @@ backgroundColor
 
 #### Defined in
 
-[packages/core/src/app.ts:11](https://github.com/zhuddan/canvas/blob/a6fd8f143d286553bb693ef3ef0c7af4be86a292/packages/core/src/app.ts#L11)
+[packages/core/src/app.ts:13](https://github.com/zhuddan/canvas/blob/e2067dfcd8aab1b5658073c5686cead119551340/packages/core/src/app.ts#L13)
