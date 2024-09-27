@@ -35,7 +35,7 @@
   ],
   "scripts": {
     "bumpp": "bumpp",
-    "typedoc": "npx typedoc --out ./docs ./src/index.ts"
+    "typedoc": "typedoc"
   },
   "dependencies": {
     "eventemitter3": "^5.0.1"
