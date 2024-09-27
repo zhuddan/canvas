@@ -24,9 +24,6 @@
 - [PointLike](interfaces/PointLike.md)
 - [RenderableOptions](interfaces/RenderableOptions.md)
 - [ShadowType](interfaces/ShadowType.md)
+- [ShapeOptions](interfaces/ShapeOptions.md)
 - [TextOptions](interfaces/TextOptions.md)
 - [TextStyleOptions](interfaces/TextStyleOptions.md)
-
-## Type Aliases
-
-- [ShapeOptions](type-aliases/ShapeOptions.md)

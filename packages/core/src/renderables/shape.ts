@@ -28,7 +28,6 @@ type Methods =
   | 'lineJoin'
 
 type PathInstruction = PathData<Methods>
-interface _ShapeOptions extends RenderableOptions { }
 
 interface IShape {
   beginPath: () => Shape
@@ -49,7 +48,7 @@ interface IShape {
   lineJoin: (...args: [CanvasRenderingContext2D['lineJoin']]) => void
 }
 
-export type ShapeOptions = Partial<_ShapeOptions>
+export interface ShapeOptions extends RenderableOptions { }
 
 export class Shape extends Renderable implements IShape {
   constructor(options: ShapeOptions = {}) {

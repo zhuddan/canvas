@@ -35,7 +35,7 @@
 
 #### Defined in
 
-[packages/core/src/app.ts:42](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/app.ts#L42)
+[packages/core/src/app.ts:42](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/app.ts#L42)
 
 ## Properties
 
@@ -47,7 +47,7 @@ canvas 元素
 
 #### Defined in
 
-[packages/core/src/app.ts:59](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/app.ts#L59)
+[packages/core/src/app.ts:59](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/app.ts#L59)
 
 ***
 
@@ -59,7 +59,7 @@ canvas 元素
 
 #### Defined in
 
-[packages/core/src/app.ts:307](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/app.ts#L307)
+[packages/core/src/app.ts:307](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/app.ts#L307)
 
 ***
 
@@ -71,7 +71,7 @@ canvas 元素
 
 #### Defined in
 
-[packages/core/src/app.ts:67](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/app.ts#L67)
+[packages/core/src/app.ts:67](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/app.ts#L67)
 
 ***
 
@@ -83,7 +83,7 @@ canvas 元素
 
 #### Defined in
 
-[packages/core/src/app.ts:63](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/app.ts#L63)
+[packages/core/src/app.ts:63](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/app.ts#L63)
 
 ***
 
@@ -117,7 +117,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:9
 
 #### Defined in
 
-[packages/core/src/app.ts:312](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/app.ts#L312)
+[packages/core/src/app.ts:312](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/app.ts#L312)
 
 ***
 
@@ -161,7 +161,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:4
 
 #### Defined in
 
-[packages/core/src/app.ts:392](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/app.ts#L392)
+[packages/core/src/app.ts:392](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/app.ts#L392)
 
 ***
 
@@ -380,7 +380,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:5
 
 #### Defined in
 
-[packages/core/src/app.ts:97](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/app.ts#L97)
+[packages/core/src/app.ts:97](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/app.ts#L97)
 
 ***
 
@@ -400,7 +400,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:5
 
 #### Defined in
 
-[packages/core/src/app.ts:323](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/app.ts#L323)
+[packages/core/src/app.ts:323](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/app.ts#L323)
 
 ***
 
@@ -480,7 +480,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:6
 
 #### Defined in
 
-[packages/core/src/app.ts:371](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/app.ts#L371)
+[packages/core/src/app.ts:371](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/app.ts#L371)
 
 ***
 
@@ -502,7 +502,7 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:6
 
 #### Defined in
 
-[packages/core/src/app.ts:378](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/app.ts#L378)
+[packages/core/src/app.ts:378](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/app.ts#L378)
 
 ***
 
@@ -520,4 +520,4 @@ node\_modules/.pnpm/eventemitter3@5.0.1/node\_modules/eventemitter3/index.d.ts:6
 
 #### Defined in
 
-[packages/core/src/app.ts:386](https://github.com/zhuddan/canvas/blob/f6c03e85774f3d0f4895661f3bf09fbc689199aa/packages/core/src/app.ts#L386)
+[packages/core/src/app.ts:386](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/app.ts#L386)

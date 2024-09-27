@@ -2,17 +2,15 @@
 
 ***
 
-[@zd~/canvas](../README.md) / RenderableOptions
+[@zd~/canvas](../README.md) / ShapeOptions
 
-# Interface: RenderableOptions
+# Interface: ShapeOptions
 
 渲染元素的配置
 
-## Extended by
+## Extends
 
-- [`PictureOptions`](PictureOptions.md)
-- [`ShapeOptions`](ShapeOptions.md)
-- [`TextOptions`](TextOptions.md)
+- [`RenderableOptions`](RenderableOptions.md)
 
 ## Properties
 
@@ -21,6 +19,10 @@
 > `optional` **alpha**: `number`
 
 透明度
+
+#### Inherited from
+
+[`RenderableOptions`](RenderableOptions.md).[`alpha`](RenderableOptions.md#alpha)
 
 #### Defined in
 
@@ -44,6 +46,10 @@ const text = new Picture('demo.png',{
 })
 ```
 
+#### Inherited from
+
+[`RenderableOptions`](RenderableOptions.md).[`anchor`](RenderableOptions.md#anchor)
+
 #### Defined in
 
 [packages/core/src/renderables/renderable.ts:71](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/renderables/renderable.ts#L71)
@@ -55,6 +61,10 @@ const text = new Picture('demo.png',{
 > `optional` **pivot**: `number` \| [`PointData`](PointData.md)
 
 同 anchor，但是具体坐标，建议使用 anchor
+
+#### Inherited from
+
+[`RenderableOptions`](RenderableOptions.md).[`pivot`](RenderableOptions.md#pivot)
 
 #### Defined in
 
@@ -68,6 +78,10 @@ const text = new Picture('demo.png',{
 
 元素位置
 
+#### Inherited from
+
+[`RenderableOptions`](RenderableOptions.md).[`position`](RenderableOptions.md#position)
+
 #### Defined in
 
 [packages/core/src/renderables/renderable.ts:57](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/renderables/renderable.ts#L57)
@@ -79,6 +93,10 @@ const text = new Picture('demo.png',{
 > `optional` **rotation**: `number`
 
 旋转角度(弧度)
+
+#### Inherited from
+
+[`RenderableOptions`](RenderableOptions.md).[`rotation`](RenderableOptions.md#rotation)
 
 #### Defined in
 
@@ -92,6 +110,10 @@ const text = new Picture('demo.png',{
 
 缩放比例
 
+#### Inherited from
+
+[`RenderableOptions`](RenderableOptions.md).[`scale`](RenderableOptions.md#scale)
+
 #### Defined in
 
 [packages/core/src/renderables/renderable.ts:83](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/renderables/renderable.ts#L83)
@@ -103,6 +125,10 @@ const text = new Picture('demo.png',{
 > `optional` **shadow**: [`ShadowType`](ShadowType.md)
 
 阴影
+
+#### Inherited from
+
+[`RenderableOptions`](RenderableOptions.md).[`shadow`](RenderableOptions.md#shadow)
 
 #### Defined in
 
@@ -116,6 +142,10 @@ const text = new Picture('demo.png',{
 
 元素倾斜
 
+#### Inherited from
+
+[`RenderableOptions`](RenderableOptions.md).[`skew`](RenderableOptions.md#skew)
+
 #### Defined in
 
 [packages/core/src/renderables/renderable.ts:87](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/renderables/renderable.ts#L87)
@@ -127,6 +157,10 @@ const text = new Picture('demo.png',{
 > `optional` **visible**: `boolean`
 
 元素是否可见
+
+#### Inherited from
+
+[`RenderableOptions`](RenderableOptions.md).[`visible`](RenderableOptions.md#visible)
 
 #### Defined in
 
@@ -140,6 +174,10 @@ const text = new Picture('demo.png',{
 
 元素位置x
 
+#### Inherited from
+
+[`RenderableOptions`](RenderableOptions.md).[`x`](RenderableOptions.md#x)
+
 #### Defined in
 
 [packages/core/src/renderables/renderable.ts:49](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/renderables/renderable.ts#L49)
@@ -151,6 +189,10 @@ const text = new Picture('demo.png',{
 > `optional` **y**: `number`
 
 元素位置y
+
+#### Inherited from
+
+[`RenderableOptions`](RenderableOptions.md).[`y`](RenderableOptions.md#y)
 
 #### Defined in
 
