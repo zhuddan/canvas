@@ -8,4 +8,10 @@ export * from './renderables/text'
 
 export * from './style/text-style'
 
-export type { Renderable, RenderableOptions } from './renderables/renderable'
+export * from './coordinate/ObservablePoint'
+
+export * from './coordinate/PointData'
+
+export * from './coordinate/PointLike'
+
+export type * from './renderables/renderable'
