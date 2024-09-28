@@ -1,5 +1,5 @@
 {
   "plugin": ["typedoc-plugin-markdown"],
   "entryPoints": ["./src"],
-  "out": "../docs/docs/types"
+  "out": "../docs/docs/api"
 }

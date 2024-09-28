@@ -2,9 +2,9 @@
 
 ***
 
-[@zd~/canvas](../README.md) / ShapeOptions
+[@zd~/canvas](../README.md) / TextOptions
 
-# Interface: ShapeOptions
+# Interface: TextOptions
 
 渲染元素的配置
 
@@ -26,7 +26,7 @@
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:41](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/renderables/renderable.ts#L41)
+[packages/core/src/renderables/renderable.ts:41](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/renderables/renderable.ts#L41)
 
 ***
 
@@ -52,7 +52,7 @@ const text = new Picture('demo.png',{
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:71](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/renderables/renderable.ts#L71)
+[packages/core/src/renderables/renderable.ts:71](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/renderables/renderable.ts#L71)
 
 ***
 
@@ -68,7 +68,7 @@ const text = new Picture('demo.png',{
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:75](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/renderables/renderable.ts#L75)
+[packages/core/src/renderables/renderable.ts:75](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/renderables/renderable.ts#L75)
 
 ***
 
@@ -84,7 +84,7 @@ const text = new Picture('demo.png',{
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:57](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/renderables/renderable.ts#L57)
+[packages/core/src/renderables/renderable.ts:57](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/renderables/renderable.ts#L57)
 
 ***
 
@@ -100,7 +100,7 @@ const text = new Picture('demo.png',{
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:79](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/renderables/renderable.ts#L79)
+[packages/core/src/renderables/renderable.ts:79](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/renderables/renderable.ts#L79)
 
 ***
 
@@ -116,7 +116,7 @@ const text = new Picture('demo.png',{
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:83](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/renderables/renderable.ts#L83)
+[packages/core/src/renderables/renderable.ts:83](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/renderables/renderable.ts#L83)
 
 ***
 
@@ -132,7 +132,7 @@ const text = new Picture('demo.png',{
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:45](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/renderables/renderable.ts#L45)
+[packages/core/src/renderables/renderable.ts:45](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/renderables/renderable.ts#L45)
 
 ***
 
@@ -148,7 +148,31 @@ const text = new Picture('demo.png',{
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:87](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/renderables/renderable.ts#L87)
+[packages/core/src/renderables/renderable.ts:87](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/renderables/renderable.ts#L87)
+
+***
+
+### style?
+
+> `optional` **style**: [`TextStyle`](../classes/TextStyle.md) \| `Partial`\<[`TextStyleOptions`](TextStyleOptions.md)\>
+
+文本样式
+
+#### Defined in
+
+[packages/core/src/renderables/text.ts:14](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/renderables/text.ts#L14)
+
+***
+
+### text
+
+> **text**: `string`
+
+文本
+
+#### Defined in
+
+[packages/core/src/renderables/text.ts:10](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/renderables/text.ts#L10)
 
 ***
 
@@ -164,7 +188,7 @@ const text = new Picture('demo.png',{
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:37](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/renderables/renderable.ts#L37)
+[packages/core/src/renderables/renderable.ts:37](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/renderables/renderable.ts#L37)
 
 ***
 
@@ -180,7 +204,7 @@ const text = new Picture('demo.png',{
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:49](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/renderables/renderable.ts#L49)
+[packages/core/src/renderables/renderable.ts:49](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/renderables/renderable.ts#L49)
 
 ***
 
@@ -196,4 +220,4 @@ const text = new Picture('demo.png',{
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:53](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/renderables/renderable.ts#L53)
+[packages/core/src/renderables/renderable.ts:53](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/renderables/renderable.ts#L53)

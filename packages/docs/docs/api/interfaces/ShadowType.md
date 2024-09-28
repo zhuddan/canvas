@@ -18,7 +18,7 @@
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:27](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/renderables/renderable.ts#L27)
+[packages/core/src/renderables/renderable.ts:27](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/renderables/renderable.ts#L27)
 
 ***
 
@@ -30,7 +30,7 @@
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:15](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/renderables/renderable.ts#L15)
+[packages/core/src/renderables/renderable.ts:15](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/renderables/renderable.ts#L15)
 
 ***
 
@@ -42,7 +42,7 @@
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:19](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/renderables/renderable.ts#L19)
+[packages/core/src/renderables/renderable.ts:19](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/renderables/renderable.ts#L19)
 
 ***
 
@@ -54,4 +54,4 @@
 
 #### Defined in
 
-[packages/core/src/renderables/renderable.ts:23](https://github.com/zhuddan/canvas/blob/4e0594a0d45f272f1c29554e1059a5920cb977c7/packages/core/src/renderables/renderable.ts#L23)
+[packages/core/src/renderables/renderable.ts:23](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/renderables/renderable.ts#L23)

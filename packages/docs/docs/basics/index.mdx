@@ -1,0 +1,115 @@
+---
+sidebar_position: 1
+---
+import Playground from '@site/src/components/Playground';
+
+# 渲染元素
+
+所有渲染元素都都是继承于 [`Renderable`](../api/classes/Renderable.md) 抽象类，他实现了最基础的形变与变换操作。
+
+
+## [`position`](../api/classes/ObservablePoint.md) 坐标
+### 初始坐标
+使用`position`属性控制元素的初始位置。
+``` ts
+const shape = new Shape({
+  position: {
+    x: 100,
+    y: 100,
+  }
+})
+```
+也可以使用`x`或者`y`属性控制元素的初始位置。
+```ts
+const shape = new Shape({
+  x: 100,
+  y: 100,
+})
+```
+⚠️ 同时使用`position`和`x`或者`y`属性的情况下只有`position`生效。
+```ts
+const shape = new Shape({
+  position: {
+    x: 100,
+    y: 100,
+  },
+  x: 50, // ==> dont work
+  y: 50, // ==> dont work
+})
+```
+
+### 修改坐标
+
+直接给`position`赋值。
+```ts
+shape.position = {
+  x: 0,
+  y: 0
+}
+```
+或者给`position.x`或`position.y`赋值或者给`x`进行赋值`y`都可以修改坐标。
+```ts
+shape.position.x = 0
+shape.position.y = 0
+// or
+shape.x = 0
+shape.y = 0
+```
+
+另外你还可以使用 [`position.set()`](../api/classes/ObservablePoint.md#set) 修改坐标。如果`x`和`y`相同，则可以省略第二个参数。
+
+```ts
+shape.position.set(0, 0)
+// or
+shape.position.set(0)
+```
+
+<Playground>
+```ts
+import { App, Shape } from '@zd~/canvas'
+
+const app = new App({
+  backgroundColor: '#60a5fab0',
+  resizeTo: window,
+})
+
+document.body.appendChild(app.canvas)
+
+// 我的初始位置是 0，0
+const shape = new Shape()
+shape.beginPath().rect(0, 0, 60, 60).fill('#FFCC80')
+
+// 我的初始位置是 80, 80
+const shape2 = new Shape({
+  position: {
+    x: 80,
+    y: 80,
+  }
+})
+shape2.beginPath().rect(0, 0, 60, 60).fill('#4DB6AC')
+
+// 我的初始位置是 180, 10
+const shape3 = new Shape({
+  position: {
+    x: 180,
+    y: 10,
+  }
+})
+shape3.beginPath().rect(0, 0, 60, 60).fill('#CDDC39')
+
+app.add(shape, shape2, shape3)
+
+app.ticker.add(()=>{
+  // 动态修改
+  shape3.y++
+  if(shape3.y>=app.height){
+    shape3.y = 10
+  }
+})
+
+```
+</Playground>
+
+
+### 可见性
+- visible 

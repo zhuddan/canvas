@@ -248,12 +248,19 @@ export class App extends EventEmitter<{
     }
     else {
       const resizeHandler = () => {
+        if (!target)
+          return
         const width = target.clientWidth
         const height = target.clientHeight
         this._nextWidth = width
         this._nextHeight = height
       }
-      const resizeObserver = new ResizeObserver(resizeHandler)
+      const resizeObserver = new ResizeObserver((entries) => {
+        if (!Array.isArray(entries) || !entries.length) {
+          return
+        }
+        resizeHandler()
+      })
       resizeObserver.observe(target)
       this.removeResizeEvent = () => {
         resizeObserver.disconnect()
