@@ -25,7 +25,7 @@
 
 #### Defined in
 
-[packages/core/src/style/abstract-style.ts:28](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/style/abstract-style.ts#L28)
+[packages/core/src/style/abstract-style.ts:28](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/style/abstract-style.ts#L28)
 
 ***
 
@@ -41,7 +41,7 @@
 
 #### Defined in
 
-[packages/core/src/style/abstract-style.ts:37](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/style/abstract-style.ts#L37)
+[packages/core/src/style/abstract-style.ts:37](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/style/abstract-style.ts#L37)
 
 ***
 
@@ -56,7 +56,7 @@
 
 #### Defined in
 
-[packages/core/src/style/text-style.ts:21](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/style/text-style.ts#L21)
+[packages/core/src/style/text-style.ts:21](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/style/text-style.ts#L21)
 
 ***
 
@@ -71,7 +71,7 @@
 
 #### Defined in
 
-[packages/core/src/style/text-style.ts:11](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/style/text-style.ts#L11)
+[packages/core/src/style/text-style.ts:11](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/style/text-style.ts#L11)
 
 ***
 
@@ -84,7 +84,7 @@
 
 #### Defined in
 
-[packages/core/src/style/text-style.ts:36](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/style/text-style.ts#L36)
+[packages/core/src/style/text-style.ts:36](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/style/text-style.ts#L36)
 
 ***
 
@@ -99,7 +99,7 @@
 
 #### Defined in
 
-[packages/core/src/style/text-style.ts:26](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/style/text-style.ts#L26)
+[packages/core/src/style/text-style.ts:26](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/style/text-style.ts#L26)
 
 ***
 
@@ -112,7 +112,7 @@
 
 #### Defined in
 
-[packages/core/src/style/text-style.ts:41](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/style/text-style.ts#L41)
+[packages/core/src/style/text-style.ts:41](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/style/text-style.ts#L41)
 
 ***
 
@@ -127,7 +127,7 @@
 
 #### Defined in
 
-[packages/core/src/style/text-style.ts:31](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/style/text-style.ts#L31)
+[packages/core/src/style/text-style.ts:31](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/style/text-style.ts#L31)
 
 ***
 
@@ -140,7 +140,7 @@
 
 #### Defined in
 
-[packages/core/src/style/text-style.ts:46](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/style/text-style.ts#L46)
+[packages/core/src/style/text-style.ts:46](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/style/text-style.ts#L46)
 
 ***
 
@@ -152,7 +152,7 @@
 
 #### Defined in
 
-[packages/core/src/style/text-style.ts:63](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/style/text-style.ts#L63)
+[packages/core/src/style/text-style.ts:63](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/style/text-style.ts#L63)
 
 ***
 
@@ -169,7 +169,7 @@
 
 #### Defined in
 
-[packages/core/src/style/abstract-style.ts:33](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/style/abstract-style.ts#L33)
+[packages/core/src/style/abstract-style.ts:33](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/style/abstract-style.ts#L33)
 
 ***
 
@@ -182,7 +182,7 @@
 
 #### Defined in
 
-[packages/core/src/style/text-style.ts:16](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/style/text-style.ts#L16)
+[packages/core/src/style/text-style.ts:16](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/style/text-style.ts#L16)
 
 ***
 
@@ -195,7 +195,7 @@
 
 #### Defined in
 
-[packages/core/src/style/text-style.ts:51](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/style/text-style.ts#L51)
+[packages/core/src/style/text-style.ts:51](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/style/text-style.ts#L51)
 
 ***
 
@@ -207,7 +207,7 @@
 
 #### Defined in
 
-[packages/core/src/style/text-style.ts:55](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/style/text-style.ts#L55)
+[packages/core/src/style/text-style.ts:55](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/style/text-style.ts#L55)
 
 ***
 
@@ -219,4 +219,4 @@
 
 #### Defined in
 
-[packages/core/src/style/text-style.ts:59](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/style/text-style.ts#L59)
+[packages/core/src/style/text-style.ts:59](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/style/text-style.ts#L59)

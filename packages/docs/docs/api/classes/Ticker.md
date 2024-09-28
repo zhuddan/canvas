@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[packages/core/src/app.ts:406](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/app.ts#L406)
+[packages/core/src/app.ts:413](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/app.ts#L413)
 
 ## Properties
 
@@ -34,7 +34,7 @@
 
 #### Defined in
 
-[packages/core/src/app.ts:406](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/app.ts#L406)
+[packages/core/src/app.ts:413](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/app.ts#L413)
 
 ***
 
@@ -54,7 +54,7 @@
 
 #### Defined in
 
-[packages/core/src/app.ts:402](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/app.ts#L402)
+[packages/core/src/app.ts:409](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/app.ts#L409)
 
 ***
 
@@ -64,7 +64,7 @@
 
 #### Defined in
 
-[packages/core/src/app.ts:405](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/app.ts#L405)
+[packages/core/src/app.ts:412](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/app.ts#L412)
 
 ***
 
@@ -74,7 +74,7 @@
 
 #### Defined in
 
-[packages/core/src/app.ts:403](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/app.ts#L403)
+[packages/core/src/app.ts:410](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/app.ts#L410)
 
 ***
 
@@ -94,7 +94,7 @@
 
 #### Defined in
 
-[packages/core/src/app.ts:401](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/app.ts#L401)
+[packages/core/src/app.ts:408](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/app.ts#L408)
 
 ## Methods
 
@@ -112,7 +112,7 @@
 
 #### Defined in
 
-[packages/core/src/app.ts:424](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/app.ts#L424)
+[packages/core/src/app.ts:431](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/app.ts#L431)
 
 ***
 
@@ -132,7 +132,7 @@
 
 #### Defined in
 
-[packages/core/src/app.ts:410](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/app.ts#L410)
+[packages/core/src/app.ts:417](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/app.ts#L417)
 
 ***
 
@@ -150,7 +150,7 @@
 
 #### Defined in
 
-[packages/core/src/app.ts:432](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/app.ts#L432)
+[packages/core/src/app.ts:439](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/app.ts#L439)
 
 ***
 
@@ -164,7 +164,7 @@
 
 #### Defined in
 
-[packages/core/src/app.ts:428](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/app.ts#L428)
+[packages/core/src/app.ts:435](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/app.ts#L435)
 
 ***
 
@@ -178,7 +178,7 @@
 
 #### Defined in
 
-[packages/core/src/app.ts:439](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/app.ts#L439)
+[packages/core/src/app.ts:446](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/app.ts#L446)
 
 ***
 
@@ -192,7 +192,7 @@
 
 #### Defined in
 
-[packages/core/src/app.ts:446](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/app.ts#L446)
+[packages/core/src/app.ts:453](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/app.ts#L453)
 
 ***
 
@@ -206,4 +206,4 @@
 
 #### Defined in
 
-[packages/core/src/app.ts:453](https://github.com/zhuddan/canvas/blob/2c03d7cefb2e6b676d454fa816d18ee0f8613833/packages/core/src/app.ts#L453)
+[packages/core/src/app.ts:460](https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/app.ts#L460)

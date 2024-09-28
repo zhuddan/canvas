@@ -9,6 +9,9 @@ import Playground from '@site/src/components/Playground';
 
 
 ## [`position`](../api/classes/ObservablePoint.md) 坐标
+
+控制一个渲染元素的坐标位置
+
 ### 初始坐标
 使用`position`属性控制元素的初始位置。
 ``` ts
@@ -76,7 +79,10 @@ const app = new App({
 document.body.appendChild(app.canvas)
 
 // 我的初始位置是 0，0
-const shape = new Shape()
+const shape = new Shape({
+  x: 0,
+  y: 0
+})
 shape.beginPath().rect(0, 0, 60, 60).fill('#FFCC80')
 
 // 我的初始位置是 80, 80
@@ -99,10 +105,10 @@ shape3.beginPath().rect(0, 0, 60, 60).fill('#CDDC39')
 
 app.add(shape, shape2, shape3)
 
-app.ticker.add(()=>{
+app.ticker.add(() => {
   // 动态修改
-  shape3.y++
-  if(shape3.y>=app.height){
+  shape3.y += 2
+  if (shape3.y >= app.height) {
     shape3.y = 10
   }
 })
@@ -111,5 +117,261 @@ app.ticker.add(()=>{
 </Playground>
 
 
-### 可见性
-- visible 
+## [`visible`](../api/classes/Renderable.md#visible) 可见性
+
+控制一个渲染元素的是否显示，接收一个`boolean` 值。默认`true。
+```ts
+const shape = new Shape({
+  visible: false
+})
+shape.visible = true
+```
+
+<Playground>
+```ts
+import { App, Shape } from '@zd~/canvas'
+
+const app = new App({
+  backgroundColor: '#60a5fab0',
+  resizeTo: window,
+})
+
+document.body.appendChild(app.canvas)
+
+const shape = new Shape({
+  visible: false,
+  x: 100,
+  y: 100
+}).beginPath().rect(0, 0, 60, 60).fill('#FFCC80')
+
+app.add(shape)
+
+function loop() {
+  const t = setTimeout(() => {
+    clearTimeout(t)
+    shape.visible = !shape.visible
+    loop()
+  }, 500)
+}
+loop()
+```
+</Playground>
+
+## [`alpha`](../api/classes/Renderable.md#alpha) 透明度
+
+控制一个渲染元素的透明度 类型为 `number`。默认 `1`。
+
+
+```ts
+const shape = new Shape({
+  alpha: 0
+})
+
+shape.alpha = 1
+
+```
+<Playground>
+```ts
+import { App, Shape } from '@zd~/canvas'
+
+const app = new App({
+  backgroundColor: '#60a5fab0',
+  resizeTo: window,
+})
+
+document.body.appendChild(app.canvas)
+
+const shape = new Shape({
+  x: 100,
+  y: 100,
+  alpha: 0
+}).beginPath().rect(0, 0, 60, 60).fill('#FFCC80')
+
+app.add(shape)
+
+app.ticker.add(() => {
+  if (shape.alpha > 1) {
+    shape.alpha = 0
+  }
+  shape.alpha += 0.001
+})
+```
+</Playground>
+## [`shadowType`](../api/interfaces/ShadowType.md) 阴影
+
+元素阴影。是[shadowColor](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowColor) [shadowOffsetX](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowOffsetX) [shadowOffsetY](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowOffsetY) 和 [shadowBlur](https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/shadowBlur)组合起来的一个对象。
+
+⚠️你至少应该提供一个`color`属性。此外阴影可能会造成性能问题，我们会在后文中解释。
+```ts
+const shape = new Shape({
+  shadow: {
+    color: 'rgba(0, 0, 0, 1)',
+    x: 5,
+    y: 5,
+    blur: 0,
+  },
+})
+
+shape.shadow.color = 'red'
+shape.shadow.blur = 10
+```
+<Playground>
+```ts
+import { App, Shape } from '@zd~/canvas'
+
+const app = new App({
+  backgroundColor: '#60a5fab0',
+  resizeTo: window,
+})
+
+document.body.appendChild(app.canvas)
+
+const shape = new Shape({
+  x: 100,
+  y: 100,
+  shadow: {
+    color: 'rgba(255,0,0,0.3)',
+    x: 5,
+    y: 5,
+    blur: 0,
+  },
+}).beginPath().rect(0, 0, 60, 60).fill('#FFCC80')
+
+app.add(shape)
+
+app.ticker.add((e) => {
+  if (Math.ceil(e) % 60 === 0) {
+    shape.shadow.color = shape.shadow.color === 'rgba(255,0,0,0.3)' ? 'rgba(0,0,255,0.3)' : 'rgba(255,0,0,0.3)'
+    shape.shadow.x++
+    shape.shadow.y++
+  }
+})
+```
+</Playground>
+
+## [`anchor`](../api/classes/ObservablePoint.md) 锚点
+
+控制元素的中心点 (0~1)，默认(0,0)表示右上角。
+
+如果一个元素的中点设置为(0.5,0.5)则表示中心点在元素中间。
+
+如果一个元素的中点设置为(1,1)则表示中心点在元素右下角。
+
+这个属性可以更方便的调整元素的位置，或者旋转缩放中心。
+
+例如我期望一个元素位于app的中心位置, 我只用设置他的坐标为`(app.width/2, app.height/2)`，并且把`anchor`设置为`0.5`。
+
+<Playground>
+```ts
+import { App, Shape } from '@zd~/canvas'
+
+const app = new App({
+  backgroundColor: '#60a5fab0',
+  resizeTo: window,
+})
+
+document.body.appendChild(app.canvas)
+
+const shape = new Shape({
+  x: app.width/2,
+  y: app.height/2,
+  anchor: 0.5
+}).beginPath().rect(0, 0, 60, 60).fill('#FFCC80')
+app.add(shape)
+```
+</Playground>
+
+对于旋转缩放的影响。
+
+<Playground>
+```ts
+import { App, Shape } from '@zd~/canvas'
+
+const app = new App({
+  backgroundColor: '#60a5fab0',
+  resizeTo: window,
+})
+
+document.body.appendChild(app.canvas)
+
+const shape1 = new Shape({
+  x: app.width / 3 * 1,
+  y: app.height / 2,
+  anchor: 0.5
+}).beginPath().rect(0, 0, 60, 60).fill('#FFCC80')
+
+const shape2 = new Shape({
+  x: app.width / 3 * 2,
+  y: app.height / 2,
+  anchor: 0,
+}).beginPath().rect(0, 0, 60, 60).fill('#FFCC80')
+
+app.add(shape1, shape2)
+let d = 1
+app.ticker.add(() => {
+  shape1.rotation += 0.005
+
+  if (shape1.scale.x < 0.5 || shape1.scale.x > 1.5) {
+    d *= -1
+  }
+  shape1.scale.x += 0.005 * d
+  shape1.scale.y += 0.005 * d
+
+  shape2.rotation += 0.005
+  if (shape2.scale.x < 0.5 || shape2.scale.x > 1.5) {
+    d *= -1
+  }
+  shape2.scale.x += 0.005 * d
+  shape2.scale.y += 0.005 * d
+})
+```
+</Playground>
+
+
+## [`pivot`](../api/classes/ObservablePoint.md) 锚点 
+
+作用和[`anchor`](#anchor-锚点)相同，区别是`anchor`使用`0~1`之间的点表示锚点位于元素的位置，`pivot`使用的是具体的坐标。
+
+<Playground>
+```ts
+import { App, Shape } from '@zd~/canvas'
+
+const app = new App({
+  backgroundColor: '#60a5fab0',
+  resizeTo: window,
+})
+
+document.body.appendChild(app.canvas)
+
+const shape1 = new Shape({
+  x: app.width / 3 * 1,
+  y: app.height / 2,
+  pivot: 30 // 矩形的中心
+}).beginPath().rect(0, 0, 60, 60).fill('#FFCC80')
+
+const shape2 = new Shape({
+  x: app.width / 3 * 2,
+  y: app.height / 2,
+  anchor: 0,
+}).beginPath().rect(0, 0, 60, 60).fill('#FFCC80')
+
+app.add(shape1, shape2)
+let d = 1
+app.ticker.add(() => {
+  shape1.rotation += 0.005
+
+  if (shape1.scale.x < 0.5 || shape1.scale.x > 1.5) {
+    d *= -1
+  }
+  shape1.scale.x += 0.005 * d
+  shape1.scale.y += 0.005 * d
+
+  shape2.rotation += 0.005
+  if (shape2.scale.x < 0.5 || shape2.scale.x > 1.5) {
+    d *= -1
+  }
+  shape2.scale.x += 0.005 * d
+  shape2.scale.y += 0.005 * d
+})
+```
+</Playground>

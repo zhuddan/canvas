@@ -1,12 +1,11 @@
-import React, { Children, useCallback, useEffect, useMemo, useState } from 'react'
+/* eslint-disable import/no-webpack-loader-syntax */
+import React, { Children, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { SandpackPreview, SandpackProvider } from '@codesandbox/sandpack-react'
 import type { Monaco } from '@monaco-editor/react'
 import Editor from '@monaco-editor/react'
-
-// eslint-disable-next-line import/no-webpack-loader-syntax
-import devDts from '!!raw-loader!@zd~/canvas/dist/index.d.ts'
-// eslint-disable-next-line import/no-webpack-loader-syntax
+import clsx from 'clsx'
 import js from '!!raw-loader!@zd~/canvas/dist/index.esm.js'
+import devDts from '!!raw-loader!@zd~/canvas/dist/index.d.ts'
 
 const debug = false
 const customHtml = `
@@ -77,15 +76,23 @@ function Playground({
     return undefined
   }
 
+  const sandpackRef = useRef()
+
   return (
     <>
       {tips && <Tips />}
       <div
-        className="border border-solid border-[#e4e7eb] shadow grid xl:grid-cols-2"
+        className="border border-solid border-[#e4e7eb] shadow grid xl:grid-cols-2 grid-cols-1 grid-rows-2 xl:grid-rows-1 "
       >
-        <div className="h-[350px] flex flex-col   border-[#ccc]">
-          <div className=" border-b border-gray-200 p-2">
-            index.ts
+        <div
+          className={clsx(
+            'flex flex-col  h-[350px] xl:h-[500px] ',
+          )}
+        >
+          <div
+            className="shadow-lg p-2 flex justify-between"
+          >
+            <span>index.ts</span>
           </div>
           <Editor
             className="flex-1"
@@ -102,7 +109,12 @@ function Playground({
           />
         </div>
 
-        <div className="h-[350px]  border-[red] box-border">
+        <div
+          className="h-[350px] xl:h-[500px]  border-[red] box-border"
+          style={{
+            borderTop: '1px solid #e4e7eb',
+          }}
+        >
           <SandpackProvider
             style={{ height: '100%' }}
             template="vanilla-ts"
@@ -125,6 +137,7 @@ function Playground({
             }}
           >
             <SandpackPreview
+              ref={sandpackRef}
               style={{
                 height: '100%',
                 width: '100%',
@@ -134,12 +147,6 @@ function Playground({
               }}
             />
           </SandpackProvider>
-        </div>
-        <div className="bg-white col-span-2 p-2">
-          <button type="button" className="flex bg-transparent border-none hover:cursor-pointer">
-            <Arrow></Arrow>
-            展开
-          </button>
         </div>
       </div>
     </>
@@ -173,14 +180,3 @@ function Tips({
 }
 
 export default Playground
-
-function Arrow() {
-  return (
-    <svg className="rotate-0 inline me-1.5 text-xl" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-      <g fill="none" fill-rule="evenodd" transform="translate(-446 -398)">
-        <path fill="currentColor" fill-rule="nonzero" d="M95.8838835,240.366117 C95.3957281,239.877961 94.6042719,239.877961 94.1161165,240.366117 C93.6279612,240.854272 93.6279612,241.645728 94.1161165,242.133883 L98.6161165,246.633883 C99.1042719,247.122039 99.8957281,247.122039 100.383883,246.633883 L104.883883,242.133883 C105.372039,241.645728 105.372039,240.854272 104.883883,240.366117 C104.395728,239.877961 103.604272,239.877961 103.116117,240.366117 L99.5,243.982233 L95.8838835,240.366117 Z" transform="translate(356.5 164.5)"></path>
-        <polygon points="446 418 466 418 466 398 446 398"></polygon>
-      </g>
-    </svg>
-  )
-}

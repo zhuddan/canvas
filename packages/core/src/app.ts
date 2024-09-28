@@ -188,7 +188,7 @@ export class App extends EventEmitter<{
    */
   private initCanvasSize(width = this.options.width, height = this.options.height) {
     const { resizeTo } = this.options
-    console.log('initCanvasSize')
+    console.log('initCanvasSize 2')
     if (!this.canvas)
       return
     if (IS_WEB) {
@@ -255,12 +255,16 @@ export class App extends EventEmitter<{
         this._nextWidth = width
         this._nextHeight = height
       }
+
       const resizeObserver = new ResizeObserver((entries) => {
         if (!Array.isArray(entries) || !entries.length) {
           return
         }
         resizeHandler()
       })
+
+      console.log(resizeObserver)
+
       resizeObserver.observe(target)
       this.removeResizeEvent = () => {
         resizeObserver.disconnect()

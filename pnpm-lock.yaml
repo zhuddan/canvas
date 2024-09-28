@@ -108,7 +108,7 @@ importers:
         specifier: workspace:^
         version: link:../core
       clsx:
-        specifier: ^2.0.0
+        specifier: ^2.1.1
         version: 2.1.1
       katex:
         specifier: ^0.16.11

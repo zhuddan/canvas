@@ -84,7 +84,7 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'api',
           position: 'left',
-          label: 'api参考',
+          label: 'API参考',
         },
         {
           to: '/blog',
