@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="zh-Hans" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-api/classes/Text" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.5.2">
+<title data-rh="true">Text | @zd-js/canvas</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://your-docusaurus-site.example.com/canvas/zh-Hans/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://your-docusaurus-site.example.com/canvas/zh-Hans/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://your-docusaurus-site.example.com/canvas/zh-Hans/docs/api/classes/Text"><meta data-rh="true" property="og:locale" content="zh_Hans"><meta data-rh="true" property="og:locale:alternate" content="en"><meta data-rh="true" name="docusaurus_locale" content="zh-Hans"><meta data-rh="true" name="docsearch:language" content="zh-Hans"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Text | @zd-js/canvas"><meta data-rh="true" name="description" content="@zd~/canvas • Docs"><meta data-rh="true" property="og:description" content="@zd~/canvas • Docs"><link data-rh="true" rel="icon" href="/canvas/zh-Hans/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://your-docusaurus-site.example.com/canvas/zh-Hans/docs/api/classes/Text"><link data-rh="true" rel="alternate" href="https://your-docusaurus-site.example.com/canvas/docs/api/classes/Text" hreflang="en"><link data-rh="true" rel="alternate" href="https://your-docusaurus-site.example.com/canvas/zh-Hans/docs/api/classes/Text" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://your-docusaurus-site.example.com/canvas/docs/api/classes/Text" hreflang="x-default"><link rel="alternate" type="application/rss+xml" href="/canvas/zh-Hans/blog/rss.xml" title="@zd-js/canvas RSS Feed">
+<link rel="alternate" type="application/atom+xml" href="/canvas/zh-Hans/blog/atom.xml" title="@zd-js/canvas Atom Feed"><link rel="stylesheet" href="/canvas/zh-Hans/assets/css/styles.d54ea9be.css">
+<script src="/canvas/zh-Hans/assets/js/runtime~main.3c85c23b.js" defer="defer"></script>
+<script src="/canvas/zh-Hans/assets/js/main.d8698b70.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"light")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="跳到主要内容"><a class="skipToContent_MnO5" href="#__docusaurus_skipToContent_fallback">跳到主要内容</a></div><nav aria-label="主导航" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="切换导航栏" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/canvas/zh-Hans/"><div class="navbar__logo"><img src="/canvas/zh-Hans/img/logo.svg" alt="My Site Logo" class="themedComponent_vI9R themedComponent--light_XTyK"><img src="/canvas/zh-Hans/img/logo.svg" alt="My Site Logo" class="themedComponent_vI9R themedComponent--dark_s19A"></div><b class="navbar__title text--truncate">@zd~/canvas</b></a><a class="navbar__item navbar__link" href="/canvas/zh-Hans/docs/quick-start">文档</a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/canvas/zh-Hans/docs/api/">API参考</a><a class="navbar__item navbar__link" href="/canvas/zh-Hans/blog">Blog</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/zhuddan/canvas" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_yMdz"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" class="iconLanguage_n4fF"><path fill="currentColor" d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"></path></svg>简体中文</a><ul class="dropdown__menu"><li><a href="/canvas/docs/api/classes/Text" target="_self" rel="noopener noreferrer" class="dropdown__link" lang="en">English</a></li><li><a href="/canvas/zh-Hans/docs/api/classes/Text" target="_self" rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang="zh-Hans">简体中文</a></li></ul></div><div class="toggle_j88w colorModeToggle_H10l"><button class="clean-btn toggleButton_Vh13 toggleButtonDisabled_iS5g" type="button" disabled="" title="切换浅色/暗黑模式（当前为浅色模式）" aria-label="切换浅色/暗黑模式（当前为浅色模式）" aria-live="polite"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_wItQ"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_zH0P"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_jW8E"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_rkeS"><div class="docsWrapper_Hph_"><button aria-label="回到顶部" class="clean-btn theme-back-to-top-button backToTopButton_ff0z" type="button"></button><div class="docRoot_yyAR"><aside class="theme-doc-sidebar-container docSidebarContainer_cOUD"><div class="sidebarViewport_JP2a"><div class="sidebar_yaTP"><nav aria-label="文档侧边栏" class="menu thin-scrollbar menu_jJq3"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/canvas/zh-Hans/docs/api/">README</a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/canvas/zh-Hans/docs/api/classes/App">classes</a></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/canvas/zh-Hans/docs/api/classes/App">App</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/canvas/zh-Hans/docs/api/classes/ObservablePoint">ObservablePoint</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/canvas/zh-Hans/docs/api/classes/Picture">Picture</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/canvas/zh-Hans/docs/api/classes/Renderable">Renderable</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/canvas/zh-Hans/docs/api/classes/Shape">Shape</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/canvas/zh-Hans/docs/api/classes/Text">Text</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/canvas/zh-Hans/docs/api/classes/TextStyle">TextStyle</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/canvas/zh-Hans/docs/api/classes/Ticker">Ticker</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/canvas/zh-Hans/docs/api/interfaces/AppOptions">interfaces</a></div></li></ul></nav></div></div></aside><main class="docMainContainer_Ti6I"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_qQgU"><div class="docItemContainer_ED4G"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Aao6" aria-label="页面路径"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="主页面" class="breadcrumbs__link" href="/canvas/zh-Hans/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_S2TU"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">classes</span><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">Text</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_qMRm theme-doc-toc-mobile tocMobile_Cy42"><button type="button" class="clean-btn tocCollapsibleButton_blln">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>Text</h1></header><p><a href="/canvas/zh-Hans/docs/api/"><strong>@zd~/canvas</strong></a> • <strong>Docs</strong></p>
+<hr>
+<p><a href="/canvas/zh-Hans/docs/api/">@zd~/canvas</a> / Text</p>
+<h1>Class: Text</h1>
+<p>渲染元素抽象类</p>
+<h2 class="anchor anchorWithStickyNavbar_jQuP" id="extends">Extends<a href="#extends" class="hash-link" aria-label="Extends的直接链接" title="Extends的直接链接">​</a></h2>
+<ul>
+<li><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a></li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_jQuP" id="constructors">Constructors<a href="#constructors" class="hash-link" aria-label="Constructors的直接链接" title="Constructors的直接链接">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="new-text">new Text()<a href="#new-text" class="hash-link" aria-label="new Text()的直接链接" title="new Text()的直接链接">​</a></h3>
+<blockquote>
+<p><strong>new Text</strong>(<code>options</code>): <a href="/canvas/zh-Hans/docs/api/classes/Text"><code>Text</code></a></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters">Parameters<a href="#parameters" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>options</strong>: <a href="/canvas/zh-Hans/docs/api/interfaces/TextOptions"><code>TextOptions</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns">Returns<a href="#returns" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Text"><code>Text</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="overrides">Overrides<a href="#overrides" class="hash-link" aria-label="Overrides的直接链接" title="Overrides的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#constructors"><code>constructor</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in">Defined in<a href="#defined-in" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/text.ts#L18" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/text.ts:18</a></p>
+<h2 class="anchor anchorWithStickyNavbar_jQuP" id="properties">Properties<a href="#properties" class="hash-link" aria-label="Properties的直接链接" title="Properties的直接链接">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="_app">_app<a href="#_app" class="hash-link" aria-label="_app的直接链接" title="_app的直接链接">​</a></h3>
+<blockquote>
+<p><strong>_app</strong>: <code>null</code> | <a href="/canvas/zh-Hans/docs/api/classes/App"><code>App</code></a> = <code>null</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from">Inherited from<a href="#inherited-from" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的  直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#_app"><code>_app</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-1">Defined in<a href="#defined-in-1" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L363" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:363</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="_dirty">_dirty<a href="#_dirty" class="hash-link" aria-label="_dirty的直接链接" title="_dirty的直接链接">​</a></h3>
+<blockquote>
+<p><code>protected</code> <strong>_dirty</strong>: <code>boolean</code> = <code>false</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-1">Inherited from<a href="#inherited-from-1" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#_dirty"><code>_dirty</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-2">Defined in<a href="#defined-in-2" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L166" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:166</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="_rawsize">_rawSize<a href="#_rawsize" class="hash-link" aria-label="_rawSize的直接链接" title="_rawSize的直接链接">​</a></h3>
+<blockquote>
+<p><code>protected</code> <strong>_rawSize</strong>: <code>object</code></p>
+</blockquote>
+<p>原始尺寸</p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="height">height<a href="#height" class="hash-link" aria-label="height的直接链接" title="height的直接链接">​</a></h4>
+<blockquote>
+<p><strong>height</strong>: <code>number</code> = <code>0</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="width">width<a href="#width" class="hash-link" aria-label="width的直接链接" title="width的直接链接">​</a></h4>
+<blockquote>
+<p><strong>width</strong>: <code>number</code> = <code>0</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-2">Inherited from<a href="#inherited-from-2" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#_rawsize"><code>_rawSize</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-3">Defined in<a href="#defined-in-3" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L463" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:463</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="_renderid">_renderId<a href="#_renderid" class="hash-link" aria-label="_renderId的直接链接" title="_renderId的直接链接">​</a></h3>
+<blockquote>
+<p><strong>_renderId</strong>: <code>number</code> = <code>0</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-3">Inherited from<a href="#inherited-from-3" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#_renderid"><code>_renderId</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-4">Defined in<a href="#defined-in-4" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L456" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:456</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="_shouldupdatebounds">_shouldUpdateBounds<a href="#_shouldupdatebounds" class="hash-link" aria-label="_shouldUpdateBounds的直接链接" title="_shouldUpdateBounds的直接链接">​</a></h3>
+<blockquote>
+<p><code>protected</code> <strong>_shouldUpdateBounds</strong>: <code>boolean</code> = <code>false</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-4">Inherited from<a href="#inherited-from-4" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#_shouldupdatebounds"><code>_shouldUpdateBounds</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-5">Defined in<a href="#defined-in-5" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L376" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:376</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="prefixed">prefixed<a href="#prefixed" class="hash-link" aria-label="prefixed的直接链接" title="prefixed的直接链接">​</a></h3>
+<blockquote>
+<p><code>static</code> <strong>prefixed</strong>: <code>string</code> | <code>boolean</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-5">Inherited from<a href="#inherited-from-5" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#prefixed"><code>prefixed</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-6">Defined in<a href="#defined-in-6" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p>node_modules/.pnpm/eventemitter3@5.0.1/node_modules/eventemitter3/index.d.ts:9</p>
+<h2 class="anchor anchorWithStickyNavbar_jQuP" id="accessors">Accessors<a href="#accessors" class="hash-link" aria-label="Accessors的直接链接" title="Accessors的直接链接">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="_shouldupdate">_shouldUpdate<a href="#_shouldupdate" class="hash-link" aria-label="_shouldUpdate的直接链接" title="_shouldUpdate的直接链接">​</a></h3>
+<blockquote>
+<p><code>get</code> <strong>_shouldUpdate</strong>(): <code>boolean</code></p>
+</blockquote>
+<p>更新优化
+如果_shouldRender为true 则渲染
+否则跳过渲染</p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-1">Returns<a href="#returns-1" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>boolean</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="overrides-1">Overrides<a href="#overrides-1" class="hash-link" aria-label="Overrides的直接链接" title="Overrides的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#_shouldupdate"><code>_shouldUpdate</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-7">Defined in<a href="#defined-in-7" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/text.ts#L61" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/text.ts:61</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="alpha">alpha<a href="#alpha" class="hash-link" aria-label="alpha的直接链接" title="alpha的直接链接">​</a></h3>
+<blockquote>
+<p><code>get</code> <strong>alpha</strong>(): <code>number</code></p>
+</blockquote>
+<blockquote>
+<p><code>set</code> <strong>alpha</strong>(<code>value</code>): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-1">Parameters<a href="#parameters-1" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>value</strong>: <code>number</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-2">Returns<a href="#returns-2" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>number</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-6">Inherited from<a href="#inherited-from-6" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#alpha"><code>alpha</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-8">Defined in<a href="#defined-in-8" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L186" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:186</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="anchor">anchor<a href="#anchor" class="hash-link" aria-label="anchor的直接链接" title="anchor的直接链接">​</a></h3>
+<blockquote>
+<p><code>get</code> <strong>anchor</strong>(): <a href="/canvas/zh-Hans/docs/api/classes/ObservablePoint"><code>ObservablePoint</code></a></p>
+</blockquote>
+<blockquote>
+<p><code>set</code> <strong>anchor</strong>(<code>value</code>): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-2">Parameters<a href="#parameters-2" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>value</strong>: <code>number</code> | <a href="/canvas/zh-Hans/docs/api/interfaces/PointData"><code>PointData</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-3">Returns<a href="#returns-3" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/ObservablePoint"><code>ObservablePoint</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-7">Inherited from<a href="#inherited-from-7" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#anchor"><code>anchor</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-9">Defined in<a href="#defined-in-9" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L266" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:266</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="dirty">dirty<a href="#dirty" class="hash-link" aria-label="dirty 的直接链接" title="dirty的直接链接">​</a></h3>
+<blockquote>
+<p><code>get</code> <strong>dirty</strong>(): <code>boolean</code></p>
+</blockquote>
+<blockquote>
+<p><code>set</code> <strong>dirty</strong>(<code>value</code>): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-3">Parameters<a href="#parameters-3" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>value</strong>: <code>boolean</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-4">Returns<a href="#returns-4" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>boolean</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-8">Inherited from<a href="#inherited-from-8" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#dirty"><code>dirty</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-10">Defined in<a href="#defined-in-10" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L173" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:173</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="height-1">height<a href="#height-1" class="hash-link" aria-label="height的直接链接" title="height的直接链接">​</a></h3>
+<blockquote>
+<p><code>get</code> <strong>height</strong>(): <code>number</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-5">Returns<a href="#returns-5" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接"> ​</a></h4>
+<p><code>number</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-9">Inherited from<a href="#inherited-from-9" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#height-1"><code>height</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-11">Defined in<a href="#defined-in-11" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L465" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:465</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="pivot">pivot<a href="#pivot" class="hash-link" aria-label="pivot的直接链接" title="pivot的直接链接">​</a></h3>
+<blockquote>
+<p><code>get</code> <strong>pivot</strong>(): <a href="/canvas/zh-Hans/docs/api/classes/ObservablePoint"><code>ObservablePoint</code></a></p>
+</blockquote>
+<blockquote>
+<p><code>set</code> <strong>pivot</strong>(<code>value</code>): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-4">Parameters<a href="#parameters-4" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>value</strong>: <code>number</code> | <a href="/canvas/zh-Hans/docs/api/interfaces/PointData"><code>PointData</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-6">Returns<a href="#returns-6" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/ObservablePoint"><code>ObservablePoint</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-10">Inherited from<a href="#inherited-from-10" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#pivot"><code>pivot</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-12">Defined in<a href="#defined-in-12" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L293" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:293</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="position">position<a href="#position" class="hash-link" aria-label="position的直接链接" title="position的直接链接">​</a></h3>
+<blockquote>
+<p><code>get</code> <strong>position</strong>(): <a href="/canvas/zh-Hans/docs/api/classes/ObservablePoint"><code>ObservablePoint</code></a></p>
+</blockquote>
+<blockquote>
+<p><code>set</code> <strong>position</strong>(<code>value</code>): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-5">Parameters<a href="#parameters-5" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>value</strong>: <a href="/canvas/zh-Hans/docs/api/interfaces/PointData"><code>PointData</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-7">Returns<a href="#returns-7" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/ObservablePoint"><code>ObservablePoint</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-11">Inherited from<a href="#inherited-from-11" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#position"><code>position</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-13">Defined in<a href="#defined-in-13" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L242" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:242</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="rotation">rotation<a href="#rotation" class="hash-link" aria-label="rotation的直接链接" title="rotation的直接链接">​</a></h3>
+<blockquote>
+<p><code>get</code> <strong>rotation</strong>(): <code>number</code></p>
+</blockquote>
+<blockquote>
+<p><code>set</code> <strong>rotation</strong>(<code>value</code>): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-6">Parameters<a href="#parameters-6" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>value</strong>: <code>number</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-8">Returns<a href="#returns-8" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>number</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-12">Inherited from<a href="#inherited-from-12" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#rotation"><code>rotation</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-14">Defined in<a href="#defined-in-14" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L309" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:309</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="scale">scale<a href="#scale" class="hash-link" aria-label="scale的直接链接" title="scale的直接链接">​</a></h3>
+<blockquote>
+<p><code>get</code> <strong>scale</strong>(): <a href="/canvas/zh-Hans/docs/api/classes/ObservablePoint"><code>ObservablePoint</code></a></p>
+</blockquote>
+<blockquote>
+<p><code>set</code> <strong>scale</strong>(<code>value</code>): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-7">Parameters<a href="#parameters-7" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>value</strong>: <code>number</code> | <a href="/canvas/zh-Hans/docs/api/interfaces/PointData"><code>PointData</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-9">Returns<a href="#returns-9" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/ObservablePoint"><code>ObservablePoint</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-13">Inherited from<a href="#inherited-from-13" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#scale"><code>scale</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-15">Defined in<a href="#defined-in-15" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L333" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:333</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="shadow">shadow<a href="#shadow" class="hash-link" aria-label="shadow的直接链接" title="shadow的直接链接">​</a></h3>
+<blockquote>
+<p><code>get</code> <strong>shadow</strong>(): <a href="/canvas/zh-Hans/docs/api/interfaces/ShadowType"><code>ShadowType</code></a></p>
+</blockquote>
+<blockquote>
+<p><code>set</code> <strong>shadow</strong>(<code>value</code>): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-8">Parameters<a href="#parameters-8" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>value</strong>: <a href="/canvas/zh-Hans/docs/api/interfaces/ShadowType"><code>ShadowType</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-10">Returns<a href="#returns-10" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/interfaces/ShadowType"><code>ShadowType</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-14">Inherited from<a href="#inherited-from-14" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#shadow"><code>shadow</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-16">Defined in<a href="#defined-in-16" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L210" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:210</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="shouldupdate">shouldUpdate<a href="#shouldupdate" class="hash-link" aria-label="shouldUpdate的直接链接" title="shouldUpdate的直接链接">​</a></h3>
+<blockquote>
+<p><code>get</code> <strong>shouldUpdate</strong>(): <code>boolean</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-11">Returns<a href="#returns-11" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>boolean</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-15">Inherited from<a href="#inherited-from-15" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#shouldupdate"><code>shouldUpdate</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-17">Defined in<a href="#defined-in-17" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L162" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:162</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="skew">skew<a href="#skew" class="hash-link" aria-label="skew的直接链接" title="skew的直接链接">​</a></h3>
+<blockquote>
+<p><code>get</code> <strong>skew</strong>(): <a href="/canvas/zh-Hans/docs/api/classes/ObservablePoint"><code>ObservablePoint</code></a></p>
+</blockquote>
+<blockquote>
+<p><code>set</code> <strong>skew</strong>(<code>value</code>): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-9">Parameters<a href="#parameters-9" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>value</strong>: <a href="/canvas/zh-Hans/docs/api/interfaces/PointData"><code>PointData</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-12">Returns<a href="#returns-12" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/ObservablePoint"><code>ObservablePoint</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-16">Inherited from<a href="#inherited-from-16" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#skew"><code>skew</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-18">Defined in<a href="#defined-in-18" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L352" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:352</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="style">style<a href="#style" class="hash-link" aria-label="style的直接链接" title="style的直接链接">​</a></h3>
+<blockquote>
+<p><code>get</code> <strong>style</strong>(): <a href="/canvas/zh-Hans/docs/api/classes/TextStyle"><code>TextStyle</code></a></p>
+</blockquote>
+<blockquote>
+<p><code>set</code> <strong>style</strong>(<code>style</code>): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-10">Parameters<a href="#parameters-10" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>style</strong>: <a href="/canvas/zh-Hans/docs/api/classes/TextStyle"><code>TextStyle</code></a> | <code>Partial</code>&lt;<a href="/canvas/zh-Hans/docs/api/interfaces/TextStyleOptions"><code>TextStyleOptions</code></a>&gt;</p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-13">Returns<a href="#returns-13" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/TextStyle"><code>TextStyle</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-19">Defined in<a href="#defined-in-19" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/text.ts#L44" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/text.ts:44</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="text">text<a href="#text" class="hash-link" aria-label="text的直接链接" title="text的直接链接">​</a></h3>
+<blockquote>
+<p><code>get</code> <strong>text</strong>(): <code>string</code></p>
+</blockquote>
+<blockquote>
+<p><code>set</code> <strong>text</strong>(<code>text</code>): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-11">Parameters<a href="#parameters-11" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>text</strong>: <code>string</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-14">Returns<a href="#returns-14" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>string</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-20">Defined in<a href="#defined-in-20" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/text.ts#L57" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/text.ts:57</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="visible">visible<a href="#visible" class="hash-link" aria-label="visible的直接链接" title="visible的直接链接">​</a></h3>
+<blockquote>
+<p><code>get</code> <strong>visible</strong>(): <code>boolean</code></p>
+</blockquote>
+<blockquote>
+<p><code>set</code> <strong>visible</strong>(<code>value</code>): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-12">Parameters<a href="#parameters-12" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>value</strong>: <code>boolean</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-15">Returns<a href="#returns-15" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>boolean</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-17">Inherited from<a href="#inherited-from-17" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#visible"><code>visible</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-21">Defined in<a href="#defined-in-21" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L367" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:367</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="width-1">width<a href="#width-1" class="hash-link" aria-label="width的直接链接" title="width的直接链接">​</a></h3>
+<blockquote>
+<p><code>get</code> <strong>width</strong>(): <code>number</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-16">Returns<a href="#returns-16" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>number</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-18">Inherited from<a href="#inherited-from-18" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#width-1"><code>width</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-22">Defined in<a href="#defined-in-22" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L469" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:469</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="x">x<a href="#x" class="hash-link" aria-label="x的直接链接" title="x的直接链接">​</a></h3>
+<blockquote>
+<p><code>get</code> <strong>x</strong>(): <code>number</code></p>
+</blockquote>
+<blockquote>
+<p><code>set</code> <strong>x</strong>(<code>value</code>): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-13">Parameters<a href="#parameters-13" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>value</strong>: <code>number</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-17">Returns<a href="#returns-17" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>number</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-19">Inherited from<a href="#inherited-from-19" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#x"><code>x</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-23">Defined in<a href="#defined-in-23" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L220" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:220</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="y">y<a href="#y" class="hash-link" aria-label="y的直接链接" title="y的直接链接">​</a></h3>
+<blockquote>
+<p><code>get</code> <strong>y</strong>(): <code>number</code></p>
+</blockquote>
+<blockquote>
+<p><code>set</code> <strong>y</strong>(<code>value</code>): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-14">Parameters<a href="#parameters-14" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>value</strong>: <code>number</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-18">Returns<a href="#returns-18" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>number</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-20">Inherited from<a href="#inherited-from-20" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#y"><code>y</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-24">Defined in<a href="#defined-in-24" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L230" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:230</a></p>
+<h2 class="anchor anchorWithStickyNavbar_jQuP" id="methods">Methods<a href="#methods" class="hash-link" aria-label="Methods的直接链接" title="Methods的直接链接">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="_onupdate">_onUpdate()<a href="#_onupdate" class="hash-link" aria-label="_onUpdate()的直接链接" title="_onUpdate()的直接链接">​</a></h3>
+<blockquote>
+<p><strong>_onUpdate</strong>(<code>_point</code>?): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-15">Parameters<a href="#parameters-15" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>_point?</strong>: <a href="/canvas/zh-Hans/docs/api/classes/ObservablePoint"><code>ObservablePoint</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-19">Returns<a href="#returns-19" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>void</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-21">Inherited from<a href="#inherited-from-21" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#_onupdate"><code>_onUpdate</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-25">Defined in<a href="#defined-in-25" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L359" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:359</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="_render">_render()<a href="#_render" class="hash-link" aria-label="_render()的直接链接" title="_render()的直接链接">​</a></h3>
+<blockquote>
+<p><strong>_render</strong>(<code>ctx</code>): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-16">Parameters<a href="#parameters-16" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>ctx</strong>: <code>CanvasRenderingContext2D</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-20">Returns<a href="#returns-20" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>void</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="overrides-2">Overrides<a href="#overrides-2" class="hash-link" aria-label="Overrides的直接链接" title="Overrides的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#_render"><code>_render</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-26">Defined in<a href="#defined-in-26" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/text.ts#L86" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/text.ts:86</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="addlistener">addListener()<a href="#addlistener" class="hash-link" aria-label="addListener()的直接链接" title="addListener()的直接链接">​</a></h3>
+<blockquote>
+<p><strong>addListener</strong>&lt;<code>T</code>&gt;(<code>event</code>, <code>fn</code>, <code>context</code>?): <code>this</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="type-parameters">Type Parameters<a href="#type-parameters" class="hash-link" aria-label="Type Parameters的直接链接" title="Type Parameters的直接链接">​</a></h4>
+<p>• <strong>T</strong> <em>extends</em> <code>&quot;updateBounds&quot;</code> | <code>&quot;render&quot;</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-17">Parameters<a href="#parameters-17" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>event</strong>: <code>T</code></p>
+<p>• <strong>fn</strong></p>
+<p>• <strong>context?</strong>: <code>any</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-21">Returns<a href="#returns-21" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>this</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-22">Inherited from<a href="#inherited-from-22" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#addlistener"><code>addListener</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-27">Defined in<a href="#defined-in-27" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p>node_modules/.pnpm/eventemitter3@5.0.1/node_modules/eventemitter3/index.d.ts:45</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="addto">addTo()<a href="#addto" class="hash-link" aria-label="addTo()的直接链接" title="addTo()的直接链接">​</a></h3>
+<blockquote>
+<p><strong>addTo</strong>(<code>app</code>): <a href="/canvas/zh-Hans/docs/api/classes/Text"><code>Text</code></a></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-18">Parameters<a href="#parameters-18" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>app</strong>: <a href="/canvas/zh-Hans/docs/api/classes/App"><code>App</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-22">Returns<a href="#returns-22" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Text"><code>Text</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-23">Inherited from<a href="#inherited-from-23" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#addto"><code>addTo</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-28">Defined in<a href="#defined-in-28" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L499" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:499</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="changerawsize">changeRawSize()<a href="#changerawsize" class="hash-link" aria-label="changeRawSize()的直接链接" title="changeRawSize()的直接链接">​</a></h3>
+<blockquote>
+<p><code>protected</code> <strong>changeRawSize</strong>(<code>width</code>, <code>height</code>): <code>void</code></p>
+</blockquote>
+<p>更新原始尺寸</p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-19">Parameters<a href="#parameters-19" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>width</strong>: <code>number</code></p>
+<p>• <strong>height</strong>: <code>number</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-23">Returns<a href="#returns-23" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>void</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-24">Inherited from<a href="#inherited-from-24" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#changerawsize"><code>changeRawSize</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-29">Defined in<a href="#defined-in-29" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L480" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:480</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="destroy">destroy()<a href="#destroy" class="hash-link" aria-label="destroy()的直接链接" title="destroy()的直接链接">​</a></h3>
+<blockquote>
+<p><strong>destroy</strong>(): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-24">Returns<a href="#returns-24" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>void</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-25">Inherited from<a href="#inherited-from-25" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#destroy"><code>destroy</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-30">Defined in<a href="#defined-in-30" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L504" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:504</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="emit">emit()<a href="#emit" class="hash-link" aria-label="emit()的直接链接" title="emit()的直接链接">​</a></h3>
+<blockquote>
+<p><strong>emit</strong>&lt;<code>T</code>&gt;(<code>event</code>, ...<code>args</code>): <code>boolean</code></p>
+</blockquote>
+<p>Calls each of the listeners registered for a given event.</p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="type-parameters-1">Type Parameters<a href="#type-parameters-1" class="hash-link" aria-label="Type Parameters的直接链接" title="Type Parameters的直接链接">​</a></h4>
+<p>• <strong>T</strong> <em>extends</em> <code>&quot;updateBounds&quot;</code> | <code>&quot;render&quot;</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-20">Parameters<a href="#parameters-20" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>event</strong>: <code>T</code></p>
+<p>• ...<strong>args</strong>: <code>ArgumentMap</code>&lt;<code>object</code>&gt;[<code>Extract</code>&lt;<code>T</code>, <code>&quot;updateBounds&quot;</code> | <code>&quot;render&quot;</code>&gt;]</p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-25">Returns<a href="#returns-25" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>boolean</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-26">Inherited from<a href="#inherited-from-26" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#emit"><code>emit</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-31">Defined in<a href="#defined-in-31" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p>node_modules/.pnpm/eventemitter3@5.0.1/node_modules/eventemitter3/index.d.ts:32</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="eventnames">eventNames()<a href="#eventnames" class="hash-link" aria-label="eventNames()的直接链接" title="eventNames()的直接链接">​</a></h3>
+<blockquote>
+<p><strong>eventNames</strong>(): (<code>&quot;updateBounds&quot;</code> | <code>&quot;render&quot;</code>)[]</p>
+</blockquote>
+<p>Return an array listing the events for which the emitter has registered
+listeners.</p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-26">Returns<a href="#returns-26" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p>(<code>&quot;updateBounds&quot;</code> | <code>&quot;render&quot;</code>)[]</p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-27">Inherited from<a href="#inherited-from-27" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#eventnames"><code>eventNames</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-32">Defined in<a href="#defined-in-32" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p>node_modules/.pnpm/eventemitter3@5.0.1/node_modules/eventemitter3/index.d.ts:15</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="getsplittext">getSplitText()<a href="#getsplittext" class="hash-link" aria-label="getSplitText()的直接链接" title="getSplitText()的直接链接">​</a></h3>
+<blockquote>
+<p><strong>getSplitText</strong>(<code>ctx</code>): <code>string</code>[]</p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-21">Parameters<a href="#parameters-21" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>ctx</strong>: <code>CanvasRenderingContext2D</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-27">Returns<a href="#returns-27" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>string</code>[]</p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-33">Defined in<a href="#defined-in-33" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/text.ts#L65" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/text.ts:65</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="listenercount">listenerCount()<a href="#listenercount" class="hash-link" aria-label="listenerCount()的直接链接" title="listenerCount()的直接链接">​</a></h3>
+<blockquote>
+<p><strong>listenerCount</strong>(<code>event</code>): <code>number</code></p>
+</blockquote>
+<p>Return the number of listeners listening to a given event.</p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-22">Parameters<a href="#parameters-22" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>event</strong>: <code>&quot;updateBounds&quot;</code> | <code>&quot;render&quot;</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-28">Returns<a href="#returns-28" class="hash-link" aria-label="Returns的直接链接" title="Returns的 直接链接">​</a></h4>
+<p><code>number</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-28">Inherited from<a href="#inherited-from-28" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#listenercount"><code>listenerCount</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-34">Defined in<a href="#defined-in-34" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p>node_modules/.pnpm/eventemitter3@5.0.1/node_modules/eventemitter3/index.d.ts:27</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="listeners">listeners()<a href="#listeners" class="hash-link" aria-label="listeners()的直接链接" title="listeners()的直接链接">​</a></h3>
+<blockquote>
+<p><strong>listeners</strong>&lt;<code>T</code>&gt;(<code>event</code>): (...<code>args</code>) =&gt; <code>void</code>[]</p>
+</blockquote>
+<p>Return the listeners registered for a given event.</p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="type-parameters-2">Type Parameters<a href="#type-parameters-2" class="hash-link" aria-label="Type Parameters的直接链接" title="Type Parameters的直接链接">​</a></h4>
+<p>• <strong>T</strong> <em>extends</em> <code>&quot;updateBounds&quot;</code> | <code>&quot;render&quot;</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-23">Parameters<a href="#parameters-23" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>event</strong>: <code>T</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-29">Returns<a href="#returns-29" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p>(...<code>args</code>) =&gt; <code>void</code>[]</p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-29">Inherited from<a href="#inherited-from-29" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#listeners"><code>listeners</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-35">Defined in<a href="#defined-in-35" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p>node_modules/.pnpm/eventemitter3@5.0.1/node_modules/eventemitter3/index.d.ts:20</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="off">off()<a href="#off" class="hash-link" aria-label="off()的直接链接" title="off()的直接链接">​</a></h3>
+<blockquote>
+<p><strong>off</strong>&lt;<code>T</code>&gt;(<code>event</code>, <code>fn</code>?, <code>context</code>?, <code>once</code>?): <code>this</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="type-parameters-3">Type Parameters<a href="#type-parameters-3" class="hash-link" aria-label="Type Parameters的直接链接" title="Type Parameters的直接链接">​</a></h4>
+<p>• <strong>T</strong> <em>extends</em> <code>&quot;updateBounds&quot;</code> | <code>&quot;render&quot;</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-24">Parameters<a href="#parameters-24" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>event</strong>: <code>T</code></p>
+<p>• <strong>fn?</strong></p>
+<p>• <strong>context?</strong>: <code>any</code></p>
+<p>• <strong>once?</strong>: <code>boolean</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-30">Returns<a href="#returns-30" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>this</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-30">Inherited from<a href="#inherited-from-30" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#off"><code>off</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-36">Defined in<a href="#defined-in-36" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p>node_modules/.pnpm/eventemitter3@5.0.1/node_modules/eventemitter3/index.d.ts:69</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="on">on()<a href="#on" class="hash-link" aria-label="on()的直接链接" title="on()的直接链接">​</a></h3>
+<blockquote>
+<p><strong>on</strong>&lt;<code>T</code>&gt;(<code>event</code>, <code>fn</code>, <code>context</code>?): <code>this</code></p>
+</blockquote>
+<p>Add a listener for a given event.</p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="type-parameters-4">Type Parameters<a href="#type-parameters-4" class="hash-link" aria-label="Type Parameters的直接链接" title="Type Parameters的直接链接">​</a></h4>
+<p>• <strong>T</strong> <em>extends</em> <code>&quot;updateBounds&quot;</code> | <code>&quot;render&quot;</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-25">Parameters<a href="#parameters-25" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>event</strong>: <code>T</code></p>
+<p>• <strong>fn</strong></p>
+<p>• <strong>context?</strong>: <code>any</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-31">Returns<a href="#returns-31" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>this</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-31">Inherited from<a href="#inherited-from-31" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#on"><code>on</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-37">Defined in<a href="#defined-in-37" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p>node_modules/.pnpm/eventemitter3@5.0.1/node_modules/eventemitter3/index.d.ts:40</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="onadd">onAdd()<a href="#onadd" class="hash-link" aria-label="onAdd()的直接链接" title="onAdd()的直接链接">​</a></h3>
+<blockquote>
+<p><strong>onAdd</strong>(<code>_app</code>): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-26">Parameters<a href="#parameters-26" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>_app</strong>: <a href="/canvas/zh-Hans/docs/api/classes/App"><code>App</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-32">Returns<a href="#returns-32" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>void</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-32">Inherited from<a href="#inherited-from-32" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#onadd"><code>onAdd</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-38">Defined in<a href="#defined-in-38" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L489" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:489</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="once">once()<a href="#once" class="hash-link" aria-label="once()的直接链接" title="once()的直接链接">​</a></h3>
+<blockquote>
+<p><strong>once</strong>&lt;<code>T</code>&gt;(<code>event</code>, <code>fn</code>, <code>context</code>?): <code>this</code></p>
+</blockquote>
+<p>Add a one-time listener for a given event.</p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="type-parameters-5">Type Parameters<a href="#type-parameters-5" class="hash-link" aria-label="Type Parameters的直接链接" title="Type Parameters的直接链接">​</a></h4>
+<p>• <strong>T</strong> <em>extends</em> <code>&quot;updateBounds&quot;</code> | <code>&quot;render&quot;</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-27">Parameters<a href="#parameters-27" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>event</strong>: <code>T</code></p>
+<p>• <strong>fn</strong></p>
+<p>• <strong>context?</strong>: <code>any</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-33">Returns<a href="#returns-33" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>this</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-33">Inherited from<a href="#inherited-from-33" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#once"><code>once</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-39">Defined in<a href="#defined-in-39" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p>node_modules/.pnpm/eventemitter3@5.0.1/node_modules/eventemitter3/index.d.ts:54</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="onremove">onRemove()<a href="#onremove" class="hash-link" aria-label="onRemove()的直接链接" title="onRemove()的直接链接">​</a></h3>
+<blockquote>
+<p><strong>onRemove</strong>(): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-34">Returns<a href="#returns-34" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>void</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-34">Inherited from<a href="#inherited-from-34" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#onremove"><code>onRemove</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-40">Defined in<a href="#defined-in-40" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L494" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:494</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="removealllisteners">removeAllListeners()<a href="#removealllisteners" class="hash-link" aria-label="removeAllListeners()的直接链接" title="removeAllListeners()的直接链接">​</a></h3>
+<blockquote>
+<p><strong>removeAllListeners</strong>(<code>event</code>?): <code>this</code></p>
+</blockquote>
+<p>Remove all listeners, or those of the specified event.</p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-28">Parameters<a href="#parameters-28" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>event?</strong>: <code>&quot;updateBounds&quot;</code> | <code>&quot;render&quot;</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-35">Returns<a href="#returns-35" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>this</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-35">Inherited from<a href="#inherited-from-35" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#removealllisteners"><code>removeAllListeners</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-41">Defined in<a href="#defined-in-41" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p>node_modules/.pnpm/eventemitter3@5.0.1/node_modules/eventemitter3/index.d.ts:79</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="removelistener">removeListener()<a href="#removelistener" class="hash-link" aria-label="removeListener()的直接链接" title="removeListener()的直接链接">​</a></h3>
+<blockquote>
+<p><strong>removeListener</strong>&lt;<code>T</code>&gt;(<code>event</code>, <code>fn</code>?, <code>context</code>?, <code>once</code>?): <code>this</code></p>
+</blockquote>
+<p>Remove the listeners of a given event.</p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="type-parameters-6">Type Parameters<a href="#type-parameters-6" class="hash-link" aria-label="Type Parameters的直接链接" title="Type Parameters的直接链接">​</a></h4>
+<p>• <strong>T</strong> <em>extends</em> <code>&quot;updateBounds&quot;</code> | <code>&quot;render&quot;</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-29">Parameters<a href="#parameters-29" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>event</strong>: <code>T</code></p>
+<p>• <strong>fn?</strong></p>
+<p>• <strong>context?</strong>: <code>any</code></p>
+<p>• <strong>once?</strong>: <code>boolean</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-36">Returns<a href="#returns-36" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>this</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-36">Inherited from<a href="#inherited-from-36" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#removelistener"><code>removeListener</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-42">Defined in<a href="#defined-in-42" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p>node_modules/.pnpm/eventemitter3@5.0.1/node_modules/eventemitter3/index.d.ts:63</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="render">render()<a href="#render" class="hash-link" aria-label="render()的直接链接" title="render()的直接链接">​</a></h3>
+<blockquote>
+<p><strong>render</strong>(<code>ctx</code>): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-30">Parameters<a href="#parameters-30" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>ctx</strong>: <code>CanvasRenderingContext2D</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-37">Returns<a href="#returns-37" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>void</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-37">Inherited from<a href="#inherited-from-37" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#render"><code>render</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-43">Defined in<a href="#defined-in-43" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L409" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:409</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="shouldupdatebounds">shouldUpdateBounds()<a href="#shouldupdatebounds" class="hash-link" aria-label="shouldUpdateBounds()的直接链接" title="shouldUpdateBounds()的直接链接">​</a></h3>
+<blockquote>
+<p><code>protected</code> <strong>shouldUpdateBounds</strong>(<code>type</code>?): <code>void</code></p>
+</blockquote>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="parameters-31">Parameters<a href="#parameters-31" class="hash-link" aria-label="Parameters的直接链接" title="Parameters的直接链接">​</a></h4>
+<p>• <strong>type?</strong>: <code>string</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-38">Returns<a href="#returns-38" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>void</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="inherited-from-38">Inherited from<a href="#inherited-from-38" class="hash-link" aria-label="Inherited from的直接链接" title="Inherited from的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#shouldupdatebounds"><code>shouldUpdateBounds</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-44">Defined in<a href="#defined-in-44" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/renderable.ts#L378" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/renderable.ts:378</a></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_jQuP" id="updaterawsize">updateRawSize()<a href="#updaterawsize" class="hash-link" aria-label="updateRawSize()的直接链接" title="updateRawSize()的直接链接">​</a></h3>
+<blockquote>
+<p><code>protected</code> <strong>updateRawSize</strong>(): <code>void</code></p>
+</blockquote>
+<p>更新原始尺寸</p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="returns-39">Returns<a href="#returns-39" class="hash-link" aria-label="Returns的直接链接" title="Returns的直接链接">​</a></h4>
+<p><code>void</code></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="overrides-3">Overrides<a href="#overrides-3" class="hash-link" aria-label="Overrides的直接链接" title="Overrides的直接链接">​</a></h4>
+<p><a href="/canvas/zh-Hans/docs/api/classes/Renderable"><code>Renderable</code></a>.<a href="/canvas/zh-Hans/docs/api/classes/Renderable#updaterawsize"><code>updateRawSize</code></a></p>
+<h4 class="anchor anchorWithStickyNavbar_jQuP" id="defined-in-45">Defined in<a href="#defined-in-45" class="hash-link" aria-label="Defined in的直接链接" title="Defined in的直接链接">​</a></h4>
+<p><a href="https://github.com/zhuddan/canvas/blob/d52e9d518af896aea2877cea1b89cdb1bc75e617/packages/core/src/renderables/text.ts#L113" target="_blank" rel="noopener noreferrer">packages/core/src/renderables/text.ts:113</a></p></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="文件选项卡"><a class="pagination-nav__link pagination-nav__link--prev" href="/canvas/zh-Hans/docs/api/classes/Shape"><div class="pagination-nav__sublabel">上一页</div><div class="pagination-nav__label">Shape</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/canvas/zh-Hans/docs/api/classes/TextStyle"><div class="pagination-nav__sublabel">下一页</div><div class="pagination-nav__label">TextStyle</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_XltQ thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#extends" class="table-of-contents__link toc-highlight">Extends</a></li><li><a href="#constructors" class="table-of-contents__link toc-highlight">Constructors</a><ul><li><a href="#new-text" class="table-of-contents__link toc-highlight">new Text()</a></li></ul></li><li><a href="#properties" class="table-of-contents__link toc-highlight">Properties</a><ul><li><a href="#_app" class="table-of-contents__link toc-highlight">_app</a></li><li><a href="#_dirty" class="table-of-contents__link toc-highlight">_dirty</a></li><li><a href="#_rawsize" class="table-of-contents__link toc-highlight">_rawSize</a></li><li><a href="#_renderid" class="table-of-contents__link toc-highlight">_renderId</a></li><li><a href="#_shouldupdatebounds" class="table-of-contents__link toc-highlight">_shouldUpdateBounds</a></li><li><a href="#prefixed" class="table-of-contents__link toc-highlight">prefixed</a></li></ul></li><li><a href="#accessors" class="table-of-contents__link toc-highlight">Accessors</a><ul><li><a href="#_shouldupdate" class="table-of-contents__link toc-highlight">_shouldUpdate</a></li><li><a href="#alpha" class="table-of-contents__link toc-highlight">alpha</a></li><li><a href="#anchor" class="table-of-contents__link toc-highlight">anchor</a></li><li><a href="#dirty" class="table-of-contents__link toc-highlight">dirty</a></li><li><a href="#height-1" class="table-of-contents__link toc-highlight">height</a></li><li><a href="#pivot" class="table-of-contents__link toc-highlight">pivot</a></li><li><a href="#position" class="table-of-contents__link toc-highlight">position</a></li><li><a href="#rotation" class="table-of-contents__link toc-highlight">rotation</a></li><li><a href="#scale" class="table-of-contents__link toc-highlight">scale</a></li><li><a href="#shadow" class="table-of-contents__link toc-highlight">shadow</a></li><li><a href="#shouldupdate" class="table-of-contents__link toc-highlight">shouldUpdate</a></li><li><a href="#skew" class="table-of-contents__link toc-highlight">skew</a></li><li><a href="#style" class="table-of-contents__link toc-highlight">style</a></li><li><a href="#text" class="table-of-contents__link toc-highlight">text</a></li><li><a href="#visible" class="table-of-contents__link toc-highlight">visible</a></li><li><a href="#width-1" class="table-of-contents__link toc-highlight">width</a></li><li><a href="#x" class="table-of-contents__link toc-highlight">x</a></li><li><a href="#y" class="table-of-contents__link toc-highlight">y</a></li></ul></li><li><a href="#methods" class="table-of-contents__link toc-highlight">Methods</a><ul><li><a href="#_onupdate" class="table-of-contents__link toc-highlight">_onUpdate()</a></li><li><a href="#_render" class="table-of-contents__link toc-highlight">_render()</a></li><li><a href="#addlistener" class="table-of-contents__link toc-highlight">addListener()</a></li><li><a href="#addto" class="table-of-contents__link toc-highlight">addTo()</a></li><li><a href="#changerawsize" class="table-of-contents__link toc-highlight">changeRawSize()</a></li><li><a href="#destroy" class="table-of-contents__link toc-highlight">destroy()</a></li><li><a href="#emit" class="table-of-contents__link toc-highlight">emit()</a></li><li><a href="#eventnames" class="table-of-contents__link toc-highlight">eventNames()</a></li><li><a href="#getsplittext" class="table-of-contents__link toc-highlight">getSplitText()</a></li><li><a href="#listenercount" class="table-of-contents__link toc-highlight">listenerCount()</a></li><li><a href="#listeners" class="table-of-contents__link toc-highlight">listeners()</a></li><li><a href="#off" class="table-of-contents__link toc-highlight">off()</a></li><li><a href="#on" class="table-of-contents__link toc-highlight">on()</a></li><li><a href="#onadd" class="table-of-contents__link toc-highlight">onAdd()</a></li><li><a href="#once" class="table-of-contents__link toc-highlight">once()</a></li><li><a href="#onremove" class="table-of-contents__link toc-highlight">onRemove()</a></li><li><a href="#removealllisteners" class="table-of-contents__link toc-highlight">removeAllListeners()</a></li><li><a href="#removelistener" class="table-of-contents__link toc-highlight">removeListener()</a></li><li><a href="#render" class="table-of-contents__link toc-highlight">render()</a></li><li><a href="#shouldupdatebounds" class="table-of-contents__link toc-highlight">shouldUpdateBounds()</a></li><li><a href="#updaterawsize" class="table-of-contents__link toc-highlight">updateRawSize()</a></li></ul></li></ul></div></div></div></div></main></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2024 My Project, Inc. Built with Docusaurus.</div></div></div></footer></div>
+</body>
+</html>
